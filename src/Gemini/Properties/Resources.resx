@@ -252,4 +252,10 @@
   <data name="ThemeDarkName" xml:space="preserve">
     <value>Dark</value>
   </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>All Files</value>
+  </data>
+  <data name="SaveChangesBeforeClosingMessage" xml:space="preserve">
+    <value>Save changes to the {0} "{1}" before closing?</value>
+  </data>
 </root>

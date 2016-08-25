@@ -61,6 +61,15 @@ namespace Gemini.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Files.
+        /// </summary>
+        internal static string AllFiles {
+            get {
+                return ResourceManager.GetString("AllFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Edit.
         /// </summary>
         internal static string EditMenuText {
@@ -300,6 +309,15 @@ namespace Gemini.Properties {
         internal static string MainWindowDefaultTitle {
             get {
                 return ResourceManager.GetString("MainWindowDefaultTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes to the {0} &quot;{1}&quot; before closing?.
+        /// </summary>
+        internal static string SaveChangesBeforeClosingMessage {
+            get {
+                return ResourceManager.GetString("SaveChangesBeforeClosingMessage", resourceCulture);
             }
         }
         
