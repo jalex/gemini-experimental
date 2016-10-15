@@ -493,6 +493,24 @@ namespace Gemini.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full Screen.
+        /// </summary>
+        internal static string ViewFullScreenCommandText {
+            get {
+                return ResourceManager.GetString("ViewFullScreenCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Screen.
+        /// </summary>
+        internal static string ViewFullScreenCommandToolTip {
+            get {
+                return ResourceManager.GetString("ViewFullScreenCommandToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _History.
         /// </summary>
         internal static string ViewHistoryCommandText {
