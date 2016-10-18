@@ -11,7 +11,7 @@
     <Setting Name="LanguageCode" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RecentDocuments" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="RecentDocuments" Type="Gemini.Modules.RecentFiles.ViewModels.RecentFileViewModel.RecentFileItemCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

@@ -6,7 +6,6 @@ namespace Gemini.Modules.RecentFiles
     public interface IRecentFiles
     {
         IObservableCollection<RecentFileItemViewModel> Items { get; }
-
         void Update(string filePath);
     }
 }

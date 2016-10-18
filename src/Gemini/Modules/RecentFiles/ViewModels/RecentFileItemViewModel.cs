@@ -1,40 +1,27 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Xml.Serialization;
+using Caliburn.Micro;
 
 namespace Gemini.Modules.RecentFiles.ViewModels
 {
+    [Serializable]
     public class RecentFileItemViewModel : PropertyChangedBase
     {
-        private int _index;
-        public int Index
-        {
-            get { return _index; }
-            internal set
-            {
-                _index = value;
-                NotifyOfPropertyChange(() => Index);
-            }
-        }
-
         private string _filePath;
+        
         public string FilePath
         {
             get { return _filePath; }
             set
             {
                 _filePath = value;
-                _displayName = ShortenPath(_filePath);
+                NotifyOfPropertyChange(() => DisplayName);
                 NotifyOfPropertyChange(() => FilePath);
             }
         }
 
-        private string _displayName;
-        public string DisplayName
-        {
-            get { return _displayName; }
-        }
-
         // TODO: will implement Pinned
-        private bool _pinned = false;
+        private bool _pinned;
         public bool Pinned
         {
             get { return _pinned; }
@@ -45,20 +32,14 @@ namespace Gemini.Modules.RecentFiles.ViewModels
             }
         }
 
-        public RecentFileItemViewModel(string filePath, bool pinned = false)
-        {
-            _filePath = filePath;
-            _displayName = ShortenPath(filePath);
-
-            _pinned = pinned;
-        }
+        public string DisplayName { get { return ShortenPath(_filePath); } }
 
         // http://stackoverflow.com/questions/8360360/function-to-shrink-file-path-to-be-more-human-readable
         private string ShortenPath(string path, int maxLength = 50)
         {
-            string[] splits = path.Split('\\');
+            var splits = path.Split('\\');
 
-            string output = "";
+            var output = "";
 
             if (splits.Length > 4)
                 output = splits[0] + "\\" + splits[1] + "\\...\\" + splits[splits.Length - 2] + "\\" + splits[splits.Length - 1];

@@ -1,5 +1,4 @@
-﻿using Caliburn.Micro;
-using Gemini.Framework;
+﻿using Gemini.Framework;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
 using Gemini.Modules.Shell.Commands;
@@ -8,7 +7,7 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
+using System;
 
 namespace Gemini.Modules.RecentFiles.Commands
 {
@@ -25,7 +24,8 @@ namespace Gemini.Modules.RecentFiles.Commands
 
         public void Populate(Command command, List<Command> commands)
         {
-            for (var i = 0; i < _shell.RecentFiles.Items.Count; i++)
+            var count = _shell.RecentFiles.Items.Count > 10 ? 10 : _shell.RecentFiles.Items.Count;
+            for (var i = 0; i < count; i++)
             {
                 var item = _shell.RecentFiles.Items[i];
                 commands.Add(new Command(command.CommandDefinition)
@@ -48,7 +48,7 @@ namespace Gemini.Modules.RecentFiles.Commands
                     continue;
 
                 var docPath = Path.GetFullPath(document.FilePath);
-                if (string.Equals(newPath, docPath, System.StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(newPath, docPath, StringComparison.OrdinalIgnoreCase))
                 {
                     _shell.OpenDocument(document);
                     return;
