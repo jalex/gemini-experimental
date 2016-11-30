@@ -8,10 +8,7 @@ namespace Gemini.Demo.SharpDX.Modules.SceneViewer.ViewModels
     [PartCreationPolicy(CreationPolicy.NonShared)]
 	public class SceneViewModel : Document
 	{
-	    public override bool ShouldReopenOnStart
-	    {
-		    get { return true; }
-	    }
+	    public override bool ShouldReopenOnStart => true;
 
 	    private Vector3 _position;
 

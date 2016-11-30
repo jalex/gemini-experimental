@@ -30,12 +30,12 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid x:Name="grid" SizeChanged="OnSizeChanged">
-        <Rectangle x:Name="bar" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="100"
+    <Grid x:Name="Grid" SizeChanged="OnSizeChanged">
+        <Rectangle x:Name="Bar" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="100"
                    Fill="{Binding BarBrush, ElementName=AdvancedSliderBaseRoot}"
                    />
 
-        <TextBlock x:Name="numberText" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"
+        <TextBlock x:Name="NumberText" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Text="100"
                    Margin="0"
                    Foreground="{Binding Foreground, ElementName=AdvancedSliderBaseRoot}"
@@ -43,14 +43,14 @@
                    GotFocus="numberText_GotFocus"
                    />
 
-        <TextBox x:Name="textBox" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"
+        <TextBox x:Name="TextBox" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"
                  Foreground="{Binding Foreground, ElementName=AdvancedSliderBaseRoot}"
                  Style="{StaticResource TransparentTextBox}"
                  Margin="0"
                  Visibility="Hidden"
                  LostFocus="textBox_LostFocus"
                  KeyDown="textBox_KeyDown"
-                 Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}"
+                 Width="{Binding ActualWidth, ElementName=Grid, Mode=OneWay}"
                  HorizontalContentAlignment="Center"
                  />
     </Grid>

@@ -51,10 +51,7 @@ namespace Gemini.Modules.GraphEditor.Controls
 
         #endregion
 
-        private GraphControl ParentGraphControl
-        {
-            get { return VisualTreeUtility.FindParent<GraphControl>(this); }
-        }
+        private GraphControl ParentGraphControl => VisualTreeUtility.FindParent<GraphControl>(this);
 
         #region Mouse input
 

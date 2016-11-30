@@ -8,12 +8,9 @@ namespace Gemini.Modules.MainMenu.Models
 	{
 		#region Static stuff
 
-		public static MenuItemBase Separator
-		{
-			get { return new MenuItemSeparator(); }
-		}
+		public static MenuItemBase Separator => new MenuItemSeparator();
 
-		#endregion
+	    #endregion
 
 		#region Properties
 

@@ -5,7 +5,7 @@ namespace Gemini.Framework.Results
 {
 	public abstract class OpenResultBase<TTarget> : IOpenResult<TTarget>
 	{
-		protected Action<TTarget> _setData;
+		protected Action<TTarget> SetData;
 		protected Action<TTarget> _onConfigure;
 		protected Action<TTarget> _onShutDown;
 

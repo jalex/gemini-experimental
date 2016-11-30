@@ -15,15 +15,11 @@ namespace Gemini.Modules.Inspector.Util
         {
             var member = expression.Body as MemberExpression;
             if (member == null)
-                throw new ArgumentException(string.Format(
-                    "Expression '{0}' refers to a method, not a property.",
-                    expression));
+                throw new ArgumentException($"Expression '{expression}' refers to a method, not a property.");
 
             var propertyInfo = member.Member as PropertyInfo;
             if (propertyInfo == null)
-                throw new ArgumentException(string.Format(
-                    "Expression '{0}' refers to a field, not a property.",
-                    expression));
+                throw new ArgumentException($"Expression '{expression}' refers to a field, not a property.");
 
             return propertyInfo.Name;
         }

@@ -50,19 +50,19 @@ namespace Gemini.Framework.Behaviors
 
             var handle = new WindowInteropHelper(AssociatedObject).Handle;
 
-            var windowStyle = NativeMethods.GetWindowLong(handle, NativeMethods.GWL_STYLE);
+            var windowStyle = NativeMethods.GetWindowLong(handle, NativeMethods.GwlStyle);
 
             if (ShowMinimizeBox)
-                windowStyle |= NativeMethods.WS_MINIMIZEBOX;
+                windowStyle |= NativeMethods.WsMinimizebox;
             else
-                windowStyle &= ~NativeMethods.WS_MINIMIZEBOX;
+                windowStyle &= ~NativeMethods.WsMinimizebox;
 
             if (ShowMaximizeBox)
-                windowStyle |= NativeMethods.WS_MAXIMIZEBOX;
+                windowStyle |= NativeMethods.WsMaximizebox;
             else
-                windowStyle &= ~NativeMethods.WS_MAXIMIZEBOX;
+                windowStyle &= ~NativeMethods.WsMaximizebox;
 
-            NativeMethods.SetWindowLong(handle, NativeMethods.GWL_STYLE, windowStyle);
+            NativeMethods.SetWindowLong(handle, NativeMethods.GwlStyle, windowStyle);
 
             if (ShowIcon)
             {
@@ -70,14 +70,14 @@ namespace Gemini.Framework.Behaviors
             }
             else
             {
-                var exWindowStyle = NativeMethods.GetWindowLong(handle, NativeMethods.GWL_EXSTYLE);
-                NativeMethods.SetWindowLong(handle, NativeMethods.GWL_EXSTYLE,
-                    exWindowStyle | NativeMethods.WS_EX_DLGMODALFRAME);
+                var exWindowStyle = NativeMethods.GetWindowLong(handle, NativeMethods.GwlExstyle);
+                NativeMethods.SetWindowLong(handle, NativeMethods.GwlExstyle,
+                    exWindowStyle | NativeMethods.WsExDlgmodalframe);
 
                 NativeMethods.SetWindowPos(handle, IntPtr.Zero, 0, 0, 0, 0,
-                    NativeMethods.SWP_NOMOVE | NativeMethods.SWP_NOSIZE | NativeMethods.SWP_NOZORDER | NativeMethods.SWP_FRAMECHANGED);
+                    NativeMethods.SwpNomove | NativeMethods.SwpNosize | NativeMethods.SwpNozorder | NativeMethods.SwpFramechanged);
 
-                NativeMethods.SendMessage(handle, NativeMethods.WM_SETICON, IntPtr.Zero, IntPtr.Zero);
+                NativeMethods.SendMessage(handle, NativeMethods.WmSeticon, IntPtr.Zero, IntPtr.Zero);
             }
         }
 

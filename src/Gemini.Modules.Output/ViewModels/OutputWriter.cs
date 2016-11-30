@@ -7,12 +7,9 @@ namespace Gemini.Modules.Output.ViewModels
 	{
 		private readonly IOutput _output;
 
-		public override Encoding Encoding
-		{
-			get { return Encoding.Default; }
-		}
+		public override Encoding Encoding => Encoding.Default;
 
-		public OutputWriter(IOutput output)
+	    public OutputWriter(IOutput output)
 		{
 			_output = output;
 		}

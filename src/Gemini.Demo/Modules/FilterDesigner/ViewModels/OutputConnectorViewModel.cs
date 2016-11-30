@@ -9,21 +9,12 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
     {
         private readonly Func<BitmapSource> _valueCallback;
 
-        public override ConnectorDirection ConnectorDirection
-        {
-            get { return ConnectorDirection.Output; }
-        }
+        public override ConnectorDirection ConnectorDirection => ConnectorDirection.Output;
 
         private readonly BindableCollection<ConnectionViewModel> _connections;
-        public IObservableCollection<ConnectionViewModel> Connections
-        {
-            get { return _connections; }
-        }
+        public IObservableCollection<ConnectionViewModel> Connections => _connections;
 
-        public BitmapSource Value
-        {
-            get { return _valueCallback(); }
-        }
+        public BitmapSource Value => _valueCallback();
 
         public OutputConnectorViewModel(ElementViewModel element, string name, Color color, Func<BitmapSource> valueCallback)
             : base(element, name, color)

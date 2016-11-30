@@ -144,12 +144,9 @@ namespace Gemini.Demo.Modules.Home.ViewModels
 		    NullableDoubleValue = 4.5;
 		}
 
-        public override bool ShouldReopenOnStart
-        {
-            get { return true; }
-        }
+        public override bool ShouldReopenOnStart => true;
 
-        public override void SaveState(BinaryWriter writer)
+	    public override void SaveState(BinaryWriter writer)
         {
             // save color as byte information
             writer.Write(Background.A);

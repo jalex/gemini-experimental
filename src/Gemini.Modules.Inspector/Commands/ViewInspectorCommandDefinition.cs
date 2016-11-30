@@ -8,19 +8,10 @@ namespace Gemini.Modules.Inspector.Commands
     {
         public const string CommandName = "View.Inspector";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.ViewInspectorCommandText; }
-        }
+        public override string Text => Resources.ViewInspectorCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.ViewInspectorCommandToolTip; }
-        }
+        public override string ToolTip => Resources.ViewInspectorCommandToolTip;
     }
 }

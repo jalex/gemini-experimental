@@ -8,24 +8,12 @@ namespace Gemini.Modules.ErrorList.Commands
     {
         public const string CommandName = "ErrorList.ToggleWarnings";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return "[NotUsed]"; }
-        }
+        public override string Text => "[NotUsed]";
 
-        public override string ToolTip
-        {
-            get { return "[NotUsed]"; }
-        }
+        public override string ToolTip => "[NotUsed]";
 
-        public override Uri IconSource
-        {
-            get { return new Uri("pack://application:,,,/Gemini.Modules.ErrorList;component/Resources/Warning.png"); }
-        }
+        public override Uri IconSource => new Uri("pack://application:,,,/Gemini.Modules.ErrorList;component/Resources/Warning.png");
     }
 }

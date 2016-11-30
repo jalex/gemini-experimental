@@ -13,15 +13,9 @@ namespace Gemini.Modules.ErrorList.ViewModels
     {
         private readonly BindableCollection<ErrorListItem> _items;
 
-        public override PaneLocation PreferredLocation
-        {
-            get { return PaneLocation.Bottom; }
-        }
+        public override PaneLocation PreferredLocation => PaneLocation.Bottom;
 
-        public IObservableCollection<ErrorListItem> Items
-        {
-            get { return _items; }
-        }
+        public IObservableCollection<ErrorListItem> Items => _items;
 
         public IEnumerable<ErrorListItem> FilteredItems
         {

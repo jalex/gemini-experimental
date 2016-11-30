@@ -14,10 +14,7 @@ namespace Gemini.Modules.UndoRedo.ViewModels
     {
         private BindableCollection<HistoryItemViewModel> _historyItems;
 
-        public override PaneLocation PreferredLocation
-        {
-            get { return PaneLocation.Right; }
-        }
+        public override PaneLocation PreferredLocation => PaneLocation.Right;
 
         private IUndoRedoManager _undoRedoManager;
         public IUndoRedoManager UndoRedoManager
@@ -58,10 +55,7 @@ namespace Gemini.Modules.UndoRedo.ViewModels
             }
         }
 
-        public IObservableCollection<HistoryItemViewModel> HistoryItems
-        {
-            get { return _historyItems; }
-        }
+        public IObservableCollection<HistoryItemViewModel> HistoryItems => _historyItems;
 
         [ImportingConstructor]
         public HistoryViewModel(IShell shell)

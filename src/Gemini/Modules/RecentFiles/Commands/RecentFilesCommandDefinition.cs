@@ -8,19 +8,10 @@ namespace Gemini.Modules.RecentFiles.Commands
     {
         public const string CommandName = "File.RecentFiles";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.FileRecentFilesCommandText; }
-        }
+        public override string Text => Resources.FileRecentFilesCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.FileRecentFilesCommandToolTip; }
-        }
+        public override string ToolTip => Resources.FileRecentFilesCommandToolTip;
     }
 }

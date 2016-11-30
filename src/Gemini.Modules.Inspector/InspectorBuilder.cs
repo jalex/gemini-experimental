@@ -16,10 +16,7 @@ namespace Gemini.Modules.Inspector
     {
         private readonly List<IInspector> _inspectors;
 
-        protected List<IInspector> Inspectors
-        {
-            get { return _inspectors; }
-        }
+        protected List<IInspector> Inspectors => _inspectors;
 
         public InspectorBuilder()
         {

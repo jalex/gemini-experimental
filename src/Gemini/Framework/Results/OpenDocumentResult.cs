@@ -45,8 +45,8 @@ namespace Gemini.Framework.Results
 				return;
 			}
 
-			if (_setData != null)
-				_setData(editor);
+			if (SetData != null)
+				SetData(editor);
 
 			if (_onConfigure != null)
 				_onConfigure(editor);

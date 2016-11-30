@@ -5,15 +5,9 @@
         private readonly ToolBarDefinition _toolBar;
         private readonly int _sortOrder;
 
-        public ToolBarDefinition ToolBar
-        {
-            get { return _toolBar; }
-        }
+        public ToolBarDefinition ToolBar => _toolBar;
 
-        public int SortOrder
-        {
-            get { return _sortOrder; }
-        }
+        public int SortOrder => _sortOrder;
 
         public ToolBarItemGroupDefinition(ToolBarDefinition toolBar, int sortOrder)
         {

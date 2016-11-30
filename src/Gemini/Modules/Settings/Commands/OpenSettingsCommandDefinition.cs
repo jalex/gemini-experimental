@@ -8,19 +8,10 @@ namespace Gemini.Modules.Settings.Commands
     {
         public const string CommandName = "Tools.Options";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.ToolsOptionsCommandText; }
-        }
+        public override string Text => Resources.ToolsOptionsCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.ToolsOptionsCommandToolTip; }
-        }
+        public override string ToolTip => Resources.ToolsOptionsCommandToolTip;
     }
 }

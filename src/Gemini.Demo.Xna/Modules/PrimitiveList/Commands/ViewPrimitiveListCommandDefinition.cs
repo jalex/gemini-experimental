@@ -7,19 +7,10 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Commands
     {
         public const string CommandName = "Demos.PrimitiveList";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return "_Primitive List"; }
-        }
+        public override string Text => "_Primitive List";
 
-        public override string ToolTip
-        {
-            get { return "Primitive List"; }
-        }
+        public override string ToolTip => "Primitive List";
     }
 }

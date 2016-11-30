@@ -57,12 +57,12 @@ namespace Gemini.Modules.CodeCompiler
                 {
                     if (exportDir == null)
                     {
-                        exportDir = typeof(Gemini.AppBootstrapper).Assembly.Location;
+                        exportDir = typeof(AppBootstrapper).Assembly.Location;
                     }
                     if (!outputName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
                         outputName += ".dll";
                     _output.AppendLine("------ Exporting to DLL");
-                    var dllPath = System.IO.Path.Combine(exportDir, outputName);
+                    var dllPath = Path.Combine(exportDir, outputName);
                     try
                     {
                         if (File.Exists(dllPath))

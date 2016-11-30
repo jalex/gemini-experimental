@@ -12,12 +12,9 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.ViewModels
     {
         private ISceneView _sceneView;
 
-        public override bool ShouldReopenOnStart
-        {
-            get { return true; }
-        }
+        public override bool ShouldReopenOnStart => true;
 
-	    private Vector3 _position;
+        private Vector3 _position;
 	    public Vector3 Position
 	    {
             get { return _position; }

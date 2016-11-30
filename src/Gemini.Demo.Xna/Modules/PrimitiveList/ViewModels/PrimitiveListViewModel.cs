@@ -13,15 +13,9 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.ViewModels
     {
         private readonly List<PrimitiveWithColor> _primitives;
 
-        public override PaneLocation PreferredLocation
-        {
-            get { return PaneLocation.Right; }
-        }
+        public override PaneLocation PreferredLocation => PaneLocation.Right;
 
-        public IList<PrimitiveWithColor> Primitives
-        {
-            get { return _primitives; }
-        }
+        public IList<PrimitiveWithColor> Primitives => _primitives;
 
         public PrimitiveListViewModel()
         {

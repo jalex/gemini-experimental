@@ -7,51 +7,51 @@ namespace Gemini.Framework.Win32
     {
         #region Constants
 
-        public const int GWL_STYLE = -16;
-        public const int GWL_EXSTYLE = -20;
+        public const int GwlStyle = -16;
+        public const int GwlExstyle = -20;
 
-        public const int WS_MAXIMIZEBOX = 0x10000;
-        public const int WS_MINIMIZEBOX = 0x20000;
+        public const int WsMaximizebox = 0x10000;
+        public const int WsMinimizebox = 0x20000;
 
-        public const int WS_EX_DLGMODALFRAME = 0x00000001;
+        public const int WsExDlgmodalframe = 0x00000001;
 
-        public const int SWP_NOSIZE = 0x0001;
-        public const int SWP_NOMOVE = 0x0002;
-        public const int SWP_NOZORDER = 0x0004;
-        public const int SWP_FRAMECHANGED = 0x0020;
+        public const int SwpNosize = 0x0001;
+        public const int SwpNomove = 0x0002;
+        public const int SwpNozorder = 0x0004;
+        public const int SwpFramechanged = 0x0020;
 
-        public const uint WM_SETICON = 0x0080;
+        public const uint WmSeticon = 0x0080;
 
         // Define the window styles we use
-        public const int WS_CHILD = 0x40000000;
-        public const int WS_VISIBLE = 0x10000000;
+        public const int WsChild = 0x40000000;
+        public const int WsVisible = 0x10000000;
 
         // Define the Windows messages we will handle
-        public const int WM_MOUSEMOVE = 0x0200;
-        public const int WM_LBUTTONDOWN = 0x0201;
-        public const int WM_LBUTTONUP = 0x0202;
-        public const int WM_LBUTTONDBLCLK = 0x0203;
-        public const int WM_RBUTTONDOWN = 0x0204;
-        public const int WM_RBUTTONUP = 0x0205;
-        public const int WM_RBUTTONDBLCLK = 0x0206;
-        public const int WM_MBUTTONDOWN = 0x0207;
-        public const int WM_MBUTTONUP = 0x0208;
-        public const int WM_MBUTTONDBLCLK = 0x0209;
-        public const int WM_MOUSEWHEEL = 0x020A;
-        public const int WM_XBUTTONDOWN = 0x020B;
-        public const int WM_XBUTTONUP = 0x020C;
-        public const int WM_XBUTTONDBLCLK = 0x020D;
-        public const int WM_MOUSELEAVE = 0x02A3;
+        public const int WmMousemove = 0x0200;
+        public const int WmLbuttondown = 0x0201;
+        public const int WmLbuttonup = 0x0202;
+        public const int WmLbuttondblclk = 0x0203;
+        public const int WmRbuttondown = 0x0204;
+        public const int WmRbuttonup = 0x0205;
+        public const int WmRbuttondblclk = 0x0206;
+        public const int WmMbuttondown = 0x0207;
+        public const int WmMbuttonup = 0x0208;
+        public const int WmMbuttondblclk = 0x0209;
+        public const int WmMousewheel = 0x020A;
+        public const int WmXbuttondown = 0x020B;
+        public const int WmXbuttonup = 0x020C;
+        public const int WmXbuttondblclk = 0x020D;
+        public const int WmMouseleave = 0x02A3;
 
         // Define the values that let us differentiate between the two extra mouse buttons
-        public const int MK_XBUTTON1 = 0x020;
-        public const int MK_XBUTTON2 = 0x040;
+        public const int MkXbutton1 = 0x020;
+        public const int MkXbutton2 = 0x040;
 
         // Define the cursor icons we use
-        public const int IDC_ARROW = 32512;
+        public const int IdcArrow = 32512;
 
         // Define the TME_LEAVE value so we can register for WM_MOUSELEAVE messages
-        public const uint TME_LEAVE = 0x00000002;
+        public const uint TmeLeave = 0x00000002;
 
         #endregion
 
@@ -62,7 +62,7 @@ namespace Gemini.Framework.Win32
         public static readonly WndProc DefaultWindowProc = DefWindowProc;
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct TRACKMOUSEEVENT
+        public struct Trackmouseevent
         {
             public int cbSize;
             public uint dwFlags;
@@ -71,7 +71,7 @@ namespace Gemini.Framework.Win32
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct WNDCLASSEX
+        public struct Wndclassex
         {
             public uint cbSize;
             public uint style;
@@ -139,11 +139,11 @@ namespace Gemini.Framework.Win32
         public static extern IntPtr LoadCursor(IntPtr hInstance, int lpCursorName);
 
         [DllImport("user32.dll")]
-        public static extern int TrackMouseEvent(ref TRACKMOUSEEVENT lpEventTrack);
+        public static extern int TrackMouseEvent(ref Trackmouseevent lpEventTrack);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.U2)]
-        public static extern short RegisterClassEx([In] ref WNDCLASSEX lpwcx);
+        public static extern short RegisterClassEx([In] ref Wndclassex lpwcx);
 
         [DllImport("user32.dll")]
         public static extern int ScreenToClient(IntPtr hWnd, ref NativePoint pt);
@@ -176,12 +176,12 @@ namespace Gemini.Framework.Win32
 
         #region Helpers
 
-        public static int GetXLParam(int lParam)
+        public static int GetXlParam(int lParam)
         {
             return LowWord(lParam);
         }
 
-        public static int GetYLParam(int lParam)
+        public static int GetYlParam(int lParam)
         {
             return HighWord(lParam);
         }

@@ -10,20 +10,11 @@ namespace Gemini.Framework.ToolBars
         private readonly int _sortOrder;
         private readonly ToolBarItemDisplay _display;
 
-        public ToolBarItemGroupDefinition Group
-        {
-            get { return _group; }
-        }
+        public ToolBarItemGroupDefinition Group => _group;
 
-        public int SortOrder
-        {
-            get { return _sortOrder; }
-        }
+        public int SortOrder => _sortOrder;
 
-        public ToolBarItemDisplay Display
-        {
-            get { return _display; }
-        }
+        public ToolBarItemDisplay Display => _display;
 
         public abstract string Text { get; }
         public abstract Uri IconSource { get; }

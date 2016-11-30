@@ -42,7 +42,7 @@ namespace Gemini.Modules.MonoGame.Controls
 		public event EventHandler<DrawEventArgs> Draw;
 
 	    private GraphicsDeviceService _graphicsDeviceService;
-	    private readonly D3DImage _d3dImage;
+	    private readonly D3DImage _d3DImage;
 	    private readonly Image _image;
 		private RenderTarget2D _renderTarget;
 	    private SharpDX.Direct3D9.Texture _renderTargetD3D9;
@@ -55,19 +55,16 @@ namespace Gemini.Modules.MonoGame.Controls
 		/// </summary>
 		public bool AlwaysRefresh { get; set; }
 
-        public GraphicsDevice GraphicsDevice
-        {
-            get { return _graphicsDeviceService.GraphicsDevice; }
-        }
+        public GraphicsDevice GraphicsDevice => _graphicsDeviceService.GraphicsDevice;
 
-        public DrawingSurface()
+	    public DrawingSurface()
         {
-            _d3dImage = new D3DImage();
+            _d3DImage = new D3DImage();
 
-            _image = new Image { Source = _d3dImage, Stretch = Stretch.None };
+            _image = new Image { Source = _d3DImage, Stretch = Stretch.None };
             AddChild(_image);
 
-            _d3dImage.IsFrontBufferAvailableChanged += OnD3DImageIsFrontBufferAvailableChanged;
+            _d3DImage.IsFrontBufferAvailableChanged += OnD3DImageIsFrontBufferAvailableChanged;
 
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
@@ -140,9 +137,9 @@ namespace Gemini.Modules.MonoGame.Controls
                 _renderTargetD3D9 = null;
             }
 
-            _d3dImage.Lock();
-            _d3dImage.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
-            _d3dImage.Unlock();
+            _d3DImage.Lock();
+            _d3DImage.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
+            _d3DImage.Unlock();
         }
 
         private void EnsureRenderTarget()
@@ -164,16 +161,16 @@ namespace Gemini.Modules.MonoGame.Controls
 
                 using (SharpDX.Direct3D9.Surface surface = _renderTargetD3D9.GetSurfaceLevel(0))
                 {
-                    _d3dImage.Lock();
-                    _d3dImage.SetBackBuffer(D3DResourceType.IDirect3DSurface9, surface.NativePointer);
-                    _d3dImage.Unlock();
+                    _d3DImage.Lock();
+                    _d3DImage.SetBackBuffer(D3DResourceType.IDirect3DSurface9, surface.NativePointer);
+                    _d3DImage.Unlock();
                 }
             }
         }
 
         private void OnD3DImageIsFrontBufferAvailableChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (_d3dImage.IsFrontBufferAvailable)
+            if (_d3DImage.IsFrontBufferAvailable)
                 _contentNeedsRefresh = true;
         }
 
@@ -183,7 +180,7 @@ namespace Gemini.Modules.MonoGame.Controls
             {
                 _contentNeedsRefresh = false;
 
-                _d3dImage.Lock();
+                _d3DImage.Lock();
 
                 EnsureRenderTarget();
                 GraphicsDevice.SetRenderTarget(_renderTarget);
@@ -194,9 +191,9 @@ namespace Gemini.Modules.MonoGame.Controls
 
                 _graphicsDeviceService.GraphicsDevice.Flush();
 
-                _d3dImage.AddDirtyRect(new Int32Rect(0, 0, (int) ActualWidth, (int) ActualHeight));
+                _d3DImage.AddDirtyRect(new Int32Rect(0, 0, (int) ActualWidth, (int) ActualHeight));
 
-                _d3dImage.Unlock();
+                _d3DImage.Unlock();
 
                 GraphicsDevice.SetRenderTarget(null);
             }
@@ -222,7 +219,7 @@ namespace Gemini.Modules.MonoGame.Controls
             if (_graphicsDeviceService == null)
                 return false;
 
-            if (!_d3dImage.IsFrontBufferAvailable)
+            if (!_d3DImage.IsFrontBufferAvailable)
                 return false;
 
             // Make sure the graphics device is big enough, and is not lost.
@@ -278,12 +275,9 @@ namespace Gemini.Modules.MonoGame.Controls
 
         private bool _isDisposed;
 
-        public bool IsDisposed
-        {
-            get { return _isDisposed; }
-        }
+        public bool IsDisposed => _isDisposed;
 
-        public void Dispose()
+	    public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);

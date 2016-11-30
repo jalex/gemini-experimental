@@ -33,15 +33,9 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
             }
         }
 
-        public int Width
-        {
-            get { return _width; }
-        }
+        public int Width => _width;
 
-        public int Height
-        {
-            get { return _height; }
-        }
+        public int Height => _height;
 
         unsafe public Color this[int x, int y]
         {

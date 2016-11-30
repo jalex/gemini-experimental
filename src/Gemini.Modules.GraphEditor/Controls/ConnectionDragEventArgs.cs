@@ -7,15 +7,9 @@ namespace Gemini.Modules.GraphEditor.Controls
         private readonly ElementItem _elementItem;
         private readonly ConnectorItem _sourceConnectorItem;
 
-        public ElementItem ElementItem
-        {
-            get { return _elementItem; }
-        }
+        public ElementItem ElementItem => _elementItem;
 
-        public ConnectorItem SourceConnector
-        {
-            get { return _sourceConnectorItem; }
-        }
+        public ConnectorItem SourceConnector => _sourceConnectorItem;
 
         protected ConnectionDragEventArgs(RoutedEvent routedEvent, object source,
             ElementItem elementItem, ConnectorItem sourceConnectorItem)

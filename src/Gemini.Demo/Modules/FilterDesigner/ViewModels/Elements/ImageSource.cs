@@ -19,10 +19,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
             }
         }
 
-        public override BitmapSource PreviewImage
-        {
-            get { return Bitmap; }
-        }
+        public override BitmapSource PreviewImage => Bitmap;
 
         public ImageSource()
         {

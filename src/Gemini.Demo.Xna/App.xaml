@@ -6,7 +6,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary>
-					<gemini:AppBootstrapper x:Key="bootstrapper" />
+					<gemini:AppBootstrapper x:Key="Bootstrapper" />
 				</ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>

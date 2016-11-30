@@ -15,15 +15,9 @@ namespace Gemini.Modules.GraphEditor.Controls
             _verticalChange = verticalChange;
         }
 
-        public double HorizontalChange
-        {
-            get { return _horizontalChange; }
-        }
+        public double HorizontalChange => _horizontalChange;
 
-        public double VerticalChange
-        {
-            get { return _verticalChange; }
-        }
+        public double VerticalChange => _verticalChange;
     }
 
     internal delegate void ConnectorItemDraggingEventHandler(object sender, ConnectorItemDraggingEventArgs e);

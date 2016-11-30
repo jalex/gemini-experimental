@@ -64,10 +64,7 @@ namespace Gemini.Demo.Xna.Primitives
         /// Queries the index of the current vertex. This starts at
         /// zero, and increments every time AddVertex is called.
         /// </summary>
-        protected int CurrentVertex
-        {
-            get { return _vertices.Count; }
-        }
+        protected int CurrentVertex => _vertices.Count;
 
 
         /// <summary>

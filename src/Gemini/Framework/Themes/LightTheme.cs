@@ -24,10 +24,7 @@ namespace Gemini.Framework.Themes
     [Export(typeof(ITheme))]
     public class LightTheme : ITheme
     {
-        public virtual string Name
-        {
-            get { return Properties.Resources.ThemeLightName; }
-        }
+        public virtual string Name => Properties.Resources.ThemeLightName;
 
         public virtual IEnumerable<Uri> ApplicationResources
         {

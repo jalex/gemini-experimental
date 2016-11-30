@@ -11,28 +11,13 @@ namespace Gemini.Modules.Shell.Commands
     {
         public const string CommandName = "File.SaveAllFiles";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.FileSaveAllCommandText; }
-        }
+        public override string Text => Resources.FileSaveAllCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.FileSaveAllCommandToolTip; }
-        }
+        public override string ToolTip => Resources.FileSaveAllCommandToolTip;
 
-        public override Uri IconSource
-        {
-            get 
-            {
-                return new Uri("pack://application:,,,/Gemini;component/Resources/Icons/SaveAll.png"); 
-            }
-        }
+        public override Uri IconSource => new Uri("pack://application:,,,/Gemini;component/Resources/Icons/SaveAll.png");
 
         [Export]
         public static CommandKeyboardShortcut KeyGesture = new CommandKeyboardShortcut<SaveAllFilesCommandDefinition>(new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift));

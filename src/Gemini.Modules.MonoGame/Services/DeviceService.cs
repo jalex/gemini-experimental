@@ -57,12 +57,9 @@ namespace Gemini.Modules.MonoGame.Services
 		private static Direct3DEx _d3DContext;
 		private static DeviceEx _d3DDevice;
 
-		public static DeviceEx D3DDevice
-		{
-			get { return _d3DDevice; }
-		}
+		public static DeviceEx D3DDevice => _d3DDevice;
 
-		public static void StartD3D(Window parentWindow)
+	    public static void StartD3D(Window parentWindow)
 		{
             _activeClients++;
 

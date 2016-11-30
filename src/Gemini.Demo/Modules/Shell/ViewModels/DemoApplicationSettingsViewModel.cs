@@ -27,15 +27,9 @@ namespace Gemini.Demo.Modules.Shell.ViewModels
             }
         }
 
-        public string SettingsPageName
-        {
-            get { return Resources.SettingsPageGeneral; }
-        }
+        public string SettingsPageName => Resources.SettingsPageGeneral;
 
-        public string SettingsPagePath
-        {
-            get { return Resources.SettingsPathEnvironment; }
-        }
+        public string SettingsPagePath => Resources.SettingsPathEnvironment;
 
         public void ApplyChanges()
         {

@@ -11,10 +11,7 @@ namespace Gemini.Modules.Inspector.Conventions
     {
         private static readonly List<PropertyEditorBuilder> _inspectorBuilders;
 
-        public static List<PropertyEditorBuilder> InspectorBuilders
-        {
-            get { return _inspectorBuilders; }
-        }
+        public static List<PropertyEditorBuilder> InspectorBuilders => _inspectorBuilders;
 
         static DefaultPropertyInspectors()
         {

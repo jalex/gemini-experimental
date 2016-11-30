@@ -40,8 +40,8 @@ namespace Gemini.Framework.ShaderEffects
         /// <summary>1.0 if the image should be rendered enabled, 0.0 if it should be disabled (grayscaled).</summary>
         public double IsEnabled
         {
-            get { return ((double)(this.GetValue(IsEnabledProperty))); }
-            set { this.SetValue(IsEnabledProperty, value); }
+            get { return ((double)(GetValue(IsEnabledProperty))); }
+            set { SetValue(IsEnabledProperty, value); }
         }
     }
 }

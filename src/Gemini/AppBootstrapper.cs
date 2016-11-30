@@ -21,15 +21,12 @@ namespace Gemini
 
 		protected CompositionContainer Container { get; set; }
 
-        internal IList<Assembly> PriorityAssemblies
-        {
-            get { return _priorityAssemblies; }
-        }
+        internal IList<Assembly> PriorityAssemblies => _priorityAssemblies;
 
         public AppBootstrapper()
         {
-            this.PreInitialize();
-            this.Initialize();
+            PreInitialize();
+            Initialize();
         }
 
         protected virtual void PreInitialize()
@@ -38,10 +35,17 @@ namespace Gemini
 
             if (!string.IsNullOrWhiteSpace(code))
             {
-                var culture = CultureInfo.GetCultureInfo(code);
-                Translator.Culture = culture;
-                Thread.CurrentThread.CurrentUICulture = culture;
-                Thread.CurrentThread.CurrentCulture = culture;
+                try
+                {
+                    var culture = CultureInfo.GetCultureInfo(code);
+                    Translator.Culture = culture;
+                    Thread.CurrentThread.CurrentUICulture = culture;
+                    Thread.CurrentThread.CurrentCulture = culture;
+                }
+                catch
+                {
+                    // fallback to default
+                }
             }
         }
 
@@ -98,7 +102,7 @@ namespace Gemini
 			if (exports.Any())
 				return exports.First().Value;
 
-			throw new Exception(string.Format("Could not locate any instances of contract {0}.", contract));
+			throw new Exception($"Could not locate any instances of contract {contract}.");
 		}
 
 		protected override IEnumerable<object> GetAllInstances(Type serviceType)

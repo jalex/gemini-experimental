@@ -9,40 +9,19 @@ namespace Gemini.Modules.MainMenu.Models
 	{
 	    private readonly MenuDefinitionBase _menuDefinition;
 
-        public override string Text
-		{
-            get { return _menuDefinition.Text; }
-		}
+        public override string Text => _menuDefinition.Text;
 
-        public override Uri IconSource
-	    {
-            get { return _menuDefinition.IconSource; }
-	    }
+	    public override Uri IconSource => _menuDefinition.IconSource;
 
-        public override string InputGestureText
-		{
-			get
-			{
-                return _menuDefinition.KeyGesture == null
-					? string.Empty
-                    : _menuDefinition.KeyGesture.GetDisplayStringForCulture(CultureInfo.CurrentUICulture);
-			}
-		}
+	    public override string InputGestureText => _menuDefinition.KeyGesture == null
+	        ? string.Empty
+	        : _menuDefinition.KeyGesture.GetDisplayStringForCulture(CultureInfo.CurrentUICulture);
 
-        public override ICommand Command
-	    {
-	        get { return null; }
-	    }
+	    public override ICommand Command => null;
 
-        public override bool IsChecked
-        {
-            get { return false; }
-        }
+	    public override bool IsChecked => false;
 
-	    public override bool IsVisible
-	    {
-	        get { return true; }
-	    }
+	    public override bool IsVisible => true;
 
 	    public TextMenuItem(MenuDefinitionBase menuDefinition)
         {

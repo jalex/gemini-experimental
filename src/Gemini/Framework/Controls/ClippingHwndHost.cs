@@ -54,7 +54,7 @@ namespace Gemini.Framework.Controls
             var param = new HwndSourceParameters("GeminiClippingHwndHost", (int) Width, (int) Height)
             {
                 ParentWindow = hwndParent.Handle,
-                WindowStyle = NativeMethods.WS_VISIBLE | NativeMethods.WS_CHILD,
+                WindowStyle = NativeMethods.WsVisible | NativeMethods.WsChild,
             };
 
             _source = new HwndSource(param)

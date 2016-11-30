@@ -11,25 +11,13 @@ namespace Gemini.Modules.Shell.Commands
     {
         public const string CommandName = "View.FullScreen";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.ViewFullScreenCommandText; }
-        }
+        public override string Text => Resources.ViewFullScreenCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.ViewFullScreenCommandToolTip; }
-        }
+        public override string ToolTip => Resources.ViewFullScreenCommandToolTip;
 
-        public override Uri IconSource
-        {
-            get { return new Uri("pack://application:,,,/Gemini;component/Resources/Icons/FullScreen.png"); }
-        }
+        public override Uri IconSource => new Uri("pack://application:,,,/Gemini;component/Resources/Icons/FullScreen.png");
 
         [Export]
         public static CommandKeyboardShortcut KeyGesture = new CommandKeyboardShortcut<ViewFullScreenCommandDefinition>(new KeyGesture(Key.Enter, ModifierKeys.Shift | ModifierKeys.Alt));

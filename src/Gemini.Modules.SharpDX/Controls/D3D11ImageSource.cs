@@ -63,7 +63,7 @@ namespace Gemini.Modules.SharpDX.Controls
 
 		public void Dispose()
 		{
-			SetRenderTargetDX10(null);
+			SetRenderTargetDx10(null);
 			Disposer.RemoveAndDispose(ref _renderTarget);
 			DeviceService.EndD3D();
 		}
@@ -78,7 +78,7 @@ namespace Gemini.Modules.SharpDX.Controls
 			Unlock();
 		}
 
-		internal void SetRenderTargetDX10(global::SharpDX.Direct3D11.Texture2D renderTarget)
+		internal void SetRenderTargetDx10(global::SharpDX.Direct3D11.Texture2D renderTarget)
 		{
 			if (_renderTarget != null)
 			{

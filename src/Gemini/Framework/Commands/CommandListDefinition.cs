@@ -4,24 +4,12 @@ namespace Gemini.Framework.Commands
 {
     public abstract class CommandListDefinition : CommandDefinitionBase
     {
-        public override sealed string Text
-        {
-            get { return "[NotUsed]"; }
-        }
+        public override sealed string Text => "[NotUsed]";
 
-        public override sealed string ToolTip
-        {
-            get { return "[NotUsed]"; }
-        }
+        public override sealed string ToolTip => "[NotUsed]";
 
-        public override sealed Uri IconSource
-        {
-            get { return null; }
-        }
+        public override sealed Uri IconSource => null;
 
-        public override sealed bool IsList
-        {
-            get { return true; }
-        }
+        public override sealed bool IsList => true;
     }
 }

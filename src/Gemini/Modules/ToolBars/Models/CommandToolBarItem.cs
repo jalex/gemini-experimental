@@ -15,49 +15,31 @@ namespace Gemini.Modules.ToolBars.Models
         private readonly KeyGesture _keyGesture;
         private readonly IToolBar _parent;
 
-		public string Text
-		{
-			get { return _command.Text; }
-		}
+		public string Text => _command.Text;
 
-        public ToolBarItemDisplay Display
-        {
-            get { return _toolBarItem.Display; }
-        }
+        public ToolBarItemDisplay Display => _toolBarItem.Display;
 
-	    public Uri IconSource
-	    {
-	        get { return _command.IconSource; }
-	    }
+        public Uri IconSource => _command.IconSource;
 
-	    public string ToolTip
+        public string ToolTip
 	    {
 	        get
 	        {
                 var inputGestureText = (_keyGesture != null)
-                    ? string.Format(" ({0})", _keyGesture.GetDisplayStringForCulture(CultureInfo.CurrentUICulture))
+                    ? $" ({_keyGesture.GetDisplayStringForCulture(CultureInfo.CurrentUICulture)})"
                     : string.Empty;
 
-                return string.Format("{0}{1}", _command.ToolTip, inputGestureText).Trim();
+                return $"{_command.ToolTip}{inputGestureText}".Trim();
 	        }
 	    }
 
-	    public bool HasToolTip
-	    {
-            get { return !string.IsNullOrWhiteSpace(ToolTip); }
-	    }
+	    public bool HasToolTip => !string.IsNullOrWhiteSpace(ToolTip);
 
-        public ICommand Command
-        {
-            get { return IoC.Get<ICommandService>().GetTargetableCommand(_command); }
-        }
+        public ICommand Command => IoC.Get<ICommandService>().GetTargetableCommand(_command);
 
-        public bool IsChecked
-        {
-            get { return _command.Checked; }
-        }
+        public bool IsChecked => _command.Checked;
 
-		public CommandToolBarItem(ToolBarItemDefinition toolBarItem, Command command, IToolBar parent)
+        public CommandToolBarItem(ToolBarItemDefinition toolBarItem, Command command, IToolBar parent)
 		{
 		    _toolBarItem = toolBarItem;
 		    _command = command;
@@ -76,10 +58,7 @@ namespace Gemini.Modules.ToolBars.Models
             NotifyOfPropertyChange(() => IsChecked);
         }
 
-	    CommandDefinitionBase ICommandUiItem.CommandDefinition
-	    {
-	        get { return _command.CommandDefinition; }
-	    }
+	    CommandDefinitionBase ICommandUiItem.CommandDefinition => _command.CommandDefinition;
 
         void ICommandUiItem.Update(CommandHandlerWrapper commandHandler)
 	    {

@@ -8,19 +8,10 @@ namespace Gemini.Modules.Shell.Commands
     {
         public const string CommandName = "File.SaveFileAs";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.FileSaveAsCommandText; }
-        }
+        public override string Text => Resources.FileSaveAsCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.FileSaveAsCommandToolTip; }
-        }
+        public override string ToolTip => Resources.FileSaveAsCommandToolTip;
     }
 }

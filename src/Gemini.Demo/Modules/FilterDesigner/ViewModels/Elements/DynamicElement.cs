@@ -9,10 +9,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
     {
         private BitmapSource _previewImage;
 
-        public override BitmapSource PreviewImage
-        {
-            get { return _previewImage; }
-        }
+        public override BitmapSource PreviewImage => _previewImage;
 
         protected DynamicElement()
         {

@@ -11,25 +11,13 @@ namespace Gemini.Modules.UndoRedo.Commands
     {
         public const string CommandName = "Edit.Redo";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.EditRedoCommandText; }
-        }
+        public override string Text => Resources.EditRedoCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.EditRedoCommandToolTip; }
-        }
+        public override string ToolTip => Resources.EditRedoCommandToolTip;
 
-        public override Uri IconSource
-        {
-            get { return new Uri("pack://application:,,,/Gemini;component/Resources/Icons/Redo.png"); }
-        }
+        public override Uri IconSource => new Uri("pack://application:,,,/Gemini;component/Resources/Icons/Redo.png");
 
         [Export]
         public static CommandKeyboardShortcut KeyGesture = new CommandKeyboardShortcut<RedoCommandDefinition>(new KeyGesture(Key.Y, ModifierKeys.Control));

@@ -77,10 +77,7 @@ namespace Gemini.Modules.MainWindow.ViewModels
             }
         }
 
-        public IShell Shell
-        {
-            get { return _shell; }
-        }
+        public IShell Shell => _shell;
 
         void IPartImportsSatisfiedNotification.OnImportsSatisfied()
         {

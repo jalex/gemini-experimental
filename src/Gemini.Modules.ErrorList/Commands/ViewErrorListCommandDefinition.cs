@@ -8,19 +8,10 @@ namespace Gemini.Modules.ErrorList.Commands
     {
         public const string CommandName = "View.ErrorList";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.ViewErrorListCommandText; }
-        }
+        public override string Text => Resources.ViewErrorListCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.ViewErrorListCommandToolTip; }
-        }
+        public override string ToolTip => Resources.ViewErrorListCommandToolTip;
     }
 }

@@ -12,7 +12,7 @@ namespace Gemini.Modules.RecentFiles.ViewModels
             InitializeList();
         }
 
-        public IObservableCollection<RecentFileItemViewModel> Items { get { return Properties.Settings.Default.RecentDocuments; } }
+        public IObservableCollection<RecentFileItemViewModel> Items => Properties.Settings.Default.RecentDocuments;
 
         public void Update(string filePath)
         {

@@ -11,15 +11,9 @@ namespace Gemini.Modules.UndoRedo.Services
         public event EventHandler BatchBegin;
         public event EventHandler BatchEnd;
 
-        public IObservableCollection<IUndoableAction> UndoStack
-        {
-            get { return _undoStack; }
-        }
+        public IObservableCollection<IUndoableAction> UndoStack => _undoStack;
 
-        public IObservableCollection<IUndoableAction> RedoStack
-        {
-            get { return _redoStack; }
-        }
+        public IObservableCollection<IUndoableAction> RedoStack => _redoStack;
 
         private int? _undoCountLimit = null;
 

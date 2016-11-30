@@ -24,10 +24,7 @@ namespace Gemini.Framework.Themes
     [Export(typeof(ITheme))]
     public class BlueTheme : ITheme
     {
-        public virtual string Name
-        {
-            get { return Properties.Resources.ThemeBlueName; }
-        }
+        public virtual string Name => Properties.Resources.ThemeBlueName;
 
         public virtual IEnumerable<Uri> ApplicationResources
         {

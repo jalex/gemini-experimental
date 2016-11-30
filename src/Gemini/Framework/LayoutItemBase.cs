@@ -13,24 +13,15 @@ namespace Gemini.Framework
 		public abstract ICommand CloseCommand { get; }
 
         [Browsable(false)]
-		public Guid Id
-		{
-			get { return _id; }
-		}
+		public Guid Id => _id;
 
-        [Browsable(false)]
-		public string ContentId
-		{
-			get { return _id.ToString(); }
-		}
+	    [Browsable(false)]
+		public string ContentId => _id.ToString();
 
-        [Browsable(false)]
-		public virtual Uri IconSource
-		{
-			get { return null; }
-		}
+	    [Browsable(false)]
+		public virtual Uri IconSource => null;
 
-		private bool _isSelected;
+	    private bool _isSelected;
 
         [Browsable(false)]
 		public bool IsSelected
@@ -44,12 +35,9 @@ namespace Gemini.Framework
 		}
 
         [Browsable(false)]
-        public virtual bool ShouldReopenOnStart
-        {
-            get { return false; }
-        }
+        public virtual bool ShouldReopenOnStart => false;
 
-		public virtual void LoadState(BinaryReader reader)
+	    public virtual void LoadState(BinaryReader reader)
 		{
 		}
 

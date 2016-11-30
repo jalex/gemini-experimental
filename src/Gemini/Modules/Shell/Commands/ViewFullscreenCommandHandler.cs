@@ -13,10 +13,19 @@ namespace Gemini.Modules.Shell.Commands
             var window = Application.Current.MainWindow;
             if (window == null)
                 return TaskUtility.Completed;
+
             if (window.WindowState != WindowState.Maximized)
+            {
                 window.WindowState = WindowState.Maximized;
+                window.WindowStyle = WindowStyle.None;
+            }
+
             else
+            {
                 window.WindowState = WindowState.Normal;
+                window.WindowStyle = WindowStyle.SingleBorderWindow;
+            }
+                
             return TaskUtility.Completed;
         }
     }

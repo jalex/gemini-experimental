@@ -8,10 +8,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
     {
         public event EventHandler SourceChanged;
 
-        public override ConnectorDirection ConnectorDirection
-        {
-            get { return ConnectorDirection.Input; }
-        }
+        public override ConnectorDirection ConnectorDirection => ConnectorDirection.Input;
 
         private ConnectionViewModel _connection;
         public ConnectionViewModel Connection

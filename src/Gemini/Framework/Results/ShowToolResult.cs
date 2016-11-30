@@ -29,8 +29,8 @@ namespace Gemini.Framework.Results
 		{
 			var tool = _toolLocator();
 
-			if (_setData != null)
-				_setData(tool);
+			if (SetData != null)
+				SetData(tool);
 
 			if (_onConfigure != null)
 				_onConfigure(tool);

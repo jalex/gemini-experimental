@@ -24,10 +24,7 @@ namespace Gemini.Modules.CodeEditor
             _syntaxDefinition = syntaxDefinition;
         }
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name => _name;
 
         public IEnumerable<string> FileExtensions { get; set; }
 

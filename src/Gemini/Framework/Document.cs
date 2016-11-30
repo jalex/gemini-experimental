@@ -24,12 +24,9 @@ namespace Gemini.Framework
         ICommandHandler<SaveFileAsCommandDefinition>
 	{
 	    private IUndoRedoManager _undoRedoManager;
-	    public IUndoRedoManager UndoRedoManager
-	    {
-            get { return _undoRedoManager ?? (_undoRedoManager = new UndoRedoManager()); }
-	    }
+	    public IUndoRedoManager UndoRedoManager => _undoRedoManager ?? (_undoRedoManager = new UndoRedoManager());
 
-		private ICommand _closeCommand;
+	    private ICommand _closeCommand;
 		public override ICommand CloseCommand
 		{
 		    get { return _closeCommand ?? (_closeCommand = new RelayCommand(p => TryClose(null), p => true)); }
@@ -151,8 +148,8 @@ namespace Gemini.Framework
             await persistedDocument.Save(filePath);
 
             // Add to recent files
-            IShell _shell = IoC.Get<IShell>();
-            _shell.RecentFiles.Update(filePath);
+            IShell shell = IoC.Get<IShell>();
+            shell.RecentFiles.Update(filePath);
 	    }
 	}
 }

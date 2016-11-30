@@ -9,11 +9,11 @@ namespace Gemini.Modules.Inspector.Inspectors
 {
     public class AdvancedSliderEditorViewModel<TValue> : SelectiveUndoEditorBase<TValue>, ILabelledInspector, IViewAware where TValue : IComparable<TValue>
     {
-        private static readonly string _defaultValueFormat = "{0:0.#####}";
+        private static readonly string DefaultValueFormat = "{0:0.#####}";
 
         public AdvancedSliderEditorViewModel()
         {
-            _valueFormat = _defaultValueFormat;
+            _valueFormat = DefaultValueFormat;
             _valueType = typeof(TValue);
             _type = AdvancedSliderBase.DisplayType.Number;
         }
@@ -22,7 +22,7 @@ namespace Gemini.Modules.Inspector.Inspectors
         {
             _minimum = min;
             _maximum = max;
-            _valueFormat = _defaultValueFormat;
+            _valueFormat = DefaultValueFormat;
             _valueType = typeof(TValue);
             _type = AdvancedSliderBase.DisplayType.Bar;
         }
@@ -125,12 +125,12 @@ namespace Gemini.Modules.Inspector.Inspectors
 
         public void Up()
         {
-            _view.slider.ApplyValueChange(SpeedMultiplier.Get());
+            _view.Slider.ApplyValueChange(SpeedMultiplier.Get());
         }
 
         public void Down()
         {
-            _view.slider.ApplyValueChange(-SpeedMultiplier.Get());
+            _view.Slider.ApplyValueChange(-SpeedMultiplier.Get());
         }
 
         private AdvancedSliderEditorView _view;

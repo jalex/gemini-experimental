@@ -15,22 +15,13 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         public event EventHandler PositionChanged;
 
         private readonly ElementViewModel _element;
-        public ElementViewModel Element
-        {
-            get { return _element; }
-        }
+        public ElementViewModel Element => _element;
 
         private readonly string _name;
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name => _name;
 
         private readonly Color _color = Colors.Black;
-        public Color Color
-        {
-            get { return _color; }
-        }
+        public Color Color => _color;
 
         private Point _position;
         public Point Position

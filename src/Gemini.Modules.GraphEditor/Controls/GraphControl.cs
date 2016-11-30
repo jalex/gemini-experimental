@@ -131,10 +131,7 @@ namespace Gemini.Modules.GraphEditor.Controls
 
         public event SelectionChangedEventHandler SelectionChanged;
 
-        public IList SelectedElements
-        {
-            get { return _elementItemsControl.SelectedItems; }
-        }
+        public IList SelectedElements => _elementItemsControl.SelectedItems;
 
         public GraphControl()
         {

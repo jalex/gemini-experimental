@@ -10,10 +10,7 @@ namespace Gemini.Modules.Xna.Controls
     {
         private readonly DrawingSurface _drawingSurface;
 
-        public GraphicsDevice GraphicsDevice
-        {
-            get { return _drawingSurface.GraphicsDevice; }
-        }
+        public GraphicsDevice GraphicsDevice => _drawingSurface.GraphicsDevice;
 
         public DrawEventArgs(DrawingSurface drawingSurface)
         {

@@ -8,55 +8,55 @@ namespace Gemini.Framework.Behaviors
     // Copied from MahApp's GlowWindowBehavior, because that one has a bug if GlowBrush is set in a style, rather than directly.
     public class CustomGlowWindowBehavior : Behavior<MetroWindow>
     {
-        private GlowWindow left;
-        private GlowWindow right;
-        private GlowWindow top;
-        private GlowWindow bottom;
+        private GlowWindow _left;
+        private GlowWindow _right;
+        private GlowWindow _top;
+        private GlowWindow _bottom;
 
         protected override void OnAttached()
         {
             base.OnAttached();
-            this.AssociatedObject.Loaded += new RoutedEventHandler(this.AssociatedObjectOnLoaded);
+            AssociatedObject.Loaded += new RoutedEventHandler(AssociatedObjectOnLoaded);
         }
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            MetroWindow metroWindow = this.AssociatedObject as MetroWindow;
+            MetroWindow metroWindow = AssociatedObject as MetroWindow;
             if (metroWindow != null && (metroWindow.UseNoneWindowStyle/* || metroWindow.GlowBrush == null*/))
                 return;
-            this.left = new GlowWindow(this.AssociatedObject, GlowDirection.Left);
-            this.right = new GlowWindow(this.AssociatedObject, GlowDirection.Right);
-            this.top = new GlowWindow(this.AssociatedObject, GlowDirection.Top);
-            this.bottom = new GlowWindow(this.AssociatedObject, GlowDirection.Bottom);
-            this.Show();
-            this.Update();
+            _left = new GlowWindow(AssociatedObject, GlowDirection.Left);
+            _right = new GlowWindow(AssociatedObject, GlowDirection.Right);
+            _top = new GlowWindow(AssociatedObject, GlowDirection.Top);
+            _bottom = new GlowWindow(AssociatedObject, GlowDirection.Bottom);
+            Show();
+            Update();
 
-            metroWindow.LocationChanged += (s, e) => this.Update();
-            metroWindow.SizeChanged += (s, e) => this.Update();
+            metroWindow.LocationChanged += (s, e) => Update();
+            metroWindow.SizeChanged += (s, e) => Update();
 
             if (metroWindow == null || !metroWindow.WindowTransitionsEnabled)
             {
-                this.SetOpacityTo(1.0);
+                SetOpacityTo(1.0);
             }
             else
             {
-                this.StartOpacityStoryboard();
-                this.AssociatedObject.IsVisibleChanged += new DependencyPropertyChangedEventHandler(this.AssociatedObjectIsVisibleChanged);
-                this.AssociatedObject.Closing += (CancelEventHandler) ((o, args) =>
+                StartOpacityStoryboard();
+                AssociatedObject.IsVisibleChanged += new DependencyPropertyChangedEventHandler(AssociatedObjectIsVisibleChanged);
+                AssociatedObject.Closing += (CancelEventHandler) ((o, args) =>
                 {
                     if (args.Cancel)
                         return;
-                    this.AssociatedObject.IsVisibleChanged -= new DependencyPropertyChangedEventHandler(this.AssociatedObjectIsVisibleChanged);
+                    AssociatedObject.IsVisibleChanged -= new DependencyPropertyChangedEventHandler(AssociatedObjectIsVisibleChanged);
                 });
             }
         }
 
         private void AssociatedObjectIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!this.AssociatedObject.IsVisible)
-                this.SetOpacityTo(0.0);
+            if (!AssociatedObject.IsVisible)
+                SetOpacityTo(0.0);
             else
-                this.StartOpacityStoryboard();
+                StartOpacityStoryboard();
         }
 
         /// <summary>
@@ -65,12 +65,12 @@ namespace Gemini.Framework.Behaviors
         /// </summary>
         private void Update()
         {
-            if (this.left == null || this.right == null || (this.top == null || this.bottom == null))
+            if (_left == null || _right == null || (_top == null || _bottom == null))
                 return;
-            this.left.Update();
-            this.right.Update();
-            this.top.Update();
-            this.bottom.Update();
+            _left.Update();
+            _right.Update();
+            _top.Update();
+            _bottom.Update();
         }
 
         /// <summary>
@@ -79,12 +79,12 @@ namespace Gemini.Framework.Behaviors
         /// </summary>
         private void SetOpacityTo(double newOpacity)
         {
-            if (this.left == null || this.right == null || (this.top == null || this.bottom == null))
+            if (_left == null || _right == null || (_top == null || _bottom == null))
                 return;
-            this.left.Opacity = newOpacity;
-            this.right.Opacity = newOpacity;
-            this.top.Opacity = newOpacity;
-            this.bottom.Opacity = newOpacity;
+            _left.Opacity = newOpacity;
+            _right.Opacity = newOpacity;
+            _top.Opacity = newOpacity;
+            _bottom.Opacity = newOpacity;
         }
 
         /// <summary>
@@ -93,12 +93,12 @@ namespace Gemini.Framework.Behaviors
         /// </summary>
         private void StartOpacityStoryboard()
         {
-            if (this.left == null || this.left.OpacityStoryboard == null || (this.right == null || this.right.OpacityStoryboard == null) || (this.top == null || this.top.OpacityStoryboard == null || (this.bottom == null || this.bottom.OpacityStoryboard == null)))
+            if (_left == null || _left.OpacityStoryboard == null || (_right == null || _right.OpacityStoryboard == null) || (_top == null || _top.OpacityStoryboard == null || (_bottom == null || _bottom.OpacityStoryboard == null)))
                 return;
-            this.left.BeginStoryboard(this.left.OpacityStoryboard);
-            this.right.BeginStoryboard(this.right.OpacityStoryboard);
-            this.top.BeginStoryboard(this.top.OpacityStoryboard);
-            this.bottom.BeginStoryboard(this.bottom.OpacityStoryboard);
+            _left.BeginStoryboard(_left.OpacityStoryboard);
+            _right.BeginStoryboard(_right.OpacityStoryboard);
+            _top.BeginStoryboard(_top.OpacityStoryboard);
+            _bottom.BeginStoryboard(_bottom.OpacityStoryboard);
         }
 
         /// <summary>
@@ -107,10 +107,10 @@ namespace Gemini.Framework.Behaviors
         /// </summary>
         private void Show()
         {
-            this.left.Show();
-            this.right.Show();
-            this.top.Show();
-            this.bottom.Show();
+            _left.Show();
+            _right.Show();
+            _top.Show();
+            _bottom.Show();
         }
     }
 }

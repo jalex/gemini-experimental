@@ -17,16 +17,10 @@ namespace Gemini.Modules.Toolbox.ViewModels
     {
         private readonly IToolboxService _toolboxService;
 
-        public override PaneLocation PreferredLocation
-        {
-            get { return PaneLocation.Left; }
-        }
+        public override PaneLocation PreferredLocation => PaneLocation.Left;
 
         private readonly BindableCollection<ToolboxItemViewModel> _items;
-        public IObservableCollection<ToolboxItemViewModel> Items
-        {
-            get { return _items; }
-        }
+        public IObservableCollection<ToolboxItemViewModel> Items => _items;
 
         [ImportingConstructor]
         public ToolboxViewModel(IShell shell, IToolboxService toolboxService)

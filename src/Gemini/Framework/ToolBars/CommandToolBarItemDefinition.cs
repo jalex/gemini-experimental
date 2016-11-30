@@ -11,25 +11,13 @@ namespace Gemini.Framework.ToolBars
         private readonly CommandDefinitionBase _commandDefinition;
         private readonly KeyGesture _keyGesture;
 
-        public override string Text
-        {
-            get { return _commandDefinition.ToolTip; }
-        }
+        public override string Text => _commandDefinition.ToolTip;
 
-        public override Uri IconSource
-        {
-            get { return _commandDefinition.IconSource; }
-        }
+        public override Uri IconSource => _commandDefinition.IconSource;
 
-        public override KeyGesture KeyGesture
-        {
-            get { return _keyGesture; }
-        }
+        public override KeyGesture KeyGesture => _keyGesture;
 
-        public override CommandDefinitionBase CommandDefinition
-        {
-            get { return _commandDefinition; }
-        }
+        public override CommandDefinitionBase CommandDefinition => _commandDefinition;
 
         public CommandToolBarItemDefinition(ToolBarItemGroupDefinition group, int sortOrder, ToolBarItemDisplay display = ToolBarItemDisplay.IconOnly)
             : base(group, sortOrder, display)

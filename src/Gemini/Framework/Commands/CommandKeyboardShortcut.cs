@@ -10,20 +10,11 @@ namespace Gemini.Framework.Commands
         private readonly KeyGesture _keyGesture;
         private readonly int _sortOrder;
 
-        public CommandDefinitionBase CommandDefinition
-        {
-            get { return _commandDefinition(); }
-        }
+        public CommandDefinitionBase CommandDefinition => _commandDefinition();
 
-        public KeyGesture KeyGesture
-        {
-            get { return _keyGesture; }
-        }
+        public KeyGesture KeyGesture => _keyGesture;
 
-        public int SortOrder
-        {
-            get { return _sortOrder; }
-        }
+        public int SortOrder => _sortOrder;
 
         protected CommandKeyboardShortcut(KeyGesture keyGesture, int sortOrder, Func<CommandDefinitionBase> commandDefinition)
         {

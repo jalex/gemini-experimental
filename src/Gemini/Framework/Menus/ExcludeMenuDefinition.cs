@@ -3,10 +3,7 @@
     public class ExcludeMenuDefinition
     {
         private readonly MenuDefinition _menuDefinitionToExclude;
-        public MenuDefinition MenuDefinitionToExclude 
-        { 
-            get { return _menuDefinitionToExclude; } 
-        }
+        public MenuDefinition MenuDefinitionToExclude => _menuDefinitionToExclude;
 
         public ExcludeMenuDefinition(MenuDefinition menuDefinition)
         {

@@ -5,15 +5,9 @@
         private readonly MenuItemGroupDefinition _group;
         private readonly int _sortOrder;
 
-        public MenuItemGroupDefinition Group
-        {
-            get { return _group; }
-        }
+        public MenuItemGroupDefinition Group => _group;
 
-        public override int SortOrder
-        {
-            get { return _sortOrder; }
-        }
+        public override int SortOrder => _sortOrder;
 
         protected MenuItemDefinition(MenuItemGroupDefinition group, int sortOrder)
         {

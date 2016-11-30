@@ -23,7 +23,7 @@ namespace Gemini.Modules.Inspector.Controls
         }
 
         private const double DefaultKeyboardIncrement = 1d;
-        private bool dragging;
+        private bool _dragging;
 
         #region ResizeBehavior
         /// <summary>
@@ -98,7 +98,7 @@ namespace Gemini.Modules.Inspector.Controls
         protected virtual void OnResizeDirectionChanged(
             GridResizeDirection oldResizeDirection, GridResizeDirection newResizeDirection)
         {
-            this.DetermineResizeCursor();
+            DetermineResizeCursor();
         }
         #endregion
 
@@ -150,8 +150,8 @@ namespace Gemini.Modules.Inspector.Controls
             }
 
             // * If the HorizontalAlignment is set to Stretch and the VerticalAlignment is not set to Stretch, space is redistributed between rows.
-            if (this.HorizontalAlignment == HorizontalAlignment.Stretch &&
-                this.VerticalAlignment != VerticalAlignment.Stretch)
+            if (HorizontalAlignment == HorizontalAlignment.Stretch &&
+                VerticalAlignment != VerticalAlignment.Stretch)
             {
                 return GridResizeDirection.Rows;
             }
@@ -160,9 +160,9 @@ namespace Gemini.Modules.Inspector.Controls
             //   * The HorizontalAlignment is set to Stretch.
             //   * The VerticalAlignment is set to Stretch.
             //   * The ActualWidth is less than or equal to the ActualHeight.
-            if (this.HorizontalAlignment == HorizontalAlignment.Stretch &&
-                this.VerticalAlignment == VerticalAlignment.Stretch &&
-                this.ActualWidth <= this.ActualHeight)
+            if (HorizontalAlignment == HorizontalAlignment.Stretch &&
+                VerticalAlignment == VerticalAlignment.Stretch &&
+                ActualWidth <= ActualHeight)
             {
                 return GridResizeDirection.Columns;
             }
@@ -216,7 +216,7 @@ namespace Gemini.Modules.Inspector.Controls
                 // * When the VerticalAlignment property is set to Top,
                 //   space is redistributed between the row that is specified
                 //   for the GridSplitter and the row that is above that row.
-                if (this.VerticalAlignment == VerticalAlignment.Top)
+                if (VerticalAlignment == VerticalAlignment.Top)
                 {
                     return GridResizeBehavior.PreviousAndCurrent;
                 }
@@ -224,7 +224,7 @@ namespace Gemini.Modules.Inspector.Controls
                 // * When the VerticalAlignment property is set to Bottom,
                 //   space is redistributed between the row that is specified
                 //   for the GridSplitter and the row that is below that row.
-                if (this.VerticalAlignment == VerticalAlignment.Bottom)
+                if (VerticalAlignment == VerticalAlignment.Bottom)
                 {
                     return GridResizeBehavior.CurrentAndNext;
                 }
@@ -247,7 +247,7 @@ namespace Gemini.Modules.Inspector.Controls
             // * When the HorizontalAlignment property is set to Left,
             //   space is redistributed between the column that is specified
             //   for the GridSplitter and the column that is to the left.
-            if (this.HorizontalAlignment == HorizontalAlignment.Left)
+            if (HorizontalAlignment == HorizontalAlignment.Left)
             {
                 return GridResizeBehavior.PreviousAndCurrent;
             }
@@ -255,7 +255,7 @@ namespace Gemini.Modules.Inspector.Controls
             // * When the HorizontalAlignment property is set to Right,
             //   space is redistributed between the column that is specified
             //   for the GridSplitter and the column that is to the right.
-            if (this.HorizontalAlignment == HorizontalAlignment.Right)
+            if (HorizontalAlignment == HorizontalAlignment.Right)
             {
                 return GridResizeBehavior.CurrentAndNext;
             }
@@ -274,15 +274,15 @@ namespace Gemini.Modules.Inspector.Controls
         private void DetermineResizeCursor()
         {
             var effectiveResizeDirection =
-                this.DetermineEffectiveResizeDirection();
+                DetermineEffectiveResizeDirection();
 
             if (effectiveResizeDirection == GridResizeDirection.Columns)
             {
-                this.Cursor = Cursors.SizeWE;
+                Cursor = Cursors.SizeWE;
             }
             else
             {
-                this.Cursor = Cursors.SizeNS;
+                Cursor = Cursors.SizeNS;
             }
         }
         #endregion
@@ -304,7 +304,7 @@ namespace Gemini.Modules.Inspector.Controls
         public SimpleGridSplitter()
         {
             //FocusManager.SetIsFocusScope(this, true);
-            this.DetermineResizeCursor();
+            DetermineResizeCursor();
         }
         #endregion
 
@@ -317,7 +317,7 @@ namespace Gemini.Modules.Inspector.Controls
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
-            this.DetermineResizeCursor();
+            DetermineResizeCursor();
             base.OnMouseEnter(e);
         }
 
@@ -331,7 +331,7 @@ namespace Gemini.Modules.Inspector.Controls
             //this.CaptureMouse();
             //var grid = GetGrid();
             //this.lastPosition = e.GetPosition(grid);
-            this.dragging = true;
+            _dragging = true;
             //this.Focus();
         }
 
@@ -342,25 +342,25 @@ namespace Gemini.Modules.Inspector.Controls
 
         private void OnDragDelta(DragDeltaEventArgs e)
         {
-            if (!dragging)
+            if (!_dragging)
             {
                 return;
             }
 
             GridResizeDirection effectiveResizeDirection =
-                this.DetermineEffectiveResizeDirection();
+                DetermineEffectiveResizeDirection();
 
             var grid = GetGrid();
 
             if (effectiveResizeDirection == GridResizeDirection.Columns)
             {
                 var deltaX = e.HorizontalChange;
-                this.ResizeColumns(grid, deltaX);
+                ResizeColumns(grid, deltaX);
             }
             else
             {
                 var deltaY = e.VerticalChange;
-                this.ResizeRows(grid, deltaY);
+                ResizeRows(grid, deltaY);
             }
         }
 
@@ -371,7 +371,7 @@ namespace Gemini.Modules.Inspector.Controls
 
         private void OnDragCompleted(DragCompletedEventArgs e)
         {
-            this.dragging = false;
+            _dragging = false;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -379,18 +379,18 @@ namespace Gemini.Modules.Inspector.Controls
             base.OnKeyDown(e);
 
             GridResizeDirection effectiveResizeDirection =
-                this.DetermineEffectiveResizeDirection();
+                DetermineEffectiveResizeDirection();
 
             if (effectiveResizeDirection == GridResizeDirection.Columns)
             {
                 if (e.Key == Key.Left)
                 {
-                    this.ResizeColumns(this.GetGrid(), -KeyboardIncrement);
+                    ResizeColumns(GetGrid(), -KeyboardIncrement);
                     e.Handled = true;
                 }
                 else if (e.Key == Key.Right)
                 {
-                    this.ResizeColumns(this.GetGrid(), KeyboardIncrement);
+                    ResizeColumns(GetGrid(), KeyboardIncrement);
                     e.Handled = true;
                 }
             }
@@ -398,12 +398,12 @@ namespace Gemini.Modules.Inspector.Controls
             {
                 if (e.Key == Key.Up)
                 {
-                    this.ResizeRows(this.GetGrid(), -KeyboardIncrement);
+                    ResizeRows(GetGrid(), -KeyboardIncrement);
                     e.Handled = true;
                 }
                 else if (e.Key == Key.Down)
                 {
-                    this.ResizeRows(this.GetGrid(), KeyboardIncrement);
+                    ResizeRows(GetGrid(), KeyboardIncrement);
                     e.Handled = true;
                 }
             }
@@ -414,7 +414,7 @@ namespace Gemini.Modules.Inspector.Controls
         private void ResizeColumns(Grid grid, double deltaX)
         {
             GridResizeBehavior effectiveGridResizeBehavior =
-                this.DetermineEffectiveResizeBehavior();
+                DetermineEffectiveResizeBehavior();
 
             int column = Grid.GetColumn(this);
             int leftColumn;
@@ -610,7 +610,7 @@ namespace Gemini.Modules.Inspector.Controls
         private void ResizeRows(Grid grid, double deltaX)
         {
             GridResizeBehavior effectiveGridResizeBehavior =
-                this.DetermineEffectiveResizeBehavior();
+                DetermineEffectiveResizeBehavior();
 
             int row = Grid.GetRow(this);
             int upperRow;
@@ -805,7 +805,7 @@ namespace Gemini.Modules.Inspector.Controls
         #region GetGrid()
         private Grid GetGrid()
         {
-            var grid = this.Parent as Grid;
+            var grid = Parent as Grid;
 
             if (grid == null)
             {

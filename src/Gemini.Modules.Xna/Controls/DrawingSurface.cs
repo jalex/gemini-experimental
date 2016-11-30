@@ -57,7 +57,7 @@ namespace Gemini.Modules.Xna.Controls
         public event EventHandler<DrawEventArgs> Draw;
 
         private GraphicsDeviceService _graphicsDeviceService;
-        private readonly D3DImage _d3dImage;
+        private readonly D3DImage _d3DImage;
         private readonly Image _image;
         private RenderTarget2D _renderTarget;
 
@@ -69,19 +69,16 @@ namespace Gemini.Modules.Xna.Controls
         /// </summary>
         public bool AlwaysRefresh { get; set; }
 
-        public GraphicsDevice GraphicsDevice
-        {
-            get { return _graphicsDeviceService.GraphicsDevice; }
-        }
+        public GraphicsDevice GraphicsDevice => _graphicsDeviceService.GraphicsDevice;
 
         public DrawingSurface()
         {
-            _d3dImage = new D3DImage();
+            _d3DImage = new D3DImage();
 
-            _image = new Image { Source = _d3dImage, Stretch = Stretch.None };
+            _image = new Image { Source = _d3DImage, Stretch = Stretch.None };
             AddChild(_image);
 
-            _d3dImage.IsFrontBufferAvailableChanged += OnD3DImageIsFrontBufferAvailableChanged;
+            _d3DImage.IsFrontBufferAvailableChanged += OnD3DImageIsFrontBufferAvailableChanged;
 
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
@@ -144,9 +141,9 @@ namespace Gemini.Modules.Xna.Controls
                 _renderTarget = null;
             }
 
-            _d3dImage.Lock();
-            _d3dImage.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
-            _d3dImage.Unlock();
+            _d3DImage.Lock();
+            _d3DImage.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
+            _d3DImage.Unlock();
         }
 
         private void EnsureRenderTarget()
@@ -156,17 +153,17 @@ namespace Gemini.Modules.Xna.Controls
                 _renderTarget = new RenderTarget2D(GraphicsDevice, (int) ActualWidth, (int) ActualHeight,
                     false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
 
-                _d3dImage.Lock();
+                _d3DImage.Lock();
                 var backBuffer = NativeMethods.GetRenderTargetSurface(_renderTarget);
-                _d3dImage.SetBackBuffer(D3DResourceType.IDirect3DSurface9, backBuffer);
-                _d3dImage.Unlock();
+                _d3DImage.SetBackBuffer(D3DResourceType.IDirect3DSurface9, backBuffer);
+                _d3DImage.Unlock();
                 Marshal.Release(backBuffer);
             }
         }
 
         private void OnD3DImageIsFrontBufferAvailableChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (_d3dImage.IsFrontBufferAvailable)
+            if (_d3DImage.IsFrontBufferAvailable)
                 _contentNeedsRefresh = true;
         }
 
@@ -176,7 +173,7 @@ namespace Gemini.Modules.Xna.Controls
             {
                 _contentNeedsRefresh = false;
 
-                _d3dImage.Lock();
+                _d3DImage.Lock();
 
                 EnsureRenderTarget();
                 GraphicsDevice.SetRenderTarget(_renderTarget);
@@ -185,9 +182,9 @@ namespace Gemini.Modules.Xna.Controls
 
                 RaiseDraw(new DrawEventArgs(this));
 
-                _d3dImage.AddDirtyRect(new Int32Rect(0, 0, (int) ActualWidth, (int) ActualHeight));
+                _d3DImage.AddDirtyRect(new Int32Rect(0, 0, (int) ActualWidth, (int) ActualHeight));
 
-                _d3dImage.Unlock();
+                _d3DImage.Unlock();
 
                 GraphicsDevice.SetRenderTarget(null);
             }
@@ -213,7 +210,7 @@ namespace Gemini.Modules.Xna.Controls
             if (_graphicsDeviceService == null)
                 return false;
 
-            if (!_d3dImage.IsFrontBufferAvailable)
+            if (!_d3DImage.IsFrontBufferAvailable)
                 return false;
 
             // Make sure the graphics device is big enough, and is not lost.
@@ -269,10 +266,7 @@ namespace Gemini.Modules.Xna.Controls
 
         private bool _isDisposed;
 
-        public bool IsDisposed
-        {
-            get { return _isDisposed; }
-        }
+        public bool IsDisposed => _isDisposed;
 
         public void Dispose()
         {

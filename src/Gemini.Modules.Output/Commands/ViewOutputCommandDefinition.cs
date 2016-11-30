@@ -8,19 +8,10 @@ namespace Gemini.Modules.Output.Commands
     {
         public const string CommandName = "View.Output";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.ViewOutputCommandText; }
-        }
+        public override string Text => Resources.ViewOutputCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.ViewOutputCommandToolTip; }
-        }
+        public override string ToolTip => Resources.ViewOutputCommandToolTip;
     }
 }

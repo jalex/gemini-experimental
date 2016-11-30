@@ -12,7 +12,7 @@ namespace Gemini.Modules.MainMenu.ViewModels
     {
         private readonly IThemeManager _themeManager;
 
-        private readonly static List<string> _availableLanguages = new List<string> {
+        private readonly static List<string> AvailableLanguages = new List<string> {
             string.Empty,
             "en",
             "de",
@@ -34,10 +34,7 @@ namespace Gemini.Modules.MainMenu.ViewModels
             SelectedLanguage = Properties.Settings.Default.LanguageCode;
         }
 
-        public IEnumerable<ITheme> Themes
-        {
-            get { return _themeManager.Themes; }
-        }
+        public IEnumerable<ITheme> Themes => _themeManager.Themes;
 
         public ITheme SelectedTheme
         {
@@ -50,10 +47,7 @@ namespace Gemini.Modules.MainMenu.ViewModels
             }
         }
 
-        public IEnumerable<string> Languages
-        {
-            get { return _availableLanguages; }
-        }
+        public IEnumerable<string> Languages => AvailableLanguages;
 
         public string SelectedLanguage
         {
@@ -78,15 +72,9 @@ namespace Gemini.Modules.MainMenu.ViewModels
             }
         }
 
-        public string SettingsPageName
-        {
-            get { return Properties.Resources.SettingsPageGeneral; }
-        }
+        public string SettingsPageName => Properties.Resources.SettingsPageGeneral;
 
-        public string SettingsPagePath
-        {
-            get { return Properties.Resources.SettingsPathEnvironment; }
-        }
+        public string SettingsPagePath => Properties.Resources.SettingsPathEnvironment;
 
         public void ApplyChanges()
         {

@@ -7,9 +7,6 @@ namespace Gemini.Modules.RecentFiles.Commands
     {
         public const string CommandName = "File.OpenRecentFileList";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
     }
 }

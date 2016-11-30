@@ -49,10 +49,7 @@ namespace Gemini.Modules.ErrorList
             }
         }
 
-        public string File
-        {
-            get { return System.IO.Path.GetFileName(Path); }
-        }
+        public string File => System.IO.Path.GetFileName(Path);
 
         private int? _line;
         public int? Line

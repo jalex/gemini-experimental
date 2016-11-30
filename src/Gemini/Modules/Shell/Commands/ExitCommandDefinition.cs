@@ -10,20 +10,11 @@ namespace Gemini.Modules.Shell.Commands
     {
         public const string CommandName = "File.Exit";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.FileExitCommandText; }
-        }
+        public override string Text => Resources.FileExitCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.FileExitCommandToolTip; }
-        }
+        public override string ToolTip => Resources.FileExitCommandToolTip;
 
         [Export]
         public static CommandKeyboardShortcut KeyGesture = new CommandKeyboardShortcut<ExitCommandDefinition>(new KeyGesture(Key.F4, ModifierKeys.Alt));

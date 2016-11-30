@@ -30,7 +30,7 @@ namespace Gemini.Modules.RecentFiles.Commands
                 var item = _shell.RecentFiles.Items[i];
                 commands.Add(new Command(command.CommandDefinition)
                 {
-                    Text = string.Format("_{0} {1}", i + 1, item.DisplayName),
+                    Text = $"_{i + 1} {item.DisplayName}",
                     ToolTip = item.FilePath,
                     Tag = item.FilePath
                 });

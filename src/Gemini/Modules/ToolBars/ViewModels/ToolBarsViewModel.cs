@@ -9,10 +9,7 @@ namespace Gemini.Modules.ToolBars.ViewModels
     public class ToolBarsViewModel : ViewAware, IToolBars
     {
         private readonly BindableCollection<IToolBar> _items;
-        public IObservableCollection<IToolBar> Items
-        {
-            get { return _items; }
-        }
+        public IObservableCollection<IToolBar> Items => _items;
 
         private readonly IToolBarBuilder _toolBarBuilder;
 

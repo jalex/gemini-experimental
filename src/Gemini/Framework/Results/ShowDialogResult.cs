@@ -25,8 +25,8 @@ namespace Gemini.Framework.Results
         {
             TWindow window = _windowLocator();
 
-            if (_setData != null)
-                _setData(window);
+            if (SetData != null)
+                SetData(window);
 
             if (_onConfigure != null)
                 _onConfigure(window);

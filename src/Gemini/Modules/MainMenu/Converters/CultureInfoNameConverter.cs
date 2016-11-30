@@ -16,10 +16,8 @@ namespace Gemini.Modules.MainMenu.Converters
                 if (Properties.Resources.LanguageSystem.Equals("System"))
                     return Properties.Resources.LanguageSystem;
 
-                return string.Format("{0} ({1})",
-                    Properties.Resources.LanguageSystem,
-                    Properties.Resources.ResourceManager.GetString("LanguageSystem", CultureInfo.InvariantCulture)
-                    );
+                return
+                    $"{Properties.Resources.LanguageSystem} ({Properties.Resources.ResourceManager.GetString("LanguageSystem", CultureInfo.InvariantCulture)})";
             }
 
             var cn = value as string;
@@ -28,7 +26,7 @@ namespace Gemini.Modules.MainMenu.Converters
             if (Equals(ci.NativeName, ci.EnglishName))
                 return ci.NativeName;
 
-            return string.Format("{0} ({1})", ci.NativeName, ci.EnglishName);
+            return $"{ci.NativeName} ({ci.EnglishName})";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

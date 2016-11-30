@@ -24,10 +24,7 @@ namespace Gemini.Framework.Themes
     [Export(typeof(ITheme))]
     public class DarkTheme : ITheme
     {
-        public virtual string Name
-        {
-            get { return Properties.Resources.ThemeDarkName; }
-        }
+        public virtual string Name => Properties.Resources.ThemeDarkName;
 
         public virtual IEnumerable<Uri> ApplicationResources
         {

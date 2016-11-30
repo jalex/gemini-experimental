@@ -8,19 +8,10 @@ namespace Gemini.Modules.Toolbox.Commands
     {
         public const string CommandName = "View.Toolbox";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.ViewToolboxCommandText; }
-        }
+        public override string Text => Resources.ViewToolboxCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.ViewToolboxCommandToolTip; }
-        }
+        public override string ToolTip => Resources.ViewToolboxCommandToolTip;
     }
 }

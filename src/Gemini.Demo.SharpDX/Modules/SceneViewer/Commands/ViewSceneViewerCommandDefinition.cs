@@ -7,19 +7,10 @@ namespace Gemini.Demo.SharpDX.Modules.SceneViewer.Commands
     {
         public const string CommandName = "Demos.SceneViewer";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return "_3D Scene"; }
-        }
+        public override string Text => "_3D Scene";
 
-        public override string ToolTip
-        {
-            get { return "3D Scene"; }
-        }
+        public override string ToolTip => "3D Scene";
     }
 }

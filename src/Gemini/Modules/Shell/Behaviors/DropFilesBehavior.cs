@@ -83,7 +83,7 @@ namespace Gemini.Modules.Shell.Behaviors
                         continue;
 
                     var docPath = Path.GetFullPath(document.FilePath);
-                    if (string.Equals(newPath, docPath, System.StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(newPath, docPath, StringComparison.OrdinalIgnoreCase))
                     {
                         shell.OpenDocument(document);
                         foundInShell = true;

@@ -5,15 +5,9 @@
         private readonly int _sortOrder;
         private readonly string _name;
 
-        public int SortOrder
-        {
-            get { return _sortOrder; }
-        }
+        public int SortOrder => _sortOrder;
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name => _name;
 
         public ToolBarDefinition(int sortOrder, string name)
         {

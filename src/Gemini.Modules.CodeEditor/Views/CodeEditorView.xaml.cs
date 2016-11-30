@@ -6,10 +6,7 @@ namespace Gemini.Modules.CodeEditor.Views
 {
     public partial class CodeEditorView : UserControl, ICodeEditorView
     {
-        public TextEditor TextEditor
-        {
-            get { return CodeEditor; }
-        }
+        public TextEditor TextEditor => CodeEditor;
 
         public CodeEditorView()
         {

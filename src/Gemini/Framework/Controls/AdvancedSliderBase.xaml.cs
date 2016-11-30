@@ -24,45 +24,45 @@ namespace Gemini.Framework.Controls
 
         private void Update()
         {
-            numberText.Text = DisplayText;
+            NumberText.Text = DisplayText;
 
             if (Type == DisplayType.Number)
             {
-                bar.Visibility = Visibility.Hidden;
+                Bar.Visibility = Visibility.Hidden;
                 return;
             }
 
-            var width = grid.ActualWidth;
+            var width = Grid.ActualWidth;
 
             switch (Type)
             {
                 case DisplayType.Bar:
-                    bar.Visibility = Visibility.Visible;
-                    bar.HorizontalAlignment = HorizontalAlignment.Left;
-                    bar.Margin = new Thickness(0.0);
-                    bar.Width = width * Ratio;
+                    Bar.Visibility = Visibility.Visible;
+                    Bar.HorizontalAlignment = HorizontalAlignment.Left;
+                    Bar.Margin = new Thickness(0.0);
+                    Bar.Width = width * Ratio;
                     break;
                 case DisplayType.Line:
                     if (Ratio == 0.5)
                     {
-                        bar.Visibility = Visibility.Hidden;
+                        Bar.Visibility = Visibility.Hidden;
                     }
                     else
                     {
-                        bar.Visibility = Visibility.Visible;
+                        Bar.Visibility = Visibility.Visible;
 
                         var hwidth = (width / 2.0);
                         if (Ratio > 0.5)
                         {
-                            bar.HorizontalAlignment = HorizontalAlignment.Left;
-                            bar.Width = Math.Ceiling(hwidth * ((Ratio - 0.5) * 2.0));
-                            bar.Margin = new Thickness(Math.Floor(hwidth), 0.0, 0.0, 0.0);
+                            Bar.HorizontalAlignment = HorizontalAlignment.Left;
+                            Bar.Width = Math.Ceiling(hwidth * ((Ratio - 0.5) * 2.0));
+                            Bar.Margin = new Thickness(Math.Floor(hwidth), 0.0, 0.0, 0.0);
                         }
                         else
                         {
-                            bar.HorizontalAlignment = HorizontalAlignment.Right;
-                            bar.Width = Math.Ceiling(hwidth * (1.0 - (Ratio * 2.0)));
-                            bar.Margin = new Thickness(0.0, 0.0, Math.Floor(hwidth), 0.0);
+                            Bar.HorizontalAlignment = HorizontalAlignment.Right;
+                            Bar.Width = Math.Ceiling(hwidth * (1.0 - (Ratio * 2.0)));
+                            Bar.Margin = new Thickness(0.0, 0.0, Math.Floor(hwidth), 0.0);
                         }
                     }
                     break;
@@ -282,23 +282,23 @@ namespace Gemini.Framework.Controls
 
         private void BeginTextBoxUpdate()
         {
-            textBox.Text = EditText;
-            textBox.Visibility = Visibility.Visible;
-            numberText.Visibility = Visibility.Hidden;
-            textBox.SelectAll();
-            textBox.Focus();
+            TextBox.Text = EditText;
+            TextBox.Visibility = Visibility.Visible;
+            NumberText.Visibility = Visibility.Hidden;
+            TextBox.SelectAll();
+            TextBox.Focus();
         }
 
         private void EndTextBoxUpdate(bool commit)
         {
             if (commit)
             {
-                EditText = textBox.Text;
+                EditText = TextBox.Text;
                 CommitEditText();
             }
 
-            textBox.Visibility = Visibility.Hidden;
-            numberText.Visibility = Visibility.Visible;
+            TextBox.Visibility = Visibility.Hidden;
+            NumberText.Visibility = Visibility.Visible;
         }
 
         private void numberText_GotFocus(object sender, RoutedEventArgs e)

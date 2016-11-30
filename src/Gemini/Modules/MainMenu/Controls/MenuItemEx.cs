@@ -5,7 +5,7 @@ using Gemini.Modules.MainMenu.Models;
 
 namespace Gemini.Modules.MainMenu.Controls
 {
-    public class MenuItemEx : System.Windows.Controls.MenuItem
+    public class MenuItemEx : MenuItem
 	{
 		private object _currentItem;
 

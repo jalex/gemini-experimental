@@ -11,10 +11,7 @@ namespace Gemini.Demo.Modules.FilterDesigner
     [Export(typeof(ISample))]
     public class Sample : ISample
     {
-        public string Name
-        {
-            get { return "Filter Designer"; }
-        }
+        public string Name => "Filter Designer";
 
         public void Activate(IShell shell)
         {

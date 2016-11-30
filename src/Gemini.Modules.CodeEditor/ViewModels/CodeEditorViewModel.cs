@@ -21,7 +21,7 @@ namespace Gemini.Modules.CodeEditor.ViewModels
         private string _originalText;
         private ICodeEditorView _view;
         private IStatusBar _statusBar;
-        private bool notYetLoaded = false;
+        private bool _notYetLoaded = false;
 
         [ImportingConstructor]
         public CodeEditorViewModel(LanguageDefinitionManager languageDefinitionManager)
@@ -34,10 +34,10 @@ namespace Gemini.Modules.CodeEditor.ViewModels
             _view = (ICodeEditorView) view;
             _statusBar = IoC.Get<IStatusBar>();
 
-            if (notYetLoaded)
+            if (_notYetLoaded)
             {
                 ApplyOriginalText();
-                notYetLoaded = false;
+                _notYetLoaded = false;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Gemini.Modules.CodeEditor.ViewModels
             // At StartUp, _view is null, so notYetLoaded flag is added
             if (_view == null)
             {
-                notYetLoaded = true;
+                _notYetLoaded = true;
                 return;
             }
             _view.TextEditor.Text = _originalText;
@@ -114,8 +114,8 @@ namespace Gemini.Modules.CodeEditor.ViewModels
 
             if (_statusBar != null && _statusBar.Items.Count >= 3)
             {
-                _statusBar.Items[1].Message = string.Format("Ln {0}", lineNumber);
-                _statusBar.Items[2].Message = string.Format("Col {0}", colPosition);
+                _statusBar.Items[1].Message = $"Ln {lineNumber}";
+                _statusBar.Items[2].Message = $"Col {colPosition}";
             }
         }
 

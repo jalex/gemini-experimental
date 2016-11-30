@@ -17,17 +17,11 @@ namespace Gemini.Modules.Output.ViewModels
 		private readonly OutputWriter _writer;
 		private IOutputView _view;
 
-		public override PaneLocation PreferredLocation
-		{
-			get { return PaneLocation.Bottom; }
-		}
+		public override PaneLocation PreferredLocation => PaneLocation.Bottom;
 
-		public TextWriter Writer
-		{
-			get { return _writer; }
-		}
+	    public TextWriter Writer => _writer;
 
-		public OutputViewModel()
+	    public OutputViewModel()
 		{
 		    DisplayName = Resources.OutputDisplayName;
 			_stringBuilder = new StringBuilder();

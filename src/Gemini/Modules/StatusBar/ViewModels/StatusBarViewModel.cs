@@ -8,10 +8,7 @@ namespace Gemini.Modules.StatusBar.ViewModels
 	public class StatusBarViewModel : PropertyChangedBase, IStatusBar
 	{
         private readonly StatusBarItemCollection _items;
-	    public IObservableCollection<StatusBarItemViewModel> Items
-	    {
-            get { return _items; }
-	    }
+	    public IObservableCollection<StatusBarItemViewModel> Items => _items;
 
 	    public StatusBarViewModel()
         {

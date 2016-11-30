@@ -7,25 +7,13 @@ namespace Gemini.Modules.Toolbox.ViewModels
     {
         private readonly ToolboxItem _model;
 
-        public ToolboxItem Model
-        {
-            get { return _model; }
-        }
+        public ToolboxItem Model => _model;
 
-        public string Name
-        {
-            get { return _model.Name; }
-        }
+        public string Name => _model.Name;
 
-        public virtual string Category
-        {
-            get { return _model.Category; }
-        }
+        public virtual string Category => _model.Category;
 
-        public virtual Uri IconSource
-        {
-            get { return _model.IconSource; }
-        }
+        public virtual Uri IconSource => _model.IconSource;
 
         public ToolboxItemViewModel(ToolboxItem model)
         {

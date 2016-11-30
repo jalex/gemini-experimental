@@ -12,17 +12,11 @@ namespace Gemini.Modules.PropertyGrid.ViewModels
 	{
 	    private readonly IShell _shell;
 
-		public override PaneLocation PreferredLocation
-		{
-			get { return PaneLocation.Right; }
-		}
+		public override PaneLocation PreferredLocation => PaneLocation.Right;
 
-		public override Uri IconSource
-		{
-			get { return new Uri("pack://application:,,,/Gemini.Modules.PropertyGrid;component/Resources/Icons/Properties.png"); }
-		}
+	    public override Uri IconSource => new Uri("pack://application:,,,/Gemini.Modules.PropertyGrid;component/Resources/Icons/Properties.png");
 
-		private object _selectedObject;
+	    private object _selectedObject;
 		public object SelectedObject
 		{
 			get { return _selectedObject; }

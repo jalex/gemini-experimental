@@ -9,10 +9,7 @@ namespace Gemini.Framework.ShaderEffects
         [ThreadStatic]
         private static PixelShader _shader;
 
-        private static PixelShader Shader
-        {
-            get { return (_shader ?? (_shader = ShaderEffectUtility.GetPixelShader(typeof(T).Name))); }
-        }
+        private static PixelShader Shader => (_shader ?? (_shader = ShaderEffectUtility.GetPixelShader(typeof(T).Name)));
 
         protected ShaderEffectBase()
         {

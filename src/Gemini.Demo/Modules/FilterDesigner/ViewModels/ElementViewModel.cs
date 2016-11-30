@@ -69,10 +69,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         public abstract BitmapSource PreviewImage { get; }
 
         private readonly BindableCollection<InputConnectorViewModel> _inputConnectors;
-        public IList<InputConnectorViewModel> InputConnectors
-        {
-            get { return _inputConnectors; }
-        }
+        public IList<InputConnectorViewModel> InputConnectors => _inputConnectors;
 
         private OutputConnectorViewModel _outputConnector;
         public OutputConnectorViewModel OutputConnector

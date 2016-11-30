@@ -32,11 +32,8 @@ namespace Gemini.Framework
         }
 
         // ShouldReopenOnStart, SaveState and LoadState are default methods of PersistedDocument.
-        public override bool ShouldReopenOnStart
-        {
-            get { return (FilePath != null); }  // if FilePath is null, SaveState() will generate an NullExceptionError
-        }
-                
+        public override bool ShouldReopenOnStart => (FilePath != null);
+
         public override void SaveState(BinaryWriter writer)
         {
             writer.Write(FilePath);
@@ -71,9 +68,9 @@ namespace Gemini.Framework
                         var filter = string.Empty;
                         if (fileType != null)
                             filter = fileType.Name + "|*" + fileType.FileExtension + "|";
-                        filter += Properties.Resources.AllFiles + "|*.*";
+                        filter += Resources.AllFiles + "|*.*";
 
-                        var dialog = new SaveFileDialog() { FileName = this.FileName, Filter = filter };
+                        var dialog = new SaveFileDialog() { FileName = FileName, Filter = filter };
                         if (dialog.ShowDialog() == true)
                         {
                             // Save file.

@@ -3,14 +3,11 @@
     public class ExcludeToolBarItemDefinition
     {
         private readonly ToolBarItemDefinition _toolBarItemDefinitionToExclude;
-        public ToolBarItemDefinition ToolBarItemDefinitionToExclude
-        {
-            get { return _toolBarItemDefinitionToExclude; }
-        }
+        public ToolBarItemDefinition ToolBarItemDefinitionToExclude => _toolBarItemDefinitionToExclude;
 
-        public ExcludeToolBarItemDefinition(ToolBarItemDefinition ToolBarItemDefinition)
+        public ExcludeToolBarItemDefinition(ToolBarItemDefinition toolBarItemDefinition)
         {
-            _toolBarItemDefinitionToExclude = ToolBarItemDefinition;
+            _toolBarItemDefinitionToExclude = toolBarItemDefinition;
         }
     }
 }

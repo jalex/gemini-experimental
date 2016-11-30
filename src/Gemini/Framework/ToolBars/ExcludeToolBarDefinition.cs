@@ -3,10 +3,7 @@
     public class ExcludeToolBarDefinition
     {
         private readonly ToolBarDefinition _toolBarDefinitionToExclude;
-        public ToolBarDefinition ToolBarDefinitionToExclude
-        {
-            get { return _toolBarDefinitionToExclude; }
-        }
+        public ToolBarDefinition ToolBarDefinitionToExclude => _toolBarDefinitionToExclude;
 
         public ExcludeToolBarDefinition(ToolBarDefinition toolBarDefinition)
         {

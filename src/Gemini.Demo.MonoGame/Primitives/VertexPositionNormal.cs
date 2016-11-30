@@ -38,9 +38,6 @@ namespace Gemini.Demo.MonoGame.Primitives
             new VertexElement(12, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0)
         );
 
-        VertexDeclaration IVertexType.VertexDeclaration
-        {
-            get { return VertexDeclaration; }
-        }
+        VertexDeclaration IVertexType.VertexDeclaration => VertexDeclaration;
     }
 }

@@ -52,10 +52,7 @@ namespace Gemini.Modules.GraphEditor.Controls
             set { SetValue(Y2Property, value); }
         }
 
-        protected override Geometry DefiningGeometry
-        {
-            get { return _geometry; }
-        }
+        protected override Geometry DefiningGeometry => _geometry;
 
         protected override Size MeasureOverride(Size constraint)
         {

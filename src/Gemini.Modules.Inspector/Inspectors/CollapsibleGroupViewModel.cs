@@ -9,20 +9,11 @@ namespace Gemini.Modules.Inspector.Inspectors
         private readonly string _name;
         private readonly IEnumerable<IInspector> _children;
 
-        public override string Name
-        {
-            get { return _name; }
-        }
+        public override string Name => _name;
 
-        public override bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public override bool IsReadOnly => false;
 
-        public IEnumerable<IInspector> Children
-        {
-            get { return _children; }
-        }
+        public IEnumerable<IInspector> Children => _children;
 
         private bool _isExpanded;
         public bool IsExpanded

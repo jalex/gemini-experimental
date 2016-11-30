@@ -49,27 +49,15 @@ namespace Gemini.Modules.Shell.ViewModels
         private IShellView _shellView;
 	    private bool _closing;
 
-        public IMenu MainMenu
-        {
-            get { return _mainMenu; }
-        }
+        public IMenu MainMenu => _mainMenu;
 
-        public IToolBars ToolBars
-        {
-            get { return _toolBars; }
-        }
+        public IToolBars ToolBars => _toolBars;
 
-		public IStatusBar StatusBar
-		{
-			get { return _statusBar; }
-		}
+        public IStatusBar StatusBar => _statusBar;
 
-        public IRecentFiles RecentFiles
-        {
-            get { return _recentFiles; }
-        }
+        public IRecentFiles RecentFiles => _recentFiles;
 
-	    private ILayoutItem _activeLayoutItem;
+        private ILayoutItem _activeLayoutItem;
 	    public ILayoutItem ActiveLayoutItem
 	    {
 	        get { return _activeLayoutItem; }
@@ -88,15 +76,9 @@ namespace Gemini.Modules.Shell.ViewModels
 	    }
 
         private readonly BindableCollection<ITool> _tools;
-        public IObservableCollection<ITool> Tools
-        {
-            get { return _tools; }
-        }
+        public IObservableCollection<ITool> Tools => _tools;
 
-        public IObservableCollection<IDocument> Documents
-        {
-            get { return Items; }
-        }
+        public IObservableCollection<IDocument> Documents => Items;
 
         private bool _showFloatingWindowsInTaskbar;
         public bool ShowFloatingWindowsInTaskbar
@@ -111,15 +93,9 @@ namespace Gemini.Modules.Shell.ViewModels
             }
         }
 
-	    public virtual string StateFile
-	    {
-	        get { return @".\ApplicationState.bin"; }
-	    }
+	    public virtual string StateFile => @".\ApplicationState.bin";
 
-        public bool HasPersistedState
-        {
-            get { return File.Exists(StateFile); }
-        }
+        public bool HasPersistedState => File.Exists(StateFile);
 
         public ShellViewModel()
         {

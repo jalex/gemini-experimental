@@ -16,7 +16,7 @@ namespace Gemini.Demo.Modules.TextEditor.ViewModels
     {
         private EditorView _view;
 		private string _originalText;
-        private bool notYetLoaded = false;
+        private bool _notYetLoaded = false;
 
         protected override Task DoNew()
         {
@@ -34,7 +34,7 @@ namespace Gemini.Demo.Modules.TextEditor.ViewModels
 
         protected override Task DoSave(string filePath)
         {
-            var newText = _view.textBox.Text;
+            var newText = _view.TextBox.Text;
             File.WriteAllText(filePath, newText);
             _originalText = newText;
             return TaskUtility.Completed;
@@ -45,14 +45,14 @@ namespace Gemini.Demo.Modules.TextEditor.ViewModels
             // At StartUp, _view is null, so notYetLoaded flag is added
             if (_view == null)
             {
-                notYetLoaded = true;
+                _notYetLoaded = true;
                 return;
             }
-            _view.textBox.Text = _originalText;
+            _view.TextBox.Text = _originalText;
 
-            _view.textBox.TextChanged += delegate
+            _view.TextBox.TextChanged += delegate
             {
-                IsDirty = string.Compare(_originalText, _view.textBox.Text) != 0;
+                IsDirty = string.Compare(_originalText, _view.TextBox.Text) != 0;
             };
         }
 
@@ -60,10 +60,10 @@ namespace Gemini.Demo.Modules.TextEditor.ViewModels
 		{
             _view = (EditorView) view;
 
-            if (notYetLoaded)
+            if (_notYetLoaded)
             {
                 ApplyOriginalText();
-                notYetLoaded = false;
+                _notYetLoaded = false;
             }
 		}
 

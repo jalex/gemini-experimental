@@ -7,19 +7,10 @@ namespace Gemini.Demo.Modules.FilterDesigner.Commands
     {
         public const string CommandName = "File.OpenGraph";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return "Open Graph"; }
-        }
+        public override string Text => "Open Graph";
 
-        public override string ToolTip
-        {
-            get { return "Open Graph"; }
-        }
+        public override string ToolTip => "Open Graph";
     }
 }

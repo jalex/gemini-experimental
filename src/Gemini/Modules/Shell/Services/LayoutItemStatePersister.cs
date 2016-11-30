@@ -60,17 +60,17 @@ namespace Gemini.Modules.Shell.Services
                         // throw exceptions here, instead of failing silently. These are design time errors.
                         var firstExport = exportTypes.FirstOrDefault();
                         if (firstExport == null)
-                            throw new InvalidOperationException(string.Format(
-                                "A ViewModel that participates in LayoutItem.ShouldReopenOnStart must be decorated with an ExportAttribute who's ContractType that inherits from ILayoutItem, infringing type is {0}.", itemType));
+                            throw new InvalidOperationException(
+                                $"A ViewModel that participates in LayoutItem.ShouldReopenOnStart must be decorated with an ExportAttribute who's ContractType that inherits from ILayoutItem, infringing type is {itemType}.");
                         if (exportTypes.Count > 1)
-                            throw new InvalidOperationException(string.Format(
-                                "A ViewModel that participates in LayoutItem.ShouldReopenOnStart can't be decorated with more than one ExportAttribute which inherits from ILayoutItem. infringing type is {0}.", itemType));
+                            throw new InvalidOperationException(
+                                $"A ViewModel that participates in LayoutItem.ShouldReopenOnStart can't be decorated with more than one ExportAttribute which inherits from ILayoutItem. infringing type is {itemType}.");
 
                         var selectedTypeName = firstExport.AssemblyQualifiedName;
 
                         if (string.IsNullOrEmpty(selectedTypeName))
-                            throw new InvalidOperationException(string.Format(
-                                "Could not retrieve the assembly qualified type name for {0}, most likely because the type is generic.", firstExport));
+                            throw new InvalidOperationException(
+                                $"Could not retrieve the assembly qualified type name for {firstExport}, most likely because the type is generic.");
                         // TODO: it is possible to save generic types. It requires that every generic parameter is saved, along with its position in the generic tree... A lot of work.
 
                         writer.Write(selectedTypeName);

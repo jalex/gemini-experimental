@@ -12,15 +12,9 @@ namespace Gemini.Modules.Inspector.ViewModels
     {
         public event EventHandler SelectedObjectChanged;
 
-        public override PaneLocation PreferredLocation
-        {
-            get { return PaneLocation.Right; }
-        }
+        public override PaneLocation PreferredLocation => PaneLocation.Right;
 
-        public override double PreferredWidth
-        {
-            get { return 300; }
-        }
+        public override double PreferredWidth => 300;
 
         private IInspectableObject _selectedObject;
 

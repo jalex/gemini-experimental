@@ -13,10 +13,7 @@ namespace Gemini.Modules.Inspector.Inspectors
     public class EnumEditorViewModel<TEnum> : EditorBase<TEnum>, ILabelledInspector
     {
         private readonly List<EnumValueViewModel<TEnum>> _items;
-        public IEnumerable<EnumValueViewModel<TEnum>> Items
-        {
-            get { return _items; }
-        }
+        public IEnumerable<EnumValueViewModel<TEnum>> Items => _items;
 
         public EnumEditorViewModel()
         {
@@ -37,10 +34,7 @@ namespace Gemini.Modules.Inspector.Inspectors
     public class EnumEditorViewModel : EditorBase<Enum>, ILabelledInspector
     {
         private readonly List<EnumValueViewModel> _items;
-        public IEnumerable<EnumValueViewModel> Items
-        {
-            get { return _items; }
-        }
+        public IEnumerable<EnumValueViewModel> Items => _items;
 
         public EnumEditorViewModel(Type enumType)
         {

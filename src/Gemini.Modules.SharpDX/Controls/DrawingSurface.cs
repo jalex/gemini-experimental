@@ -130,7 +130,7 @@ namespace Gemini.Modules.SharpDX.Controls
 	        if (_device == null)
 		        return;
 
-			_d3DSurface.SetRenderTargetDX10(null);
+			_d3DSurface.SetRenderTargetDx10(null);
 
 			Disposer.RemoveAndDispose(ref _backBuffer);
 
@@ -154,7 +154,7 @@ namespace Gemini.Modules.SharpDX.Controls
 			_graphicsDevice.Presenter = new RenderTargetGraphicsPresenter(
 				_graphicsDevice, _backBuffer, DepthFormat.Depth16);
 
-            _d3DSurface.SetRenderTargetDX10(_backBuffer);
+            _d3DSurface.SetRenderTargetDx10(_backBuffer);
         }
 
         private void StartRendering()
@@ -249,12 +249,9 @@ namespace Gemini.Modules.SharpDX.Controls
         /// Gets a value indicating whether the control is in design mode
         /// (running in Blend or Visual Studio).
         /// </summary>
-        public static bool IsInDesignMode
-        {
-	        get { return DesignerProperties.GetIsInDesignMode(new DependencyObject()); }
-        }
+        public static bool IsInDesignMode => DesignerProperties.GetIsInDesignMode(new DependencyObject());
 
-		public void Invalidate()
+	    public void Invalidate()
 		{
 			_contentNeedsRefresh = true;
 		}

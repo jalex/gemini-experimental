@@ -28,10 +28,7 @@ namespace Gemini.Modules.StatusBar.ViewModels
         }
 
         private readonly GridLength _width;
-        public GridLength Width
-        {
-            get { return _width; }
-        }
+        public GridLength Width => _width;
 
         public StatusBarItemViewModel(string message, GridLength width)
         {

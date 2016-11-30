@@ -20,16 +20,10 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         private readonly IInspectorTool _inspectorTool;
 
         private readonly BindableCollection<ElementViewModel> _elements;
-        public IObservableCollection<ElementViewModel> Elements
-        {
-            get { return _elements; }
-        }
+        public IObservableCollection<ElementViewModel> Elements => _elements;
 
         private readonly BindableCollection<ConnectionViewModel> _connections;
-        public IObservableCollection<ConnectionViewModel> Connections
-        {
-            get { return _connections; }
-        }
+        public IObservableCollection<ConnectionViewModel> Connections => _connections;
 
         public IEnumerable<ElementViewModel> SelectedElements
         {

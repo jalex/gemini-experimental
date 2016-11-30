@@ -13,10 +13,7 @@ namespace Gemini.Framework.Commands
         private string _toolTip;
         private Uri _iconSource;
 
-        public CommandDefinitionBase CommandDefinition
-        {
-            get { return _commandDefinition; }       
-        }
+        public CommandDefinitionBase CommandDefinition => _commandDefinition;
 
         public bool Visible
         {

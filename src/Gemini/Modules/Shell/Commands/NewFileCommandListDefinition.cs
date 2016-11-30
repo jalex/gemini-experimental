@@ -7,9 +7,6 @@ namespace Gemini.Modules.Shell.Commands
     {
         public const string CommandName = "File.NewFile";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
     }
 }

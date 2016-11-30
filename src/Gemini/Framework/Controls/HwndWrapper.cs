@@ -152,10 +152,7 @@ namespace Gemini.Framework.Controls
 
         #region Properties
 
-        public new bool IsMouseCaptured
-        {
-            get { return _isMouseCaptured; }
-        }
+        public new bool IsMouseCaptured => _isMouseCaptured;
 
         #endregion
 
@@ -323,7 +320,7 @@ namespace Gemini.Framework.Controls
 
             // Create the window
             return NativeMethods.CreateWindowEx(0, WindowClass, "",
-               NativeMethods.WS_CHILD | NativeMethods.WS_VISIBLE,
+               NativeMethods.WsChild | NativeMethods.WsVisible,
                0, 0, (int) Width, (int) Height, hWndParent, IntPtr.Zero, IntPtr.Zero, 0);
         }
 
@@ -332,12 +329,12 @@ namespace Gemini.Framework.Controls
         /// </summary>
         private void RegisterWindowClass()
         {
-            var wndClass = new NativeMethods.WNDCLASSEX();
+            var wndClass = new NativeMethods.Wndclassex();
             wndClass.cbSize = (uint) Marshal.SizeOf(wndClass);
             wndClass.hInstance = NativeMethods.GetModuleHandle(null);
             wndClass.lpfnWndProc = NativeMethods.DefaultWindowProc;
             wndClass.lpszClassName = WindowClass;
-            wndClass.hCursor = NativeMethods.LoadCursor(IntPtr.Zero, NativeMethods.IDC_ARROW);
+            wndClass.hCursor = NativeMethods.LoadCursor(IntPtr.Zero, NativeMethods.IdcArrow);
 
             NativeMethods.RegisterClassEx(ref wndClass);
         }
@@ -350,85 +347,85 @@ namespace Gemini.Framework.Controls
         {
             switch (msg)
             {
-                case NativeMethods.WM_MOUSEWHEEL:
+                case NativeMethods.WmMousewheel:
                     if (_mouseInWindow)
                     {
                         int delta = NativeMethods.GetWheelDeltaWParam(wParam.ToInt32());
                         RaiseHwndMouseWheel(new HwndMouseEventArgs(_mouseState, delta, 0));
                     }
                     break;
-                case NativeMethods.WM_LBUTTONDOWN:
+                case NativeMethods.WmLbuttondown:
                     _mouseState.LeftButton = MouseButtonState.Pressed;
                     RaiseHwndLButtonDown(new HwndMouseEventArgs(_mouseState));
                     break;
-                case NativeMethods.WM_LBUTTONUP:
+                case NativeMethods.WmLbuttonup:
                     _mouseState.LeftButton = MouseButtonState.Released;
                     RaiseHwndLButtonUp(new HwndMouseEventArgs(_mouseState));
                     break;
-                case NativeMethods.WM_LBUTTONDBLCLK:
+                case NativeMethods.WmLbuttondblclk:
                     RaiseHwndLButtonDblClick(new HwndMouseEventArgs(_mouseState, MouseButton.Left));
                     break;
-                case NativeMethods.WM_RBUTTONDOWN:
+                case NativeMethods.WmRbuttondown:
                     _mouseState.RightButton = MouseButtonState.Pressed;
                     RaiseHwndRButtonDown(new HwndMouseEventArgs(_mouseState));
                     break;
-                case NativeMethods.WM_RBUTTONUP:
+                case NativeMethods.WmRbuttonup:
                     _mouseState.RightButton = MouseButtonState.Released;
                     RaiseHwndRButtonUp(new HwndMouseEventArgs(_mouseState));
                     break;
-                case NativeMethods.WM_RBUTTONDBLCLK:
+                case NativeMethods.WmRbuttondblclk:
                     RaiseHwndRButtonDblClick(new HwndMouseEventArgs(_mouseState, MouseButton.Right));
                     break;
-                case NativeMethods.WM_MBUTTONDOWN:
+                case NativeMethods.WmMbuttondown:
                     _mouseState.MiddleButton = MouseButtonState.Pressed;
                     RaiseHwndMButtonDown(new HwndMouseEventArgs(_mouseState));
                     break;
-                case NativeMethods.WM_MBUTTONUP:
+                case NativeMethods.WmMbuttonup:
                     _mouseState.MiddleButton = MouseButtonState.Released;
                     RaiseHwndMButtonUp(new HwndMouseEventArgs(_mouseState));
                     break;
-                case NativeMethods.WM_MBUTTONDBLCLK:
+                case NativeMethods.WmMbuttondblclk:
                     RaiseHwndMButtonDblClick(new HwndMouseEventArgs(_mouseState, MouseButton.Middle));
                     break;
-                case NativeMethods.WM_XBUTTONDOWN:
-                    if (((int) wParam & NativeMethods.MK_XBUTTON1) != 0)
+                case NativeMethods.WmXbuttondown:
+                    if (((int) wParam & NativeMethods.MkXbutton1) != 0)
                     {
                         _mouseState.X1Button = MouseButtonState.Pressed;
                         RaiseHwndX1ButtonDown(new HwndMouseEventArgs(_mouseState));
                     }
-                    else if (((int) wParam & NativeMethods.MK_XBUTTON2) != 0)
+                    else if (((int) wParam & NativeMethods.MkXbutton2) != 0)
                     {
                         _mouseState.X2Button = MouseButtonState.Pressed;
                         RaiseHwndX2ButtonDown(new HwndMouseEventArgs(_mouseState));
                     }
                     break;
-                case NativeMethods.WM_XBUTTONUP:
-                    if (((int) wParam & NativeMethods.MK_XBUTTON1) != 0)
+                case NativeMethods.WmXbuttonup:
+                    if (((int) wParam & NativeMethods.MkXbutton1) != 0)
                     {
                         _mouseState.X1Button = MouseButtonState.Released;
                         RaiseHwndX1ButtonUp(new HwndMouseEventArgs(_mouseState));
                     }
-                    else if (((int) wParam & NativeMethods.MK_XBUTTON2) != 0)
+                    else if (((int) wParam & NativeMethods.MkXbutton2) != 0)
                     {
                         _mouseState.X2Button = MouseButtonState.Released;
                         RaiseHwndX2ButtonUp(new HwndMouseEventArgs(_mouseState));
                     }
                     break;
-                case NativeMethods.WM_XBUTTONDBLCLK:
-                    if (((int) wParam & NativeMethods.MK_XBUTTON1) != 0)
+                case NativeMethods.WmXbuttondblclk:
+                    if (((int) wParam & NativeMethods.MkXbutton1) != 0)
                         RaiseHwndX1ButtonDblClick(new HwndMouseEventArgs(_mouseState, MouseButton.XButton1));
-                    else if (((int) wParam & NativeMethods.MK_XBUTTON2) != 0)
+                    else if (((int) wParam & NativeMethods.MkXbutton2) != 0)
                         RaiseHwndX2ButtonDblClick(new HwndMouseEventArgs(_mouseState, MouseButton.XButton2));
                     break;
-                case NativeMethods.WM_MOUSEMOVE:
+                case NativeMethods.WmMousemove:
                     // If the application isn't in focus, we don't handle this message
                     if (!_applicationHasFocus)
                         break;
 
                     // record the prevous and new position of the mouse
                     _mouseState.ScreenPosition = PointToScreen(new Point(
-                        NativeMethods.GetXLParam((int) lParam),
-                        NativeMethods.GetYLParam((int) lParam)));
+                        NativeMethods.GetXlParam((int) lParam),
+                        NativeMethods.GetYlParam((int) lParam)));
 
                     if (!_mouseInWindow)
                     {
@@ -441,10 +438,10 @@ namespace Gemini.Framework.Controls
                         NativeMethods.SetFocus(_hWnd);
 
                         // send the track mouse event so that we get the WM_MOUSELEAVE message
-                        var tme = new NativeMethods.TRACKMOUSEEVENT
+                        var tme = new NativeMethods.Trackmouseevent
                         {
-                            cbSize = Marshal.SizeOf(typeof (NativeMethods.TRACKMOUSEEVENT)),
-                            dwFlags = NativeMethods.TME_LEAVE,
+                            cbSize = Marshal.SizeOf(typeof (NativeMethods.Trackmouseevent)),
+                            dwFlags = NativeMethods.TmeLeave,
                             hWnd = hwnd
                         };
                         NativeMethods.TrackMouseEvent(ref tme);
@@ -456,7 +453,7 @@ namespace Gemini.Framework.Controls
                     _previousPosition = _mouseState.ScreenPosition;
 
                     break;
-                case NativeMethods.WM_MOUSELEAVE:
+                case NativeMethods.WmMouseleave:
 
                     // If we have capture, we ignore this message because we're just
                     // going to reset the cursor position back into the window

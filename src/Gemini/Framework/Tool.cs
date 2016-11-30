@@ -17,17 +17,11 @@ namespace Gemini.Framework
 
 	    public abstract PaneLocation PreferredLocation { get; }
 
-	    public virtual double PreferredWidth
-	    {
-            get { return 200; }
-	    }
+	    public virtual double PreferredWidth => 200;
 
-        public virtual double PreferredHeight
-        {
-            get { return 200; }
-        }
+	    public virtual double PreferredHeight => 200;
 
-		private bool _isVisible;
+	    private bool _isVisible;
 		public bool IsVisible
 		{
 			get { return _isVisible; }
@@ -68,13 +62,9 @@ namespace Gemini.Framework
             }
         }
 
-        public override bool ShouldReopenOnStart
-        {
-            // Tool windows should always reopen on app start by default.
-            get { return true; }
-        }
+        public override bool ShouldReopenOnStart => true;
 
-		protected Tool()
+	    protected Tool()
 		{
 			IsVisible = true;
 		}

@@ -18,27 +18,15 @@ namespace Gemini.Framework
         private IShell _shell;
 #pragma warning restore 649
 
-        protected IMainWindow MainWindow
-	    {
-	        get { return _mainWindow; }
-	    }
+        protected IMainWindow MainWindow => _mainWindow;
 
-		protected IShell Shell
-		{
-			get { return _shell; }
-		}
+	    protected IShell Shell => _shell;
 
-		protected IMenu MainMenu
-		{
-			get { return _shell.MainMenu; }
-		}
+	    protected IMenu MainMenu => _shell.MainMenu;
 
-        protected IToolBars ToolBars
-        {
-            get { return _shell.ToolBars; }
-        }
+	    protected IToolBars ToolBars => _shell.ToolBars;
 
-        public virtual IEnumerable<ResourceDictionary> GlobalResourceDictionaries
+	    public virtual IEnumerable<ResourceDictionary> GlobalResourceDictionaries
         {
             get { yield break; }
         }

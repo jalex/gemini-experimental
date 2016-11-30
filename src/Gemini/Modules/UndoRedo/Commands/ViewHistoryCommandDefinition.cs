@@ -8,19 +8,10 @@ namespace Gemini.Modules.UndoRedo.Commands
     {
         public const string CommandName = "View.History";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return Resources.ViewHistoryCommandText; }
-        }
+        public override string Text => Resources.ViewHistoryCommandText;
 
-        public override string ToolTip
-        {
-            get { return Resources.ViewHistoryCommandToolTip; }
-        }
+        public override string ToolTip => Resources.ViewHistoryCommandToolTip;
     }
 }

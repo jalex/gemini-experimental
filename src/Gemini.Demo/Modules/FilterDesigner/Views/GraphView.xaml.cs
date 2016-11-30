@@ -16,10 +16,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.Views
     {
         private Point _originalContentMouseDownPoint;
 
-        private GraphViewModel ViewModel
-        {
-            get { return (GraphViewModel) DataContext; }
-        }
+        private GraphViewModel ViewModel => (GraphViewModel) DataContext;
 
         public GraphView()
         {

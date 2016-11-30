@@ -7,19 +7,10 @@ namespace Gemini.Demo.Modules.Home.Commands
     {
         public const string CommandName = "View.Helix";
 
-        public override string Name
-        {
-            get { return CommandName; }
-        }
+        public override string Name => CommandName;
 
-        public override string Text
-        {
-            get { return "Helix"; }
-        }
+        public override string Text => "Helix";
 
-        public override string ToolTip
-        {
-            get { return "Helix"; }
-        }
+        public override string ToolTip => "Helix";
     }
 }
