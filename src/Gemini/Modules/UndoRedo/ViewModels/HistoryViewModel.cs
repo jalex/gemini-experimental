@@ -119,7 +119,7 @@ namespace Gemini.Modules.UndoRedo.ViewModels
             NotifyOfPropertyChange(() => HistoryItems);
 
             if (!_internallyTriggeredChange)
-                UpdateSelectedIndexOnly(_historyItems.Count);
+                UpdateSelectedIndexOnly(_historyItems.IndexOf(_historyItems.First(x => x.ItemType == HistoryItemType.Current)) + 1);
         }
 
         public void UndoOrRedoTo(HistoryItemViewModel item)
