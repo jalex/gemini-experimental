@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -6,12 +8,14 @@ using System.Windows.Data;
 using Caliburn.Micro;
 using Gemini.Framework.Services;
 
+#endregion
+
 namespace Gemini.Modules.Inspector.Inspectors
 {
     public abstract class EditorBase<TValue> : InspectorBase, IEditor, IDisposable
     {
         private BoundPropertyDescriptor _boundPropertyDescriptor;
-        private IShell _shell;
+        private readonly IShell _shell;
 
         public EditorBase()
         {
@@ -19,41 +23,7 @@ namespace Gemini.Modules.Inspector.Inspectors
             IsUndoEnabled = true;
         }
 
-        public bool IsUndoEnabled
-        {
-            get;
-            set;
-        }
-
-        public bool CanReset
-        {
-            get
-            {
-                if (IsReadOnly)
-                    return false;
-
-                return BoundPropertyDescriptor.PropertyDescriptor.CanResetValue(BoundPropertyDescriptor.PropertyOwner);
-            }
-        }
-
-        public void Reset()
-        {
-            if (CanReset)
-            {
-                var item = _shell.ActiveItem;
-                if (IsUndoEnabled && item != null)
-                {
-                    item.UndoRedoManager.ExecuteAction(
-                        new ResetObjectValueAction(BoundPropertyDescriptor, StringConverter));
-                }
-                else
-                {
-                    BoundPropertyDescriptor.PropertyDescriptor.ResetValue(BoundPropertyDescriptor.PropertyOwner);
-                }
-            }
-        }
-
-        public override string Name => BoundPropertyDescriptor.PropertyDescriptor.DisplayName;
+        public bool IsUndoEnabled { get; set; }
 
         public string Description
         {
@@ -65,76 +35,23 @@ namespace Gemini.Modules.Inspector.Inspectors
             }
         }
 
-        public IValueConverter Converter
-        {
-            get;
-            set;
-        }
+        public IValueConverter Converter { get; set; }
 
-        public IValueConverter StringConverter
-        {
-            get;
-            set;
-        }
-
-        private void CleanupPropertyChanged()
-        {
-            if (_boundPropertyDescriptor != null) {
-                if (_boundPropertyDescriptor.PropertyDescriptor.SupportsChangeEvents) {
-                    _boundPropertyDescriptor.ValueChanged -= OnValueChanged;
-                } else if (typeof(INotifyPropertyChanged).IsAssignableFrom(_boundPropertyDescriptor.PropertyOwner.GetType())) {
-                    ((INotifyPropertyChanged)_boundPropertyDescriptor.PropertyOwner).PropertyChanged -= OnPropertyChanged;
-                }
-            }
-        }
-
-        public BoundPropertyDescriptor BoundPropertyDescriptor
-        {
-            get { return _boundPropertyDescriptor; }
-            set
-            {
-                CleanupPropertyChanged();
-
-                _boundPropertyDescriptor = value;
-
-                if (value.PropertyDescriptor.SupportsChangeEvents) {
-                    value.ValueChanged += OnValueChanged;
-                } else if (typeof(INotifyPropertyChanged).IsAssignableFrom(value.PropertyOwner.GetType())) {
-                    ((INotifyPropertyChanged)value.PropertyOwner).PropertyChanged += OnPropertyChanged;
-                }
-            }
-        }
-
-        public override bool IsReadOnly => BoundPropertyDescriptor.PropertyDescriptor.IsReadOnly;
+        public IValueConverter StringConverter { get; set; }
 
         public virtual bool IsDirty
         {
             get
             {
-                DefaultValueAttribute defaultAttribute = BoundPropertyDescriptor.PropertyDescriptor.Attributes.OfType<DefaultValueAttribute>().FirstOrDefault();
+                var defaultAttribute =
+                    BoundPropertyDescriptor.PropertyDescriptor.Attributes.OfType<DefaultValueAttribute>()
+                        .FirstOrDefault();
                 if (defaultAttribute == null)
                     /* Maybe not dirty, but we have no way to know if we don't have a default value */
                     return true;
 
                 return !Equals(defaultAttribute.Value, Value);
             }
-        }
-
-        private void OnValueChanged()
-        {
-            NotifyOfPropertyChange(() => Value);
-            NotifyOfPropertyChange(() => IsDirty);
-        }
-
-        private void OnValueChanged(object sender, EventArgs e)
-        {
-            OnValueChanged();
-        }
-
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName.Equals(BoundPropertyDescriptor.PropertyDescriptor.Name))
-                OnValueChanged();
         }
 
         public TValue Value
@@ -144,7 +61,8 @@ namespace Gemini.Modules.Inspector.Inspectors
                 if (!typeof(TValue).IsAssignableFrom(BoundPropertyDescriptor.PropertyDescriptor.PropertyType))
                 {
                     if (Converter == null)
-                        throw new InvalidCastException("editor property value does not match editor type and no converter specified");
+                        throw new InvalidCastException(
+                            "editor property value does not match editor type and no converter specified");
 
                     return (TValue) Converter.Convert(RawValue, typeof(TValue), null, CultureInfo.CurrentCulture);
                 }
@@ -161,9 +79,11 @@ namespace Gemini.Modules.Inspector.Inspectors
                 if (!typeof(TValue).IsAssignableFrom(BoundPropertyDescriptor.PropertyDescriptor.PropertyType))
                 {
                     if (Converter == null)
-                        throw new InvalidCastException("editor property value does not match editor type and no converter specified");
+                        throw new InvalidCastException(
+                            "editor property value does not match editor type and no converter specified");
 
-                    newValue = Converter.ConvertBack(value, BoundPropertyDescriptor.PropertyDescriptor.PropertyType, null, CultureInfo.CurrentCulture);
+                    newValue = Converter.ConvertBack(value, BoundPropertyDescriptor.PropertyDescriptor.PropertyType,
+                        null, CultureInfo.CurrentCulture);
                 }
 
                 /* Only notify of property change once */
@@ -172,15 +92,11 @@ namespace Gemini.Modules.Inspector.Inspectors
                 try
                 {
                     var item = _shell.ActiveItem;
-                    if (IsUndoEnabled && item != null)
-                    {
+                    if (IsUndoEnabled && (item != null))
                         item.UndoRedoManager.ExecuteAction(
                             new ChangeObjectValueAction(BoundPropertyDescriptor, newValue, StringConverter));
-                    }
                     else
-                    {
                         RawValue = newValue;
-                    }
                 }
                 finally
                 {
@@ -200,6 +116,76 @@ namespace Gemini.Modules.Inspector.Inspectors
         public virtual void Dispose()
         {
             CleanupPropertyChanged();
+        }
+
+        public bool CanReset
+        {
+            get
+            {
+                if (IsReadOnly)
+                    return false;
+
+                return BoundPropertyDescriptor.PropertyDescriptor.CanResetValue(BoundPropertyDescriptor.PropertyOwner);
+            }
+        }
+
+        public void Reset()
+        {
+            if (CanReset)
+            {
+                var item = _shell.ActiveItem;
+                if (IsUndoEnabled && (item != null))
+                    item.UndoRedoManager.ExecuteAction(
+                        new ResetObjectValueAction(BoundPropertyDescriptor, StringConverter));
+                else
+                    BoundPropertyDescriptor.PropertyDescriptor.ResetValue(BoundPropertyDescriptor.PropertyOwner);
+            }
+        }
+
+        public override string Name => BoundPropertyDescriptor.PropertyDescriptor.DisplayName;
+
+        public BoundPropertyDescriptor BoundPropertyDescriptor
+        {
+            get { return _boundPropertyDescriptor; }
+            set
+            {
+                CleanupPropertyChanged();
+
+                _boundPropertyDescriptor = value;
+
+                if (value.PropertyDescriptor.SupportsChangeEvents) value.ValueChanged += OnValueChanged;
+                else if (typeof(INotifyPropertyChanged).IsAssignableFrom(value.PropertyOwner.GetType()))
+                    ((INotifyPropertyChanged) value.PropertyOwner).PropertyChanged += OnPropertyChanged;
+            }
+        }
+
+        public override bool IsReadOnly => BoundPropertyDescriptor.PropertyDescriptor.IsReadOnly;
+
+        private void CleanupPropertyChanged()
+        {
+            if (_boundPropertyDescriptor != null)
+                if (_boundPropertyDescriptor.PropertyDescriptor.SupportsChangeEvents)
+                    _boundPropertyDescriptor.ValueChanged -= OnValueChanged;
+                else if (typeof(INotifyPropertyChanged).IsAssignableFrom(_boundPropertyDescriptor.PropertyOwner.GetType()))
+                    ((INotifyPropertyChanged) _boundPropertyDescriptor.PropertyOwner).PropertyChanged -=
+                        OnPropertyChanged;
+        }
+
+        private void OnValueChanged()
+        {
+            NotifyOfPropertyChange(() => Value);
+            NotifyOfPropertyChange(() => IsDirty);
+        }
+
+        private void OnValueChanged(object sender, EventArgs e)
+        {
+            OnValueChanged();
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals(BoundPropertyDescriptor.PropertyDescriptor.Name))
+                OnValueChanged();
         }
     }
 }

@@ -1,29 +1,35 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Gemini.Framework.Themes;
 using Gemini.Modules.Settings;
+using Gemini.Properties;
+
+#endregion
 
 namespace Gemini.Modules.MainMenu.ViewModels
 {
-    [Export(typeof (ISettingsEditor))]
+    [Export(typeof(ISettingsEditor))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class MainMenuSettingsViewModel : PropertyChangedBase, ISettingsEditor
     {
-        private readonly IThemeManager _themeManager;
-
-        private readonly static List<string> AvailableLanguages = new List<string> {
+        private static readonly List<string> AvailableLanguages = new List<string>
+        {
             string.Empty,
             "en",
             "de",
             "ru",
             "zh-Hans",
-            "ko",
+            "ko"
         };
 
-        private ITheme _selectedTheme;
-        private string _selectedLanguage;
+        private readonly IThemeManager _themeManager;
         private bool _autoHideMainMenu;
+        private string _selectedLanguage;
+
+        private ITheme _selectedTheme;
 
         [ImportingConstructor]
         public MainMenuSettingsViewModel(IThemeManager themeManager)
@@ -72,9 +78,9 @@ namespace Gemini.Modules.MainMenu.ViewModels
             }
         }
 
-        public string SettingsPageName => Properties.Resources.SettingsPageGeneral;
+        public string SettingsPageName => Resources.SettingsPageGeneral;
 
-        public string SettingsPagePath => Properties.Resources.SettingsPathEnvironment;
+        public string SettingsPagePath => Resources.SettingsPathEnvironment;
 
         public void ApplyChanges()
         {

@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿#region
+
+using System.Threading.Tasks;
+
+#endregion
 
 namespace Gemini.Framework.Threading
 {

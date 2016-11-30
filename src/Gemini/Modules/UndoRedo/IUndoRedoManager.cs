@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region
+
+using System;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Modules.UndoRedo
 {
@@ -8,10 +12,10 @@ namespace Gemini.Modules.UndoRedo
         IObservableCollection<IUndoableAction> UndoStack { get; }
         IObservableCollection<IUndoableAction> RedoStack { get; }
 
+        int? UndoCountLimit { get; set; }
+
         event EventHandler BatchBegin;
         event EventHandler BatchEnd;
-
-        int? UndoCountLimit { get; set; }
 
         void ExecuteAction(IUndoableAction action);
 

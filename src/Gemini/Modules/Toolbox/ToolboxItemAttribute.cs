@@ -1,15 +1,14 @@
-﻿using System;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace Gemini.Modules.Toolbox
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class ToolboxItemAttribute : Attribute
     {
-        public Type DocumentType { get; set; }
-        public string Name { get; set; }
-        public string Category { get; set; }
-        public string IconSource { get; set; }
-
         public ToolboxItemAttribute(Type documentType, string name, string category, string iconSource = null)
         {
             DocumentType = documentType;
@@ -17,5 +16,10 @@ namespace Gemini.Modules.Toolbox
             Category = category;
             IconSource = iconSource;
         }
+
+        public Type DocumentType { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public string IconSource { get; set; }
     }
 }

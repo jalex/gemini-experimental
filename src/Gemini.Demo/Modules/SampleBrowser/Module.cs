@@ -1,7 +1,11 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Gemini.Demo.Modules.SampleBrowser.ViewModels;
 using Gemini.Framework;
+
+#endregion
 
 namespace Gemini.Demo.Modules.SampleBrowser
 {

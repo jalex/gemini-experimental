@@ -1,22 +1,4 @@
-﻿// Copyright (c) 2010-2013 SharpDX - Alexandre Mutel
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+﻿#region
 
 using System;
 using System.Diagnostics;
@@ -26,42 +8,29 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Gemini.Modules.MonoGame.Services;
 using Microsoft.Xna.Framework.Graphics;
+using SharpDX.Direct3D9;
+using Texture = SharpDX.Direct3D9.Texture;
+
+#endregion
 
 namespace Gemini.Modules.MonoGame.Controls
 {
-	public class DrawingSurface : ContentControl, IDisposable
-	{
-		/// <summary>
-		/// Occurs when the control has initialized the GraphicsDevice.
-		/// </summary>
-		public event EventHandler<GraphicsDeviceEventArgs> LoadContent;
+    public class DrawingSurface : ContentControl, IDisposable
+    {
+        private readonly D3DImage _d3DImage;
+        private readonly Image _image;
 
-		/// <summary>
-		/// Occurs when the DrawingSurface has been invalidated.
-		/// </summary>
-		public event EventHandler<DrawEventArgs> Draw;
+        private bool _contentNeedsRefresh;
 
-	    private GraphicsDeviceService _graphicsDeviceService;
-	    private readonly D3DImage _d3DImage;
-	    private readonly Image _image;
-		private RenderTarget2D _renderTarget;
-	    private SharpDX.Direct3D9.Texture _renderTargetD3D9;
+        private GraphicsDeviceService _graphicsDeviceService;
+        private RenderTarget2D _renderTarget;
+        private Texture _renderTargetD3D9;
 
-		private bool _contentNeedsRefresh;
-
-		/// <summary>
-		/// Gets or sets a value indicating whether this control will redraw every time the CompositionTarget.Rendering event is fired.
-		/// Defaults to false.
-		/// </summary>
-		public bool AlwaysRefresh { get; set; }
-
-        public GraphicsDevice GraphicsDevice => _graphicsDeviceService.GraphicsDevice;
-
-	    public DrawingSurface()
+        public DrawingSurface()
         {
             _d3DImage = new D3DImage();
 
-            _image = new Image { Source = _d3DImage, Stretch = Stretch.None };
+            _image = new Image {Source = _d3DImage, Stretch = Stretch.None};
             AddChild(_image);
 
             _d3DImage.IsFrontBufferAvailableChanged += OnD3DImageIsFrontBufferAvailableChanged;
@@ -69,6 +38,25 @@ namespace Gemini.Modules.MonoGame.Controls
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
         }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether this control will redraw every time the CompositionTarget.Rendering event
+        ///     is fired.
+        ///     Defaults to false.
+        /// </summary>
+        public bool AlwaysRefresh { get; set; }
+
+        public GraphicsDevice GraphicsDevice => _graphicsDeviceService.GraphicsDevice;
+
+        /// <summary>
+        ///     Occurs when the control has initialized the GraphicsDevice.
+        /// </summary>
+        public event EventHandler<GraphicsDeviceEventArgs> LoadContent;
+
+        /// <summary>
+        ///     Occurs when the DrawingSurface has been invalidated.
+        /// </summary>
+        public event EventHandler<DrawEventArgs> Draw;
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
@@ -121,7 +109,8 @@ namespace Gemini.Modules.MonoGame.Controls
         }
 
         /// <summary>
-        /// If we didn't do this, D3DImage would keep an reference to the backbuffer that causes the device reset below to fail.
+        ///     If we didn't do this, D3DImage would keep an reference to the backbuffer that causes the device reset below to
+        ///     fail.
         /// </summary>
         private void RemoveBackBufferReference()
         {
@@ -147,19 +136,19 @@ namespace Gemini.Modules.MonoGame.Controls
             if (_renderTarget == null)
             {
                 _renderTarget = new RenderTarget2D(GraphicsDevice, (int) ActualWidth, (int) ActualHeight,
-                    false, SurfaceFormat.Bgra32, DepthFormat.Depth24Stencil8, 1, 
+                    false, SurfaceFormat.Bgra32, DepthFormat.Depth24Stencil8, 1,
                     RenderTargetUsage.PlatformContents, true);
 
                 var handle = _renderTarget.GetSharedHandle();
                 if (handle == IntPtr.Zero)
                     throw new ArgumentException("Handle could not be retrieved");
 
-                _renderTargetD3D9 = new SharpDX.Direct3D9.Texture(DeviceService.D3DDevice,
+                _renderTargetD3D9 = new Texture(DeviceService.D3DDevice,
                     _renderTarget.Width, _renderTarget.Height,
-                    1, SharpDX.Direct3D9.Usage.RenderTarget, SharpDX.Direct3D9.Format.A8R8G8B8,
-                    SharpDX.Direct3D9.Pool.Default, ref handle);
+                    1, Usage.RenderTarget, Format.A8R8G8B8,
+                    Pool.Default, ref handle);
 
-                using (SharpDX.Direct3D9.Surface surface = _renderTargetD3D9.GetSurfaceLevel(0))
+                using (var surface = _renderTargetD3D9.GetSurfaceLevel(0))
                 {
                     _d3DImage.Lock();
                     _d3DImage.SetBackBuffer(D3DResourceType.IDirect3DSurface9, surface.NativePointer);
@@ -242,7 +231,7 @@ namespace Gemini.Modules.MonoGame.Controls
 
         private bool HandleDeviceReset()
         {
-            bool deviceNeedsReset = false;
+            var deviceNeedsReset = false;
 
             switch (_graphicsDeviceService.GraphicsDevice.GraphicsDeviceStatus)
             {
@@ -273,11 +262,9 @@ namespace Gemini.Modules.MonoGame.Controls
 
         #region IDisposable
 
-        private bool _isDisposed;
+        public bool IsDisposed { get; private set; }
 
-        public bool IsDisposed => _isDisposed;
-
-	    public void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -285,7 +272,7 @@ namespace Gemini.Modules.MonoGame.Controls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_isDisposed)
+            if (!IsDisposed)
             {
                 if (_renderTarget != null)
                     _renderTarget.Dispose();
@@ -293,7 +280,7 @@ namespace Gemini.Modules.MonoGame.Controls
                     _renderTargetD3D9.Dispose();
                 if (_graphicsDeviceService != null)
                     _graphicsDeviceService.Release(disposing);
-                _isDisposed = true;
+                IsDisposed = true;
             }
         }
 
@@ -303,5 +290,5 @@ namespace Gemini.Modules.MonoGame.Controls
         }
 
         #endregion
-	}
+    }
 }

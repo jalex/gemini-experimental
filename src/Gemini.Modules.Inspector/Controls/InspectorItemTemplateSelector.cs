@@ -1,6 +1,10 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Controls;
 using Gemini.Modules.Inspector.Inspectors;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Controls
 {

@@ -1,18 +1,15 @@
-﻿#region File Description
-//-----------------------------------------------------------------------------
-// Microsoft XNA Community Game Platform
-// Copyright (C) Microsoft Corporation. All rights reserved.
-//-----------------------------------------------------------------------------
-#endregion
+﻿#region
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+#endregion
+
 namespace Gemini.Demo.Xna.Primitives
 {
     /// <summary>
-    /// Custom vertex type for vertices that have just a
-    /// position and a normal, without any texture coordinates.
+    ///     Custom vertex type for vertices that have just a
+    ///     position and a normal, without any texture coordinates.
     /// </summary>
     public struct VertexPositionNormal : IVertexType
     {
@@ -20,7 +17,7 @@ namespace Gemini.Demo.Xna.Primitives
         public Vector3 Normal;
 
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
         public VertexPositionNormal(Vector3 position, Vector3 normal)
         {
@@ -29,8 +26,8 @@ namespace Gemini.Demo.Xna.Primitives
         }
 
         /// <summary>
-        /// A VertexDeclaration object, which contains information about the vertex
-        /// elements contained within this struct.
+        ///     A VertexDeclaration object, which contains information about the vertex
+        ///     elements contained within this struct.
         /// </summary>
         public static readonly VertexDeclaration VertexDeclaration = new VertexDeclaration
         (

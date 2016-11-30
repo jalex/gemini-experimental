@@ -1,13 +1,17 @@
+#region
+
 using Gemini.Framework.Services;
+
+#endregion
 
 namespace Gemini.Framework
 {
-	public interface ITool : ILayoutItem
-	{
-		PaneLocation PreferredLocation { get; }
+    public interface ITool : ILayoutItem
+    {
+        PaneLocation PreferredLocation { get; }
         double PreferredWidth { get; }
         double PreferredHeight { get; }
 
-		bool IsVisible { get; set; }
-	}
+        bool IsVisible { get; set; }
+    }
 }

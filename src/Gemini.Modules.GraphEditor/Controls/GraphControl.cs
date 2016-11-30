@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿#region
+
+using System.Collections;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+
+#endregion
 
 namespace Gemini.Modules.GraphEditor.Controls
 {
@@ -17,6 +21,50 @@ namespace Gemini.Modules.GraphEditor.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(GraphControl),
                 new FrameworkPropertyMetadata(typeof(GraphControl)));
+        }
+
+        public GraphControl()
+        {
+            AddHandler(ConnectorItem.ConnectorDragStartedEvent,
+                new ConnectorItemDragStartedEventHandler(OnConnectorItemDragStarted));
+            AddHandler(ConnectorItem.ConnectorDraggingEvent,
+                new ConnectorItemDraggingEventHandler(OnConnectorItemDragging));
+            AddHandler(ConnectorItem.ConnectorDragCompletedEvent,
+                new ConnectorItemDragCompletedEventHandler(OnConnectorItemDragCompleted));
+        }
+
+        public IList SelectedElements => _elementItemsControl.SelectedItems;
+
+        public event SelectionChangedEventHandler SelectionChanged;
+
+        public override void OnApplyTemplate()
+        {
+            _elementItemsControl = (ElementItemsControl) Template.FindName("PART_ElementItemsControl", this);
+            _elementItemsControl.SelectionChanged += OnElementItemsControlSelectChanged;
+            base.OnApplyTemplate();
+        }
+
+        private void OnElementItemsControlSelectChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var handler = SelectionChanged;
+            if (handler != null)
+                handler(this,
+                    new SelectionChangedEventArgs(Selector.SelectionChangedEvent, e.RemovedItems, e.AddedItems));
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            _elementItemsControl.SelectedItems.Clear();
+            base.OnMouseLeftButtonDown(e);
+        }
+
+        internal int GetMaxZIndex()
+        {
+            return _elementItemsControl.Items.Cast<object>()
+                .Select(item => (ElementItem) _elementItemsControl.ItemContainerGenerator.ContainerFromItem(item))
+                .Select(elementItem => elementItem.ZIndex)
+                .Concat(new[] {0})
+                .Max();
         }
 
         #region Dependency properties
@@ -49,7 +97,8 @@ namespace Gemini.Modules.GraphEditor.Controls
         }
 
         public static readonly DependencyProperty ElementItemDataTemplateSelectorProperty = DependencyProperty.Register(
-            "ElementItemDataTemplateSelector", typeof(DataTemplateSelector), typeof(GraphControl), new PropertyMetadata(null));
+            "ElementItemDataTemplateSelector", typeof(DataTemplateSelector), typeof(GraphControl),
+            new PropertyMetadata(null));
 
         public DataTemplateSelector ElementItemDataTemplateSelector
         {
@@ -57,8 +106,10 @@ namespace Gemini.Modules.GraphEditor.Controls
             set { SetValue(ElementItemDataTemplateSelectorProperty, value); }
         }
 
-        public static readonly DependencyProperty ConnectionItemDataTemplateSelectorProperty = DependencyProperty.Register(
-            "ConnectionItemDataTemplateSelector", typeof(DataTemplateSelector), typeof(GraphControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty ConnectionItemDataTemplateSelectorProperty = DependencyProperty
+            .Register(
+                "ConnectionItemDataTemplateSelector", typeof(DataTemplateSelector), typeof(GraphControl),
+                new PropertyMetadata(null));
 
         public DataTemplateSelector ConnectionItemDataTemplateSelector
         {
@@ -98,15 +149,15 @@ namespace Gemini.Modules.GraphEditor.Controls
         #region Routed events
 
         public static readonly RoutedEvent ConnectionDragStartedEvent = EventManager.RegisterRoutedEvent(
-            "ConnectionDragStarted", RoutingStrategy.Bubble, typeof(ConnectionDragStartedEventHandler), 
+            "ConnectionDragStarted", RoutingStrategy.Bubble, typeof(ConnectionDragStartedEventHandler),
             typeof(GraphControl));
 
         public static readonly RoutedEvent ConnectionDraggingEvent = EventManager.RegisterRoutedEvent(
-            "ConnectionDragging", RoutingStrategy.Bubble, typeof(ConnectionDraggingEventHandler), 
+            "ConnectionDragging", RoutingStrategy.Bubble, typeof(ConnectionDraggingEventHandler),
             typeof(GraphControl));
 
         public static readonly RoutedEvent ConnectionDragCompletedEvent = EventManager.RegisterRoutedEvent(
-            "ConnectionDragCompleted", RoutingStrategy.Bubble, typeof(ConnectionDragCompletedEventHandler), 
+            "ConnectionDragCompleted", RoutingStrategy.Bubble, typeof(ConnectionDragCompletedEventHandler),
             typeof(GraphControl));
 
         public event ConnectionDragStartedEventHandler ConnectionDragStarted
@@ -129,46 +180,6 @@ namespace Gemini.Modules.GraphEditor.Controls
 
         #endregion
 
-        public event SelectionChangedEventHandler SelectionChanged;
-
-        public IList SelectedElements => _elementItemsControl.SelectedItems;
-
-        public GraphControl()
-        {
-            AddHandler(ConnectorItem.ConnectorDragStartedEvent, new ConnectorItemDragStartedEventHandler(OnConnectorItemDragStarted));
-            AddHandler(ConnectorItem.ConnectorDraggingEvent, new ConnectorItemDraggingEventHandler(OnConnectorItemDragging));
-            AddHandler(ConnectorItem.ConnectorDragCompletedEvent, new ConnectorItemDragCompletedEventHandler(OnConnectorItemDragCompleted));
-        }
-
-        public override void OnApplyTemplate()
-        {
-            _elementItemsControl = (ElementItemsControl) Template.FindName("PART_ElementItemsControl", this);
-            _elementItemsControl.SelectionChanged += OnElementItemsControlSelectChanged;
-            base.OnApplyTemplate();
-        }
-
-        private void OnElementItemsControlSelectChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var handler = SelectionChanged;
-            if (handler != null)
-                handler(this, new SelectionChangedEventArgs(Selector.SelectionChangedEvent, e.RemovedItems, e.AddedItems));
-        }
-
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            _elementItemsControl.SelectedItems.Clear();
-            base.OnMouseLeftButtonDown(e);
-        }
-
-        internal int GetMaxZIndex()
-        {
-            return _elementItemsControl.Items.Cast<object>()
-                .Select(item => (ElementItem) _elementItemsControl.ItemContainerGenerator.ContainerFromItem(item))
-                .Select(elementItem => elementItem.ZIndex)
-                .Concat(new[] { 0 })
-                .Max();
-        }
-
         #region Connection dragging
 
         private ConnectorItem _draggingSourceConnector;
@@ -180,7 +191,7 @@ namespace Gemini.Modules.GraphEditor.Controls
 
             _draggingSourceConnector = (ConnectorItem) e.OriginalSource;
 
-            var eventArgs = new ConnectionDragStartedEventArgs(ConnectionDragStartedEvent, this, 
+            var eventArgs = new ConnectionDragStartedEventArgs(ConnectionDragStartedEvent, this,
                 _draggingSourceConnector.ParentElementItem, _draggingSourceConnector);
             RaiseEvent(eventArgs);
 
@@ -205,10 +216,10 @@ namespace Gemini.Modules.GraphEditor.Controls
         {
             e.Handled = true;
 
-            RaiseEvent(new ConnectionDragCompletedEventArgs(ConnectionDragCompletedEvent, this, 
+            RaiseEvent(new ConnectionDragCompletedEventArgs(ConnectionDragCompletedEvent, this,
                 _draggingSourceConnector.ParentElementItem, _draggingConnectionDataContext,
                 _draggingSourceConnector));
-             
+
             _draggingSourceConnector = null;
             _draggingConnectionDataContext = null;
         }

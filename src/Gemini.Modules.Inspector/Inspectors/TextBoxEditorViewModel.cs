@@ -2,6 +2,5 @@
 {
     public class TextBoxEditorViewModel<T> : EditorBase<T>, ILabelledInspector
     {
-        
     }
 }

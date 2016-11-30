@@ -1,12 +1,34 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
 {
     public class ConnectionViewModel : PropertyChangedBase
     {
         private OutputConnectorViewModel _from;
+
+        private Point _fromPosition;
+
+        private InputConnectorViewModel _to;
+
+        private Point _toPosition;
+
+        public ConnectionViewModel(OutputConnectorViewModel from, InputConnectorViewModel to)
+        {
+            From = from;
+            To = to;
+        }
+
+        public ConnectionViewModel(OutputConnectorViewModel from)
+        {
+            From = from;
+        }
+
         public OutputConnectorViewModel From
         {
             get { return _from; }
@@ -31,7 +53,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             }
         }
 
-        private InputConnectorViewModel _to;
         public InputConnectorViewModel To
         {
             get { return _to; }
@@ -56,7 +77,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             }
         }
 
-        private Point _fromPosition;
         public Point FromPosition
         {
             get { return _fromPosition; }
@@ -67,7 +87,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             }
         }
 
-        private Point _toPosition;
         public Point ToPosition
         {
             get { return _toPosition; }
@@ -76,17 +95,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
                 _toPosition = value;
                 NotifyOfPropertyChange(() => ToPosition);
             }
-        }
-
-        public ConnectionViewModel(OutputConnectorViewModel from, InputConnectorViewModel to)
-        {
-            From = from;
-            To = to;
-        }
-
-        public ConnectionViewModel(OutputConnectorViewModel from)
-        {
-            From = from;
         }
 
         private void OnFromPositionChanged(object sender, EventArgs e)

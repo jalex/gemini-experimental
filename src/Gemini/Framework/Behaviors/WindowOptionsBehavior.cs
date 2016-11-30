@@ -1,15 +1,27 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
 using Gemini.Framework.Win32;
+
+#endregion
 
 namespace Gemini.Framework.Behaviors
 {
     public class WindowOptionsBehavior : Behavior<Window>
     {
         public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register(
-            "ShowIcon", typeof(bool), typeof(WindowOptionsBehavior), 
+            "ShowIcon", typeof(bool), typeof(WindowOptionsBehavior),
+            new PropertyMetadata(true, OnWindowOptionChanged));
+
+        public static readonly DependencyProperty ShowMinimizeBoxProperty = DependencyProperty.Register(
+            "ShowMinimizeBox", typeof(bool), typeof(WindowOptionsBehavior),
+            new PropertyMetadata(true, OnWindowOptionChanged));
+
+        public static readonly DependencyProperty ShowMaximizeBoxProperty = DependencyProperty.Register(
+            "ShowMaximizeBox", typeof(bool), typeof(WindowOptionsBehavior),
             new PropertyMetadata(true, OnWindowOptionChanged));
 
         public bool ShowIcon
@@ -18,19 +30,11 @@ namespace Gemini.Framework.Behaviors
             set { SetValue(ShowIconProperty, value); }
         }
 
-        public static readonly DependencyProperty ShowMinimizeBoxProperty = DependencyProperty.Register(
-            "ShowMinimizeBox", typeof(bool), typeof(WindowOptionsBehavior),
-            new PropertyMetadata(true, OnWindowOptionChanged));
-
         public bool ShowMinimizeBox
         {
             get { return (bool) GetValue(ShowMinimizeBoxProperty); }
             set { SetValue(ShowMinimizeBoxProperty, value); }
         }
-
-        public static readonly DependencyProperty ShowMaximizeBoxProperty = DependencyProperty.Register(
-            "ShowMaximizeBox", typeof(bool), typeof(WindowOptionsBehavior),
-            new PropertyMetadata(true, OnWindowOptionChanged));
 
         public bool ShowMaximizeBox
         {
@@ -75,7 +79,8 @@ namespace Gemini.Framework.Behaviors
                     exWindowStyle | NativeMethods.WsExDlgmodalframe);
 
                 NativeMethods.SetWindowPos(handle, IntPtr.Zero, 0, 0, 0, 0,
-                    NativeMethods.SwpNomove | NativeMethods.SwpNosize | NativeMethods.SwpNozorder | NativeMethods.SwpFramechanged);
+                    NativeMethods.SwpNomove | NativeMethods.SwpNosize | NativeMethods.SwpNozorder |
+                    NativeMethods.SwpFramechanged);
 
                 NativeMethods.SendMessage(handle, NativeMethods.WmSeticon, IntPtr.Zero, IntPtr.Zero);
             }

@@ -1,5 +1,9 @@
+#region
+
 using System;
 using Gemini.Framework.Commands;
+
+#endregion
 
 namespace Gemini.Modules.ErrorList.Commands
 {
@@ -14,6 +18,7 @@ namespace Gemini.Modules.ErrorList.Commands
 
         public override string ToolTip => "[NotUsed]";
 
-        public override Uri IconSource => new Uri("pack://application:,,,/Gemini.Modules.ErrorList;component/Resources/Message.png");
+        public override Uri IconSource
+            => new Uri("pack://application:,,,/Gemini.Modules.ErrorList;component/Resources/Message.png");
     }
 }

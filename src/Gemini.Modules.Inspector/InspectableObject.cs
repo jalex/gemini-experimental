@@ -1,15 +1,19 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using Gemini.Modules.Inspector.Inspectors;
+
+#endregion
 
 namespace Gemini.Modules.Inspector
 {
     public class InspectableObject : IInspectableObject
     {
-        public IEnumerable<IInspector> Inspectors { get; set; }
-
         public InspectableObject(IEnumerable<IInspector> inspectors)
         {
             Inspectors = inspectors;
         }
+
+        public IEnumerable<IInspector> Inspectors { get; set; }
     }
 }

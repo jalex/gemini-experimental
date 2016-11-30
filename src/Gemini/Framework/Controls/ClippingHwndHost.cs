@@ -1,19 +1,38 @@
-﻿using System.Collections;
+﻿#region
+
+using System.Collections;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using Gemini.Framework.Win32;
 
+#endregion
+
 namespace Gemini.Framework.Controls
 {
     public class ClippingHwndHost : HwndHost
     {
-        private HwndSource _source;
-
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
             "Content", typeof(Visual), typeof(ClippingHwndHost),
             new PropertyMetadata(OnContentChanged));
+
+        private HwndSource _source;
+
+        public Visual Content
+        {
+            get { return (Visual) GetValue(ContentProperty); }
+            set { SetValue(ContentProperty, value); }
+        }
+
+        protected override IEnumerator LogicalChildren
+        {
+            get
+            {
+                if (Content != null)
+                    yield return Content;
+            }
+        }
 
         private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -34,27 +53,12 @@ namespace Gemini.Framework.Controls
             }
         }
 
-        public Visual Content
-        {
-            get { return (Visual) GetValue(ContentProperty); }
-            set { SetValue(ContentProperty, value); }
-        }
-
-        protected override IEnumerator LogicalChildren
-        {
-            get
-            {
-                if (Content != null)
-                    yield return Content;
-            }
-        }
-
         protected override HandleRef BuildWindowCore(HandleRef hwndParent)
         {
             var param = new HwndSourceParameters("GeminiClippingHwndHost", (int) Width, (int) Height)
             {
                 ParentWindow = hwndParent.Handle,
-                WindowStyle = NativeMethods.WsVisible | NativeMethods.WsChild,
+                WindowStyle = NativeMethods.WsVisible | NativeMethods.WsChild
             };
 
             _source = new HwndSource(param)

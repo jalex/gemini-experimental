@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Windows.Media;
+
+#endregion
 
 namespace Gemini.Framework.Behaviors
 {
@@ -18,7 +22,7 @@ namespace Gemini.Framework.Behaviors
         }
 
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(
-            "SelectedItem", typeof(object), typeof(BindableTreeViewSelectedItemBehavior), 
+            "SelectedItem", typeof(object), typeof(BindableTreeViewSelectedItemBehavior),
             new UIPropertyMetadata(null, OnSelectedItemChanged));
 
         private static void OnSelectedItemChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -50,7 +54,7 @@ namespace Gemini.Framework.Behaviors
                         tree.Loaded -= handler;
                     };
                     tree.Loaded += handler;
-                    
+
                     return;
                 }
                 tvi = GetTreeViewItem(tree, e.NewValue);
@@ -73,15 +77,11 @@ namespace Gemini.Framework.Behaviors
             if (container != null)
             {
                 if (container.DataContext == item)
-                {
                     return container as TreeViewItem;
-                }
 
                 // Expand the current container
                 if (container is TreeViewItem && !((TreeViewItem) container).IsExpanded)
-                {
                     container.SetValue(TreeViewItem.IsExpandedProperty, true);
-                }
 
                 // Try to generate the ItemsPresenter and the ItemsPanel.
                 // by calling ApplyTemplate.  Note that in the 
@@ -118,26 +118,16 @@ namespace Gemini.Framework.Behaviors
                 for (int i = 0, count = container.Items.Count; i < count; i++)
                 {
                     var subContainer = (TreeViewItem) container.ItemContainerGenerator.
-                                                          ContainerFromIndex(i);
+                        ContainerFromIndex(i);
                     if (subContainer == null)
-                    {
                         continue;
-                    }
 
                     subContainer.BringIntoView();
 
                     // Search the next level for the object.
                     var resultContainer = GetTreeViewItem(subContainer, item);
                     if (resultContainer != null)
-                    {
                         return resultContainer;
-                    }
-                    else
-                    {
-                        // The object is not under this TreeViewItem
-                        // so collapse it.
-                        //subContainer.IsExpanded = false;
-                    }
                 }
             }
 
@@ -145,29 +135,25 @@ namespace Gemini.Framework.Behaviors
         }
 
         /// <summary>
-        /// Search for an element of a certain type in the visual tree.
+        ///     Search for an element of a certain type in the visual tree.
         /// </summary>
         /// <typeparam name="T">The type of element to find.</typeparam>
         /// <param name="visual">The parent element.</param>
         /// <returns></returns>
         private static T FindVisualChild<T>(Visual visual) where T : Visual
         {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(visual); i++)
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(visual); i++)
             {
-                Visual child = (Visual) VisualTreeHelper.GetChild(visual, i);
+                var child = (Visual) VisualTreeHelper.GetChild(visual, i);
                 if (child != null)
                 {
-                    T correctlyTyped = child as T;
+                    var correctlyTyped = child as T;
                     if (correctlyTyped != null)
-                    {
                         return correctlyTyped;
-                    }
 
-                    T descendent = FindVisualChild<T>(child);
+                    var descendent = FindVisualChild<T>(child);
                     if (descendent != null)
-                    {
                         return descendent;
-                    }
                 }
             }
 
@@ -190,9 +176,7 @@ namespace Gemini.Framework.Behaviors
             base.OnDetaching();
 
             if (AssociatedObject != null)
-            {
                 AssociatedObject.SelectedItemChanged -= OnTreeViewSelectedItemChanged;
-            }
         }
 
         #endregion

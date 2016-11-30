@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Modules.RecentFiles.ViewModels
 {

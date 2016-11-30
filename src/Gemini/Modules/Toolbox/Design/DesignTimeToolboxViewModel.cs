@@ -1,4 +1,9 @@
-﻿using Gemini.Modules.Toolbox.ViewModels;
+﻿#region
+
+using Gemini.Modules.Toolbox.Models;
+using Gemini.Modules.Toolbox.ViewModels;
+
+#endregion
 
 namespace Gemini.Modules.Toolbox.Design
 {
@@ -7,9 +12,9 @@ namespace Gemini.Modules.Toolbox.Design
         public DesignTimeToolboxViewModel()
             : base(null, null)
         {
-            Items.Add(new ToolboxItemViewModel(new Models.ToolboxItem { Name = "Foo", Category = "General" }));
-            Items.Add(new ToolboxItemViewModel(new Models.ToolboxItem { Name = "Bar", Category = "General" }));
-            Items.Add(new ToolboxItemViewModel(new Models.ToolboxItem { Name = "Baz", Category = "Misc" }));
+            Items.Add(new ToolboxItemViewModel(new ToolboxItem {Name = "Foo", Category = "General"}));
+            Items.Add(new ToolboxItemViewModel(new ToolboxItem {Name = "Bar", Category = "General"}));
+            Items.Add(new ToolboxItemViewModel(new ToolboxItem {Name = "Baz", Category = "Misc"}));
         }
     }
 }

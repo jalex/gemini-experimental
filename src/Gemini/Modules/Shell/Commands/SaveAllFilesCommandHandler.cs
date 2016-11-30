@@ -1,10 +1,14 @@
-﻿using Gemini.Framework;
-using Gemini.Framework.Commands;
-using Gemini.Framework.Services;
+﻿#region
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
+using Gemini.Framework;
+using Gemini.Framework.Commands;
+using Gemini.Framework.Services;
+
+#endregion
 
 namespace Gemini.Modules.Shell.Commands
 {
@@ -30,9 +34,7 @@ namespace Gemini.Modules.Shell.Commands
 
                 // skip if the file is new
                 if (!persistedDocument.IsNew)
-                {
                     await persistedDocument.Save(persistedDocument.FilePath);
-                }
             }
 
             // TODO: display "Item(s) saved" in statusbar

@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Input;
+
+#endregion
 
 namespace Gemini.Framework.Commands
 {

@@ -1,15 +1,19 @@
+#region
+
 using System;
+
+#endregion
 
 namespace Gemini.Framework.Commands
 {
     public abstract class CommandListDefinition : CommandDefinitionBase
     {
-        public override sealed string Text => "[NotUsed]";
+        public sealed override string Text => "[NotUsed]";
 
-        public override sealed string ToolTip => "[NotUsed]";
+        public sealed override string ToolTip => "[NotUsed]";
 
-        public override sealed Uri IconSource => null;
+        public sealed override Uri IconSource => null;
 
-        public override sealed bool IsList => true;
+        public sealed override bool IsList => true;
     }
 }

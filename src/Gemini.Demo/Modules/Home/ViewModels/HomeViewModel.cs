@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -6,35 +8,69 @@ using System.Windows;
 using System.Windows.Media;
 using Gemini.Framework;
 
+#endregion
+
 namespace Gemini.Demo.Modules.Home.ViewModels
 {
     [DisplayName("Home View Model")]
-	[Export]
-	public class HomeViewModel : Document
-	{
-		private Color _background;
-		public Color Background
-		{
-			get { return _background; }
-			set
-			{
-				_background = value;
-				NotifyOfPropertyChange(() => Background);
-			}
-		}
+    [Export]
+    public class HomeViewModel : Document
+    {
+        private Color _background;
 
-		private Color _foreground;
-		public Color Foreground
-		{
-			get { return _foreground; }
-			set
-			{
-				_foreground = value;
-				NotifyOfPropertyChange(() => Foreground);
-			}
-		}
+        private double _doubleValue;
+
+        private float _floatValue;
+
+        private Color _foreground;
+
+        private int _integerValue;
+
+        private double? _nullableDoubleValue;
+
+        private float? _nullableFloatValue;
+
+        private int? _nullableIntegerValue;
+
+        private string _text;
 
         private TextAlignment _textAlignment;
+
+        public HomeViewModel()
+        {
+            DisplayName = "Home";
+            Background = Colors.CornflowerBlue;
+            Foreground = Colors.White;
+            TextAlignment = TextAlignment.Center;
+            Text = "Welcome to the Gemini Demo!";
+            IntegerValue = 3;
+            NullableIntegerValue = null;
+            FloatValue = 5.2f;
+            NullableFloatValue = null;
+            DoubleValue = Math.PI;
+            NullableDoubleValue = 4.5;
+        }
+
+        public Color Background
+        {
+            get { return _background; }
+            set
+            {
+                _background = value;
+                NotifyOfPropertyChange(() => Background);
+            }
+        }
+
+        public Color Foreground
+        {
+            get { return _foreground; }
+            set
+            {
+                _foreground = value;
+                NotifyOfPropertyChange(() => Foreground);
+            }
+        }
+
         [DisplayName("Text Alignment")]
         public TextAlignment TextAlignment
         {
@@ -46,7 +82,6 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             }
         }
 
-        private string _text;
         public string Text
         {
             get { return _text; }
@@ -57,7 +92,6 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             }
         }
 
-        private int _integerValue;
         [DisplayName("Integer Value")]
         public int IntegerValue
         {
@@ -69,7 +103,6 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             }
         }
 
-        private int? _nullableIntegerValue;
         [DisplayName("Nullable Integer Value")]
         public int? NullableIntegerValue
         {
@@ -81,7 +114,6 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             }
         }
 
-        private float _floatValue;
         [DisplayName("Float Value")]
         public float FloatValue
         {
@@ -93,7 +125,6 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             }
         }
 
-        private float? _nullableFloatValue;
         [DisplayName("Nullable Float Value")]
         public float? NullableFloatValue
         {
@@ -105,7 +136,6 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             }
         }
 
-        private double _doubleValue;
         [DisplayName("Double Value")]
         public double DoubleValue
         {
@@ -117,7 +147,6 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             }
         }
 
-        private double? _nullableDoubleValue;
         [DisplayName("Nullable Double Value")]
         public double? NullableDoubleValue
         {
@@ -129,24 +158,9 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             }
         }
 
-		public HomeViewModel()
-		{
-		    DisplayName = "Home";
-			Background = Colors.CornflowerBlue;
-			Foreground = Colors.White;
-		    TextAlignment = TextAlignment.Center;
-		    Text = "Welcome to the Gemini Demo!";
-		    IntegerValue = 3;
-		    NullableIntegerValue = null;
-		    FloatValue = 5.2f;
-		    NullableFloatValue = null;
-		    DoubleValue = Math.PI;
-		    NullableDoubleValue = 4.5;
-		}
-
         public override bool ShouldReopenOnStart => true;
 
-	    public override void SaveState(BinaryWriter writer)
+        public override void SaveState(BinaryWriter writer)
         {
             // save color as byte information
             writer.Write(Background.A);
@@ -167,11 +181,23 @@ namespace Gemini.Demo.Modules.Home.ViewModels
         public override void LoadState(BinaryReader reader)
         {
             // load color
-            Background = new Color { A = reader.ReadByte(), R = reader.ReadByte(), G = reader.ReadByte(), B = reader.ReadByte() };
-            Foreground = new Color { A = reader.ReadByte(), R = reader.ReadByte(), G = reader.ReadByte(), B = reader.ReadByte() };
+            Background = new Color
+            {
+                A = reader.ReadByte(),
+                R = reader.ReadByte(),
+                G = reader.ReadByte(),
+                B = reader.ReadByte()
+            };
+            Foreground = new Color
+            {
+                A = reader.ReadByte(),
+                R = reader.ReadByte(),
+                G = reader.ReadByte(),
+                B = reader.ReadByte()
+            };
 
             // load TextAlignment as a string
-            TextAlignment = (TextAlignment)Enum.Parse(typeof(TextAlignment), reader.ReadString());
+            TextAlignment = (TextAlignment) Enum.Parse(typeof(TextAlignment), reader.ReadString());
         }
-	}
+    }
 }

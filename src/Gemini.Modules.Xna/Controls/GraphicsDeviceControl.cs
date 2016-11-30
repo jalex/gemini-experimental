@@ -1,10 +1,4 @@
-﻿#region File Description
-//-----------------------------------------------------------------------------
-// Copyright 2011, Nick Gravelyn.
-// Licensed under the terms of the Ms-PL: 
-// http://www.microsoft.com/opensource/licenses.mspx#Ms-PL
-//-----------------------------------------------------------------------------
-#endregion
+﻿#region
 
 using System;
 using System.Windows;
@@ -12,11 +6,13 @@ using Gemini.Framework.Controls;
 using Gemini.Modules.Xna.Services;
 using Microsoft.Xna.Framework.Graphics;
 
+#endregion
+
 namespace Gemini.Modules.Xna.Controls
 {
     /// <summary>
-    /// A control that enables XNA graphics rendering inside a WPF control through
-    /// the use of a hosted child Hwnd.
+    ///     A control that enables XNA graphics rendering inside a WPF control through
+    ///     the use of a hosted child Hwnd.
     /// </summary>
     public class GraphicsDeviceControl : HwndWrapper
     {
@@ -24,42 +20,14 @@ namespace Gemini.Modules.Xna.Controls
         private GraphicsDeviceService _graphicsService;
 
         /// <summary>
-        /// Invoked when the control has initialized the GraphicsDevice.
+        ///     Invoked when the control has initialized the GraphicsDevice.
         /// </summary>
         public event EventHandler<GraphicsDeviceEventArgs> LoadContent;
 
         /// <summary>
-        /// Invoked when the control is ready to render XNA content
+        ///     Invoked when the control is ready to render XNA content
         /// </summary>
         public event EventHandler<GraphicsDeviceEventArgs> RenderXna;
-
-        #region Construction and Disposal
-
-        public GraphicsDeviceControl()
-        {
-            // We must be notified of the control finishing loading so we can get the GraphicsDeviceService
-            Loaded += OnXnaWindowHostLoaded;
-
-            // We must be notified of the control changing sizes so we can resize the GraphicsDeviceService
-            SizeChanged += OnXnaWindowHostSizeChanged;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            // Release our reference to the GraphicsDeviceService if we have one
-            if (_graphicsService != null)
-            {
-                _graphicsService.Release(disposing);
-                _graphicsService = null;
-            }
-
-            SizeChanged -= OnXnaWindowHostSizeChanged;
-            Loaded -= OnXnaWindowHostLoaded;
-
-            base.Dispose(disposing);
-        }
-
-        #endregion
 
         protected override void Render(IntPtr windowHandle)
         {
@@ -89,11 +57,11 @@ namespace Gemini.Modules.Xna.Controls
         }
 
         /// <summary>
-        /// Helper used by <see cref="Render"/>. 
-        /// This checks the graphics device status,
-        /// making sure it is big enough for drawing the current control, and
-        /// that the device is not lost. Returns an error string if the device
-        /// could not be reset.
+        ///     Helper used by <see cref="Render" />.
+        ///     This checks the graphics device status,
+        ///     making sure it is big enough for drawing the current control, and
+        ///     that the device is not lost. Returns an error string if the device
+        ///     could not be reset.
         /// </summary>
         private GraphicsDeviceResetStatus HandleDeviceReset(int width, int height)
         {
@@ -112,7 +80,7 @@ namespace Gemini.Modules.Xna.Controls
 
                 default:
                     // If the device state is ok, check whether it is big enough.
-                    PresentationParameters pp = _graphicsService.GraphicsDevice.PresentationParameters;
+                    var pp = _graphicsService.GraphicsDevice.PresentationParameters;
 
                     deviceNeedsReset = (width > pp.BackBufferWidth) ||
                                        (height > pp.BackBufferHeight);
@@ -121,7 +89,6 @@ namespace Gemini.Modules.Xna.Controls
 
             // Do we need to reset the device?
             if (deviceNeedsReset)
-            {
                 try
                 {
                     _graphicsService.ResetDevice(width, height);
@@ -130,16 +97,8 @@ namespace Gemini.Modules.Xna.Controls
                 {
                     return GraphicsDeviceResetStatus.ResetFailed;
                 }
-            }
 
             return GraphicsDeviceResetStatus.Normal;
-        }
-
-        private enum GraphicsDeviceResetStatus
-        {
-            Normal,
-            Lost,
-            ResetFailed
         }
 
         private void OnXnaWindowHostLoaded(object sender, RoutedEventArgs e)
@@ -174,5 +133,40 @@ namespace Gemini.Modules.Xna.Controls
             if (_graphicsService != null)
                 _graphicsService.ResetDevice((int) ActualWidth, (int) ActualHeight);
         }
+
+        private enum GraphicsDeviceResetStatus
+        {
+            Normal,
+            Lost,
+            ResetFailed
+        }
+
+        #region Construction and Disposal
+
+        public GraphicsDeviceControl()
+        {
+            // We must be notified of the control finishing loading so we can get the GraphicsDeviceService
+            Loaded += OnXnaWindowHostLoaded;
+
+            // We must be notified of the control changing sizes so we can resize the GraphicsDeviceService
+            SizeChanged += OnXnaWindowHostSizeChanged;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            // Release our reference to the GraphicsDeviceService if we have one
+            if (_graphicsService != null)
+            {
+                _graphicsService.Release(disposing);
+                _graphicsService = null;
+            }
+
+            SizeChanged -= OnXnaWindowHostSizeChanged;
+            Loaded -= OnXnaWindowHostLoaded;
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }

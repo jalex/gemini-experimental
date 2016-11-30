@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using Gemini.Framework.Results;
 using Microsoft.Win32;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Inspectors
 {
@@ -12,7 +16,7 @@ namespace Gemini.Modules.Inspector.Inspectors
         {
             var fileDialog = new OpenFileDialog();
             yield return Show.CommonDialog(fileDialog);
-            
+
             using (var stream = fileDialog.OpenFile())
             {
                 var result = new BitmapImage();

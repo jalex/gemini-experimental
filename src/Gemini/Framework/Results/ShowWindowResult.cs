@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Framework.Results
 {
@@ -9,18 +13,17 @@ namespace Gemini.Framework.Results
     {
         private readonly Func<TWindow> _windowLocator = () => IoC.Get<TWindow>();
 
-        [Import]
-        public IWindowManager WindowManager { get; set; }
-
         public ShowWindowResult()
         {
-            
         }
 
         public ShowWindowResult(TWindow window)
         {
             _windowLocator = () => window;
         }
+
+        [Import]
+        public IWindowManager WindowManager { get; set; }
 
         public override void Execute(CoroutineExecutionContext context)
         {

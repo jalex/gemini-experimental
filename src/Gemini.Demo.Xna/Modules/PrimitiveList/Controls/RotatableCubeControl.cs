@@ -1,28 +1,33 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using Gemini.Demo.Xna.Primitives;
 using Gemini.Framework.Controls;
 using Gemini.Modules.Xna.Controls;
 using Microsoft.Xna.Framework;
+using Point = System.Windows.Point;
+
+#endregion
 
 namespace Gemini.Demo.Xna.Modules.PrimitiveList.Controls
 {
     public class RotatableCubeControl : GraphicsDeviceControl
     {
-        private float _yaw, _pitch;
-        private System.Windows.Point _originalPosition;
-
         public static readonly DependencyProperty PrimitiveProperty = DependencyProperty.Register(
             "Primitive", typeof(GeometricPrimitive), typeof(RotatableCubeControl));
+
+        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
+            "Color", typeof(Color), typeof(RotatableCubeControl),
+            new PropertyMetadata(Color.Red));
+
+        private Point _originalPosition;
+        private float _yaw, _pitch;
 
         public GeometricPrimitive Primitive
         {
             get { return (GeometricPrimitive) GetValue(PrimitiveProperty); }
             set { SetValue(PrimitiveProperty, value); }
         }
-
-        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            "Color", typeof(Color), typeof(RotatableCubeControl),
-            new PropertyMetadata(Color.Red));
 
         public Color Color
         {
@@ -31,7 +36,7 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Controls
         }
 
         /// <summary>
-        /// Invoked after either control has created its graphics device.
+        ///     Invoked after either control has created its graphics device.
         /// </summary>
         protected override void RaiseLoadContent(GraphicsDeviceEventArgs args)
         {
@@ -42,7 +47,7 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Controls
         }
 
         /// <summary>
-        /// Invoked when our second control is ready to render.
+        ///     Invoked when our second control is ready to render.
         /// </summary>
         protected override void RaiseRenderXna(GraphicsDeviceEventArgs args)
         {
@@ -51,9 +56,9 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Controls
             if (Primitive != null)
             {
                 // Create the world-view-projection matrices for the cube and camera
-                Matrix world = Matrix.CreateFromYawPitchRoll(_yaw, _pitch, 0f);
-                Matrix view = Matrix.CreateLookAt(new Vector3(0, 0, 2.5f), Vector3.Zero, Vector3.Up);
-                Matrix projection = Matrix.CreatePerspectiveFieldOfView(1, args.GraphicsDevice.Viewport.AspectRatio, 1, 10);
+                var world = Matrix.CreateFromYawPitchRoll(_yaw, _pitch, 0f);
+                var view = Matrix.CreateLookAt(new Vector3(0, 0, 2.5f), Vector3.Zero, Vector3.Up);
+                var projection = Matrix.CreatePerspectiveFieldOfView(1, args.GraphicsDevice.Viewport.AspectRatio, 1, 10);
 
                 // Draw a cube
                 Primitive.Draw(world, view, projection, Color);
@@ -63,7 +68,7 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Controls
         }
 
         /// <summary>
-        /// Invoked when the mouse moves over the second viewport
+        ///     Invoked when the mouse moves over the second viewport
         /// </summary>
         /// <param name="args"></param>
         protected override void RaiseHwndMouseMove(HwndMouseEventArgs args)
@@ -73,8 +78,8 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Controls
             {
                 var position = HwndMouse.GetCursorPosition();
 
-                _yaw += (float) (position.X - _originalPosition.X) * .01f;
-                _pitch += (float) (position.Y - _originalPosition.Y) * .01f;
+                _yaw += (float) (position.X - _originalPosition.X)*.01f;
+                _pitch += (float) (position.Y - _originalPosition.Y)*.01f;
 
                 HwndMouse.SetCursorPosition(_originalPosition);
             }
@@ -83,8 +88,8 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Controls
         }
 
         /// <summary>
-        /// We use the left mouse button to do exclusive capture of the mouse so we can drag and drag
-        /// to rotate the cube without ever leaving the control
+        ///     We use the left mouse button to do exclusive capture of the mouse so we can drag and drag
+        ///     to rotate the cube without ever leaving the control
         /// </summary>
         /// <param name="args"></param>
         protected override void RaiseHwndLButtonDown(HwndMouseEventArgs args)

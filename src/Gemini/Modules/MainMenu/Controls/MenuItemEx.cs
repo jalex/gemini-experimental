@@ -1,36 +1,40 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Controls;
 using Gemini.Framework.Controls;
 using Gemini.Modules.MainMenu.Models;
 
+#endregion
+
 namespace Gemini.Modules.MainMenu.Controls
 {
     public class MenuItemEx : MenuItem
-	{
-		private object _currentItem;
+    {
+        private object _currentItem;
 
-		protected override bool IsItemItsOwnContainerOverride(object item)
-		{
-			_currentItem = item;
-			return base.IsItemItsOwnContainerOverride(item);
-		}
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
+            _currentItem = item;
+            return base.IsItemItsOwnContainerOverride(item);
+        }
 
-		protected override DependencyObject GetContainerForItemOverride()
-		{
-			return GetContainer(this, _currentItem);
-		}
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return GetContainer(this, _currentItem);
+        }
 
-		internal static DependencyObject GetContainer(FrameworkElement frameworkElement, object item)
-		{
-		    if (item is MenuItemSeparator)
-		        return new Separator();
+        internal static DependencyObject GetContainer(FrameworkElement frameworkElement, object item)
+        {
+            if (item is MenuItemSeparator)
+                return new Separator();
 
-		    const string styleKey = "MenuItem";
+            const string styleKey = "MenuItem";
 
-		    var result = new MenuItemEx();
+            var result = new MenuItemEx();
             result.SetResourceReference(DynamicStyle.BaseStyleProperty, typeof(MenuItem));
-		    result.SetResourceReference(DynamicStyle.DerivedStyleProperty, styleKey);
-		    return result;
-		}
-	}
+            result.SetResourceReference(DynamicStyle.DerivedStyleProperty, styleKey);
+            return result;
+        }
+    }
 }

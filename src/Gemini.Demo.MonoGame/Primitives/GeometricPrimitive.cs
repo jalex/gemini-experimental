@@ -1,23 +1,20 @@
-﻿#region File Description
-//-----------------------------------------------------------------------------
-// Microsoft XNA Community Game Platform
-// Copyright (C) Microsoft Corporation. All rights reserved.
-//-----------------------------------------------------------------------------
-#endregion
+﻿#region
 
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+#endregion
+
 namespace Gemini.Demo.MonoGame.Primitives
 {
     /// <summary>
-    /// Base class for simple geometric primitive models. This provides a vertex
-    /// buffer, an index buffer, plus methods for drawing the model. Classes for
-    /// specific types of primitive (CubePrimitive, SpherePrimitive, etc.) are
-    /// derived from this common base, and use the AddVertex and AddIndex methods
-    /// to specify their geometry.
+    ///     Base class for simple geometric primitive models. This provides a vertex
+    ///     buffer, an index buffer, plus methods for drawing the model. Classes for
+    ///     specific types of primitive (CubePrimitive, SpherePrimitive, etc.) are
+    ///     derived from this common base, and use the AddVertex and AddIndex methods
+    ///     to specify their geometry.
     /// </summary>
     public abstract class GeometricPrimitive : IDisposable
     {
@@ -40,8 +37,8 @@ namespace Gemini.Demo.MonoGame.Primitives
         #region Initialization
 
         /// <summary>
-        /// Adds a new vertex to the primitive model. This should only be called
-        /// during the initialization process, before InitializePrimitive.
+        ///     Adds a new vertex to the primitive model. This should only be called
+        ///     during the initialization process, before InitializePrimitive.
         /// </summary>
         protected void AddVertex(Vector3 position, Vector3 normal)
         {
@@ -49,28 +46,28 @@ namespace Gemini.Demo.MonoGame.Primitives
         }
 
         /// <summary>
-        /// Adds a new index to the primitive model. This should only be called
-        /// during the initialization process, before InitializePrimitive.
+        ///     Adds a new index to the primitive model. This should only be called
+        ///     during the initialization process, before InitializePrimitive.
         /// </summary>
         protected void AddIndex(int index)
         {
             if (index > ushort.MaxValue)
                 throw new ArgumentOutOfRangeException("index");
 
-            _indices.Add((ushort)index);
+            _indices.Add((ushort) index);
         }
 
         /// <summary>
-        /// Queries the index of the current vertex. This starts at
-        /// zero, and increments every time AddVertex is called.
+        ///     Queries the index of the current vertex. This starts at
+        ///     zero, and increments every time AddVertex is called.
         /// </summary>
         protected int CurrentVertex => _vertices.Count;
 
 
         /// <summary>
-        /// Once all the geometry has been specified by calling AddVertex and AddIndex,
-        /// this method copies the vertex and index data into GPU format buffers, ready
-        /// for efficient rendering.
+        ///     Once all the geometry has been specified by calling AddVertex and AddIndex,
+        ///     this method copies the vertex and index data into GPU format buffers, ready
+        ///     for efficient rendering.
         /// </summary>
         public void Initialize(GraphicsDevice graphicsDevice)
         {
@@ -78,25 +75,25 @@ namespace Gemini.Demo.MonoGame.Primitives
 
             // Create a vertex buffer, and copy our vertex data into it.
             _vertexBuffer = new VertexBuffer(graphicsDevice,
-                                            typeof(VertexPositionNormal),
-                                            _vertices.Count, BufferUsage.None);
+                typeof(VertexPositionNormal),
+                _vertices.Count, BufferUsage.None);
 
             _vertexBuffer.SetData(_vertices.ToArray());
 
             // Create an index buffer, and copy our index data into it.
             _indexBuffer = new IndexBuffer(graphicsDevice, typeof(ushort),
-                                          _indices.Count, BufferUsage.None);
+                _indices.Count, BufferUsage.None);
 
             _indexBuffer.SetData(_indices.ToArray());
 
             // Create a BasicEffect, which will be used to render the primitive.
             _basicEffect = new BasicEffect(graphicsDevice);
 
-            _basicEffect.EnableDefaultLighting();            
+            _basicEffect.EnableDefaultLighting();
         }
 
         /// <summary>
-        /// Finalizer.
+        ///     Finalizer.
         /// </summary>
         ~GeometricPrimitive()
         {
@@ -104,7 +101,7 @@ namespace Gemini.Demo.MonoGame.Primitives
         }
 
         /// <summary>
-        /// Frees resources used by this object.
+        ///     Frees resources used by this object.
         /// </summary>
         public void Dispose()
         {
@@ -113,7 +110,7 @@ namespace Gemini.Demo.MonoGame.Primitives
         }
 
         /// <summary>
-        /// Frees resources used by this object.
+        ///     Frees resources used by this object.
         /// </summary>
         protected virtual void Dispose(bool disposing)
         {
@@ -135,25 +132,25 @@ namespace Gemini.Demo.MonoGame.Primitives
         #region Draw
 
         /// <summary>
-        /// Draws the primitive model, using the specified effect. Unlike the other
-        /// Draw overload where you just specify the world/view/projection matrices
-        /// and color, this method does not set any renderstates, so you must make
-        /// sure all states are set to sensible values before you call it.
+        ///     Draws the primitive model, using the specified effect. Unlike the other
+        ///     Draw overload where you just specify the world/view/projection matrices
+        ///     and color, this method does not set any renderstates, so you must make
+        ///     sure all states are set to sensible values before you call it.
         /// </summary>
         public void Draw(Effect effect)
         {
-            GraphicsDevice graphicsDevice = effect.GraphicsDevice;
+            var graphicsDevice = effect.GraphicsDevice;
 
             // Set our vertex declaration, vertex buffer, and index buffer.
             graphicsDevice.SetVertexBuffer(_vertexBuffer);
 
-            graphicsDevice.Indices = _indexBuffer;            
+            graphicsDevice.Indices = _indexBuffer;
 
             foreach (var effectPass in effect.CurrentTechnique.Passes)
             {
                 effectPass.Apply();
 
-                int primitiveCount = _indices.Count / 3;
+                var primitiveCount = _indices.Count/3;
 
                 graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
                     _vertices.Count, 0, primitiveCount);
@@ -161,11 +158,11 @@ namespace Gemini.Demo.MonoGame.Primitives
         }
 
         /// <summary>
-        /// Draws the primitive model, using a BasicEffect shader with default
-        /// lighting. Unlike the other Draw overload where you specify a custom
-        /// effect, this method sets important renderstates to sensible values
-        /// for 3D model rendering, so you do not need to set these states before
-        /// you call it.
+        ///     Draws the primitive model, using a BasicEffect shader with default
+        ///     lighting. Unlike the other Draw overload where you specify a custom
+        ///     effect, this method sets important renderstates to sensible values
+        ///     for 3D model rendering, so you do not need to set these states before
+        ///     you call it.
         /// </summary>
         public void Draw(Matrix world, Matrix view, Matrix projection, Color color)
         {
@@ -174,21 +171,15 @@ namespace Gemini.Demo.MonoGame.Primitives
             _basicEffect.View = view;
             _basicEffect.Projection = projection;
             _basicEffect.DiffuseColor = color.ToVector3();
-            _basicEffect.Alpha = color.A / 255.0f;
+            _basicEffect.Alpha = color.A/255.0f;
 
             var device = _basicEffect.GraphicsDevice;
             device.DepthStencilState = DepthStencilState.Default;
 
             if (color.A < 255)
-            {
-                // Set renderstates for alpha blended rendering.
                 device.BlendState = BlendState.AlphaBlend;
-            }
             else
-            {
-                // Set renderstates for opaque rendering.
                 device.BlendState = BlendState.Opaque;
-            }
 
             // Draw the model, using BasicEffect.
             Draw(_basicEffect);

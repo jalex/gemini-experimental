@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -6,16 +9,18 @@ using Caliburn.Micro;
 using Gemini.Framework;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
+using Gemini.Properties;
 using Microsoft.Win32;
-using System.IO;
+
+#endregion
 
 namespace Gemini.Modules.Shell.Commands
 {
     [CommandHandler]
     public class OpenFileCommandHandler : CommandHandlerBase<OpenFileCommandDefinition>
     {
-        private readonly IShell _shell;
         private readonly IEditorProvider[] _editorProviders;
+        private readonly IShell _shell;
 
         [ImportingConstructor]
         public OpenFileCommandHandler(IShell shell, [ImportMany] IEditorProvider[] editorProviders)
@@ -28,12 +33,12 @@ namespace Gemini.Modules.Shell.Commands
         {
             var dialog = new OpenFileDialog();
 
-            dialog.Filter = Properties.Resources.AllSupportedFiles + "|" + string.Join(";", _editorProviders
-                .SelectMany(x => x.FileTypes).Select(x => "*" + x.FileExtension));
+            dialog.Filter = Resources.AllSupportedFiles + "|" + string.Join(";", _editorProviders
+                                .SelectMany(x => x.FileTypes).Select(x => "*" + x.FileExtension));
 
             dialog.Filter += "|" + string.Join("|", _editorProviders
-                .SelectMany(x => x.FileTypes)
-                .Select(x => x.Name + "|*" + x.FileExtension));
+                                 .SelectMany(x => x.FileTypes)
+                                 .Select(x => x.Name + "|*" + x.FileExtension));
 
             if (dialog.ShowDialog() == true)
             {

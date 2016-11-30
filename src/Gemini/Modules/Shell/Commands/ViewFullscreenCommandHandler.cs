@@ -1,7 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿#region
+
+using System.Threading.Tasks;
 using System.Windows;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Threading;
+
+#endregion
 
 namespace Gemini.Modules.Shell.Commands
 {
@@ -25,7 +29,7 @@ namespace Gemini.Modules.Shell.Commands
                 window.WindowState = WindowState.Normal;
                 window.WindowStyle = WindowStyle.SingleBorderWindow;
             }
-                
+
             return TaskUtility.Completed;
         }
     }

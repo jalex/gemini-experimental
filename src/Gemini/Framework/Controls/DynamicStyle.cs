@@ -1,6 +1,10 @@
+#region
+
 using System;
 using System.Windows;
 using System.Windows.Controls;
+
+#endregion
 
 namespace Gemini.Framework.Controls
 {
@@ -11,6 +15,19 @@ namespace Gemini.Framework.Controls
             "BaseStyle", typeof(Style), typeof(DynamicStyle),
             new PropertyMetadata(OnStylesChanged));
 
+        public static readonly DependencyProperty DerivedStyleProperty = DependencyProperty.RegisterAttached(
+            "DerivedStyle", typeof(Style), typeof(DynamicStyle),
+            new PropertyMetadata(OnStylesChanged));
+
+        public static readonly DependencyProperty ItemContainerBaseStyleProperty = DependencyProperty.RegisterAttached(
+            "ItemContainerBaseStyle", typeof(Style), typeof(DynamicStyle),
+            new PropertyMetadata(OnItemContainerStylesChanged));
+
+        public static readonly DependencyProperty ItemContainerDerivedStyleProperty = DependencyProperty
+            .RegisterAttached(
+                "ItemContainerDerivedStyle", typeof(Style), typeof(DynamicStyle),
+                new PropertyMetadata(OnItemContainerStylesChanged));
+
         public static Style GetBaseStyle(DependencyObject obj)
         {
             return (Style) obj.GetValue(BaseStyleProperty);
@@ -20,10 +37,6 @@ namespace Gemini.Framework.Controls
         {
             obj.SetValue(BaseStyleProperty, value);
         }
-
-        public static readonly DependencyProperty DerivedStyleProperty = DependencyProperty.RegisterAttached(
-            "DerivedStyle", typeof(Style), typeof(DynamicStyle),
-            new PropertyMetadata(OnStylesChanged));
 
         public static Style GetDerivedStyle(DependencyObject obj)
         {
@@ -42,10 +55,6 @@ namespace Gemini.Framework.Controls
             element.Style = mergedStyles;
         }
 
-        public static readonly DependencyProperty ItemContainerBaseStyleProperty = DependencyProperty.RegisterAttached(
-            "ItemContainerBaseStyle", typeof(Style), typeof(DynamicStyle),
-            new PropertyMetadata(OnItemContainerStylesChanged));
-
         public static Style GetItemContainerBaseStyle(DependencyObject obj)
         {
             return (Style) obj.GetValue(ItemContainerBaseStyleProperty);
@@ -55,10 +64,6 @@ namespace Gemini.Framework.Controls
         {
             obj.SetValue(ItemContainerBaseStyleProperty, value);
         }
-
-        public static readonly DependencyProperty ItemContainerDerivedStyleProperty = DependencyProperty.RegisterAttached(
-            "ItemContainerDerivedStyle", typeof(Style), typeof(DynamicStyle),
-            new PropertyMetadata(OnItemContainerStylesChanged));
 
         public static Style GetItemContainerDerivedStyle(DependencyObject obj)
         {
@@ -73,7 +78,7 @@ namespace Gemini.Framework.Controls
         private static void OnItemContainerStylesChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var mergedStyles = GetMergedStyles<ItemsControl>(target,
-                GetItemContainerBaseStyle(target), 
+                GetItemContainerBaseStyle(target),
                 GetItemContainerDerivedStyle(target));
             var element = (ItemsControl) target;
             element.ItemContainerStyle = mergedStyles;
@@ -83,7 +88,7 @@ namespace Gemini.Framework.Controls
             where T : DependencyObject
         {
             if (!(target is T))
-                throw new InvalidCastException("Target must be " + typeof (T));
+                throw new InvalidCastException("Target must be " + typeof(T));
 
             if (derivedStyle == null) return baseStyle;
             if (baseStyle == null) return derivedStyle;

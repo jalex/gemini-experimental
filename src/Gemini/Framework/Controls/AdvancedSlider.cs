@@ -1,44 +1,53 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel;
 using System.Windows;
+
+#endregion
 
 namespace Gemini.Framework.Controls
 {
     public class AdvancedSlider : AdvancedSliderBase
     {
-        public override void ApplyValueChange(double ammount)
-        {
-            var s = (dynamic) Speed;
-            var change = s * ammount;
+        public static readonly DependencyProperty ValueTypeProperty =
+            DependencyProperty.Register("ValueType", typeof(Type), typeof(AdvancedSlider));
 
-            var newValue = (dynamic) Value + Convert.ChangeType(change, ValueType);
-            newValue = CoerceValue(this, newValue);
+        public static readonly DependencyProperty ValueProperty =
+            DependencyProperty.Register("Value", typeof(object), typeof(AdvancedSlider),
+                new FrameworkPropertyMetadata(DependencyPropertyChanged, CoerceValue)
+            );
 
-            Value = newValue;
-        }
+        public static readonly DependencyProperty ValueMinProperty =
+            DependencyProperty.Register("ValueMin", typeof(object), typeof(AdvancedSlider),
+                new FrameworkPropertyMetadata(DependencyPropertyChanged)
+            );
 
-        protected override void CommitEditText()
-        {
-            try
-            {
+        public static readonly DependencyProperty ValueMaxProperty =
+            DependencyProperty.Register("ValueMax", typeof(object), typeof(AdvancedSlider),
+                new FrameworkPropertyMetadata(DependencyPropertyChanged)
+            );
 
-                Value = TypeDescriptor.GetConverter(ValueType).ConvertFrom(EditText);
-            }
-            catch (Exception ex)
-            {
-                var msg = string.Format(Properties.Resources.AdvancedSliderCommitErrorFormat, ex.Message);
-                MessageBox.Show(Application.Current.MainWindow, msg, Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        public static readonly DependencyProperty SpeedProperty =
+            DependencyProperty.Register("Speed", typeof(object), typeof(AdvancedSlider),
+                new FrameworkPropertyMetadata(DependencyPropertyChanged)
+            );
+
+        public static readonly DependencyProperty ValueFormatProperty =
+            DependencyProperty.Register("ValueFormat", typeof(string), typeof(AdvancedSlider),
+                new FrameworkPropertyMetadata("{0:0.#####}", DependencyPropertyChanged)
+            );
+
+        public static readonly DependencyProperty ValueEditFormatProperty =
+            DependencyProperty.Register("ValueEditFormat", typeof(string), typeof(AdvancedSlider),
+                new FrameworkPropertyMetadata("{0:0.#####}", DependencyPropertyChanged)
+            );
 
         public Type ValueType
         {
             get { return (Type) GetValue(ValueTypeProperty); }
             set { SetValue(ValueTypeProperty, value); }
         }
-
-        public static readonly DependencyProperty ValueTypeProperty =
-            DependencyProperty.Register("ValueType", typeof(Type), typeof(AdvancedSlider));
 
         public object Value
         {
@@ -51,21 +60,11 @@ namespace Gemini.Framework.Controls
             }
         }
 
-        public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(object), typeof(AdvancedSlider),
-                new FrameworkPropertyMetadata(DependencyPropertyChanged, CoerceValue)
-                );
-
         public object ValueMin
         {
             get { return GetValue(ValueMinProperty); }
             set { SetValue(ValueMinProperty, value); }
         }
-
-        public static readonly DependencyProperty ValueMinProperty =
-            DependencyProperty.Register("ValueMin", typeof(object), typeof(AdvancedSlider),
-                new FrameworkPropertyMetadata(DependencyPropertyChanged)
-                );
 
         public object ValueMax
         {
@@ -73,21 +72,11 @@ namespace Gemini.Framework.Controls
             set { SetValue(ValueMaxProperty, value); }
         }
 
-        public static readonly DependencyProperty ValueMaxProperty =
-            DependencyProperty.Register("ValueMax", typeof(object), typeof(AdvancedSlider),
-                new FrameworkPropertyMetadata(DependencyPropertyChanged)
-                );
-
         public object Speed
         {
             get { return GetValue(SpeedProperty); }
             set { SetValue(SpeedProperty, value); }
         }
-
-        public static readonly DependencyProperty SpeedProperty =
-            DependencyProperty.Register("Speed", typeof(object), typeof(AdvancedSlider),
-                new FrameworkPropertyMetadata(DependencyPropertyChanged)
-                );
 
         public string ValueFormat
         {
@@ -95,21 +84,36 @@ namespace Gemini.Framework.Controls
             set { SetValue(ValueFormatProperty, value); }
         }
 
-        public static readonly DependencyProperty ValueFormatProperty =
-            DependencyProperty.Register("ValueFormat", typeof(string), typeof(AdvancedSlider),
-                new FrameworkPropertyMetadata("{0:0.#####}", DependencyPropertyChanged)
-                );
-
         public string ValueEditFormat
         {
             get { return (string) GetValue(ValueEditFormatProperty); }
             set { SetValue(ValueEditFormatProperty, value); }
         }
 
-        public static readonly DependencyProperty ValueEditFormatProperty =
-            DependencyProperty.Register("ValueEditFormat", typeof(string), typeof(AdvancedSlider),
-                new FrameworkPropertyMetadata("{0:0.#####}", DependencyPropertyChanged)
-                );
+        public override void ApplyValueChange(double ammount)
+        {
+            var s = (dynamic) Speed;
+            var change = s*ammount;
+
+            var newValue = (dynamic) Value + Convert.ChangeType(change, ValueType);
+            newValue = CoerceValue(this, newValue);
+
+            Value = newValue;
+        }
+
+        protected override void CommitEditText()
+        {
+            try
+            {
+                Value = TypeDescriptor.GetConverter(ValueType).ConvertFrom(EditText);
+            }
+            catch (Exception ex)
+            {
+                var msg = string.Format(Properties.Resources.AdvancedSliderCommitErrorFormat, ex.Message);
+                MessageBox.Show(Application.Current.MainWindow, msg, Application.Current.MainWindow.Title,
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private static void DependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -130,16 +134,12 @@ namespace Gemini.Framework.Controls
             var value = (dynamic) baseValue;
 
             if (slider.ValueMin != null)
-            {
                 if (value.CompareTo(slider.ValueMin) < 0)
                     value = slider.ValueMin;
-            }
 
             if (slider.ValueMax != null)
-            {
                 if (value.CompareTo(slider.ValueMax) > 0)
                     value = slider.ValueMax;
-            }
 
             return value;
         }
@@ -155,19 +155,17 @@ namespace Gemini.Framework.Controls
             if (Type == DisplayType.Number)
                 return;
 
-            if (ValueMin != null && ValueMax != null)
-            {
+            if ((ValueMin != null) && (ValueMax != null))
                 try
                 {
                     var v = (dynamic) Value;
                     var vmin = (dynamic) ValueMin;
                     var vmax = (dynamic) ValueMax;
-                    Ratio = (v - vmin) / (vmax - vmin);
+                    Ratio = (v - vmin)/(vmax - vmin);
                 }
                 catch (DivideByZeroException)
                 {
                 }
-            }
         }
     }
 }

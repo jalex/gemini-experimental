@@ -1,7 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿#region
+
+using System;
 using System.Windows.Input;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Framework.Commands
 {

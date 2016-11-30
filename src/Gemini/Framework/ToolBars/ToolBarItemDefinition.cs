@@ -1,32 +1,32 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows.Input;
 using Gemini.Framework.Commands;
+
+#endregion
 
 namespace Gemini.Framework.ToolBars
 {
     public abstract class ToolBarItemDefinition
     {
-        private readonly ToolBarItemGroupDefinition _group;
-        private readonly int _sortOrder;
-        private readonly ToolBarItemDisplay _display;
+        protected ToolBarItemDefinition(ToolBarItemGroupDefinition group, int sortOrder, ToolBarItemDisplay display)
+        {
+            Group = group;
+            SortOrder = sortOrder;
+            Display = display;
+        }
 
-        public ToolBarItemGroupDefinition Group => _group;
+        public ToolBarItemGroupDefinition Group { get; }
 
-        public int SortOrder => _sortOrder;
+        public int SortOrder { get; }
 
-        public ToolBarItemDisplay Display => _display;
+        public ToolBarItemDisplay Display { get; }
 
         public abstract string Text { get; }
         public abstract Uri IconSource { get; }
         public abstract KeyGesture KeyGesture { get; }
         public abstract CommandDefinitionBase CommandDefinition { get; }
-
-        protected ToolBarItemDefinition(ToolBarItemGroupDefinition group, int sortOrder, ToolBarItemDisplay display)
-        {
-            _group = group;
-            _sortOrder = sortOrder;
-            _display = display;
-        }
     }
 
     public enum ToolBarItemDisplay

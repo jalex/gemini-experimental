@@ -1,16 +1,20 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using Caliburn.Micro;
 
+#endregion
+
 namespace Gemini.Framework.Services
 {
-	public static class ExtensionMethods
-	{
-		public static string GetExecutingAssemblyName()
-		{
-			return Assembly.GetExecutingAssembly().GetAssemblyName();
-		}
+    public static class ExtensionMethods
+    {
+        public static string GetExecutingAssemblyName()
+        {
+            return Assembly.GetExecutingAssembly().GetAssemblyName();
+        }
 
         public static string GetPropertyName<TProperty>(Expression<Func<TProperty>> property)
         {
@@ -21,5 +25,5 @@ namespace Gemini.Framework.Services
         {
             return property.GetMemberInfo().Name;
         }
-	}
+    }
 }

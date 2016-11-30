@@ -1,6 +1,10 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
+
+#endregion
 
 namespace Gemini.Framework.Behaviors
 {

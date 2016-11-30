@@ -2,6 +2,5 @@
 {
     public class CheckBoxEditorViewModel : EditorBase<bool>, ILabelledInspector
     {
-         
     }
 }

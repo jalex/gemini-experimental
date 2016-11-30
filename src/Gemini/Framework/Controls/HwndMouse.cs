@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using Gemini.Framework.Win32;
+
+#endregion
 
 namespace Gemini.Framework.Controls
 {

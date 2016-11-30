@@ -1,18 +1,22 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading.Tasks;
 using Gemini.Demo.Modules.TextEditor.ViewModels;
+using Gemini.Demo.Properties;
 using Gemini.Framework;
 using Gemini.Framework.Services;
-using Gemini.Demo.Properties;
+
+#endregion
 
 namespace Gemini.Demo.Modules.TextEditor
 {
-	[Export(typeof(IEditorProvider))]
-	public class EditorProvider : IEditorProvider
-	{
-		private readonly List<string> _extensions = new List<string>
+    [Export(typeof(IEditorProvider))]
+    public class EditorProvider : IEditorProvider
+    {
+        private readonly List<string> _extensions = new List<string>
         {
             ".txt",
             ".cmd"
@@ -25,11 +29,11 @@ namespace Gemini.Demo.Modules.TextEditor
 
         public bool CanCreateNew => true;
 
-	    public bool Handles(string path)
-		{
-			var extension = Path.GetExtension(path);
-			return _extensions.Contains(extension);
-		}
+        public bool Handles(string path)
+        {
+            var extension = Path.GetExtension(path);
+            return _extensions.Contains(extension);
+        }
 
         public IDocument Create()
         {
@@ -42,8 +46,8 @@ namespace Gemini.Demo.Modules.TextEditor
         }
 
         public async Task Open(IDocument document, string path)
-		{
-			await ((EditorViewModel) document).Load(path);
-		}
-	}
+        {
+            await ((EditorViewModel) document).Load(path);
+        }
+    }
 }

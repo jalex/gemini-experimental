@@ -1,7 +1,11 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Controls;
 using Gemini.Framework.Controls;
 using Gemini.Modules.ToolBars.Models;
+
+#endregion
 
 namespace Gemini.Modules.ToolBars.Controls
 {

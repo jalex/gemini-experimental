@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
@@ -6,56 +8,58 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using Gemini.Framework;
 using Gemini.Framework.Services;
-using Gemini.Modules.CodeEditor.ViewModels;
 using Gemini.Modules.CodeEditor.Properties;
+using Gemini.Modules.CodeEditor.ViewModels;
+
+#endregion
 
 namespace Gemini.Modules.CodeEditor
 {
-	[Export(typeof(IEditorProvider))]
-	public class EditorProvider : IEditorProvider
-	{
-	    private readonly LanguageDefinitionManager _languageDefinitionManager;
+    [Export(typeof(IEditorProvider))]
+    public class EditorProvider : IEditorProvider
+    {
+        private readonly LanguageDefinitionManager _languageDefinitionManager;
 
         [ImportingConstructor]
-	    public EditorProvider(LanguageDefinitionManager languageDefinitionManager)
-	    {
-	        _languageDefinitionManager = languageDefinitionManager;
-	    }
+        public EditorProvider(LanguageDefinitionManager languageDefinitionManager)
+        {
+            _languageDefinitionManager = languageDefinitionManager;
+        }
 
-	    public IEnumerable<EditorFileType> FileTypes
-	    {
-	        get
-	        {
-	            return _languageDefinitionManager.LanguageDefinitions
-	                .Select(languageDefinition => new EditorFileType
-	                {
-	                    Name = languageDefinition.Name + Resources.EditorProviderFileSuffix,
-	                    FileExtension = languageDefinition.FileExtensions.First()
-	                });
-	        }
-	    }
+        public IEnumerable<EditorFileType> FileTypes
+        {
+            get
+            {
+                return _languageDefinitionManager.LanguageDefinitions
+                    .Select(languageDefinition => new EditorFileType
+                    {
+                        Name = languageDefinition.Name + Resources.EditorProviderFileSuffix,
+                        FileExtension = languageDefinition.FileExtensions.First()
+                    });
+            }
+        }
 
         public bool CanCreateNew => true;
 
-	    public bool Handles(string path)
-	    {
-	        var extension = Path.GetExtension(path);
-	        return extension != null && _languageDefinitionManager.GetDefinitionByExtension(extension) != null;
-	    }
+        public bool Handles(string path)
+        {
+            var extension = Path.GetExtension(path);
+            return (extension != null) && (_languageDefinitionManager.GetDefinitionByExtension(extension) != null);
+        }
 
-	    public IDocument Create()
+        public IDocument Create()
         {
             return IoC.Get<CodeEditorViewModel>();
         }
 
-	    public async Task New(IDocument document, string name)
+        public async Task New(IDocument document, string name)
         {
             await ((CodeEditorViewModel) document).New(name);
         }
 
-	    public async Task Open(IDocument document, string path)
+        public async Task Open(IDocument document, string path)
         {
             await ((CodeEditorViewModel) document).Load(path);
         }
-	}
+    }
 }

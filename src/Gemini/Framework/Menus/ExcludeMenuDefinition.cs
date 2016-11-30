@@ -2,12 +2,11 @@
 {
     public class ExcludeMenuDefinition
     {
-        private readonly MenuDefinition _menuDefinitionToExclude;
-        public MenuDefinition MenuDefinitionToExclude => _menuDefinitionToExclude;
-
         public ExcludeMenuDefinition(MenuDefinition menuDefinition)
         {
-            _menuDefinitionToExclude = menuDefinition;
+            MenuDefinitionToExclude = menuDefinition;
         }
+
+        public MenuDefinition MenuDefinitionToExclude { get; }
     }
 }

@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Controls;
+
+#endregion
 
 namespace Gemini.Framework.Controls
 {
@@ -9,6 +13,6 @@ namespace Gemini.Framework.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ExpanderEx),
                 new FrameworkPropertyMetadata(typeof(ExpanderEx)));
-        } 
+        }
     }
 }

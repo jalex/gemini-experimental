@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -8,6 +10,8 @@ using System.Windows.Media;
 using Caliburn.Micro;
 using Gemini.Framework.Services;
 
+#endregion
+
 namespace Gemini.Framework.Commands
 {
     [Export(typeof(ICommandRouter))]
@@ -15,16 +19,46 @@ namespace Gemini.Framework.Commands
     {
         private static readonly Type CommandHandlerInterfaceType = typeof(ICommandHandler<>);
         private static readonly Type CommandListHandlerInterfaceType = typeof(ICommandListHandler<>);
+        private readonly Dictionary<Type, HashSet<Type>> _commandHandlerTypeToCommandDefinitionTypesLookup;
 
         private readonly Dictionary<Type, CommandHandlerWrapper> _globalCommandHandlerWrappers;
-        private readonly Dictionary<Type, HashSet<Type>> _commandHandlerTypeToCommandDefinitionTypesLookup;
-            
+
         [ImportingConstructor]
         public CommandRouter(
             [ImportMany(typeof(ICommandHandler))] ICommandHandler[] globalCommandHandlers)
         {
             _commandHandlerTypeToCommandDefinitionTypesLookup = new Dictionary<Type, HashSet<Type>>();
             _globalCommandHandlerWrappers = BuildCommandHandlerWrappers(globalCommandHandlers);
+        }
+
+        public CommandHandlerWrapper GetCommandHandler(CommandDefinitionBase commandDefinition)
+        {
+            CommandHandlerWrapper commandHandler;
+
+            var shell = IoC.Get<IShell>();
+
+            var activeItemViewModel = shell.ActiveLayoutItem;
+            if (activeItemViewModel != null)
+            {
+                commandHandler = GetCommandHandlerForLayoutItem(commandDefinition, activeItemViewModel);
+                if (commandHandler != null)
+                    return commandHandler;
+            }
+
+            var activeDocumentViewModel = shell.ActiveItem;
+            if ((activeDocumentViewModel != null) && !Equals(activeDocumentViewModel, activeItemViewModel))
+            {
+                commandHandler = GetCommandHandlerForLayoutItem(commandDefinition, activeDocumentViewModel);
+                if (commandHandler != null)
+                    return commandHandler;
+            }
+
+            // If none of the objects in the DataContext hierarchy handle the command,
+            // fallback to the global handler.
+            if (!_globalCommandHandlerWrappers.TryGetValue(commandDefinition.GetType(), out commandHandler))
+                return null;
+
+            return commandHandler;
         }
 
         private Dictionary<Type, CommandHandlerWrapper> BuildCommandHandlerWrappers(ICommandHandler[] commandHandlers)
@@ -60,37 +94,8 @@ namespace Gemini.Framework.Commands
                 .ToList();
         }
 
-        public CommandHandlerWrapper GetCommandHandler(CommandDefinitionBase commandDefinition)
-        {
-            CommandHandlerWrapper commandHandler;
-
-            var shell = IoC.Get<IShell>();
-
-            var activeItemViewModel = shell.ActiveLayoutItem;
-            if (activeItemViewModel != null)
-            {
-                commandHandler = GetCommandHandlerForLayoutItem(commandDefinition, activeItemViewModel);
-                if (commandHandler != null)
-                    return commandHandler;
-            }
-
-            var activeDocumentViewModel = shell.ActiveItem;
-            if (activeDocumentViewModel != null && !Equals(activeDocumentViewModel, activeItemViewModel))
-            {
-                commandHandler = GetCommandHandlerForLayoutItem(commandDefinition, activeDocumentViewModel);
-                if (commandHandler != null)
-                    return commandHandler;
-            }
-
-            // If none of the objects in the DataContext hierarchy handle the command,
-            // fallback to the global handler.
-            if (!_globalCommandHandlerWrappers.TryGetValue(commandDefinition.GetType(), out commandHandler))
-                return null;
-
-            return commandHandler;
-        }
-
-        private CommandHandlerWrapper GetCommandHandlerForLayoutItem(CommandDefinitionBase commandDefinition, object activeItemViewModel)
+        private CommandHandlerWrapper GetCommandHandlerForLayoutItem(CommandDefinitionBase commandDefinition,
+            object activeItemViewModel)
         {
             var activeItemView = ViewLocator.LocateForModel(activeItemViewModel, null, null);
             var activeItemWindow = Window.GetWindow(activeItemView);
@@ -104,7 +109,8 @@ namespace Gemini.Framework.Commands
             return FindCommandHandlerInVisualTree(commandDefinition, startElement);
         }
 
-        private CommandHandlerWrapper FindCommandHandlerInVisualTree(CommandDefinitionBase commandDefinition, IInputElement target)
+        private CommandHandlerWrapper FindCommandHandlerInVisualTree(CommandDefinitionBase commandDefinition,
+            IInputElement target)
         {
             var visualObject = target as DependencyObject;
             if (visualObject == null)
@@ -117,7 +123,7 @@ namespace Gemini.Framework.Commands
                 if (frameworkElement != null)
                 {
                     var dataContext = frameworkElement.DataContext;
-                    if (dataContext != null && !ReferenceEquals(dataContext, previousDataContext))
+                    if ((dataContext != null) && !ReferenceEquals(dataContext, previousDataContext))
                     {
                         if (dataContext is ICommandRerouter)
                         {
@@ -127,7 +133,8 @@ namespace Gemini.Framework.Commands
                             {
                                 if (IsCommandHandlerForCommandDefinitionType(commandTarget, commandDefinition.GetType()))
                                     return CreateCommandHandlerWrapper(commandDefinition.GetType(), commandTarget);
-                                throw new InvalidOperationException("This object does not handle the specified command definition.");
+                                throw new InvalidOperationException(
+                                    "This object does not handle the specified command definition.");
                             }
                         }
 
@@ -147,9 +154,13 @@ namespace Gemini.Framework.Commands
             Type commandDefinitionType, object commandHandler)
         {
             if (typeof(CommandDefinition).IsAssignableFrom(commandDefinitionType))
-                return CommandHandlerWrapper.FromCommandHandler(CommandHandlerInterfaceType.MakeGenericType(commandDefinitionType), commandHandler);
+                return
+                    CommandHandlerWrapper.FromCommandHandler(
+                        CommandHandlerInterfaceType.MakeGenericType(commandDefinitionType), commandHandler);
             if (typeof(CommandListDefinition).IsAssignableFrom(commandDefinitionType))
-                return CommandHandlerWrapper.FromCommandListHandler(CommandListHandlerInterfaceType.MakeGenericType(commandDefinitionType), commandHandler);
+                return
+                    CommandHandlerWrapper.FromCommandListHandler(
+                        CommandListHandlerInterfaceType.MakeGenericType(commandDefinitionType), commandHandler);
             throw new InvalidOperationException();
         }
 
@@ -166,12 +177,17 @@ namespace Gemini.Framework.Commands
         {
             if (!_commandHandlerTypeToCommandDefinitionTypesLookup.ContainsKey(commandHandlerType))
             {
-                var commandDefinitionTypes = _commandHandlerTypeToCommandDefinitionTypesLookup[commandHandlerType] = new HashSet<Type>();
+                var commandDefinitionTypes =
+                    _commandHandlerTypeToCommandDefinitionTypesLookup[commandHandlerType] = new HashSet<Type>();
 
-                foreach (var handledCommandDefinitionType in GetAllHandledCommandedDefinitionTypes(commandHandlerType, CommandHandlerInterfaceType))
+                foreach (
+                    var handledCommandDefinitionType in
+                    GetAllHandledCommandedDefinitionTypes(commandHandlerType, CommandHandlerInterfaceType))
                     commandDefinitionTypes.Add(handledCommandDefinitionType);
 
-                foreach (var handledCommandDefinitionType in GetAllHandledCommandedDefinitionTypes(commandHandlerType, CommandListHandlerInterfaceType))
+                foreach (
+                    var handledCommandDefinitionType in
+                    GetAllHandledCommandedDefinitionTypes(commandHandlerType, CommandListHandlerInterfaceType))
                     commandDefinitionTypes.Add(handledCommandDefinitionType);
             }
         }
@@ -184,7 +200,7 @@ namespace Gemini.Framework.Commands
             while (type != null)
             {
                 result.AddRange(type.GetInterfaces()
-                    .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == genericInterfaceType)
+                    .Where(x => x.IsGenericType && (x.GetGenericTypeDefinition() == genericInterfaceType))
                     .Select(x => x.GetGenericArguments().First()));
 
                 type = type.BaseType;

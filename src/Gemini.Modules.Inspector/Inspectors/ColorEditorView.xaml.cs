@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Gemini.Modules.Inspector.Controls;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Inspectors
 {

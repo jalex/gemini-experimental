@@ -1,4 +1,8 @@
-﻿using Gemini.Modules.ErrorList.ViewModels;
+﻿#region
+
+using Gemini.Modules.ErrorList.ViewModels;
+
+#endregion
 
 namespace Gemini.Modules.ErrorList.Design
 {
@@ -28,7 +32,7 @@ namespace Gemini.Modules.ErrorList.Design
             {
                 ItemType = ErrorListItemType.Message,
                 Number = 3,
-                Description = "This is a message.",
+                Description = "This is a message."
             });
         }
     }

@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region
+
+using System;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Framework.Results
 {

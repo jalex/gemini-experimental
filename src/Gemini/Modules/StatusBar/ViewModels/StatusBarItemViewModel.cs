@@ -1,11 +1,24 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Modules.StatusBar.ViewModels
 {
     public class StatusBarItemViewModel : PropertyChangedBase
     {
         private int _index;
+
+        private string _message;
+
+        public StatusBarItemViewModel(string message, GridLength width)
+        {
+            _message = message;
+            Width = width;
+        }
+
         public int Index
         {
             get { return _index; }
@@ -16,7 +29,6 @@ namespace Gemini.Modules.StatusBar.ViewModels
             }
         }
 
-        private string _message;
         public string Message
         {
             get { return _message; }
@@ -27,13 +39,6 @@ namespace Gemini.Modules.StatusBar.ViewModels
             }
         }
 
-        private readonly GridLength _width;
-        public GridLength Width => _width;
-
-        public StatusBarItemViewModel(string message, GridLength width)
-        {
-            _message = message;
-            _width = width;
-        }
+        public GridLength Width { get; }
     }
 }

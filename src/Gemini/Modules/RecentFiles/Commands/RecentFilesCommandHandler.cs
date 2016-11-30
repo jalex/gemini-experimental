@@ -1,7 +1,11 @@
-﻿using Gemini.Framework.Commands;
-using Gemini.Framework.Services;
+﻿#region
+
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
+using Gemini.Framework.Commands;
+using Gemini.Framework.Services;
+
+#endregion
 
 namespace Gemini.Modules.RecentFiles.Commands
 {
@@ -18,7 +22,7 @@ namespace Gemini.Modules.RecentFiles.Commands
 
         public override void Update(Command command)
         {
-            command.Enabled = (_shell.RecentFiles.Items.Count > 0);
+            command.Enabled = _shell.RecentFiles.Items.Count > 0;
         }
 
         public override Task Run(Command command)

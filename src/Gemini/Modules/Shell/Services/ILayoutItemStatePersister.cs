@@ -1,5 +1,9 @@
+#region
+
 using Gemini.Framework.Services;
 using Gemini.Modules.Shell.Views;
+
+#endregion
 
 namespace Gemini.Modules.Shell.Services
 {

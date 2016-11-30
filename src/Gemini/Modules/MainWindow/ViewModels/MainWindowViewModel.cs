@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using System.Windows;
 using System.Windows.Media;
 using Caliburn.Micro;
@@ -6,23 +8,23 @@ using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
 using Gemini.Properties;
 
+#endregion
+
 namespace Gemini.Modules.MainWindow.ViewModels
 {
     [Export(typeof(IMainWindow))]
     public class MainWindowViewModel : Conductor<IShell>, IMainWindow, IPartImportsSatisfiedNotification
     {
-#pragma warning disable 649
-        [Import]
-        private IShell _shell;
+        private double _height = 800.0;
 
-        [Import]
-        private IResourceManager _resourceManager;
+        private ImageSource _icon;
 
-        [Import]
-        private ICommandKeyGestureService _commandKeyGestureService;
-#pragma warning restore 649
+        private string _title = Resources.MainWindowDefaultTitle;
+
+        private double _width = 1000.0;
 
         private WindowState _windowState = WindowState.Normal;
+
         public WindowState WindowState
         {
             get { return _windowState; }
@@ -33,7 +35,6 @@ namespace Gemini.Modules.MainWindow.ViewModels
             }
         }
 
-        private double _width = 1000.0;
         public double Width
         {
             get { return _width; }
@@ -44,7 +45,6 @@ namespace Gemini.Modules.MainWindow.ViewModels
             }
         }
 
-        private double _height = 800.0;
         public double Height
         {
             get { return _height; }
@@ -55,7 +55,6 @@ namespace Gemini.Modules.MainWindow.ViewModels
             }
         }
 
-        private string _title = Resources.MainWindowDefaultTitle;
         public string Title
         {
             get { return _title; }
@@ -66,7 +65,6 @@ namespace Gemini.Modules.MainWindow.ViewModels
             }
         }
 
-        private ImageSource _icon;
         public ImageSource Icon
         {
             get { return _icon; }
@@ -91,5 +89,12 @@ namespace Gemini.Modules.MainWindow.ViewModels
             _commandKeyGestureService.BindKeyGestures((UIElement) view);
             base.OnViewLoaded(view);
         }
+#pragma warning disable 649
+        [Import] private IShell _shell;
+
+        [Import] private IResourceManager _resourceManager;
+
+        [Import] private ICommandKeyGestureService _commandKeyGestureService;
+#pragma warning restore 649
     }
 }

@@ -1,21 +1,25 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿#region
+
+using Microsoft.Xna.Framework.Graphics;
+
+#endregion
 
 namespace Gemini.Modules.MonoGame.Controls
 {
     /// <summary>
-    /// Provides data for the Draw event.
+    ///     Provides data for the Draw event.
     /// </summary>
     public sealed class DrawEventArgs : GraphicsDeviceEventArgs
     {
         private readonly DrawingSurface _drawingSurface;
-	    
+
         public DrawEventArgs(DrawingSurface drawingSurface, GraphicsDevice graphicsDevice)
-			: base(graphicsDevice)
+            : base(graphicsDevice)
         {
-	        _drawingSurface = drawingSurface;
+            _drawingSurface = drawingSurface;
         }
 
-	    public void InvalidateSurface()
+        public void InvalidateSurface()
         {
             _drawingSurface.Invalidate();
         }

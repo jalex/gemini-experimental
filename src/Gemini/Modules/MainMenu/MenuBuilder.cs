@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using System.Linq;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Menus;
 using Gemini.Modules.MainMenu.Models;
+
+#endregion
 
 namespace Gemini.Modules.MainMenu
 {
@@ -10,13 +14,13 @@ namespace Gemini.Modules.MainMenu
     public class MenuBuilder : IMenuBuilder
     {
         private readonly ICommandService _commandService;
-        private readonly MenuBarDefinition[] _menuBars;
-        private readonly MenuDefinition[] _menus;
-        private readonly MenuItemGroupDefinition[] _menuItemGroups;
-        private readonly MenuItemDefinition[] _menuItems;
-        private readonly MenuDefinition[] _excludeMenus;
         private readonly MenuItemGroupDefinition[] _excludeMenuItemGroups;
         private readonly MenuItemDefinition[] _excludeMenuItems;
+        private readonly MenuDefinition[] _excludeMenus;
+        private readonly MenuBarDefinition[] _menuBars;
+        private readonly MenuItemGroupDefinition[] _menuItemGroups;
+        private readonly MenuItemDefinition[] _menuItems;
+        private readonly MenuDefinition[] _menus;
 
         [ImportingConstructor]
         public MenuBuilder(
@@ -63,7 +67,7 @@ namespace Gemini.Modules.MainMenu
                 .OrderBy(x => x.SortOrder)
                 .ToList();
 
-            for (int i = 0; i < groups.Count; i++)
+            for (var i = 0; i < groups.Count; i++)
             {
                 var group = groups[i];
                 var menuItems = _menuItems
@@ -73,14 +77,14 @@ namespace Gemini.Modules.MainMenu
 
                 foreach (var menuItem in menuItems)
                 {
-                    var menuItemModel = (menuItem.CommandDefinition != null)
+                    var menuItemModel = menuItem.CommandDefinition != null
                         ? new CommandMenuItem(_commandService.GetCommand(menuItem.CommandDefinition), menuModel)
-                        : (StandardMenuItem)new TextMenuItem(menuItem);
+                        : (StandardMenuItem) new TextMenuItem(menuItem);
                     AddGroupsRecursive(menuItem, menuItemModel);
                     menuModel.Add(menuItemModel);
                 }
 
-                if (i < groups.Count - 1 && menuItems.Any())
+                if ((i < groups.Count - 1) && menuItems.Any())
                     menuModel.Add(new MenuItemSeparator());
             }
         }

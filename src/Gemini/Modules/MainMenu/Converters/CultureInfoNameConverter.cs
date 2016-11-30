@@ -1,6 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Globalization;
 using System.Windows.Data;
+using Gemini.Properties;
+
+#endregion
 
 namespace Gemini.Modules.MainMenu.Converters
 {
@@ -13,11 +18,11 @@ namespace Gemini.Modules.MainMenu.Converters
 
             if (string.Empty.Equals(value))
             {
-                if (Properties.Resources.LanguageSystem.Equals("System"))
-                    return Properties.Resources.LanguageSystem;
+                if (Resources.LanguageSystem.Equals("System"))
+                    return Resources.LanguageSystem;
 
                 return
-                    $"{Properties.Resources.LanguageSystem} ({Properties.Resources.ResourceManager.GetString("LanguageSystem", CultureInfo.InvariantCulture)})";
+                    $"{Resources.LanguageSystem} ({Resources.ResourceManager.GetString("LanguageSystem", CultureInfo.InvariantCulture)})";
             }
 
             var cn = value as string;

@@ -1,5 +1,7 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Gemini.Properties" GeneratedClassName="Settings">
+
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)"
+              GeneratedClassNamespace="Gemini.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="AutoHideMainMenu" Type="System.Boolean" Scope="User">
@@ -11,7 +13,8 @@
     <Setting Name="LanguageCode" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RecentDocuments" Type="Gemini.Modules.RecentFiles.ViewModels.RecentFileViewModel.RecentFileItemCollection" Scope="User">
+    <Setting Name="RecentDocuments"
+             Type="Gemini.Modules.RecentFiles.ViewModels.RecentFileViewModel.RecentFileItemCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

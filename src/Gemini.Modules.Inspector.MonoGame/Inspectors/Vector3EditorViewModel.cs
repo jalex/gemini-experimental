@@ -1,9 +1,13 @@
-﻿using Gemini.Modules.Inspector.Inspectors;
+﻿#region
+
+using Gemini.Modules.Inspector.Inspectors;
 using Microsoft.Xna.Framework;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.MonoGame.Inspectors
 {
-	public class Vector3EditorViewModel : EditorBase<Vector3>, ILabelledInspector
+    public class Vector3EditorViewModel : EditorBase<Vector3>, ILabelledInspector
     {
         public float X
         {

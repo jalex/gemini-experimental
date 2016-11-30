@@ -1,6 +1,10 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+
+#endregion
 
 namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
 {

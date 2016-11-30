@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+
+#endregion
 
 namespace Gemini.Framework.Commands
 {
@@ -13,8 +17,7 @@ namespace Gemini.Framework.Commands
         private readonly Dictionary<Command, TargetableCommand> _targetableCommands;
 
 #pragma warning disable 649
-        [ImportMany]
-        private CommandDefinitionBase[] _commandDefinitions;
+        [ImportMany] private CommandDefinitionBase[] _commandDefinitions;
 #pragma warning restore 649
 
         public CommandService()

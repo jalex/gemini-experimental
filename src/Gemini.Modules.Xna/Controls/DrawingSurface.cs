@@ -1,27 +1,4 @@
-﻿#region Licence
-//-----------------------------------------------------------------------------
-// Ported from Engine Nine (http://nine.codeplex.com)
-
-// Microsoft Public License (Ms-PL)
-// 
-// This license governs use of the accompanying software. If you use the software, you accept this license. If you do not accept the license, do not use the software.
-// 1. Definitions
-// The terms "reproduce," "reproduction," "derivative works," and "distribution" have the same meaning here as under U.S. copyright law.
-// A "contribution" is the original software, or any additions or changes to the software.
-// A "contributor" is any person that distributes its contribution under this license.
-// "Licensed patents" are a contributor's patent claims that read directly on its contribution.
-// 
-// 2. Grant of Rights
-// (A) Copyright Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free copyright license to reproduce its contribution, prepare derivative works of its contribution, and distribute its contribution or any derivative works that you create.
-// (B) Patent Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free license under its licensed patents to make, have made, use, sell, offer for sale, import, and/or otherwise dispose of its contribution in the software or derivative works of the contribution in the software.
-// 
-// 3. Conditions and Limitations
-// (A) No Trademark License- This license does not grant you rights to use any contributors' name, logo, or trademarks.
-// (B) If you bring a patent claim against any contributor over patents that you claim are infringed by the software, your patent license from such contributor to the software ends automatically.
-// (C) If you distribute any portion of the software, you must retain all copyright, patent, trademark, and attribution notices that are present in the software.
-// (D) If you distribute any portion of the software in source code form, you may do so only under this license by including a complete copy of this license with your distribution. If you distribute any portion of the software in compiled or object code form, you may only do so under a license that complies with this license.
-// (E) The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws which this license cannot change. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
-#endregion
+﻿#region
 
 using System;
 using System.Diagnostics;
@@ -34,48 +11,33 @@ using Gemini.Modules.Xna.Services;
 using Gemini.Modules.Xna.Util;
 using Microsoft.Xna.Framework.Graphics;
 
+#endregion
+
 namespace Gemini.Modules.Xna.Controls
 {
     /// <summary>
-    /// Defines an area within which 3-D content can be composed and rendered. 
+    ///     Defines an area within which 3-D content can be composed and rendered.
     /// </summary>
     /// <remarks>
-    /// Thanks to:
+    ///     Thanks to:
     ///     maoren      (http://forums.create.msdn.com/forums/p/53048/321984.aspx#321984)
     ///     bozalina    (http://blog.bozalina.com/2010/11/xna-40-and-wpf.html)
     /// </remarks>
     public class DrawingSurface : ContentControl, IDisposable
     {
-        /// <summary>
-        /// Occurs when the control has initialized the GraphicsDevice.
-        /// </summary>
-        public event EventHandler<GraphicsDeviceEventArgs> LoadContent;
-
-        /// <summary>
-        /// Occurs when the DrawingSurface has been invalidated.
-        /// </summary>
-        public event EventHandler<DrawEventArgs> Draw;
-
-        private GraphicsDeviceService _graphicsDeviceService;
         private readonly D3DImage _d3DImage;
         private readonly Image _image;
-        private RenderTarget2D _renderTarget;
 
         private bool _contentNeedsRefresh;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether this control will redraw every time the CompositionTarget.Rendering event is fired.
-        /// Defaults to false.
-        /// </summary>
-        public bool AlwaysRefresh { get; set; }
-
-        public GraphicsDevice GraphicsDevice => _graphicsDeviceService.GraphicsDevice;
+        private GraphicsDeviceService _graphicsDeviceService;
+        private RenderTarget2D _renderTarget;
 
         public DrawingSurface()
         {
             _d3DImage = new D3DImage();
 
-            _image = new Image { Source = _d3DImage, Stretch = Stretch.None };
+            _image = new Image {Source = _d3DImage, Stretch = Stretch.None};
             AddChild(_image);
 
             _d3DImage.IsFrontBufferAvailableChanged += OnD3DImageIsFrontBufferAvailableChanged;
@@ -83,6 +45,25 @@ namespace Gemini.Modules.Xna.Controls
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
         }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether this control will redraw every time the CompositionTarget.Rendering event
+        ///     is fired.
+        ///     Defaults to false.
+        /// </summary>
+        public bool AlwaysRefresh { get; set; }
+
+        public GraphicsDevice GraphicsDevice => _graphicsDeviceService.GraphicsDevice;
+
+        /// <summary>
+        ///     Occurs when the control has initialized the GraphicsDevice.
+        /// </summary>
+        public event EventHandler<GraphicsDeviceEventArgs> LoadContent;
+
+        /// <summary>
+        ///     Occurs when the DrawingSurface has been invalidated.
+        /// </summary>
+        public event EventHandler<DrawEventArgs> Draw;
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
@@ -131,7 +112,8 @@ namespace Gemini.Modules.Xna.Controls
         }
 
         /// <summary>
-        /// If we didn't do this, D3DImage would keep an reference to the backbuffer that causes the device reset below to fail.
+        ///     If we didn't do this, D3DImage would keep an reference to the backbuffer that causes the device reset below to
+        ///     fail.
         /// </summary>
         private void RemoveBackBufferReference()
         {
@@ -233,7 +215,7 @@ namespace Gemini.Modules.Xna.Controls
 
         private bool HandleDeviceReset()
         {
-            bool deviceNeedsReset = false;
+            var deviceNeedsReset = false;
 
             switch (_graphicsDeviceService.GraphicsDevice.GraphicsDeviceStatus)
             {
@@ -264,9 +246,7 @@ namespace Gemini.Modules.Xna.Controls
 
         #region IDisposable
 
-        private bool _isDisposed;
-
-        public bool IsDisposed => _isDisposed;
+        public bool IsDisposed { get; private set; }
 
         public void Dispose()
         {
@@ -276,13 +256,13 @@ namespace Gemini.Modules.Xna.Controls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_isDisposed)
+            if (!IsDisposed)
             {
                 if (_renderTarget != null)
                     _renderTarget.Dispose();
                 if (_graphicsDeviceService != null)
                     _graphicsDeviceService.Release(disposing);
-                _isDisposed = true;
+                IsDisposed = true;
             }
         }
 

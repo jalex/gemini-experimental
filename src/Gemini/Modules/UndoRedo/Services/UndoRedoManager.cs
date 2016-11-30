@@ -1,12 +1,24 @@
-﻿using System;
+﻿#region
+
+using System;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Modules.UndoRedo.Services
 {
     public class UndoRedoManager : IUndoRedoManager
     {
-        private readonly BindableCollection<IUndoableAction> _undoStack;
         private readonly BindableCollection<IUndoableAction> _redoStack;
+        private readonly BindableCollection<IUndoableAction> _undoStack;
+
+        private int? _undoCountLimit;
+
+        public UndoRedoManager()
+        {
+            _undoStack = new BindableCollection<IUndoableAction>();
+            _redoStack = new BindableCollection<IUndoableAction>();
+        }
 
         public event EventHandler BatchBegin;
         public event EventHandler BatchEnd;
@@ -14,8 +26,6 @@ namespace Gemini.Modules.UndoRedo.Services
         public IObservableCollection<IUndoableAction> UndoStack => _undoStack;
 
         public IObservableCollection<IUndoableAction> RedoStack => _redoStack;
-
-        private int? _undoCountLimit = null;
 
         public int? UndoCountLimit
         {
@@ -26,21 +36,6 @@ namespace Gemini.Modules.UndoRedo.Services
                 _undoCountLimit = value;
                 EnforceLimit();
             }
-        }
-
-        private void EnforceLimit()
-        {
-            if (!_undoCountLimit.HasValue)
-                return;
-
-            while (_undoStack.Count > UndoCountLimit.Value)
-                PopFront(_undoStack);
-        }
-
-        public UndoRedoManager()
-        {
-            _undoStack = new BindableCollection<IUndoableAction>();
-            _redoStack = new BindableCollection<IUndoableAction>();
         }
 
         public void ExecuteAction(IUndoableAction action)
@@ -57,7 +52,7 @@ namespace Gemini.Modules.UndoRedo.Services
 
             try
             {
-                for (int i = 0; i < actionCount; i++)
+                for (var i = 0; i < actionCount; i++)
                 {
                     var action = Pop(_undoStack);
                     action.Undo();
@@ -102,7 +97,7 @@ namespace Gemini.Modules.UndoRedo.Services
 
             try
             {
-                for (int i = 0; i < actionCount; i++)
+                for (var i = 0; i < actionCount; i++)
                 {
                     var action = Pop(_redoStack);
                     action.Execute();
@@ -138,6 +133,15 @@ namespace Gemini.Modules.UndoRedo.Services
             {
                 OnEnd();
             }
+        }
+
+        private void EnforceLimit()
+        {
+            if (!_undoCountLimit.HasValue)
+                return;
+
+            while (_undoStack.Count > UndoCountLimit.Value)
+                PopFront(_undoStack);
         }
 
         private void OnBegin()

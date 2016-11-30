@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using System.Linq;
 using Gemini.Framework.Commands;
 using Gemini.Framework.ToolBars;
 using Gemini.Modules.ToolBars.Models;
+
+#endregion
 
 namespace Gemini.Modules.ToolBars
 {
@@ -10,9 +14,9 @@ namespace Gemini.Modules.ToolBars
     public class ToolBarBuilder : IToolBarBuilder
     {
         private readonly ICommandService _commandService;
-        private readonly ToolBarDefinition[] _toolBars;
         private readonly ToolBarItemGroupDefinition[] _toolBarItemGroups;
         private readonly ToolBarItemDefinition[] _toolBarItems;
+        private readonly ToolBarDefinition[] _toolBars;
 
         [ImportingConstructor]
         public ToolBarBuilder(
@@ -56,7 +60,7 @@ namespace Gemini.Modules.ToolBars
                 .OrderBy(x => x.SortOrder)
                 .ToList();
 
-            for (int i = 0; i < groups.Count; i++)
+            for (var i = 0; i < groups.Count; i++)
             {
                 var group = groups[i];
                 var toolBarItems = _toolBarItems
@@ -64,9 +68,10 @@ namespace Gemini.Modules.ToolBars
                     .OrderBy(x => x.SortOrder);
 
                 foreach (var toolBarItem in toolBarItems)
-                    result.Add(new CommandToolBarItem(toolBarItem, _commandService.GetCommand(toolBarItem.CommandDefinition), result));
+                    result.Add(new CommandToolBarItem(toolBarItem,
+                        _commandService.GetCommand(toolBarItem.CommandDefinition), result));
 
-                if (i < groups.Count - 1 && toolBarItems.Any())
+                if ((i < groups.Count - 1) && toolBarItems.Any())
                     result.Add(new ToolBarItemSeparator());
             }
         }

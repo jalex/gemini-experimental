@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Gemini.Demo.Xna.Primitives;
 using Gemini.Framework;
 using Gemini.Framework.Services;
 using Microsoft.Xna.Framework;
+
+#endregion
 
 namespace Gemini.Demo.Xna.Modules.PrimitiveList.ViewModels
 {
@@ -13,22 +17,26 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.ViewModels
     {
         private readonly List<PrimitiveWithColor> _primitives;
 
-        public override PaneLocation PreferredLocation => PaneLocation.Right;
-
-        public IList<PrimitiveWithColor> Primitives => _primitives;
-
         public PrimitiveListViewModel()
         {
             DisplayName = "Primitive List";
 
             _primitives = new List<PrimitiveWithColor>(
-                new[] { Color.Blue, Color.Red, Color.Yellow, Color.Green, Color.Gold, Color.Fuchsia, Color.Black, Color.SlateBlue }
+                new[]
+                    {
+                        Color.Blue, Color.Red, Color.Yellow, Color.Green, Color.Gold, Color.Fuchsia, Color.Black,
+                        Color.SlateBlue
+                    }
                     .Select(x => new PrimitiveWithColor
                     {
                         Primitive = new CubePrimitive(),
                         Color = x
                     }));
         }
+
+        public override PaneLocation PreferredLocation => PaneLocation.Right;
+
+        public IList<PrimitiveWithColor> Primitives => _primitives;
     }
 
     public class PrimitiveWithColor

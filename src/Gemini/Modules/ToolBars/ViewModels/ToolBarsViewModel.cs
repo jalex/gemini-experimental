@@ -1,7 +1,11 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Gemini.Modules.ToolBars.Controls;
 using Gemini.Modules.ToolBars.Views;
+
+#endregion
 
 namespace Gemini.Modules.ToolBars.ViewModels
 {
@@ -9,11 +13,23 @@ namespace Gemini.Modules.ToolBars.ViewModels
     public class ToolBarsViewModel : ViewAware, IToolBars
     {
         private readonly BindableCollection<IToolBar> _items;
-        public IObservableCollection<IToolBar> Items => _items;
 
         private readonly IToolBarBuilder _toolBarBuilder;
 
+        private bool _locked;
+
         private bool _visible;
+
+        [ImportingConstructor]
+        public ToolBarsViewModel(IToolBarBuilder toolBarBuilder)
+        {
+            _toolBarBuilder = toolBarBuilder;
+            _items = new BindableCollection<IToolBar>();
+            _locked = false;
+        }
+
+        public IObservableCollection<IToolBar> Items => _items;
+
         public bool Visible
         {
             get { return _visible; }
@@ -23,8 +39,7 @@ namespace Gemini.Modules.ToolBars.ViewModels
                 NotifyOfPropertyChange();
             }
         }
-        
-        private bool _locked;
+
         public bool Locked
         {
             get { return _locked; }
@@ -33,14 +48,6 @@ namespace Gemini.Modules.ToolBars.ViewModels
                 _locked = value;
                 NotifyOfPropertyChange();
             }
-        }
-
-        [ImportingConstructor]
-        public ToolBarsViewModel(IToolBarBuilder toolBarBuilder)
-        {
-            _toolBarBuilder = toolBarBuilder;
-            _items = new BindableCollection<IToolBar>();
-            _locked = false;
         }
 
         protected override void OnViewLoaded(object view)

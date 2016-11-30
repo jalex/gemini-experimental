@@ -1,43 +1,47 @@
-﻿using System;
+﻿#region
+
+using System;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Framework.Results
 {
-	public abstract class OpenResultBase<TTarget> : IOpenResult<TTarget>
-	{
-		protected Action<TTarget> SetData;
-		protected Action<TTarget> _onConfigure;
-		protected Action<TTarget> _onShutDown;
+    public abstract class OpenResultBase<TTarget> : IOpenResult<TTarget>
+    {
+        protected Action<TTarget> _onConfigure;
+        protected Action<TTarget> _onShutDown;
+        protected Action<TTarget> SetData;
 
-		Action<TTarget> IOpenResult<TTarget>.OnConfigure
-		{
-			get { return _onConfigure; }
-			set { _onConfigure = value; }
-		}
+        Action<TTarget> IOpenResult<TTarget>.OnConfigure
+        {
+            get { return _onConfigure; }
+            set { _onConfigure = value; }
+        }
 
-		Action<TTarget> IOpenResult<TTarget>.OnShutDown
-		{
-			get { return _onShutDown; }
-			set { _onShutDown = value; }
-		}
+        Action<TTarget> IOpenResult<TTarget>.OnShutDown
+        {
+            get { return _onShutDown; }
+            set { _onShutDown = value; }
+        }
 
-		//void IOpenResult<TTarget>.SetData<TData>(TData data)
-		//{
-		//    _setData = child =>
-		//    {
-		//        var dataCentric = (IDataCentric<TData>)child;
-		//        dataCentric.LoadData(data);
-		//    };
-		//}
+        public abstract void Execute(CoroutineExecutionContext context);
 
-		protected virtual void OnCompleted(Exception exception, bool wasCancelled)
-		{
-			if (Completed != null)
-				Completed(this, new ResultCompletionEventArgs { Error = exception, WasCancelled = wasCancelled});
-		}
+        public event EventHandler<ResultCompletionEventArgs> Completed;
 
-		public abstract void Execute(CoroutineExecutionContext context);
+        //void IOpenResult<TTarget>.SetData<TData>(TData data)
+        //{
+        //    _setData = child =>
+        //    {
+        //        var dataCentric = (IDataCentric<TData>)child;
+        //        dataCentric.LoadData(data);
+        //    };
+        //}
 
-		public event EventHandler<ResultCompletionEventArgs> Completed;
-	}
+        protected virtual void OnCompleted(Exception exception, bool wasCancelled)
+        {
+            if (Completed != null)
+                Completed(this, new ResultCompletionEventArgs {Error = exception, WasCancelled = wasCancelled});
+        }
+    }
 }

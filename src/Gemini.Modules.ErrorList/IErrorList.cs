@@ -1,5 +1,10 @@
-﻿using Caliburn.Micro;
+﻿#region
+
+using Caliburn.Micro;
 using Gemini.Framework;
+using Action = System.Action;
+
+#endregion
 
 namespace Gemini.Modules.ErrorList
 {
@@ -13,6 +18,6 @@ namespace Gemini.Modules.ErrorList
 
         void AddItem(ErrorListItemType itemType, string description,
             string path = null, int? line = null, int? column = null,
-            System.Action onClick = null);
+            Action onClick = null);
     }
 }

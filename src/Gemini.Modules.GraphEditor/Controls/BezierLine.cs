@@ -1,20 +1,36 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
+
+#endregion
 
 namespace Gemini.Modules.GraphEditor.Controls
 {
     public class BezierLine : Shape
     {
         private const FrameworkPropertyMetadataOptions MetadataOptions =
-            FrameworkPropertyMetadataOptions.AffectsMeasure | 
+            FrameworkPropertyMetadataOptions.AffectsMeasure |
             FrameworkPropertyMetadataOptions.AffectsRender;
-
-        private Geometry _geometry;
 
         public static readonly DependencyProperty X1Property = DependencyProperty.Register(
             "X1", typeof(double), typeof(BezierLine),
             new FrameworkPropertyMetadata(0.0, MetadataOptions));
+
+        public static readonly DependencyProperty X2Property = DependencyProperty.Register(
+            "X2", typeof(double), typeof(BezierLine),
+            new FrameworkPropertyMetadata(0.0, MetadataOptions));
+
+        public static readonly DependencyProperty Y1Property = DependencyProperty.Register(
+            "Y1", typeof(double), typeof(BezierLine),
+            new FrameworkPropertyMetadata(0.0, MetadataOptions));
+
+        public static readonly DependencyProperty Y2Property = DependencyProperty.Register(
+            "Y2", typeof(double), typeof(BezierLine),
+            new FrameworkPropertyMetadata(0.0, MetadataOptions));
+
+        private Geometry _geometry;
 
         public double X1
         {
@@ -22,29 +38,17 @@ namespace Gemini.Modules.GraphEditor.Controls
             set { SetValue(X1Property, value); }
         }
 
-        public static readonly DependencyProperty X2Property = DependencyProperty.Register(
-            "X2", typeof(double), typeof(BezierLine),
-            new FrameworkPropertyMetadata(0.0, MetadataOptions));
-
         public double X2
         {
             get { return (double) GetValue(X2Property); }
             set { SetValue(X2Property, value); }
         }
 
-        public static readonly DependencyProperty Y1Property = DependencyProperty.Register(
-            "Y1", typeof(double), typeof(BezierLine),
-            new FrameworkPropertyMetadata(0.0, MetadataOptions));
-
         public double Y1
         {
             get { return (double) GetValue(Y1Property); }
             set { SetValue(Y1Property, value); }
         }
-
-        public static readonly DependencyProperty Y2Property = DependencyProperty.Register(
-            "Y2", typeof(double), typeof(BezierLine),
-            new FrameworkPropertyMetadata(0.0, MetadataOptions));
 
         public double Y2
         {
@@ -56,7 +60,7 @@ namespace Gemini.Modules.GraphEditor.Controls
 
         protected override Size MeasureOverride(Size constraint)
         {
-            var midX = X1 + ((X2 - X1) / 2);
+            var midX = X1 + (X2 - X1)/2;
 
             _geometry = new PathGeometry
             {

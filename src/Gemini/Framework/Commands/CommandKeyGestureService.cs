@@ -1,15 +1,19 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+
+#endregion
 
 namespace Gemini.Framework.Commands
 {
     [Export(typeof(ICommandKeyGestureService))]
     public class CommandKeyGestureService : ICommandKeyGestureService
     {
-        private readonly CommandKeyboardShortcut[] _keyboardShortcuts;
         private readonly ICommandService _commandService;
+        private readonly CommandKeyboardShortcut[] _keyboardShortcuts;
 
         [ImportingConstructor]
         public CommandKeyGestureService(
@@ -29,14 +33,15 @@ namespace Gemini.Framework.Commands
             foreach (var keyboardShortcut in _keyboardShortcuts)
                 if (keyboardShortcut.KeyGesture != null)
                     uiElement.InputBindings.Add(new InputBinding(
-                        _commandService.GetTargetableCommand(_commandService.GetCommand(keyboardShortcut.CommandDefinition)),
+                        _commandService.GetTargetableCommand(
+                            _commandService.GetCommand(keyboardShortcut.CommandDefinition)),
                         keyboardShortcut.KeyGesture));
         }
 
         public KeyGesture GetPrimaryKeyGesture(CommandDefinitionBase commandDefinition)
         {
             var keyboardShortcut = _keyboardShortcuts.FirstOrDefault(x => x.CommandDefinition == commandDefinition);
-            return (keyboardShortcut != null)
+            return keyboardShortcut != null
                 ? keyboardShortcut.KeyGesture
                 : null;
         }

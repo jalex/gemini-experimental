@@ -1,4 +1,8 @@
-﻿using Gemini.Framework.Services;
+﻿#region
+
+using Gemini.Framework.Services;
+
+#endregion
 
 namespace Gemini.Demo.Modules.SampleBrowser
 {

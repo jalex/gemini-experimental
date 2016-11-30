@@ -1,8 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Reflection;
-using System.Reflection.Emit;
 using Caliburn.Micro;
 using Gemini.Framework.Results;
 using Gemini.Framework.Services;
@@ -10,8 +12,9 @@ using Gemini.Modules.ErrorList;
 using Gemini.Modules.Output;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using System.IO;
 using Microsoft.CodeAnalysis.Emit;
+
+#endregion
 
 namespace Gemini.Modules.CodeCompiler
 {
@@ -19,8 +22,8 @@ namespace Gemini.Modules.CodeCompiler
     public class CodeCompiler : ICodeCompiler
     {
         private readonly IEditorProvider _editorProvider;
-        private readonly IOutput _output;
         private readonly IErrorList _errorList;
+        private readonly IOutput _output;
 
         [ImportingConstructor]
         public CodeCompiler(IEditorProvider editorProvider, IOutput output, IErrorList errorList)
@@ -30,15 +33,16 @@ namespace Gemini.Modules.CodeCompiler
             _errorList = errorList;
         }
 
-        public Assembly Compile(IEnumerable<SyntaxTree> syntaxTrees, IEnumerable<MetadataReference> references, string outputName, bool exportDll = false, string exportDir = null)
+        public Assembly Compile(IEnumerable<SyntaxTree> syntaxTrees, IEnumerable<MetadataReference> references,
+            string outputName, bool exportDll = false, string exportDir = null)
         {
             _output.AppendLine("------ Compile started");
 
             GC.Collect();
             var compilation = CSharpCompilation.Create(outputName)
-                       .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
-                       .AddReferences(references)
-                       .AddSyntaxTrees(syntaxTrees);
+                .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+                .AddReferences(references)
+                .AddSyntaxTrees(syntaxTrees);
 
             using (var ms = new MemoryStream())
             {
@@ -52,13 +56,11 @@ namespace Gemini.Modules.CodeCompiler
                 }
                 _output.AppendLine("------ Compile finished");
                 ms.Seek(0, SeekOrigin.Begin);
-                
+
                 if (exportDll)
                 {
                     if (exportDir == null)
-                    {
                         exportDir = typeof(AppBootstrapper).Assembly.Location;
-                    }
                     if (!outputName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
                         outputName += ".dll";
                     _output.AppendLine("------ Exporting to DLL");
@@ -86,9 +88,7 @@ namespace Gemini.Modules.CodeCompiler
             foreach (var diagnostic in result.Diagnostics)
             {
                 if (!diagnostic.Location.IsInSource)
-                {
                     throw new NotSupportedException("Only support source file locations.");
-                }
                 var itemType = GetItemType(diagnostic.Severity);
                 var description = diagnostic.GetMessage();
                 var lineSpan = diagnostic.Location.GetLineSpan();

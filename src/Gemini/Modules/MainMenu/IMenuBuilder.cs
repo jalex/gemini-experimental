@@ -1,5 +1,9 @@
+#region
+
 using Gemini.Framework.Menus;
 using Gemini.Modules.MainMenu.Models;
+
+#endregion
 
 namespace Gemini.Modules.MainMenu
 {

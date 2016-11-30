@@ -1,13 +1,13 @@
 ﻿<UserControl
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:cal="http://www.caliburnproject.org"
-             xmlns:local="clr-namespace:Gemini.Modules.Inspector.Inspectors"
-             xmlns:controls="clr-namespace:Gemini.Framework.Controls;assembly=Gemini"
-             x:Class="Gemini.Modules.Inspector.Inspectors.AdvancedSliderEditorView"
-             mc:Ignorable="d" d:DesignWidth="300">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:local="clr-namespace:Gemini.Modules.Inspector.Inspectors"
+    xmlns:controls="clr-namespace:Gemini.Framework.Controls;assembly=Gemini"
+    x:Class="Gemini.Modules.Inspector.Inspectors.AdvancedSliderEditorView"
+    mc:Ignorable="d" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -27,14 +27,15 @@
                                  ValueMin="{Binding Path=Minimum}"
                                  Speed="{Binding Path=Speed}"
                                  ValueFormat="{Binding Path=ValueFormat}"
-                                 MouseCaptured="{Binding Path=MouseCaptured, Mode=OneWayToSource}"
-                                 />
+                                 MouseCaptured="{Binding Path=MouseCaptured, Mode=OneWayToSource}" />
 
-        <controls:RepeatingButton Grid.Column="1" Grid.Row="0" cal:Message.Attach="Up" BorderBrush="Transparent" Padding="0">
-            <Path Fill="{DynamicResource EnvironmentToolWindowText}" Data="M 0 6 L 12 6 L 6 0 Z"/>
+        <controls:RepeatingButton Grid.Column="1" Grid.Row="0" cal:Message.Attach="Up" BorderBrush="Transparent"
+                                  Padding="0">
+            <Path Fill="{DynamicResource EnvironmentToolWindowText}" Data="M 0 6 L 12 6 L 6 0 Z" />
         </controls:RepeatingButton>
-        <controls:RepeatingButton Grid.Column="1" Grid.Row="1" cal:Message.Attach="Down" BorderBrush="Transparent" Padding="0">
-            <Path Fill="{DynamicResource EnvironmentToolWindowText}" Data="M 0 0 L 6 6 L 12 0 Z"/>
+        <controls:RepeatingButton Grid.Column="1" Grid.Row="1" cal:Message.Attach="Down" BorderBrush="Transparent"
+                                  Padding="0">
+            <Path Fill="{DynamicResource EnvironmentToolWindowText}" Data="M 0 0 L 6 6 L 12 0 Z" />
         </controls:RepeatingButton>
     </Grid>
 </UserControl>

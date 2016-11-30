@@ -1,5 +1,9 @@
-﻿using System.ComponentModel;
+﻿#region
+
+using System.ComponentModel;
 using Gemini.Modules.Inspector.Inspectors;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Conventions
 {

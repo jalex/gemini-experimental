@@ -1,5 +1,9 @@
+#region
+
 using Gemini.Framework.Commands;
 using Gemini.Properties;
+
+#endregion
 
 namespace Gemini.Modules.Shell.Commands
 {

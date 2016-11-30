@@ -1,4 +1,8 @@
-﻿using Gemini.Modules.UndoRedo.ViewModels;
+﻿#region
+
+using Gemini.Modules.UndoRedo.ViewModels;
+
+#endregion
 
 namespace Gemini.Modules.UndoRedo.Design
 {

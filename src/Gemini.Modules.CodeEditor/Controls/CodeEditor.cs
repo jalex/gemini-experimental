@@ -1,5 +1,9 @@
-﻿using System.Windows.Media;
+﻿#region
+
+using System.Windows.Media;
 using ICSharpCode.AvalonEdit;
+
+#endregion
 
 namespace Gemini.Modules.CodeEditor.Controls
 {

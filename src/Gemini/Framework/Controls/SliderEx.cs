@@ -1,12 +1,16 @@
-﻿using System.ComponentModel;
+﻿#region
+
+using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+
+#endregion
 
 namespace Gemini.Framework.Controls
 {
     /// <summary>
-    /// Slider that exposes the thumb drag started / completed events directly
-    /// to allow Caliburn Micro to attach to the messages.
+    ///     Slider that exposes the thumb drag started / completed events directly
+    ///     to allow Caliburn Micro to attach to the messages.
     /// </summary>
     public class SliderEx : Slider
     {

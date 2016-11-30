@@ -2,6 +2,6 @@
 {
     public interface IHelixView
     {
-        ICSharpCode.AvalonEdit.TextEditor TextEditor { get; }  
+        ICSharpCode.AvalonEdit.TextEditor TextEditor { get; }
     }
 }

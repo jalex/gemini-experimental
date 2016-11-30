@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
+#endregion
 
 namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
 {
@@ -9,16 +13,15 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
     {
         private BitmapSource _previewImage;
 
-        public override BitmapSource PreviewImage => _previewImage;
-
         protected DynamicElement()
         {
             SetOutputConnector("Output", Colors.DarkSeaGreen, () => PreviewImage);
         }
 
+        public override BitmapSource PreviewImage => _previewImage;
+
         protected virtual void PrepareDrawingVisual(DrawingVisual drawingVisual)
         {
-            
         }
 
         protected abstract void Draw(DrawingContext drawingContext, Rect bounds);
@@ -28,7 +31,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
             var dv = new DrawingVisual();
             PrepareDrawingVisual(dv);
 
-            DrawingContext dc = dv.RenderOpen();
+            var dc = dv.RenderOpen();
             Draw(dc, new Rect(0, 0, PreviewSize, PreviewSize));
             dc.Close();
 

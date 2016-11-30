@@ -1,4 +1,8 @@
-﻿using System.Windows.Input;
+﻿#region
+
+using System.Windows.Input;
+
+#endregion
 
 namespace Gemini.Framework.Util
 {
@@ -13,13 +17,9 @@ namespace Gemini.Framework.Util
             var alt = Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt);
 
             if (ctrl)
-            {
                 multi = shift ? 0.01 : 0.1;
-            }
             else if (alt)
-            {
                 multi = shift ? 100.0 : 10.0;
-            }
 
             return multi;
         }

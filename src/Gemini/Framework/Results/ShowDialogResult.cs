@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Framework.Results
 {
@@ -23,7 +27,7 @@ namespace Gemini.Framework.Results
 
         public override void Execute(CoroutineExecutionContext context)
         {
-            TWindow window = _windowLocator();
+            var window = _windowLocator();
 
             if (SetData != null)
                 SetData(window);
@@ -31,7 +35,7 @@ namespace Gemini.Framework.Results
             if (_onConfigure != null)
                 _onConfigure(window);
 
-            bool result = WindowManager.ShowDialog(window).GetValueOrDefault();
+            var result = WindowManager.ShowDialog(window).GetValueOrDefault();
 
             if (_onShutDown != null)
                 _onShutDown(window);

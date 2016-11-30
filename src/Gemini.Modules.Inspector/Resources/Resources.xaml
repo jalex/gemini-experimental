@@ -7,7 +7,7 @@
                     xmlns:p="clr-namespace:Gemini.Modules.Inspector.Properties"
                     xmlns:l="http://gu.se/Localization">
     <xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
-    <xcad:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    <xcad:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
     <controls:InspectorItemTemplateSelector x:Key="InspectorItemTemplateSelector">
         <controls:InspectorItemTemplateSelector.LabelledTemplate>
@@ -15,16 +15,21 @@
                 <Grid IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBoolConverter}}"
                       l:ErrorHandling.Mode="ReturnErrorInfoPreserveNeutral">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{Binding Path=(controls:InspectorGrid.PropertyNameColumnWidth), Mode=TwoWay}" MinWidth="50" />
+                        <ColumnDefinition
+                            Width="{Binding Path=(controls:InspectorGrid.PropertyNameColumnWidth), Mode=TwoWay}"
+                            MinWidth="50" />
                         <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="{Binding Path=(controls:InspectorGrid.PropertyValueColumnWidth), Mode=TwoWay}" MinWidth="50" />
+                        <ColumnDefinition
+                            Width="{Binding Path=(controls:InspectorGrid.PropertyValueColumnWidth), Mode=TwoWay}"
+                            MinWidth="50" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" 
+                    <Label Grid.Column="0"
                            ToolTip="{Binding Description}"
                            HorizontalContentAlignment="Left"
                            VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource EnvironmentToolWindowText}" />
+                        <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis"
+                                   Foreground="{DynamicResource EnvironmentToolWindowText}" />
                     </Label>
                     <controls:SimpleGridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" />
                     <Border Grid.Column="2" Padding="0 2 5 2" VerticalAlignment="Center">
@@ -37,7 +42,7 @@
                             BorderBrush="Transparent"
                             IsEnabled="{Binding IsDirty}"
                             Visibility="{Binding CanReset, Converter={StaticResource BoolToVisibilityConverter}}"
-                            cal:Message.Attach="Reset"/>
+                            cal:Message.Attach="Reset" />
                 </Grid>
             </DataTemplate>
         </controls:InspectorItemTemplateSelector.LabelledTemplate>

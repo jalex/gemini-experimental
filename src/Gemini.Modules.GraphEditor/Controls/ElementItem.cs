@@ -1,20 +1,36 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Gemini.Framework;
+
+#endregion
 
 namespace Gemini.Modules.GraphEditor.Controls
 {
     public class ElementItem : ListBoxItem
     {
-        private Point _lastMousePosition;
-        private bool _isLeftMouseButtonDown;
         private bool _isDragging;
+        private bool _isLeftMouseButtonDown;
+        private Point _lastMousePosition;
 
         static ElementItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ElementItem),
                 new FrameworkPropertyMetadata(typeof(ElementItem)));
+        }
+
+        private GraphControl ParentGraphControl => VisualTreeUtility.FindParent<GraphControl>(this);
+
+        internal void BringToFront()
+        {
+            var parentGraphControl = ParentGraphControl;
+            if (parentGraphControl == null)
+                return;
+
+            var maxZ = parentGraphControl.GetMaxZIndex();
+            ZIndex = maxZ + 1;
         }
 
         #region Dependency properties
@@ -50,8 +66,6 @@ namespace Gemini.Modules.GraphEditor.Controls
         }
 
         #endregion
-
-        private GraphControl ParentGraphControl => VisualTreeUtility.FindParent<GraphControl>(this);
 
         #region Mouse input
 
@@ -128,15 +142,5 @@ namespace Gemini.Modules.GraphEditor.Controls
         }
 
         #endregion
-
-        internal void BringToFront()
-        {
-            var parentGraphControl = ParentGraphControl;
-            if (parentGraphControl == null)
-                return;
-
-            var maxZ = parentGraphControl.GetMaxZIndex();
-            ZIndex = maxZ + 1;
-        }
     }
 }

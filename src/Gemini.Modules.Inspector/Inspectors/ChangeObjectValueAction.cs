@@ -1,16 +1,35 @@
-﻿using Gemini.Modules.Inspector.Properties;
-using Gemini.Modules.UndoRedo;
+﻿#region
+
 using System.Globalization;
 using System.Windows.Data;
+using Gemini.Modules.Inspector.Properties;
+using Gemini.Modules.UndoRedo;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Inspectors
 {
     public class ChangeObjectValueAction : IUndoableAction
     {
         private readonly BoundPropertyDescriptor _boundPropertyDescriptor;
-        private readonly object _originalValue;
         private readonly object _newValue;
+        private readonly object _originalValue;
         private readonly IValueConverter _stringConverter;
+
+        public ChangeObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, object newValue,
+            IValueConverter stringConverter) :
+            this(boundPropertyDescriptor, boundPropertyDescriptor.Value, newValue, stringConverter)
+        {
+        }
+
+        public ChangeObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, object originalValue,
+            object newValue, IValueConverter stringConverter)
+        {
+            _boundPropertyDescriptor = boundPropertyDescriptor;
+            _originalValue = originalValue;
+            _newValue = newValue;
+            _stringConverter = stringConverter;
+        }
 
         public string Name
         {
@@ -21,8 +40,11 @@ namespace Gemini.Modules.Inspector.Inspectors
 
                 if (_stringConverter != null)
                 {
-                    origText = (string) _stringConverter.Convert(_originalValue, typeof(string), null, CultureInfo.CurrentUICulture);
-                    newText = (string) _stringConverter.Convert(_newValue, typeof(string), null, CultureInfo.CurrentUICulture);
+                    origText =
+                        (string)
+                        _stringConverter.Convert(_originalValue, typeof(string), null, CultureInfo.CurrentUICulture);
+                    newText =
+                        (string) _stringConverter.Convert(_newValue, typeof(string), null, CultureInfo.CurrentUICulture);
                 }
                 else
                 {
@@ -35,18 +57,6 @@ namespace Gemini.Modules.Inspector.Inspectors
                     origText,
                     newText);
             }
-        }
-
-        public ChangeObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, object newValue, IValueConverter stringConverter) :
-            this(boundPropertyDescriptor, boundPropertyDescriptor.Value, newValue, stringConverter)
-        { }
-
-        public ChangeObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, object originalValue, object newValue, IValueConverter stringConverter)
-        {
-            _boundPropertyDescriptor = boundPropertyDescriptor;
-            _originalValue = originalValue;
-            _newValue = newValue;
-            _stringConverter = stringConverter;
         }
 
         public void Execute()

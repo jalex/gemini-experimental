@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Windows;
+
+#endregion
 
 namespace Gemini.Framework.Services
 {
@@ -21,7 +25,7 @@ namespace Gemini.Framework.Services
             Expression<Func<TApplicationSettings, TSettingsProperty>> property,
             Action<TSettingsProperty> onPropertyChanged)
         {
-            string propertyName = ExtensionMethods.GetPropertyName(property);
+            var propertyName = ExtensionMethods.GetPropertyName(property);
 
             var listener = new PropertyChangedEventListener<TSettingsProperty>(_applicationSettings, property,
                 onPropertyChanged);

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using Gemini.Demo.Modules.FilterDesigner.ViewModels;
@@ -6,6 +8,8 @@ using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
 using Gemini.Framework.Threading;
 using Gemini.Modules.Inspector;
+
+#endregion
 
 namespace Gemini.Demo.Modules.FilterDesigner.Commands
 {

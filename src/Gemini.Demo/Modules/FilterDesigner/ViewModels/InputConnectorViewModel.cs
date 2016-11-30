@@ -1,16 +1,24 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
+#endregion
 
 namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
 {
     public class InputConnectorViewModel : ConnectorViewModel
     {
-        public event EventHandler SourceChanged;
+        private ConnectionViewModel _connection;
+
+        public InputConnectorViewModel(ElementViewModel element, string name, Color color)
+            : base(element, name, color)
+        {
+        }
 
         public override ConnectorDirection ConnectorDirection => ConnectorDirection.Input;
 
-        private ConnectionViewModel _connection;
         public ConnectionViewModel Connection
         {
             get { return _connection; }
@@ -26,32 +34,28 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             }
         }
 
-        private void OnSourceElementOutputChanged(object sender, EventArgs e)
-        {
-            RaiseSourceChanged();
-        }
-
         public BitmapSource Value
         {
             get
             {
-                if (Connection == null || Connection.From == null)
+                if ((Connection == null) || (Connection.From == null))
                     return null;
 
                 return Connection.From.Value;
             }
         }
 
-        public InputConnectorViewModel(ElementViewModel element, string name, Color color)
-            : base(element, name, color)
+        public event EventHandler SourceChanged;
+
+        private void OnSourceElementOutputChanged(object sender, EventArgs e)
         {
-            
+            RaiseSourceChanged();
         }
 
         private void RaiseSourceChanged()
         {
             var handler = SourceChanged;
-            if (handler!= null)
+            if (handler != null)
                 handler(this, EventArgs.Empty);
         }
     }

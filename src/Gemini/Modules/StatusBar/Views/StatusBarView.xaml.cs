@@ -1,12 +1,16 @@
-﻿using System.Linq;
+﻿#region
+
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Gemini.Modules.StatusBar.ViewModels;
 
+#endregion
+
 namespace Gemini.Modules.StatusBar.Views
 {
     /// <summary>
-    /// Interaction logic for StatusBarView.xaml
+    ///     Interaction logic for StatusBarView.xaml
     /// </summary>
     public partial class StatusBarView : UserControl
     {
@@ -27,7 +31,7 @@ namespace Gemini.Modules.StatusBar.Views
         {
             _statusBarGrid.ColumnDefinitions.Clear();
             foreach (var item in StatusBar.Items.Cast<StatusBarItemViewModel>())
-                _statusBarGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = item.Width });
+                _statusBarGrid.ColumnDefinitions.Add(new ColumnDefinition {Width = item.Width});
         }
     }
 }

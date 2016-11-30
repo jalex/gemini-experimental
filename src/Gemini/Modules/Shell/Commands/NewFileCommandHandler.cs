@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,15 +10,17 @@ using Gemini.Framework.Services;
 using Gemini.Framework.Threading;
 using Gemini.Properties;
 
+#endregion
+
 namespace Gemini.Modules.Shell.Commands
 {
     [CommandHandler]
     public class NewFileCommandHandler : ICommandListHandler<NewFileCommandListDefinition>
     {
-        private int _newFileCounter = 1;
+        private readonly IEditorProvider[] _editorProviders;
 
         private readonly IShell _shell;
-        private readonly IEditorProvider[] _editorProviders;
+        private int _newFileCounter = 1;
 
         [ImportingConstructor]
         public NewFileCommandHandler(
@@ -31,7 +35,6 @@ namespace Gemini.Modules.Shell.Commands
         {
             foreach (var editorProvider in _editorProviders)
                 if (editorProvider.CanCreateNew)
-                {
                     foreach (var editorFileType in editorProvider.FileTypes)
                         commands.Add(new Command(command.CommandDefinition)
                         {
@@ -42,7 +45,6 @@ namespace Gemini.Modules.Shell.Commands
                                 FileType = editorFileType
                             }
                         });
-                }
         }
 
         public Task Run(Command command)
@@ -50,16 +52,18 @@ namespace Gemini.Modules.Shell.Commands
             var tag = (NewFileTag) command.Tag;
             var editor = tag.EditorProvider.Create();
 
-            var viewAware = (IViewAware)editor;
+            var viewAware = (IViewAware) editor;
             viewAware.ViewAttached += (sender, e) =>
             {
-                var frameworkElement = (FrameworkElement)e.View;
+                var frameworkElement = (FrameworkElement) e.View;
 
                 RoutedEventHandler loadedHandler = null;
                 loadedHandler = async (sender2, e2) =>
                 {
                     frameworkElement.Loaded -= loadedHandler;
-                    await tag.EditorProvider.New(editor, string.Format(Resources.FileNewUntitled, (_newFileCounter++) + tag.FileType.FileExtension));
+                    await
+                        tag.EditorProvider.New(editor,
+                            string.Format(Resources.FileNewUntitled, _newFileCounter++ + tag.FileType.FileExtension));
                 };
                 frameworkElement.Loaded += loadedHandler;
             };

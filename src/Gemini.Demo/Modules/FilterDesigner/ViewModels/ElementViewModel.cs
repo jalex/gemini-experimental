@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -6,15 +8,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 
+#endregion
+
 namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
 {
     public abstract class ElementViewModel : PropertyChangedBase
     {
-        public event EventHandler OutputChanged;
-
         public const double PreviewSize = 100;
 
+        private readonly BindableCollection<InputConnectorViewModel> _inputConnectors;
+
+        private bool _isSelected;
+
+        private string _name;
+
+        private OutputConnectorViewModel _outputConnector;
+
         private double _x;
+
+        private double _y;
+
+        protected ElementViewModel()
+        {
+            _inputConnectors = new BindableCollection<InputConnectorViewModel>();
+            _name = GetType().Name;
+        }
 
         [Browsable(false)]
         public double X
@@ -27,8 +45,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             }
         }
 
-        private double _y;
-
         [Browsable(false)]
         public double Y
         {
@@ -40,8 +56,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             }
         }
 
-        private string _name;
-
         [Browsable(false)]
         public string Name
         {
@@ -52,8 +66,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
                 NotifyOfPropertyChange(() => Name);
             }
         }
-
-        private bool _isSelected;
 
         [Browsable(false)]
         public bool IsSelected
@@ -67,11 +79,8 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         }
 
         public abstract BitmapSource PreviewImage { get; }
-
-        private readonly BindableCollection<InputConnectorViewModel> _inputConnectors;
         public IList<InputConnectorViewModel> InputConnectors => _inputConnectors;
 
-        private OutputConnectorViewModel _outputConnector;
         public OutputConnectorViewModel OutputConnector
         {
             get { return _outputConnector; }
@@ -92,11 +101,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             }
         }
 
-        protected ElementViewModel()
-        {
-            _inputConnectors = new BindableCollection<InputConnectorViewModel>();
-            _name = GetType().Name;
-        }
+        public event EventHandler OutputChanged;
 
         protected void AddInputConnector(string name, Color color)
         {
@@ -112,12 +117,11 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
 
         protected virtual void OnInputConnectorConnectionChanged()
         {
-            
         }
 
         protected virtual void RaiseOutputChanged()
         {
-            EventHandler handler = OutputChanged;
+            var handler = OutputChanged;
             if (handler != null) handler(this, EventArgs.Empty);
         }
     }

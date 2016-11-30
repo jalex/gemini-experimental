@@ -2,9 +2,6 @@
 {
     public class EditorFileType
     {
-        public string Name { get; set; }
-        public string FileExtension { get; set; }
-
         public EditorFileType(string name, string fileExtension)
         {
             Name = name;
@@ -13,7 +10,9 @@
 
         public EditorFileType()
         {
-            
         }
+
+        public string Name { get; set; }
+        public string FileExtension { get; set; }
     }
 }

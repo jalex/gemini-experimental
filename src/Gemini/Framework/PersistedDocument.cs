@@ -1,11 +1,16 @@
-using Caliburn.Micro;
-using Gemini.Framework.Services;
-using Gemini.Properties;
-using Microsoft.Win32;
+#region
+
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Caliburn.Micro;
+using Gemini.Framework.Services;
+using Gemini.Properties;
+using Microsoft.Win32;
+
+#endregion
 
 namespace Gemini.Framework
 {
@@ -32,7 +37,7 @@ namespace Gemini.Framework
         }
 
         // ShouldReopenOnStart, SaveState and LoadState are default methods of PersistedDocument.
-        public override bool ShouldReopenOnStart => (FilePath != null);
+        public override bool ShouldReopenOnStart => FilePath != null;
 
         public override void SaveState(BinaryWriter writer)
         {
@@ -44,20 +49,20 @@ namespace Gemini.Framework
             await Load(reader.ReadString());
         }
 
-        public override async void CanClose(System.Action<bool> callback)
+        public override async void CanClose(Action<bool> callback)
         {
             if (IsDirty)
             {
                 // Show save prompt.  
                 // Note that CanClose method of Demo ShellViewModel blocks this. 
-                string title = IoC.Get<IMainWindow>().Title;
-                string fileName = Path.GetFileNameWithoutExtension(FileName);
-                string fileExtension = Path.GetExtension(FileName);
+                var title = IoC.Get<IMainWindow>().Title;
+                var fileName = Path.GetFileNameWithoutExtension(FileName);
+                var fileExtension = Path.GetExtension(FileName);
                 var fileType = IoC.GetAll<IEditorProvider>()
-                                  .SelectMany(x => x.FileTypes)
-                                  .SingleOrDefault(x => x.FileExtension == fileExtension);
+                    .SelectMany(x => x.FileTypes)
+                    .SingleOrDefault(x => x.FileExtension == fileExtension);
 
-                string message = string.Format(Resources.SaveChangesBeforeClosingMessage, fileType.Name, fileName);
+                var message = string.Format(Resources.SaveChangesBeforeClosingMessage, fileType.Name, fileName);
                 var result = MessageBox.Show(message, title, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
 
                 if (result == MessageBoxResult.Yes)
@@ -70,7 +75,7 @@ namespace Gemini.Framework
                             filter = fileType.Name + "|*" + fileType.FileExtension + "|";
                         filter += Resources.AllFiles + "|*.*";
 
-                        var dialog = new SaveFileDialog() { FileName = FileName, Filter = filter };
+                        var dialog = new SaveFileDialog {FileName = FileName, Filter = filter};
                         if (dialog.ShowDialog() == true)
                         {
                             // Save file.
@@ -102,11 +107,6 @@ namespace Gemini.Framework
             callback(true);
         }
 
-        private void UpdateDisplayName()
-        {
-            DisplayName = (IsDirty) ? FileName + "*" : FileName;
-        }
-
         public async Task New(string fileName)
         {
             FileName = fileName;
@@ -117,8 +117,6 @@ namespace Gemini.Framework
 
             await DoNew();
         }
-
-        protected abstract Task DoNew();
 
         public async Task Load(string filePath)
         {
@@ -132,8 +130,6 @@ namespace Gemini.Framework
             await DoLoad(filePath);
         }
 
-        protected abstract Task DoLoad(string filePath);
-
         public async Task Save(string filePath)
         {
             FilePath = filePath;
@@ -145,6 +141,15 @@ namespace Gemini.Framework
             IsDirty = false;
             IsNew = false;
         }
+
+        private void UpdateDisplayName()
+        {
+            DisplayName = IsDirty ? FileName + "*" : FileName;
+        }
+
+        protected abstract Task DoNew();
+
+        protected abstract Task DoLoad(string filePath);
 
         protected abstract Task DoSave(string filePath);
     }

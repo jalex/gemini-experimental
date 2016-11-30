@@ -1,28 +1,32 @@
-﻿using System.ComponentModel;
+﻿#region
+
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interactivity;
 using MahApps.Metro.Controls;
+
+#endregion
 
 namespace Gemini.Framework.Behaviors
 {
     // Copied from MahApp's GlowWindowBehavior, because that one has a bug if GlowBrush is set in a style, rather than directly.
     public class CustomGlowWindowBehavior : Behavior<MetroWindow>
     {
+        private GlowWindow _bottom;
         private GlowWindow _left;
         private GlowWindow _right;
         private GlowWindow _top;
-        private GlowWindow _bottom;
 
         protected override void OnAttached()
         {
             base.OnAttached();
-            AssociatedObject.Loaded += new RoutedEventHandler(AssociatedObjectOnLoaded);
+            AssociatedObject.Loaded += AssociatedObjectOnLoaded;
         }
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            MetroWindow metroWindow = AssociatedObject as MetroWindow;
-            if (metroWindow != null && (metroWindow.UseNoneWindowStyle/* || metroWindow.GlowBrush == null*/))
+            var metroWindow = AssociatedObject;
+            if ((metroWindow != null) && metroWindow.UseNoneWindowStyle)
                 return;
             _left = new GlowWindow(AssociatedObject, GlowDirection.Left);
             _right = new GlowWindow(AssociatedObject, GlowDirection.Right);
@@ -34,19 +38,19 @@ namespace Gemini.Framework.Behaviors
             metroWindow.LocationChanged += (s, e) => Update();
             metroWindow.SizeChanged += (s, e) => Update();
 
-            if (metroWindow == null || !metroWindow.WindowTransitionsEnabled)
+            if ((metroWindow == null) || !metroWindow.WindowTransitionsEnabled)
             {
                 SetOpacityTo(1.0);
             }
             else
             {
                 StartOpacityStoryboard();
-                AssociatedObject.IsVisibleChanged += new DependencyPropertyChangedEventHandler(AssociatedObjectIsVisibleChanged);
+                AssociatedObject.IsVisibleChanged += AssociatedObjectIsVisibleChanged;
                 AssociatedObject.Closing += (CancelEventHandler) ((o, args) =>
                 {
                     if (args.Cancel)
                         return;
-                    AssociatedObject.IsVisibleChanged -= new DependencyPropertyChangedEventHandler(AssociatedObjectIsVisibleChanged);
+                    AssociatedObject.IsVisibleChanged -= AssociatedObjectIsVisibleChanged;
                 });
             }
         }
@@ -60,12 +64,11 @@ namespace Gemini.Framework.Behaviors
         }
 
         /// <summary>
-        /// Updates all glow windows (visible, hidden, collapsed)
-        /// 
+        ///     Updates all glow windows (visible, hidden, collapsed)
         /// </summary>
         private void Update()
         {
-            if (_left == null || _right == null || (_top == null || _bottom == null))
+            if ((_left == null) || (_right == null) || (_top == null) || (_bottom == null))
                 return;
             _left.Update();
             _right.Update();
@@ -74,12 +77,11 @@ namespace Gemini.Framework.Behaviors
         }
 
         /// <summary>
-        /// Sets the opacity to all glow windows
-        /// 
+        ///     Sets the opacity to all glow windows
         /// </summary>
         private void SetOpacityTo(double newOpacity)
         {
-            if (_left == null || _right == null || (_top == null || _bottom == null))
+            if ((_left == null) || (_right == null) || (_top == null) || (_bottom == null))
                 return;
             _left.Opacity = newOpacity;
             _right.Opacity = newOpacity;
@@ -88,12 +90,13 @@ namespace Gemini.Framework.Behaviors
         }
 
         /// <summary>
-        /// Starts the opacity storyboard 0 -&gt; 1
-        /// 
+        ///     Starts the opacity storyboard 0 -&gt; 1
         /// </summary>
         private void StartOpacityStoryboard()
         {
-            if (_left == null || _left.OpacityStoryboard == null || (_right == null || _right.OpacityStoryboard == null) || (_top == null || _top.OpacityStoryboard == null || (_bottom == null || _bottom.OpacityStoryboard == null)))
+            if ((_left == null) || (_left.OpacityStoryboard == null) || (_right == null) ||
+                (_right.OpacityStoryboard == null) || (_top == null) || (_top.OpacityStoryboard == null) ||
+                (_bottom == null) || (_bottom.OpacityStoryboard == null))
                 return;
             _left.BeginStoryboard(_left.OpacityStoryboard);
             _right.BeginStoryboard(_right.OpacityStoryboard);
@@ -102,8 +105,7 @@ namespace Gemini.Framework.Behaviors
         }
 
         /// <summary>
-        /// Shows all glow windows
-        /// 
+        ///     Shows all glow windows
         /// </summary>
         private void Show()
         {

@@ -1,26 +1,25 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using Gemini.Modules.Inspector.Inspectors;
 
+#endregion
+
 namespace Gemini.Modules.Inspector.Conventions
 {
     public static class DefaultPropertyInspectors
     {
-        private static readonly List<PropertyEditorBuilder> _inspectorBuilders;
-
-        public static List<PropertyEditorBuilder> InspectorBuilders => _inspectorBuilders;
-
         static DefaultPropertyInspectors()
         {
-            _inspectorBuilders = new List<PropertyEditorBuilder>
+            InspectorBuilders = new List<PropertyEditorBuilder>
             {
                 new AdvancedSliderPropertyEditorBuilder(),
                 new AdvancedSliderRangePropertyEditorBuilder(),
                 new EnumPropertyEditorBuilder(),
-
                 new StandardPropertyEditorBuilder<bool, CheckBoxEditorViewModel>(),
                 new StandardPropertyEditorBuilder<Color, ColorEditorViewModel>(),
                 new StandardPropertyEditorBuilder<double?, TextBoxEditorViewModel<double?>>(),
@@ -28,18 +27,17 @@ namespace Gemini.Modules.Inspector.Conventions
                 new StandardPropertyEditorBuilder<int?, TextBoxEditorViewModel<int?>>(),
                 new StandardPropertyEditorBuilder<Point3D, Point3DEditorViewModel>(),
                 new StandardPropertyEditorBuilder<string, TextBoxEditorViewModel<string>>(),
-
                 new StandardPropertyEditorBuilder<BitmapSource, BitmapSourceEditorViewModel>()
             };
         }
 
+        public static List<PropertyEditorBuilder> InspectorBuilders { get; }
+
         public static IEditor CreateEditor(PropertyDescriptor propertyDescriptor)
         {
-            foreach (var inspectorBuilder in _inspectorBuilders)
-            {
+            foreach (var inspectorBuilder in InspectorBuilders)
                 if (inspectorBuilder.IsApplicable(propertyDescriptor))
                     return inspectorBuilder.BuildEditor(propertyDescriptor);
-            }
             return null;
         }
     }

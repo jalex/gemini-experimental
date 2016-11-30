@@ -1,20 +1,21 @@
-﻿using System;
-using System.Drawing;
+﻿#region
+
 using System.Runtime.InteropServices;
-using System.Windows;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Win32
 {
     internal static class NativeMethods
     {
+        [DllImport("user32.dll", EntryPoint = "GetCursorPos")]
+        public static extern bool GetCursorPos(out NativePoint point);
+
         [StructLayout(LayoutKind.Sequential)]
         public struct NativePoint
         {
             public int X;
             public int Y;
         }
-
-        [DllImport("user32.dll", EntryPoint = "GetCursorPos")]
-        public static extern bool GetCursorPos(out NativePoint point);
     }
 }

@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Gemini.Modules.Inspector.Inspectors;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Conventions
 {
@@ -10,9 +14,9 @@ namespace Gemini.Modules.Inspector.Conventions
     {
         public override bool IsApplicable(PropertyDescriptor propertyDescriptor)
         {
-            var isNumberType = propertyDescriptor.PropertyType == typeof(int)
-                || propertyDescriptor.PropertyType == typeof(double)
-                || propertyDescriptor.PropertyType == typeof(float);
+            var isNumberType = (propertyDescriptor.PropertyType == typeof(int))
+                               || (propertyDescriptor.PropertyType == typeof(double))
+                               || (propertyDescriptor.PropertyType == typeof(float));
 
             if (!isNumberType)
                 return false;
@@ -27,13 +31,13 @@ namespace Gemini.Modules.Inspector.Conventions
                 .First();
 
             if (propertyDescriptor.PropertyType == typeof(int))
-               return new RangeEditorViewModel<int>((int) rangeAttribute.Minimum, (int) rangeAttribute.Maximum);
+                return new RangeEditorViewModel<int>((int) rangeAttribute.Minimum, (int) rangeAttribute.Maximum);
 
             if (propertyDescriptor.PropertyType == typeof(double))
-               return new RangeEditorViewModel<double>((double) rangeAttribute.Minimum, (double) rangeAttribute.Maximum);
+                return new RangeEditorViewModel<double>((double) rangeAttribute.Minimum, (double) rangeAttribute.Maximum);
 
             if (propertyDescriptor.PropertyType == typeof(float))
-               return new RangeEditorViewModel<float>((float) rangeAttribute.Minimum, (float) rangeAttribute.Maximum);
+                return new RangeEditorViewModel<float>((float) rangeAttribute.Minimum, (float) rangeAttribute.Maximum);
 
             throw new InvalidOperationException();
         }

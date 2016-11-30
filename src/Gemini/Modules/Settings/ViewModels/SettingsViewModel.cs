@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -7,13 +9,15 @@ using Caliburn.Micro;
 using Gemini.Framework;
 using Gemini.Properties;
 
+#endregion
+
 namespace Gemini.Modules.Settings.ViewModels
 {
-    [Export(typeof (SettingsViewModel))]
+    [Export(typeof(SettingsViewModel))]
     public class SettingsViewModel : WindowBase
     {
-        private IEnumerable<ISettingsEditor> _settingsEditors;
         private SettingsPageViewModel _selectedPage;
+        private IEnumerable<ISettingsEditor> _settingsEditors;
 
         public SettingsViewModel()
         {
@@ -45,18 +49,18 @@ namespace Gemini.Modules.Settings.ViewModels
             var pages = new List<SettingsPageViewModel>();
             _settingsEditors = IoC.GetAll<ISettingsEditor>();
 
-            foreach (ISettingsEditor settingsEditor in _settingsEditors)
+            foreach (var settingsEditor in _settingsEditors)
             {
-                List<SettingsPageViewModel> parentCollection = GetParentCollection(settingsEditor, pages);
+                var parentCollection = GetParentCollection(settingsEditor, pages);
 
-                SettingsPageViewModel page =
+                var page =
                     parentCollection.FirstOrDefault(m => m.Name == settingsEditor.SettingsPageName);
 
                 if (page == null)
                 {
                     page = new SettingsPageViewModel
                     {
-                        Name = settingsEditor.SettingsPageName,
+                        Name = settingsEditor.SettingsPageName
                     };
                     parentCollection.Add(page);
                 }
@@ -84,15 +88,13 @@ namespace Gemini.Modules.Settings.ViewModels
             List<SettingsPageViewModel> pages)
         {
             if (string.IsNullOrEmpty(settingsEditor.SettingsPagePath))
-            {
                 return pages;
-            }
 
-            string[] path = settingsEditor.SettingsPagePath.Split(new[] {'\\'}, StringSplitOptions.RemoveEmptyEntries);
+            var path = settingsEditor.SettingsPagePath.Split(new[] {'\\'}, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (string pathElement in path)
+            foreach (var pathElement in path)
             {
-                SettingsPageViewModel page = pages.FirstOrDefault(s => s.Name == pathElement);
+                var page = pages.FirstOrDefault(s => s.Name == pathElement);
 
                 if (page == null)
                 {
@@ -108,10 +110,8 @@ namespace Gemini.Modules.Settings.ViewModels
 
         private void SaveChanges(object obj)
         {
-            foreach (ISettingsEditor settingsEditor in _settingsEditors)
-            {
+            foreach (var settingsEditor in _settingsEditors)
                 settingsEditor.ApplyChanges();
-            }
 
             TryClose(true);
         }

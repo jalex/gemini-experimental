@@ -1,4 +1,8 @@
-﻿using Gemini.Demo.Modules.FilterDesigner.ViewModels;
+﻿#region
+
+using Gemini.Demo.Modules.FilterDesigner.ViewModels;
+
+#endregion
 
 namespace Gemini.Demo.Modules.FilterDesigner.Design
 {
@@ -7,7 +11,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.Design
         public DesignTimeGraphViewModel()
             : base(null)
         {
-            
         }
     }
 }

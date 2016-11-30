@@ -1,22 +1,32 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Gemini.Framework;
 using Gemini.Framework.Services;
+using Gemini.Modules.Inspector.Inspectors;
 using Gemini.Modules.Inspector.Properties;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.ViewModels
 {
     [Export(typeof(IInspectorTool))]
     public class InspectorViewModel : Tool, IInspectorTool
     {
+        private IInspectableObject _selectedObject;
+
+        public InspectorViewModel()
+        {
+            DisplayName = Resources.InspectorDisplayName;
+        }
+
         public event EventHandler SelectedObjectChanged;
 
         public override PaneLocation PreferredLocation => PaneLocation.Right;
 
         public override double PreferredWidth => 300;
-
-        private IInspectableObject _selectedObject;
 
         public IInspectableObject SelectedObject
         {
@@ -29,14 +39,9 @@ namespace Gemini.Modules.Inspector.ViewModels
             }
         }
 
-        public InspectorViewModel()
-        {
-            DisplayName = Resources.InspectorDisplayName;
-        }
-
         private void RaiseSelectedObjectChanged()
         {
-            EventHandler handler = SelectedObjectChanged;
+            var handler = SelectedObjectChanged;
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
@@ -45,25 +50,22 @@ namespace Gemini.Modules.Inspector.ViewModels
             if (SelectedObject == null)
                 return;
 
-            RecurseEditors(SelectedObject.Inspectors, delegate(Inspectors.IEditor editor) {
-                if (editor != null && editor.CanReset)
+            RecurseEditors(SelectedObject.Inspectors, delegate(IEditor editor)
+            {
+                if ((editor != null) && editor.CanReset)
                     editor.Reset();
             });
         }
 
-        public void RecurseEditors(IEnumerable<Inspectors.IInspector> inspectors, Action<Inspectors.IEditor> action)
+        public void RecurseEditors(IEnumerable<IInspector> inspectors, Action<IEditor> action)
         {
             foreach (var inspector in inspectors)
             {
-                var group = inspector as Inspectors.CollapsibleGroupViewModel;
+                var group = inspector as CollapsibleGroupViewModel;
                 if (group != null)
-                {
                     RecurseEditors(group.Children, action);
-                }
                 else
-                {
-                    action(inspector as Inspectors.IEditor);
-                }
+                    action(inspector as IEditor);
             }
         }
     }

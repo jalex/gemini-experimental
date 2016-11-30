@@ -1,13 +1,17 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using Gemini.Framework.Menus;
 using Gemini.Modules.Settings.Commands;
+
+#endregion
 
 namespace Gemini.Modules.Settings
 {
     public static class MenuDefinitions
     {
-        [Export]
-        public static MenuItemDefinition OpenSettingsMenuItem = new CommandMenuItemDefinition<OpenSettingsCommandDefinition>(
-            MainMenu.MenuDefinitions.ToolsOptionsMenuGroup, 0);
+        [Export] public static MenuItemDefinition OpenSettingsMenuItem = new CommandMenuItemDefinition
+            <OpenSettingsCommandDefinition>(
+                MainMenu.MenuDefinitions.ToolsOptionsMenuGroup, 0);
     }
 }

@@ -1,19 +1,30 @@
-﻿using System;
+﻿#region
+
+using System;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Framework.Commands
 {
     public class Command : PropertyChangedBase
     {
-        private readonly CommandDefinitionBase _commandDefinition;
-        private bool _visible = true;
-        private bool _enabled = true;
         private bool _checked;
+        private bool _enabled = true;
+        private Uri _iconSource;
         private string _text;
         private string _toolTip;
-        private Uri _iconSource;
+        private bool _visible = true;
 
-        public CommandDefinitionBase CommandDefinition => _commandDefinition;
+        public Command(CommandDefinitionBase commandDefinition)
+        {
+            CommandDefinition = commandDefinition;
+            Text = commandDefinition.Text;
+            ToolTip = commandDefinition.ToolTip;
+            IconSource = commandDefinition.IconSource;
+        }
+
+        public CommandDefinitionBase CommandDefinition { get; }
 
         public bool Visible
         {
@@ -76,13 +87,5 @@ namespace Gemini.Framework.Commands
         }
 
         public object Tag { get; set; }
-
-        public Command(CommandDefinitionBase commandDefinition)
-        {
-            _commandDefinition = commandDefinition;
-            Text = commandDefinition.Text;
-            ToolTip = commandDefinition.ToolTip;
-            IconSource = commandDefinition.IconSource;
-        }
     }
 }

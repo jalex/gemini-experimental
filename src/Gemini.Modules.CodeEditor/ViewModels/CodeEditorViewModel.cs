@@ -1,13 +1,16 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading.Tasks;
+using Caliburn.Micro;
 using Gemini.Framework;
 using Gemini.Framework.Threading;
 using Gemini.Modules.CodeEditor.Views;
 using Gemini.Modules.StatusBar;
-using System.ComponentModel;
-using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Modules.CodeEditor.ViewModels
 {
@@ -18,10 +21,10 @@ namespace Gemini.Modules.CodeEditor.ViewModels
 #pragma warning restore 659
     {
         private readonly LanguageDefinitionManager _languageDefinitionManager;
+        private bool _notYetLoaded;
         private string _originalText;
-        private ICodeEditorView _view;
         private IStatusBar _statusBar;
-        private bool _notYetLoaded = false;
+        private ICodeEditorView _view;
 
         [ImportingConstructor]
         public CodeEditorViewModel(LanguageDefinitionManager languageDefinitionManager)
@@ -44,9 +47,9 @@ namespace Gemini.Modules.CodeEditor.ViewModels
         public override bool Equals(object obj)
         {
             var other = obj as CodeEditorViewModel;
-            return other != null
-                && string.Equals(FilePath, other.FilePath, StringComparison.InvariantCultureIgnoreCase)
-                && string.Equals(FileName, other.FileName, StringComparison.InvariantCultureIgnoreCase);
+            return (other != null)
+                   && string.Equals(FilePath, other.FilePath, StringComparison.InvariantCultureIgnoreCase)
+                   && string.Equals(FileName, other.FileName, StringComparison.InvariantCultureIgnoreCase);
         }
 
         protected override Task DoNew()
@@ -81,38 +84,33 @@ namespace Gemini.Modules.CodeEditor.ViewModels
             }
             _view.TextEditor.Text = _originalText;
 
-            _view.TextEditor.TextChanged += delegate
-            {
-                IsDirty = string.Compare(_originalText, _view.TextEditor.Text) != 0;
-            };
+            _view.TextEditor.TextChanged +=
+                delegate { IsDirty = string.Compare(_originalText, _view.TextEditor.Text) != 0; };
 
             UpdateStatusBar();
 
             // To update status bar items, Caret PositionChanged event is added
-            _view.TextEditor.TextArea.Caret.PositionChanged += delegate
-            {
-                UpdateStatusBar();
-            };
+            _view.TextEditor.TextArea.Caret.PositionChanged += delegate { UpdateStatusBar(); };
 
             var fileExtension = Path.GetExtension(FileName).ToLower();
 
-            ILanguageDefinition languageDefinition = _languageDefinitionManager.GetDefinitionByExtension(fileExtension);
+            var languageDefinition = _languageDefinitionManager.GetDefinitionByExtension(fileExtension);
 
             SetLanguage(languageDefinition);
         }
 
         /// <summary>
-        /// Update Column and Line position properties when caret position is changed
+        ///     Update Column and Line position properties when caret position is changed
         /// </summary>
         private void UpdateStatusBar()
         {
-            int lineNumber = _view.TextEditor.Document.GetLineByOffset(_view.TextEditor.CaretOffset).LineNumber;
-            int colPosition = _view.TextEditor.TextArea.Caret.VisualColumn + 1;
+            var lineNumber = _view.TextEditor.Document.GetLineByOffset(_view.TextEditor.CaretOffset).LineNumber;
+            var colPosition = _view.TextEditor.TextArea.Caret.VisualColumn + 1;
 
             // TODO: Now I don't know about Ch#
             //int charPosition = _view.TextEditor.CaretOffset;
 
-            if (_statusBar != null && _statusBar.Items.Count >= 3)
+            if ((_statusBar != null) && (_statusBar.Items.Count >= 3))
             {
                 _statusBar.Items[1].Message = $"Ln {lineNumber}";
                 _statusBar.Items[2].Message = $"Col {colPosition}";
@@ -121,7 +119,7 @@ namespace Gemini.Modules.CodeEditor.ViewModels
 
         private void SetLanguage(ILanguageDefinition languageDefinition)
         {
-            _view.TextEditor.SyntaxHighlighting = (languageDefinition != null)
+            _view.TextEditor.SyntaxHighlighting = languageDefinition != null
                 ? languageDefinition.SyntaxHighlighting
                 : null;
         }

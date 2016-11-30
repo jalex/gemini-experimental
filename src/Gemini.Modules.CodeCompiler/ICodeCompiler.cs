@@ -1,6 +1,10 @@
-﻿using Microsoft.CodeAnalysis;
+﻿#region
+
 using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.CodeAnalysis;
+
+#endregion
 
 namespace Gemini.Modules.CodeCompiler
 {

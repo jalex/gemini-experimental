@@ -1,9 +1,13 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
+
+#endregion
 
 namespace Gemini.Modules.Settings.Views
 {
     /// <summary>
-    /// Interaction logic for SettingsView.xaml
+    ///     Interaction logic for SettingsView.xaml
     /// </summary>
     public partial class SettingsView : Window
     {

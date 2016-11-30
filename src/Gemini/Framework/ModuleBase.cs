@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Windows;
@@ -6,27 +8,21 @@ using Gemini.Framework.Services;
 using Gemini.Modules.MainMenu;
 using Gemini.Modules.ToolBars;
 
+#endregion
+
 namespace Gemini.Framework
 {
-	public abstract class ModuleBase : IModule
-	{
-#pragma warning disable 649
-        [Import]
-        private IMainWindow _mainWindow;
-
-        [Import]
-        private IShell _shell;
-#pragma warning restore 649
-
+    public abstract class ModuleBase : IModule
+    {
         protected IMainWindow MainWindow => _mainWindow;
 
-	    protected IShell Shell => _shell;
+        protected IShell Shell => _shell;
 
-	    protected IMenu MainMenu => _shell.MainMenu;
+        protected IMenu MainMenu => _shell.MainMenu;
 
-	    protected IToolBars ToolBars => _shell.ToolBars;
+        protected IToolBars ToolBars => _shell.ToolBars;
 
-	    public virtual IEnumerable<ResourceDictionary> GlobalResourceDictionaries
+        public virtual IEnumerable<ResourceDictionary> GlobalResourceDictionaries
         {
             get { yield break; }
         }
@@ -36,24 +32,26 @@ namespace Gemini.Framework
             get { yield break; }
         }
 
-	    public virtual IEnumerable<Type> DefaultTools
-	    {
+        public virtual IEnumerable<Type> DefaultTools
+        {
             get { yield break; }
-	    }
+        }
 
         public virtual void PreInitialize()
         {
-            
         }
 
-		public virtual void Initialize()
-		{
-		    
-		}
+        public virtual void Initialize()
+        {
+        }
 
         public virtual void PostInitialize()
         {
-
         }
-	}
+#pragma warning disable 649
+        [Import] private IMainWindow _mainWindow;
+
+        [Import] private IShell _shell;
+#pragma warning restore 649
+    }
 }

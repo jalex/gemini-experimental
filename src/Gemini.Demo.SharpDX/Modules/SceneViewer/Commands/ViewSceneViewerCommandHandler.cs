@@ -1,9 +1,13 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using Gemini.Demo.SharpDX.Modules.SceneViewer.ViewModels;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
 using Gemini.Framework.Threading;
+
+#endregion
 
 namespace Gemini.Demo.SharpDX.Modules.SceneViewer.Commands
 {

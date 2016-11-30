@@ -1,20 +1,23 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 
+#endregion
+
 namespace Gemini.Modules.CodeEditor
 {
     internal class DefaultLanguageDefinition : ILanguageDefinition
     {
-        private readonly string _name;
         private IHighlightingDefinition _highlightingDefinition;
         private XshdSyntaxDefinition _syntaxDefinition;
 
         public DefaultLanguageDefinition(string name, IEnumerable<string> fileExtensions)
         {
-            _name = name;
+            Name = name;
             FileExtensions = fileExtensions;
         }
 
@@ -24,7 +27,7 @@ namespace Gemini.Modules.CodeEditor
             _syntaxDefinition = syntaxDefinition;
         }
 
-        public string Name => _name;
+        public string Name { get; }
 
         public IEnumerable<string> FileExtensions { get; set; }
 
@@ -33,9 +36,7 @@ namespace Gemini.Modules.CodeEditor
             get
             {
                 if (_highlightingDefinition == null)
-                {
                     _highlightingDefinition = LoadHighlightingDefinition();
-                }
 
                 return _highlightingDefinition;
             }
@@ -45,25 +46,25 @@ namespace Gemini.Modules.CodeEditor
 
         private IHighlightingDefinition LoadHighlightingDefinition()
         {
-            HighlightingManager highlightingManager = HighlightingManager.Instance;
+            var highlightingManager = HighlightingManager.Instance;
 
             if (!string.IsNullOrEmpty(CustomSyntaxHighlightingFileName))
-            {
                 using (var reader = new XmlTextReader(CustomSyntaxHighlightingFileName))
+                {
                     _syntaxDefinition = HighlightingLoader.LoadXshd(reader);
-            }
+                }
 
             if (_syntaxDefinition != null)
             {
-                IHighlightingDefinition highlightingDefinition =
+                var highlightingDefinition =
                     HighlightingLoader.Load(_syntaxDefinition, highlightingManager);
 
                 highlightingManager.RegisterHighlighting(_syntaxDefinition.Name,
-                                                         _syntaxDefinition.Extensions.ToArray(),
-                                                         highlightingDefinition);
+                    _syntaxDefinition.Extensions.ToArray(),
+                    highlightingDefinition);
             }
 
-            return highlightingManager.GetDefinition(_name);
+            return highlightingManager.GetDefinition(Name);
         }
     }
 }

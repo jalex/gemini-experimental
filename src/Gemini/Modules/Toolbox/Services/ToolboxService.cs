@@ -1,9 +1,13 @@
+#region
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Caliburn.Micro;
 using Gemini.Modules.Toolbox.Models;
+
+#endregion
 
 namespace Gemini.Modules.Toolbox.Services
 {
@@ -24,8 +28,8 @@ namespace Gemini.Modules.Toolbox.Services
                         DocumentType = attribute.DocumentType,
                         Name = attribute.Name,
                         Category = attribute.Category,
-                        IconSource = (attribute.IconSource != null) ? new Uri(attribute.IconSource) : null,
-                        ItemType = x,
+                        IconSource = attribute.IconSource != null ? new Uri(attribute.IconSource) : null,
+                        ItemType = x
                     };
                 })
                 .GroupBy(x => x.DocumentType)

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Windows;
@@ -11,25 +13,19 @@ using Gemini.Framework;
 using Gemini.Modules.Inspector;
 using ImageSource = Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements.ImageSource;
 
+#endregion
+
 namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
 {
     [Export(typeof(GraphViewModel))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class GraphViewModel : Document
     {
-        private readonly IInspectorTool _inspectorTool;
+        private readonly BindableCollection<ConnectionViewModel> _connections;
 
         private readonly BindableCollection<ElementViewModel> _elements;
-        public IObservableCollection<ElementViewModel> Elements => _elements;
+        private readonly IInspectorTool _inspectorTool;
 
-        private readonly BindableCollection<ConnectionViewModel> _connections;
-        public IObservableCollection<ConnectionViewModel> Connections => _connections;
-
-        public IEnumerable<ElementViewModel> SelectedElements
-        {
-            get { return _elements.Where(x => x.IsSelected); }
-        }
-          
         [ImportingConstructor]
         public GraphViewModel(IInspectorTool inspectorTool)
         {
@@ -59,10 +55,18 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             element1.IsSelected = true;
         }
 
+        public IObservableCollection<ElementViewModel> Elements => _elements;
+        public IObservableCollection<ConnectionViewModel> Connections => _connections;
+
+        public IEnumerable<ElementViewModel> SelectedElements
+        {
+            get { return _elements.Where(x => x.IsSelected); }
+        }
+
         public TElement AddElement<TElement>(double x, double y)
             where TElement : ElementViewModel, new()
         {
-            var element = new TElement { X = x, Y = y };
+            var element = new TElement {X = x, Y = y};
             _elements.Add(element);
             return element;
         }
@@ -86,16 +90,17 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         {
             // If current drag point is close to an input connector, show its snapped position.
             var nearbyConnector = FindNearbyInputConnector(currentDragPoint);
-            connection.ToPosition = (nearbyConnector != null)
+            connection.ToPosition = nearbyConnector != null
                 ? nearbyConnector.Position
                 : currentDragPoint;
         }
 
-        public void OnConnectionDragCompleted(Point currentDragPoint, ConnectionViewModel newConnection, ConnectorViewModel sourceConnector)
+        public void OnConnectionDragCompleted(Point currentDragPoint, ConnectionViewModel newConnection,
+            ConnectorViewModel sourceConnector)
         {
             var nearbyConnector = FindNearbyInputConnector(currentDragPoint);
 
-            if (nearbyConnector == null || sourceConnector.Element == nearbyConnector.Element)
+            if ((nearbyConnector == null) || (sourceConnector.Element == nearbyConnector.Element))
             {
                 Connections.Remove(newConnection);
                 return;

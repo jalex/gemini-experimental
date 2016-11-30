@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,21 +9,23 @@ using Gemini.Modules.GraphEditor.Controls;
 using Gemini.Modules.Toolbox;
 using Gemini.Modules.Toolbox.Models;
 
+#endregion
+
 namespace Gemini.Demo.Modules.FilterDesigner.Views
 {
     /// <summary>
-    /// Interaction logic for GraphView.xaml
+    ///     Interaction logic for GraphView.xaml
     /// </summary>
     public partial class GraphView : UserControl
     {
         private Point _originalContentMouseDownPoint;
 
-        private GraphViewModel ViewModel => (GraphViewModel) DataContext;
-
         public GraphView()
         {
             InitializeComponent();
         }
+
+        private GraphViewModel ViewModel => (GraphViewModel) DataContext;
 
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
         {
@@ -53,10 +57,10 @@ namespace Gemini.Demo.Modules.FilterDesigner.Views
 
         private void OnGraphControlMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.RightButton == MouseButtonState.Pressed && GraphControl.IsMouseCaptured)
+            if ((e.RightButton == MouseButtonState.Pressed) && GraphControl.IsMouseCaptured)
             {
-                Point currentContentMousePoint = e.GetPosition(GraphControl);
-                Vector dragOffset = currentContentMousePoint - _originalContentMouseDownPoint;
+                var currentContentMousePoint = e.GetPosition(GraphControl);
+                var dragOffset = currentContentMousePoint - _originalContentMouseDownPoint;
 
                 ZoomAndPanControl.ContentOffsetX -= dragOffset.X;
                 ZoomAndPanControl.ContentOffsetY -= dragOffset.Y;
@@ -68,7 +72,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.Views
         private void OnGraphControlMouseWheel(object sender, MouseWheelEventArgs e)
         {
             ZoomAndPanControl.ZoomAboutPoint(
-                ZoomAndPanControl.ContentScale + e.Delta / 1000.0f,
+                ZoomAndPanControl.ContentScale + e.Delta/1000.0f,
                 e.GetPosition(GraphControl));
 
             e.Handled = true;

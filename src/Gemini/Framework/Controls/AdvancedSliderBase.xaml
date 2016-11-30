@@ -13,17 +13,18 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <Style x:Key="TransparentTextBox" TargetType="{x:Type TextBox}">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="Foreground" Value="{Binding Foreground, ElementName=AdvancedSliderBaseRoot}"/>
-                <Setter Property="SelectionBrush" Value="{DynamicResource TextBox.Selection.Background}"/>
-                <Setter Property="CaretBrush" Value="{DynamicResource TextBox.Caret}"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="Foreground" Value="{Binding Foreground, ElementName=AdvancedSliderBaseRoot}" />
+                <Setter Property="SelectionBrush" Value="{DynamicResource TextBox.Selection.Background}" />
+                <Setter Property="CaretBrush" Value="{DynamicResource TextBox.Caret}" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type TextBox}">
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False"
+                                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -32,16 +33,14 @@
     </UserControl.Resources>
     <Grid x:Name="Grid" SizeChanged="OnSizeChanged">
         <Rectangle x:Name="Bar" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="100"
-                   Fill="{Binding BarBrush, ElementName=AdvancedSliderBaseRoot}"
-                   />
+                   Fill="{Binding BarBrush, ElementName=AdvancedSliderBaseRoot}" />
 
         <TextBlock x:Name="NumberText" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Text="100"
                    Margin="0"
                    Foreground="{Binding Foreground, ElementName=AdvancedSliderBaseRoot}"
                    Focusable="True"
-                   GotFocus="numberText_GotFocus"
-                   />
+                   GotFocus="numberText_GotFocus" />
 
         <TextBox x:Name="TextBox" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"
                  Foreground="{Binding Foreground, ElementName=AdvancedSliderBaseRoot}"
@@ -51,7 +50,6 @@
                  LostFocus="textBox_LostFocus"
                  KeyDown="textBox_KeyDown"
                  Width="{Binding ActualWidth, ElementName=Grid, Mode=OneWay}"
-                 HorizontalContentAlignment="Center"
-                 />
+                 HorizontalContentAlignment="Center" />
     </Grid>
 </UserControl>

@@ -1,7 +1,6 @@
 ﻿namespace Gemini.Modules.MainMenu.Models
 {
-	public class MenuItemSeparator : MenuItemBase
-	{
-		 
-	}
+    public class MenuItemSeparator : MenuItemBase
+    {
+    }
 }

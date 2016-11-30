@@ -1,4 +1,8 @@
-﻿using System.Windows.Media.Media3D;
+﻿#region
+
+using System.Windows.Media.Media3D;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Inspectors
 {

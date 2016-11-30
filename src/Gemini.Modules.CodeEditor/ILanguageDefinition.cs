@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using ICSharpCode.AvalonEdit.Highlighting;
+
+#endregion
 
 namespace Gemini.Modules.CodeEditor
 {

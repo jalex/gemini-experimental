@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Media;
+
+#endregion
 
 namespace Gemini.Framework
 {
@@ -10,7 +14,7 @@ namespace Gemini.Framework
         {
             var parentObject = VisualTreeHelper.GetParent(child);
 
-            if (parentObject == null) 
+            if (parentObject == null)
                 return null;
 
             var parent = parentObject as T;

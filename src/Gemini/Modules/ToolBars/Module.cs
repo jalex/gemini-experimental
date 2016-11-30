@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Windows;
 using Gemini.Framework;
+
+#endregion
 
 namespace Gemini.Modules.ToolBars
 {

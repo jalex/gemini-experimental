@@ -1,4 +1,8 @@
-﻿using Gemini.Framework.Commands;
+﻿#region
+
+using Gemini.Framework.Commands;
+
+#endregion
 
 namespace Gemini.Demo.SharpDX.Modules.SceneViewer.Commands
 {

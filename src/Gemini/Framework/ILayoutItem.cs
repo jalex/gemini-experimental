@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.IO;
 using System.Windows.Input;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Framework
 {

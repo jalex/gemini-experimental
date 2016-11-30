@@ -1,15 +1,20 @@
-﻿using System.Linq;
+﻿#region
+
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using Gemini.Framework.Commands;
+
+#endregion
 
 namespace Gemini.Modules.MainMenu.Behaviors
 {
     public class MenuBehavior : DependencyObject
     {
         public static readonly DependencyProperty UpdateCommandUiItemsProperty = DependencyProperty.RegisterAttached(
-            "UpdateCommandUiItems", typeof(bool), typeof(MenuBehavior), new PropertyMetadata(false, OnUpdateCommandUiItemsChanged));
+            "UpdateCommandUiItems", typeof(bool), typeof(MenuBehavior),
+            new PropertyMetadata(false, OnUpdateCommandUiItemsChanged));
 
         public static bool GetUpdateCommandUiItems(DependencyObject control)
         {

@@ -1,9 +1,13 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Gemini.Framework.Commands;
+
+#endregion
 
 namespace Gemini.Modules.MainMenu.Models
 {
@@ -11,8 +15,25 @@ namespace Gemini.Modules.MainMenu.Models
     {
         private readonly Command _command;
         private readonly KeyGesture _keyGesture;
-        private readonly StandardMenuItem _parent;
         private readonly List<StandardMenuItem> _listItems;
+        private readonly StandardMenuItem _parent;
+
+        public CommandMenuItem(Command command, StandardMenuItem parent)
+        {
+            _command = command;
+            _keyGesture = IoC.Get<ICommandKeyGestureService>().GetPrimaryKeyGesture(_command.CommandDefinition);
+            _parent = parent;
+
+            _listItems = new List<StandardMenuItem>();
+
+            _command.PropertyChanged += (s, e) =>
+            {
+                if ((e.PropertyName == "Visible") || (e.PropertyName == "Checked"))
+                    NotifyOfPropertyChange("Is" + e.PropertyName);
+                else if ((e.PropertyName == "Text") || (e.PropertyName == "IconSource"))
+                    NotifyOfPropertyChange(e.PropertyName);
+            };
+        }
 
         public override string Text => _command.Text;
 
@@ -30,32 +51,11 @@ namespace Gemini.Modules.MainMenu.Models
 
         private bool IsListItem { get; set; }
 
-        public CommandMenuItem(Command command, StandardMenuItem parent)
-        {
-            _command = command;
-            _keyGesture = IoC.Get<ICommandKeyGestureService>().GetPrimaryKeyGesture(_command.CommandDefinition);
-            _parent = parent;
-
-            _listItems = new List<StandardMenuItem>();
-
-            _command.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == "Visible" || e.PropertyName == "Checked")
-                {
-                    NotifyOfPropertyChange("Is" + e.PropertyName);
-                }
-                else if (e.PropertyName == "Text" || e.PropertyName == "IconSource")
-                {
-                    NotifyOfPropertyChange(e.PropertyName);
-                }
-            };
-        }
-
         CommandDefinitionBase ICommandUiItem.CommandDefinition => _command.CommandDefinition;
 
         void ICommandUiItem.Update(CommandHandlerWrapper commandHandler)
         {
-            if (_command != null && _command.CommandDefinition.IsList && !IsListItem)
+            if ((_command != null) && _command.CommandDefinition.IsList && !IsListItem)
             {
                 foreach (var listItem in _listItems)
                     _parent.Children.Remove(listItem);
@@ -67,7 +67,7 @@ namespace Gemini.Modules.MainMenu.Models
 
                 _command.Visible = false;
 
-                int startIndex = _parent.Children.IndexOf(this) + 1;
+                var startIndex = _parent.Children.IndexOf(this) + 1;
 
                 foreach (var command in listCommands)
                 {

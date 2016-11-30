@@ -6,12 +6,12 @@
     xmlns:cal="http://www.caliburnproject.org"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:behaviors="clr-namespace:Gemini.Framework.Behaviors"
-    x:Class="Gemini.Modules.Settings.Views.SettingsView" 
-    mc:Ignorable="d" 
+    x:Class="Gemini.Modules.Settings.Views.SettingsView"
+    mc:Ignorable="d"
     d:DataContext="{d:DesignData Source=../SampleData/SettingsViewModelSampleData.xaml}"
     Background="{DynamicResource EnvironmentWindowBackground}"
     Foreground="{DynamicResource EnvironmentWindowText}"
-    Width="760" Height="500" MinWidth="512" MinHeight="300" 
+    Width="760" Height="500" MinWidth="512" MinHeight="300"
     WindowStartupLocation="CenterOwner"
     ShowInTaskbar="False">
     <i:Interaction.Behaviors>
@@ -41,18 +41,20 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        
+
         <Grid Grid.Row="0" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10" />
             </Grid.RowDefinitions>
 
-            <ScrollViewer IsTabStop="False" Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ScrollViewer IsTabStop="False" Grid.Row="0" VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl IsTabStop="False" HorizontalContentAlignment="Stretch"
-                      ItemsSource="{Binding ElementName=TreeView, Path=SelectedValue}"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      BorderBrush="{x:Null}">
+                              ItemsSource="{Binding ElementName=TreeView, Path=SelectedValue}"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              BorderBrush="{x:Null}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <ContentControl IsTabStop="False" cal:View.Model="{Binding}" />
@@ -60,9 +62,9 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            
+
             <Rectangle Grid.Row="1" Height="1" Fill="{x:Static SystemColors.ActiveBorderBrush}"
-                       VerticalAlignment="Bottom"/>
+                       VerticalAlignment="Bottom" />
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 12 0 0" HorizontalAlignment="Right"

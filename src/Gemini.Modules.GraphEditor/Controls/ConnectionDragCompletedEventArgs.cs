@@ -1,19 +1,21 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
+
+#endregion
 
 namespace Gemini.Modules.GraphEditor.Controls
 {
     public class ConnectionDragCompletedEventArgs : ConnectionDragEventArgs
     {
-        private readonly object _connection;
-
-        public object Connection => _connection;
-
-        internal ConnectionDragCompletedEventArgs(RoutedEvent routedEvent, object source, 
+        internal ConnectionDragCompletedEventArgs(RoutedEvent routedEvent, object source,
             ElementItem elementItem, object connection, ConnectorItem sourceConnectorItem)
             : base(routedEvent, source, elementItem, sourceConnectorItem)
         {
-            _connection = connection;
+            Connection = connection;
         }
+
+        public object Connection { get; }
     }
 
     public delegate void ConnectionDragCompletedEventHandler(object sender, ConnectionDragCompletedEventArgs e);

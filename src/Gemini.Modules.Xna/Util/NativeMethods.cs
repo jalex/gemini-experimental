@@ -1,26 +1,24 @@
-#region File Description
-//-----------------------------------------------------------------------------
-// Copyright 2011, Nick Gravelyn.
-// Licensed under the terms of the Ms-PL:
-// http://www.microsoft.com/opensource/licenses.mspx#Ms-PL
-//-----------------------------------------------------------------------------
-#endregion
+#region
 
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework.Graphics;
 
+#endregion
+
 namespace Gemini.Modules.Xna.Util
 {
     /// <summary>
-    /// An internal set of functionality used for interopping with native Win32 APIs.
+    ///     An internal set of functionality used for interopping with native Win32 APIs.
     /// </summary>
     internal static class NativeMethods
     {
         #region Interfaces
 
-        [ComImport, Guid("D0223B96-BF7A-43fd-92BD-A43B0D82B9EB"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [ComImport]
+        [Guid("D0223B96-BF7A-43fd-92BD-A43B0D82B9EB")]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IDirect3DDevice9
         {
             void TestCooperativeLevel();
@@ -41,7 +39,9 @@ namespace Gemini.Modules.Xna.Util
             int GetBackBuffer(uint swapChain, uint backBuffer, int type, out IntPtr backBufferPointer);
         }
 
-        [ComImport, Guid("85C31227-3DE5-4f00-9B3A-F11AC38C18B5"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [ComImport]
+        [Guid("85C31227-3DE5-4f00-9B3A-F11AC38C18B5")]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         private interface IDirect3DTexture9
         {
             void GetDevice();
@@ -68,7 +68,7 @@ namespace Gemini.Modules.Xna.Util
 
         public static unsafe IntPtr GetDirect3DDevice(GraphicsDevice graphics)
         {
-            FieldInfo comPtr = graphics.GetType().GetField("pComPtr", BindingFlags.NonPublic | BindingFlags.Instance);
+            var comPtr = graphics.GetType().GetField("pComPtr", BindingFlags.NonPublic | BindingFlags.Instance);
             return new IntPtr(Pointer.Unbox(comPtr.GetValue(graphics)));
         }
 
@@ -95,7 +95,8 @@ namespace Gemini.Modules.Xna.Util
             unsafe
             {
                 //Get the COM object pointer from the D3D object and marshal it as one of the interfaces defined below
-                var deviceField = container.GetType().GetField("pComPtr", BindingFlags.NonPublic | BindingFlags.Instance);
+                var deviceField = container.GetType()
+                    .GetField("pComPtr", BindingFlags.NonPublic | BindingFlags.Instance);
                 var devicePointer = new IntPtr(Pointer.Unbox(deviceField.GetValue(container)));
                 return (T) Marshal.GetObjectForIUnknown(devicePointer);
             }

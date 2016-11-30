@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,26 +9,28 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using Gemini.Modules.Inspector.Conventions;
 using Gemini.Modules.Inspector.Inspectors;
+using Gemini.Modules.Inspector.Properties;
 using Gemini.Modules.Inspector.Util;
+
+#endregion
 
 namespace Gemini.Modules.Inspector
 {
     public class InspectorBuilder<TBuilder>
         where TBuilder : InspectorBuilder<TBuilder>
     {
-        private readonly List<IInspector> _inspectors;
-
-        protected List<IInspector> Inspectors => _inspectors;
-
         public InspectorBuilder()
         {
-            _inspectors = new List<IInspector>();
+            Inspectors = new List<IInspector>();
         }
 
-        public TBuilder WithCollapsibleGroup(string name, Func<CollapsibleGroupBuilder, CollapsibleGroupBuilder> callback)
+        protected List<IInspector> Inspectors { get; }
+
+        public TBuilder WithCollapsibleGroup(string name,
+            Func<CollapsibleGroupBuilder, CollapsibleGroupBuilder> callback)
         {
             var builder = new CollapsibleGroupBuilder();
-            _inspectors.Add(callback(builder).ToCollapsibleGroup(name));
+            Inspectors.Add(callback(builder).ToCollapsibleGroup(name));
             return (TBuilder) this;
         }
 
@@ -50,12 +54,14 @@ namespace Gemini.Modules.Inspector
             return WithEditor<T, Point3D, Point3DEditorViewModel>(instance, propertyExpression);
         }
 
-        public TBuilder WithRangeEditor<T>(T instance, Expression<Func<T, float>> propertyExpression, float minimum, float maximum)
+        public TBuilder WithRangeEditor<T>(T instance, Expression<Func<T, float>> propertyExpression, float minimum,
+            float maximum)
         {
             return WithEditor(instance, propertyExpression, new RangeEditorViewModel<float>(minimum, maximum));
         }
 
-        public TBuilder WithRangeEditor<T>(T instance, Expression<Func<T, double>> propertyExpression, double minimum, double maximum)
+        public TBuilder WithRangeEditor<T>(T instance, Expression<Func<T, double>> propertyExpression, double minimum,
+            double maximum)
         {
             return WithEditor(instance, propertyExpression, new RangeEditorViewModel<double>(minimum, maximum));
         }
@@ -66,12 +72,13 @@ namespace Gemini.Modules.Inspector
             return WithEditor(instance, propertyExpression, new TEditor());
         }
 
-        public TBuilder WithEditor<T, TProperty, TEditor>(T instance, Expression<Func<T, TProperty>> propertyExpression, TEditor editor)
+        public TBuilder WithEditor<T, TProperty, TEditor>(T instance, Expression<Func<T, TProperty>> propertyExpression,
+            TEditor editor)
             where TEditor : IEditor
         {
             var propertyName = ExpressionUtility.GetPropertyName(propertyExpression);
             editor.BoundPropertyDescriptor = BoundPropertyDescriptor.FromProperty(instance, propertyName);
-            _inspectors.Add(editor);
+            Inspectors.Add(editor);
             return (TBuilder) this;
         }
 
@@ -83,24 +90,23 @@ namespace Gemini.Modules.Inspector
                 .ToList();
 
             // If any properties are not in the default group, show all properties in collapsible groups.
-            if (properties.Any(x => !string.IsNullOrEmpty(x.Category) && x.Category != CategoryAttribute.Default.Category))
-            {
+            if (
+                properties.Any(
+                    x => !string.IsNullOrEmpty(x.Category) && (x.Category != CategoryAttribute.Default.Category)))
                 foreach (var category in properties.GroupBy(x => x.Category))
                 {
-                    var actualCategory = (string.IsNullOrEmpty(category.Key) || category.Key == CategoryAttribute.Default.Category)
-                        ? Properties.Resources.InspectorBuilderMiscellaneous
+                    var actualCategory = string.IsNullOrEmpty(category.Key) ||
+                                         (category.Key == CategoryAttribute.Default.Category)
+                        ? Resources.InspectorBuilderMiscellaneous
                         : category.Key;
 
                     var collapsibleGroupBuilder = new CollapsibleGroupBuilder();
                     AddProperties(instance, category, collapsibleGroupBuilder.Inspectors);
                     if (collapsibleGroupBuilder.Inspectors.Any())
-                        _inspectors.Add(collapsibleGroupBuilder.ToCollapsibleGroup(actualCategory));
+                        Inspectors.Add(collapsibleGroupBuilder.ToCollapsibleGroup(actualCategory));
                 }
-            }
             else // Otherwise, show properties in flat list.
-            {
-                AddProperties(instance, properties, _inspectors);
-            }
+                AddProperties(instance, properties, Inspectors);
 
             return (TBuilder) this;
         }
@@ -108,15 +114,17 @@ namespace Gemini.Modules.Inspector
         public TBuilder WithObjectProperty(object instance, PropertyDescriptor property)
         {
             var editor = DefaultPropertyInspectors.CreateEditor(property);
-            if (editor != null) {
+            if (editor != null)
+            {
                 editor.BoundPropertyDescriptor = new BoundPropertyDescriptor(instance, property);
-                _inspectors.Add(editor);
+                Inspectors.Add(editor);
             }
 
-            return (TBuilder)this;
+            return (TBuilder) this;
         }
 
-        private static void AddProperties(object instance, IEnumerable<PropertyDescriptor> properties, List<IInspector> inspectors)
+        private static void AddProperties(object instance, IEnumerable<PropertyDescriptor> properties,
+            List<IInspector> inspectors)
         {
             foreach (var property in properties)
             {

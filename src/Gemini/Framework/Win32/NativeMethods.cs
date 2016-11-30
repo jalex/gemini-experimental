@@ -1,5 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Runtime.InteropServices;
+using System.Windows;
+
+#endregion
 
 namespace Gemini.Framework.Win32
 {
@@ -75,8 +80,7 @@ namespace Gemini.Framework.Win32
         {
             public uint cbSize;
             public uint style;
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public WndProc lpfnWndProc;
+            [MarshalAs(UnmanagedType.FunctionPtr)] public WndProc lpfnWndProc;
             public int cbClsExtra;
             public int cbWndExtra;
             public IntPtr hInstance;
@@ -100,13 +104,13 @@ namespace Gemini.Framework.Win32
         #region DllImports
 
         [DllImport("user32.dll")]
-        public extern static int GetWindowLong(IntPtr hwnd, int index);
+        public static extern int GetWindowLong(IntPtr hwnd, int index);
 
         [DllImport("user32.dll")]
-        public extern static int SetWindowLong(IntPtr hwnd, int index, int value);
+        public static extern int SetWindowLong(IntPtr hwnd, int index, int value);
 
         [DllImport("user32.dll")]
-        public extern static bool SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter,
+        public static extern bool SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter,
             int x, int y, int width, int height, uint flags);
 
         [DllImport("user32.dll")]
@@ -201,7 +205,7 @@ namespace Gemini.Framework.Win32
             return (short) (input >> 16);
         }
 
-        public static bool SetCursorPos(System.Windows.Point pos)
+        public static bool SetCursorPos(Point pos)
         {
             return SetCursorPos((int) pos.X, (int) pos.Y);
         }

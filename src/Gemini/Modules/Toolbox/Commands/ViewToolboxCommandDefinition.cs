@@ -1,5 +1,9 @@
-﻿using Gemini.Framework.Commands;
+﻿#region
+
+using Gemini.Framework.Commands;
 using Gemini.Properties;
+
+#endregion
 
 namespace Gemini.Modules.Toolbox.Commands
 {

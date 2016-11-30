@@ -1,14 +1,18 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Gemini.Framework;
 using Gemini.Modules.Toolbox.ViewModels;
 
+#endregion
+
 namespace Gemini.Modules.Toolbox.Views
 {
     /// <summary>
-    /// Interaction logic for ToolboxView.xaml
+    ///     Interaction logic for ToolboxView.xaml
     /// </summary>
     public partial class ToolboxView : UserControl
     {
@@ -35,12 +39,12 @@ namespace Gemini.Modules.Toolbox.Views
                 return;
 
             // Get the current mouse position
-            Point mousePosition = e.GetPosition(null);
-            Vector diff = _mouseStartPosition - mousePosition;
+            var mousePosition = e.GetPosition(null);
+            var diff = _mouseStartPosition - mousePosition;
 
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            if ((e.LeftButton == MouseButtonState.Pressed) &&
+                ((Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance) ||
+                 (Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)))
             {
                 var listBoxItem = VisualTreeUtility.FindParent<ListBoxItem>(
                     (DependencyObject) e.OriginalSource);

@@ -1,6 +1,10 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using Gemini.Framework;
 using Gemini.Framework.Services;
+
+#endregion
 
 namespace Gemini.Demo.Modules.SampleBrowser.ViewModels
 {
@@ -8,19 +12,18 @@ namespace Gemini.Demo.Modules.SampleBrowser.ViewModels
     public class SampleBrowserViewModel : Document
     {
         private readonly IShell _shell;
-        private readonly ISample[] _samples;
-
-        public override string DisplayName => "Sample Browser";
-
-        public ISample[] Samples => _samples;
 
         [ImportingConstructor]
         public SampleBrowserViewModel([Import] IShell shell,
             [ImportMany] ISample[] samples)
         {
             _shell = shell;
-            _samples = samples;
+            Samples = samples;
         }
+
+        public override string DisplayName => "Sample Browser";
+
+        public ISample[] Samples { get; }
 
         public void Activate(ISample sample)
         {

@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using Gemini.Framework;
 using Gemini.Modules.Inspector.Conventions;
 using Gemini.Modules.Inspector.MonoGame.Inspectors;
 using Microsoft.Xna.Framework;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.MonoGame
 {
@@ -11,8 +15,10 @@ namespace Gemini.Modules.Inspector.MonoGame
     {
         public override void Initialize()
         {
-            DefaultPropertyInspectors.InspectorBuilders.Add(new StandardPropertyEditorBuilder<Color, XnaColorEditorViewModel>());
-            DefaultPropertyInspectors.InspectorBuilders.Add(new StandardPropertyEditorBuilder<Vector3, Vector3EditorViewModel>());
+            DefaultPropertyInspectors.InspectorBuilders.Add(
+                new StandardPropertyEditorBuilder<Color, XnaColorEditorViewModel>());
+            DefaultPropertyInspectors.InspectorBuilders.Add(
+                new StandardPropertyEditorBuilder<Vector3, Vector3EditorViewModel>());
         }
     }
 }

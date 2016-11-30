@@ -1,4 +1,8 @@
-﻿using Caliburn.Micro;
+﻿#region
+
+using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Inspectors
 {

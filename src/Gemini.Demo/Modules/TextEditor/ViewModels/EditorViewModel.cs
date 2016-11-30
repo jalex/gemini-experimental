@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region
+
+using System;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading.Tasks;
 using Gemini.Demo.Modules.TextEditor.Views;
 using Gemini.Framework;
 using Gemini.Framework.Threading;
-using System.ComponentModel.Composition;
+
+#endregion
 
 namespace Gemini.Demo.Modules.TextEditor.ViewModels
 {
@@ -14,9 +18,9 @@ namespace Gemini.Demo.Modules.TextEditor.ViewModels
     public class EditorViewModel : PersistedDocument
 #pragma warning restore 659
     {
+        private bool _notYetLoaded;
+        private string _originalText;
         private EditorView _view;
-		private string _originalText;
-        private bool _notYetLoaded = false;
 
         protected override Task DoNew()
         {
@@ -50,14 +54,11 @@ namespace Gemini.Demo.Modules.TextEditor.ViewModels
             }
             _view.TextBox.Text = _originalText;
 
-            _view.TextBox.TextChanged += delegate
-            {
-                IsDirty = string.Compare(_originalText, _view.TextBox.Text) != 0;
-            };
+            _view.TextBox.TextChanged += delegate { IsDirty = string.Compare(_originalText, _view.TextBox.Text) != 0; };
         }
 
-		protected override void OnViewLoaded(object view)
-		{
+        protected override void OnViewLoaded(object view)
+        {
             _view = (EditorView) view;
 
             if (_notYetLoaded)
@@ -65,14 +66,14 @@ namespace Gemini.Demo.Modules.TextEditor.ViewModels
                 ApplyOriginalText();
                 _notYetLoaded = false;
             }
-		}
+        }
 
         public override bool Equals(object obj)
-		{
-			var other = obj as EditorViewModel;
-            return other != null
-                && string.Equals(FilePath, other.FilePath, StringComparison.InvariantCultureIgnoreCase)
-                && string.Equals(FileName, other.FileName, StringComparison.InvariantCultureIgnoreCase);
+        {
+            var other = obj as EditorViewModel;
+            return (other != null)
+                   && string.Equals(FilePath, other.FilePath, StringComparison.InvariantCultureIgnoreCase)
+                   && string.Equals(FileName, other.FileName, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

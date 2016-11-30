@@ -1,14 +1,19 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Controls
 {
     public class InspectorGrid
     {
-        public static event EventHandler PropertyNameColumnWidthChanged;
-        public static event EventHandler PropertyValueColumnWidthChanged;
-
         private static GridLength _propertyNameColumnWidth = new GridLength(1, GridUnitType.Star);
+
+
+        private static GridLength _propertyValueColumnWidth = new GridLength(1.5, GridUnitType.Star);
+
         public static GridLength PropertyNameColumnWidth
         {
             get { return _propertyNameColumnWidth; }
@@ -21,8 +26,6 @@ namespace Gemini.Modules.Inspector.Controls
             }
         }
 
-
-        private static GridLength _propertyValueColumnWidth = new GridLength(1.5, GridUnitType.Star);
         public static GridLength PropertyValueColumnWidth
         {
             get { return _propertyValueColumnWidth; }
@@ -34,5 +37,8 @@ namespace Gemini.Modules.Inspector.Controls
                     handler(null, EventArgs.Empty);
             }
         }
+
+        public static event EventHandler PropertyNameColumnWidthChanged;
+        public static event EventHandler PropertyValueColumnWidthChanged;
     }
 }

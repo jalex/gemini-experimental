@@ -1,5 +1,9 @@
-﻿using Gemini.Framework.Commands;
+﻿#region
+
+using Gemini.Framework.Commands;
 using Gemini.Modules.Output.Properties;
+
+#endregion
 
 namespace Gemini.Modules.Output.Commands
 {

@@ -1,22 +1,31 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel.Composition;
 using Gemini.Demo.MonoGame.Modules.SceneViewer.Views;
 using Gemini.Framework;
 using Microsoft.Xna.Framework;
 
+#endregion
+
 namespace Gemini.Demo.MonoGame.Modules.SceneViewer.ViewModels
 {
     [Export(typeof(SceneViewModel))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-	public class SceneViewModel : Document
+    public class SceneViewModel : Document
     {
+        private Vector3 _position;
         private ISceneView _sceneView;
+
+        public SceneViewModel()
+        {
+            DisplayName = "3D Scene";
+        }
 
         public override bool ShouldReopenOnStart => true;
 
-        private Vector3 _position;
-	    public Vector3 Position
-	    {
+        public Vector3 Position
+        {
             get { return _position; }
             set
             {
@@ -26,11 +35,6 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.ViewModels
                 if (_sceneView != null)
                     _sceneView.Invalidate();
             }
-	    }
-
-        public SceneViewModel()
-        {
-            DisplayName = "3D Scene";
         }
 
         protected override void OnViewLoaded(object view)
@@ -50,5 +54,5 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.ViewModels
 
             base.OnDeactivate(close);
         }
-	}
+    }
 }

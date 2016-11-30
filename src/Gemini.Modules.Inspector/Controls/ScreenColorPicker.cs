@@ -1,5 +1,6 @@
-﻿using System;
-using System.Diagnostics;
+﻿#region
+
+using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,24 +11,21 @@ using Gemini.Modules.Inspector.Util;
 using Gemini.Modules.Inspector.Win32;
 using Color = System.Windows.Media.Color;
 
+#endregion
+
 namespace Gemini.Modules.Inspector.Controls
 {
     public class ScreenColorPicker : Control
     {
+        private readonly DispatcherTimer _timer;
+        private Bitmap _bitmap;
+        private bool _endingCapture;
+
         static ScreenColorPicker()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ScreenColorPicker),
                 new FrameworkPropertyMetadata(typeof(ScreenColorPicker)));
         }
-
-        public event EventHandler PickingStarted;
-        public event EventHandler PickingCancelled;
-        public event EventHandler<ColorEventArgs> ColorHovered;
-        public event EventHandler<ColorEventArgs> ColorPicked;
-
-        private readonly DispatcherTimer _timer;
-        private Bitmap _bitmap;
-        private bool _endingCapture;
 
         public ScreenColorPicker()
         {
@@ -37,6 +35,11 @@ namespace Gemini.Modules.Inspector.Controls
             };
             _timer.Tick += OnTimerTick;
         }
+
+        public event EventHandler PickingStarted;
+        public event EventHandler PickingCancelled;
+        public event EventHandler<ColorEventArgs> ColorHovered;
+        public event EventHandler<ColorEventArgs> ColorPicked;
 
         private void OnTimerTick(object sender, EventArgs e)
         {
@@ -72,13 +75,11 @@ namespace Gemini.Modules.Inspector.Controls
                 _bitmap = ScreenShotUtility.Take();
 
                 if (Focus()) // So that we get the Escape key.
-                {
                     if (CaptureMouse())
                     {
                         RaisePickingStarted(EventArgs.Empty);
                         _timer.Start();
                     }
-                }
             }
             else
             {
@@ -100,8 +101,8 @@ namespace Gemini.Modules.Inspector.Controls
                 cursorPosition.X -= (int) SystemParameters.VirtualScreenLeft;
                 cursorPosition.Y -= (int) SystemParameters.VirtualScreenTop;
 
-                if (cursorPosition.X > 0 && cursorPosition.X < _bitmap.Width &&
-                    cursorPosition.Y > 0 && cursorPosition.Y < _bitmap.Height)
+                if ((cursorPosition.X > 0) && (cursorPosition.X < _bitmap.Width) &&
+                    (cursorPosition.Y > 0) && (cursorPosition.Y < _bitmap.Height))
                 {
                     var pixel = _bitmap.GetPixel(cursorPosition.X, cursorPosition.Y);
                     return new ColorEventArgs(Color.FromArgb(pixel.A, pixel.R, pixel.G, pixel.B));
@@ -137,11 +138,11 @@ namespace Gemini.Modules.Inspector.Controls
 
     public class ColorEventArgs : EventArgs
     {
-        public Color Color { get; private set; }
-
         public ColorEventArgs(Color color)
         {
             Color = color;
         }
+
+        public Color Color { get; private set; }
     }
 }

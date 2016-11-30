@@ -1,10 +1,4 @@
-﻿#region File Description
-//-----------------------------------------------------------------------------
-// Copyright 2011, Nick Gravelyn.
-// Licensed under the terms of the Ms-PL: 
-// http://www.microsoft.com/opensource/licenses.mspx#Ms-PL
-//-----------------------------------------------------------------------------
-#endregion
+﻿#region
 
 using System;
 using System.Linq;
@@ -15,14 +9,22 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Gemini.Framework.Win32;
 
+#endregion
+
 namespace Gemini.Framework.Controls
 {
     /// <summary>
-    /// A control that enables graphics rendering inside a WPF control through
-    /// the use of a hosted child Hwnd.
+    ///     A control that enables graphics rendering inside a WPF control through
+    ///     the use of a hosted child Hwnd.
     /// </summary>
     public abstract class HwndWrapper : HwndHost
     {
+        #region Properties
+
+        public new bool IsMouseCaptured { get; private set; }
+
+        #endregion
+
         #region Fields
 
         // The name of our window class
@@ -47,112 +49,105 @@ namespace Gemini.Framework.Controls
         private readonly HwndMouseState _mouseState = new HwndMouseState();
 
         // Tracking whether we've "capture" the mouse
-        private bool _isMouseCaptured;
 
         #endregion
 
         #region Events
 
         /// <summary>
-        /// Invoked when the control receives a left mouse down message.
+        ///     Invoked when the control receives a left mouse down message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndLButtonDown;
 
         /// <summary>
-        /// Invoked when the control receives a left mouse up message.
+        ///     Invoked when the control receives a left mouse up message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndLButtonUp;
 
         /// <summary>
-        /// Invoked when the control receives a left mouse double click message.
+        ///     Invoked when the control receives a left mouse double click message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndLButtonDblClick;
 
         /// <summary>
-        /// Invoked when the control receives a right mouse down message.
+        ///     Invoked when the control receives a right mouse down message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndRButtonDown;
 
         /// <summary>
-        /// Invoked when the control receives a right mouse up message.
+        ///     Invoked when the control receives a right mouse up message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndRButtonUp;
 
         /// <summary>
-        /// Invoked when the control receives a rigt mouse double click message.
+        ///     Invoked when the control receives a rigt mouse double click message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndRButtonDblClick;
 
         /// <summary>
-        /// Invoked when the control receives a middle mouse down message.
+        ///     Invoked when the control receives a middle mouse down message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndMButtonDown;
 
         /// <summary>
-        /// Invoked when the control receives a middle mouse up message.
+        ///     Invoked when the control receives a middle mouse up message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndMButtonUp;
 
         /// <summary>
-        /// Invoked when the control receives a middle mouse double click message.
+        ///     Invoked when the control receives a middle mouse double click message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndMButtonDblClick;
 
         /// <summary>
-        /// Invoked when the control receives a mouse down message for the first extra button.
+        ///     Invoked when the control receives a mouse down message for the first extra button.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndX1ButtonDown;
 
         /// <summary>
-        /// Invoked when the control receives a mouse up message for the first extra button.
+        ///     Invoked when the control receives a mouse up message for the first extra button.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndX1ButtonUp;
 
         /// <summary>
-        /// Invoked when the control receives a double click message for the first extra mouse button.
+        ///     Invoked when the control receives a double click message for the first extra mouse button.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndX1ButtonDblClick;
 
         /// <summary>
-        /// Invoked when the control receives a mouse down message for the second extra button.
+        ///     Invoked when the control receives a mouse down message for the second extra button.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndX2ButtonDown;
 
         /// <summary>
-        /// Invoked when the control receives a mouse up message for the second extra button.
+        ///     Invoked when the control receives a mouse up message for the second extra button.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndX2ButtonUp;
 
         /// <summary>
-        /// Invoked when the control receives a double click message for the first extra mouse button.
+        ///     Invoked when the control receives a double click message for the first extra mouse button.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndX2ButtonDblClick;
 
         /// <summary>
-        /// Invoked when the control receives a mouse move message.
+        ///     Invoked when the control receives a mouse move message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndMouseMove;
 
         /// <summary>
-        /// Invoked when the control first gets a mouse move message.
+        ///     Invoked when the control first gets a mouse move message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndMouseEnter;
 
         /// <summary>
-        /// Invoked when the control gets a mouse leave message.
+        ///     Invoked when the control gets a mouse leave message.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndMouseLeave;
 
         /// <summary>
-        /// Invoked when the control recieves a mouse wheel delta.
+        ///     Invoked when the control recieves a mouse wheel delta.
         /// </summary>
         public event EventHandler<HwndMouseEventArgs> HwndMouseWheel;
-
-        #endregion
-
-        #region Properties
-
-        public new bool IsMouseCaptured => _isMouseCaptured;
 
         #endregion
 
@@ -190,35 +185,35 @@ namespace Gemini.Framework.Controls
         #region Public Methods
 
         /// <summary>
-        /// Captures the mouse, hiding it and trapping it inside the window bounds.
+        ///     Captures the mouse, hiding it and trapping it inside the window bounds.
         /// </summary>
         /// <remarks>
-        /// This method is useful for tooling scenarios where you only care about the mouse deltas
-        /// and want the user to be able to continue interacting with the window while they move
-        /// the mouse. A good example of this is rotating an object based on the mouse deltas where
-        /// through capturing you can spin and spin without having the cursor leave the window.
+        ///     This method is useful for tooling scenarios where you only care about the mouse deltas
+        ///     and want the user to be able to continue interacting with the window while they move
+        ///     the mouse. A good example of this is rotating an object based on the mouse deltas where
+        ///     through capturing you can spin and spin without having the cursor leave the window.
         /// </remarks>
         public new void CaptureMouse()
         {
             // Don't do anything if the mouse is already captured
-            if (_isMouseCaptured)
+            if (IsMouseCaptured)
                 return;
 
             NativeMethods.SetCapture(_hWnd);
-            _isMouseCaptured = true;
+            IsMouseCaptured = true;
         }
 
         /// <summary>
-        /// Releases the capture of the mouse which makes it visible and allows it to leave the window bounds.
+        ///     Releases the capture of the mouse which makes it visible and allows it to leave the window bounds.
         /// </summary>
         public new void ReleaseMouseCapture()
         {
             // Don't do anything if the mouse is not captured
-            if (!_isMouseCaptured)
+            if (!IsMouseCaptured)
                 return;
 
             NativeMethods.ReleaseCapture();
-            _isMouseCaptured = false;
+            IsMouseCaptured = false;
         }
 
         #endregion
@@ -232,7 +227,7 @@ namespace Gemini.Framework.Controls
             var height = (int) ActualHeight;
 
             // If the control has no width or no height, skip drawing since it's not visible
-            if (width < 1 || height < 1)
+            if ((width < 1) || (height < 1))
                 return;
 
             Render(_hWnd);
@@ -262,11 +257,11 @@ namespace Gemini.Framework.Controls
         private void ResetMouseState()
         {
             // We need to invoke events for any buttons that were pressed
-            bool fireL = _mouseState.LeftButton == MouseButtonState.Pressed;
-            bool fireM = _mouseState.MiddleButton == MouseButtonState.Pressed;
-            bool fireR = _mouseState.RightButton == MouseButtonState.Pressed;
-            bool fireX1 = _mouseState.X1Button == MouseButtonState.Pressed;
-            bool fireX2 = _mouseState.X2Button == MouseButtonState.Pressed;
+            var fireL = _mouseState.LeftButton == MouseButtonState.Pressed;
+            var fireM = _mouseState.MiddleButton == MouseButtonState.Pressed;
+            var fireR = _mouseState.RightButton == MouseButtonState.Pressed;
+            var fireX1 = _mouseState.X1Button == MouseButtonState.Pressed;
+            var fireX2 = _mouseState.X2Button == MouseButtonState.Pressed;
 
             // Update the state of all of the buttons
             _mouseState.LeftButton = MouseButtonState.Released;
@@ -311,7 +306,7 @@ namespace Gemini.Framework.Controls
         }
 
         /// <summary>
-        /// Creates the host window as a child of the parent window.
+        ///     Creates the host window as a child of the parent window.
         /// </summary>
         private IntPtr CreateHostWindow(IntPtr hWndParent)
         {
@@ -320,12 +315,12 @@ namespace Gemini.Framework.Controls
 
             // Create the window
             return NativeMethods.CreateWindowEx(0, WindowClass, "",
-               NativeMethods.WsChild | NativeMethods.WsVisible,
-               0, 0, (int) Width, (int) Height, hWndParent, IntPtr.Zero, IntPtr.Zero, 0);
+                NativeMethods.WsChild | NativeMethods.WsVisible,
+                0, 0, (int) Width, (int) Height, hWndParent, IntPtr.Zero, IntPtr.Zero, 0);
         }
 
         /// <summary>
-        /// Registers the window class.
+        ///     Registers the window class.
         /// </summary>
         private void RegisterWindowClass()
         {
@@ -350,7 +345,7 @@ namespace Gemini.Framework.Controls
                 case NativeMethods.WmMousewheel:
                     if (_mouseInWindow)
                     {
-                        int delta = NativeMethods.GetWheelDeltaWParam(wParam.ToInt32());
+                        var delta = NativeMethods.GetWheelDeltaWParam(wParam.ToInt32());
                         RaiseHwndMouseWheel(new HwndMouseEventArgs(_mouseState, delta, 0));
                     }
                     break;
@@ -440,7 +435,7 @@ namespace Gemini.Framework.Controls
                         // send the track mouse event so that we get the WM_MOUSELEAVE message
                         var tme = new NativeMethods.Trackmouseevent
                         {
-                            cbSize = Marshal.SizeOf(typeof (NativeMethods.Trackmouseevent)),
+                            cbSize = Marshal.SizeOf(typeof(NativeMethods.Trackmouseevent)),
                             dwFlags = NativeMethods.TmeLeave,
                             hWnd = hwnd
                         };
@@ -457,7 +452,7 @@ namespace Gemini.Framework.Controls
 
                     // If we have capture, we ignore this message because we're just
                     // going to reset the cursor position back into the window
-                    if (_isMouseCaptured)
+                    if (IsMouseCaptured)
                         break;
 
                     // Reset the state which releases all buttons and 

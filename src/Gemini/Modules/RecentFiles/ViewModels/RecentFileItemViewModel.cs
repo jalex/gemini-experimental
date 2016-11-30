@@ -1,6 +1,9 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿#region
+
+using System;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Modules.RecentFiles.ViewModels
 {
@@ -8,7 +11,10 @@ namespace Gemini.Modules.RecentFiles.ViewModels
     public class RecentFileItemViewModel : PropertyChangedBase
     {
         private string _filePath;
-        
+
+        // TODO: will implement Pinned
+        private bool _pinned;
+
         public string FilePath
         {
             get { return _filePath; }
@@ -20,8 +26,6 @@ namespace Gemini.Modules.RecentFiles.ViewModels
             }
         }
 
-        // TODO: will implement Pinned
-        private bool _pinned;
         public bool Pinned
         {
             get { return _pinned; }
@@ -42,7 +46,8 @@ namespace Gemini.Modules.RecentFiles.ViewModels
             var output = "";
 
             if (splits.Length > 4)
-                output = splits[0] + "\\" + splits[1] + "\\...\\" + splits[splits.Length - 2] + "\\" + splits[splits.Length - 1];
+                output = splits[0] + "\\" + splits[1] + "\\...\\" + splits[splits.Length - 2] + "\\" +
+                         splits[splits.Length - 1];
             else
                 output = string.Join("\\", splits, 0, splits.Length);
 

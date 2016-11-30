@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows.Input;
 using Gemini.Framework.Commands;
+
+#endregion
 
 namespace Gemini.Framework.Menus
 {

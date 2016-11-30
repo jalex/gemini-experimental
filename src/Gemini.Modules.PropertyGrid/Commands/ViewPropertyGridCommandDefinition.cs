@@ -1,5 +1,9 @@
-﻿using Gemini.Framework.Commands;
+﻿#region
+
+using Gemini.Framework.Commands;
 using Gemini.Modules.PropertyGrid.Properties;
+
+#endregion
 
 namespace Gemini.Modules.PropertyGrid.Commands
 {

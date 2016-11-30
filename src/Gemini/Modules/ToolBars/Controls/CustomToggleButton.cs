@@ -1,4 +1,8 @@
-﻿using System.Windows.Controls.Primitives;
+﻿#region
+
+using System.Windows.Controls.Primitives;
+
+#endregion
 
 namespace Gemini.Modules.ToolBars.Controls
 {

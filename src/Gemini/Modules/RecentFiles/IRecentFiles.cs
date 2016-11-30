@@ -1,5 +1,9 @@
-﻿using Caliburn.Micro;
+﻿#region
+
+using Caliburn.Micro;
 using Gemini.Modules.RecentFiles.ViewModels;
+
+#endregion
 
 namespace Gemini.Modules.RecentFiles
 {

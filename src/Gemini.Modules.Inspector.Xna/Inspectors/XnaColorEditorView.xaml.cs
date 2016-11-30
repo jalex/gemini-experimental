@@ -1,11 +1,15 @@
-﻿using System.Windows.Controls;
+﻿#region
+
+using System.Windows.Controls;
 using Gemini.Modules.Inspector.Controls;
 using Gemini.Modules.Inspector.Xna.Converters;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Xna.Inspectors
 {
     /// <summary>
-    /// Interaction logic for XnaColorEditorView.xaml
+    ///     Interaction logic for XnaColorEditorView.xaml
     /// </summary>
     public partial class XnaColorEditorView : UserControl
     {

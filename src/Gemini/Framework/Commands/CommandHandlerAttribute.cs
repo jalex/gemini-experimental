@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel.Composition;
+
+#endregion
 
 namespace Gemini.Framework.Commands
 {
@@ -10,7 +14,6 @@ namespace Gemini.Framework.Commands
         public CommandHandlerAttribute()
             : base(typeof(ICommandHandler))
         {
-            
         }
     }
 }

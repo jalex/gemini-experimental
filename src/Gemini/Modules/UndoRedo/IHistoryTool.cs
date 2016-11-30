@@ -1,4 +1,8 @@
-﻿using Gemini.Framework;
+﻿#region
+
+using Gemini.Framework;
+
+#endregion
 
 namespace Gemini.Modules.UndoRedo
 {

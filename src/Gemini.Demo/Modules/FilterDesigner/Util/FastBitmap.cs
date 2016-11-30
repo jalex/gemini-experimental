@@ -1,18 +1,45 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
+#endregion
 
 namespace Gemini.Demo.Modules.FilterDesigner.Util
 {
     public class FastBitmap : IDisposable
     {
+        public void Dispose()
+        {
+            Dispose(true);
+            if (_stream != null)
+                _stream.Close();
+            GC.SuppressFinalize(this);
+        }
+
+        private static BitmapSource ConvertFormat(BitmapSource source)
+        {
+            // If bitmap is anything other than Pbgra32, convert it to Pbgra32 so that we can deal with all images consistently.
+            // This does mean that if an image starts off as as 16-bit, we'll be limiting the output to 8-bit, but that's okay
+            // for web images.
+            if (source != null)
+                if (source.Format != PixelFormats.Pbgra32)
+                    source = new FormatConvertedBitmap(source, PixelFormats.Pbgra32, null, 0);
+            return source;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            Unlock();
+        }
+
         #region Variables
 
         private const int BitsPerPixel = 4;
         private readonly Stream _stream;
         private WriteableBitmap _bitmap;
-        private int _width, _height;
         private int _strideWidth;
         private IntPtr _startingPosition;
         private bool _locked;
@@ -28,16 +55,16 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
             {
                 _bitmap = value;
 
-                _width = value.PixelWidth;
-                _height = value.PixelHeight;
+                Width = value.PixelWidth;
+                Height = value.PixelHeight;
             }
         }
 
-        public int Width => _width;
+        public int Width { get; private set; }
 
-        public int Height => _height;
+        public int Height { get; private set; }
 
-        unsafe public Color this[int x, int y]
+        public unsafe Color this[int x, int y]
         {
             get
             {
@@ -45,11 +72,11 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
                 if (!_locked)
                     throw new InvalidOperationException("Must call Lock() before getting pixel values");
 
-                if (x < 0 || y < 0 || x >= Width || y >= Height)
+                if ((x < 0) || (y < 0) || (x >= Width) || (y >= Height))
                     throw new ArgumentOutOfRangeException();
 #endif
 
-                byte* b = (byte*) _startingPosition + (y * _strideWidth) + (x * BitsPerPixel);
+                var b = (byte*) _startingPosition + y*_strideWidth + x*BitsPerPixel;
                 return Color.FromArgb(*(b + 3), *(b + 2), *(b + 1), *b);
             }
 
@@ -59,11 +86,11 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
                 if (!_locked)
                     throw new InvalidOperationException("Must call Lock() before setting pixel values");
 
-                if (x < 0 || y < 0 || x >= _width || y >= _height)
+                if ((x < 0) || (y < 0) || (x >= Width) || (y >= Height))
                     throw new ArgumentOutOfRangeException();
 #endif
 
-                byte* b = (byte*) _startingPosition + (y * _strideWidth) + (x * BitsPerPixel);
+                var b = (byte*) _startingPosition + y*_strideWidth + x*BitsPerPixel;
                 *b = value.B;
                 *(b + 1) = value.G;
                 *(b + 2) = value.R;
@@ -90,12 +117,16 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
             _stream = new MemoryStream(bytes);
             lock (_stream)
             {
-                if (!_stream.CanRead || _stream.Length == 0)
+                if (!_stream.CanRead || (_stream.Length == 0))
                     return;
 
                 try
                 {
-                    InnerBitmap = new WriteableBitmap(ConvertFormat(BitmapDecoder.Create(_stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.None).Frames[0]));
+                    InnerBitmap =
+                        new WriteableBitmap(
+                            ConvertFormat(
+                                BitmapDecoder.Create(_stream, BitmapCreateOptions.PreservePixelFormat,
+                                    BitmapCacheOption.None).Frames[0]));
                 }
                 catch (ArgumentException ex)
                 {
@@ -115,30 +146,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
         }
 
         #endregion
-
-        private static BitmapSource ConvertFormat(BitmapSource source)
-        {
-            // If bitmap is anything other than Pbgra32, convert it to Pbgra32 so that we can deal with all images consistently.
-            // This does mean that if an image starts off as as 16-bit, we'll be limiting the output to 8-bit, but that's okay
-            // for web images.
-            if (source != null)
-                if (source.Format != PixelFormats.Pbgra32)
-                    source = new FormatConvertedBitmap(source, PixelFormats.Pbgra32, null, 0);
-            return source;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            if (_stream != null)
-                _stream.Close();
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            Unlock();
-        }
 
         #region Methods
 
@@ -160,12 +167,12 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
         }
 
         /// <summary>
-        /// Only used for testing.
+        ///     Only used for testing.
         /// </summary>
         /// <param name="filename"></param>
         public void Save(string filename)
         {
-            using (FileStream stream = File.OpenWrite(filename))
+            using (var stream = File.OpenWrite(filename))
             {
                 BitmapEncoder encoder = new BmpBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(_bitmap));

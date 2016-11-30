@@ -1,25 +1,117 @@
-﻿using Gemini.Framework.Util;
-using Gemini.Framework.Win32;
+﻿#region
+
 using System;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Gemini.Framework.Util;
+using Gemini.Framework.Win32;
+
+#endregion
 
 namespace Gemini.Framework.Controls
 {
     public abstract partial class AdvancedSliderBase : UserControl, IDisposable
     {
+        public enum DisplayType
+        {
+            Number,
+            Bar,
+            Line
+        }
+
+        public static readonly DependencyProperty DisplayTextProperty =
+            DependencyProperty.Register("DisplayText", typeof(string), typeof(AdvancedSliderBase),
+                new FrameworkPropertyMetadata(string.Empty, DependencyPropertyChanged)
+            );
+
+        public static readonly DependencyProperty EditTextProperty =
+            DependencyProperty.Register("EditText", typeof(string), typeof(AdvancedSliderBase),
+                new FrameworkPropertyMetadata(string.Empty)
+            );
+
+        public static readonly DependencyProperty TypeProperty =
+            DependencyProperty.Register("Type", typeof(DisplayType), typeof(AdvancedSliderBase),
+                new FrameworkPropertyMetadata(DisplayType.Number, DependencyPropertyChanged)
+            );
+
+        public static readonly DependencyProperty RatioProperty =
+            DependencyProperty.Register("Ratio", typeof(double), typeof(AdvancedSliderBase),
+                new FrameworkPropertyMetadata(0.5, DependencyPropertyChanged, CoerceValue)
+            );
+
+        public static readonly DependencyProperty BarBrushProperty =
+            DependencyProperty.Register("BarBrush", typeof(Brush), typeof(AdvancedSliderBase),
+                new FrameworkPropertyMetadata(Brushes.DarkGray, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    DependencyPropertyChanged)
+            );
+
+        public static readonly DependencyProperty MouseCapturedProperty =
+            DependencyProperty.Register("MouseCaptured", typeof(bool), typeof(AdvancedSliderBase));
+
+        private int _clickCounter;
+
+        private Timer _clickTimer;
+
+        private bool _failing = false;
+        private DateTime _firstClickTime;
+        private Point _lastPos;
+        private bool _lostMouseGuard;
+        private Point _originalPos;
+        private bool _relativeMouse;
+        private Point _resetPos;
+
+        private double _startValue;
+
         static AdvancedSliderBase()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(AdvancedSliderBase), new FrameworkPropertyMetadata(typeof(AdvancedSliderBase)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(AdvancedSliderBase),
+                new FrameworkPropertyMetadata(typeof(AdvancedSliderBase)));
         }
 
         public AdvancedSliderBase()
         {
-            _clickTimer = new System.Timers.Timer(NativeMethods.GetDoubleClickTime());
+            _clickTimer = new Timer(NativeMethods.GetDoubleClickTime());
             _clickTimer.Elapsed += ClickTimer_Elapsed;
             InitializeComponent();
+        }
+
+        public string DisplayText
+        {
+            get { return (string) GetValue(DisplayTextProperty); }
+            set { SetValue(DisplayTextProperty, value); }
+        }
+
+        public string EditText
+        {
+            get { return (string) GetValue(EditTextProperty); }
+            set { SetValue(EditTextProperty, value); }
+        }
+
+        public DisplayType Type
+        {
+            get { return (DisplayType) GetValue(TypeProperty); }
+            set { SetValue(TypeProperty, value); }
+        }
+
+        public double Ratio
+        {
+            get { return (double) GetValue(RatioProperty); }
+            set { SetValue(RatioProperty, value); }
+        }
+
+        public Brush BarBrush
+        {
+            get { return (Brush) GetValue(BarBrushProperty); }
+            set { SetValue(BarBrushProperty, value); }
+        }
+
+        public bool MouseCaptured
+        {
+            get { return (bool) GetValue(MouseCapturedProperty); }
+            set { SetValue(MouseCapturedProperty, value); }
         }
 
         private void Update()
@@ -40,7 +132,7 @@ namespace Gemini.Framework.Controls
                     Bar.Visibility = Visibility.Visible;
                     Bar.HorizontalAlignment = HorizontalAlignment.Left;
                     Bar.Margin = new Thickness(0.0);
-                    Bar.Width = width * Ratio;
+                    Bar.Width = width*Ratio;
                     break;
                 case DisplayType.Line:
                     if (Ratio == 0.5)
@@ -51,85 +143,23 @@ namespace Gemini.Framework.Controls
                     {
                         Bar.Visibility = Visibility.Visible;
 
-                        var hwidth = (width / 2.0);
+                        var hwidth = width/2.0;
                         if (Ratio > 0.5)
                         {
                             Bar.HorizontalAlignment = HorizontalAlignment.Left;
-                            Bar.Width = Math.Ceiling(hwidth * ((Ratio - 0.5) * 2.0));
+                            Bar.Width = Math.Ceiling(hwidth*((Ratio - 0.5)*2.0));
                             Bar.Margin = new Thickness(Math.Floor(hwidth), 0.0, 0.0, 0.0);
                         }
                         else
                         {
                             Bar.HorizontalAlignment = HorizontalAlignment.Right;
-                            Bar.Width = Math.Ceiling(hwidth * (1.0 - (Ratio * 2.0)));
+                            Bar.Width = Math.Ceiling(hwidth*(1.0 - Ratio*2.0));
                             Bar.Margin = new Thickness(0.0, 0.0, Math.Floor(hwidth), 0.0);
                         }
                     }
                     break;
             }
         }
-
-        public string DisplayText
-        {
-            get { return (string) GetValue(DisplayTextProperty); }
-            set { SetValue(DisplayTextProperty, value); }
-        }
-
-        public static readonly DependencyProperty DisplayTextProperty =
-            DependencyProperty.Register("DisplayText", typeof(string), typeof(AdvancedSliderBase),
-                new FrameworkPropertyMetadata(string.Empty, DependencyPropertyChanged)
-                );
-
-        public string EditText
-        {
-            get { return (string) GetValue(EditTextProperty); }
-            set { SetValue(EditTextProperty, value); }
-        }
-
-        public static readonly DependencyProperty EditTextProperty =
-            DependencyProperty.Register("EditText", typeof(string), typeof(AdvancedSliderBase),
-                new FrameworkPropertyMetadata(string.Empty)
-                );
-
-        public enum DisplayType
-        {
-            Number,
-            Bar,
-            Line
-        }
-
-        public DisplayType Type
-        {
-            get { return (DisplayType) GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(DisplayType), typeof(AdvancedSliderBase),
-                new FrameworkPropertyMetadata(DisplayType.Number, DependencyPropertyChanged)
-                );
-
-        public double Ratio
-        {
-            get { return (double) GetValue(RatioProperty); }
-            set { SetValue(RatioProperty, value); }
-        }
-
-        public static readonly DependencyProperty RatioProperty =
-            DependencyProperty.Register("Ratio", typeof(double), typeof(AdvancedSliderBase),
-                new FrameworkPropertyMetadata(0.5, DependencyPropertyChanged, CoerceValue)
-                );
-
-        public Brush BarBrush
-        {
-            get { return (Brush) GetValue(BarBrushProperty); }
-            set { SetValue(BarBrushProperty, value); }
-        }
-
-        public static readonly DependencyProperty BarBrushProperty =
-            DependencyProperty.Register("BarBrush", typeof(Brush), typeof(AdvancedSliderBase),
-                new FrameworkPropertyMetadata(Brushes.DarkGray, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, DependencyPropertyChanged)
-                );
 
         private static void DependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -147,27 +177,7 @@ namespace Gemini.Framework.Controls
             return value;
         }
 
-        public bool MouseCaptured
-        {
-            get { return (bool) GetValue(MouseCapturedProperty); }
-            set { SetValue(MouseCapturedProperty, value); }
-        }
-
-        public static readonly DependencyProperty MouseCapturedProperty =
-            DependencyProperty.Register("MouseCaptured", typeof(bool), typeof(AdvancedSliderBase));
-
-        private double _startValue;
-        private Point _originalPos;
-        private Point _resetPos;
-        private Point _lastPos;
-        private bool _lostMouseGuard;
-        private bool _relativeMouse;
-
-        private System.Timers.Timer _clickTimer;
-        private DateTime _firstClickTime;
-        private int _clickCounter;
-
-        private void ClickTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void ClickTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             _clickTimer.Stop();
             _clickCounter = 0;
@@ -199,7 +209,7 @@ namespace Gemini.Framework.Controls
 
             _lastPos = _originalPos = PointToScreen(Mouse.GetPosition(this));
             Mouse.OverrideCursor = Cursors.None;
-            _resetPos = new Point(SystemParameters.PrimaryScreenWidth / 2, SystemParameters.PrimaryScreenHeight / 2);
+            _resetPos = new Point(SystemParameters.PrimaryScreenWidth/2, SystemParameters.PrimaryScreenHeight/2);
             _relativeMouse = NativeMethods.SetCursorPos(_resetPos);
 
             _clickTimer.Stop();
@@ -247,8 +257,6 @@ namespace Gemini.Framework.Controls
             EndMouseCapture(false);
         }
 
-        private bool _failing = false;
-
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             if (!MouseCaptured)
@@ -260,7 +268,7 @@ namespace Gemini.Framework.Controls
             var diff = (pos - (_relativeMouse ? _resetPos : _lastPos)).X;
             var multi = SpeedMultiplier.Get();
 
-            ApplyValueChange(multi * diff);
+            ApplyValueChange(multi*diff);
 
             /*
              * TODO: There seems to be a bug with Synergy where setting the cursor position can fail.
@@ -328,20 +336,18 @@ namespace Gemini.Framework.Controls
 
         #region IDisposable Support
 
-        private bool _disposed = false;
+        private bool _disposed;
 
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
             {
                 if (disposing)
-                {
                     if (_clickTimer != null)
                     {
                         _clickTimer.Dispose();
                         _clickTimer = null;
                     }
-                }
 
                 _disposed = true;
             }

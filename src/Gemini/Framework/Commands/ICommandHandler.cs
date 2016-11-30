@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
+
+#endregion
 
 namespace Gemini.Framework.Commands
 {
@@ -19,12 +23,10 @@ namespace Gemini.Framework.Commands
 
     public interface ICommandHandler
     {
-        
     }
 
     public interface ICommandListHandler : ICommandHandler
     {
-        
     }
 
     public abstract class CommandHandlerBase<TCommandDefinition> : ICommandHandler<TCommandDefinition>
@@ -32,7 +34,6 @@ namespace Gemini.Framework.Commands
     {
         public virtual void Update(Command command)
         {
-            
         }
 
         public abstract Task Run(Command command);

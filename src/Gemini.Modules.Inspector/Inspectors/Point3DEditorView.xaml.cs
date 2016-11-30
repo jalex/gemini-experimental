@@ -1,9 +1,13 @@
-﻿using System.Windows.Controls;
+﻿#region
+
+using System.Windows.Controls;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Inspectors
 {
     /// <summary>
-    /// Interaction logic for Point3DEditorView.xaml
+    ///     Interaction logic for Point3DEditorView.xaml
     /// </summary>
     public partial class Point3DEditorView : UserControl
     {

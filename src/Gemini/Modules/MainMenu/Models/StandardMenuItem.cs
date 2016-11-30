@@ -1,5 +1,9 @@
+#region
+
 using System;
 using System.Windows.Input;
+
+#endregion
 
 namespace Gemini.Modules.MainMenu.Models
 {

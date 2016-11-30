@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Caliburn.Micro;
@@ -7,21 +9,24 @@ using Gemini.Demo.MonoGame.Primitives;
 using Gemini.Modules.MonoGame.Controls;
 using Gemini.Modules.Output;
 using Microsoft.Xna.Framework;
+using Point = System.Windows.Point;
+
+#endregion
 
 namespace Gemini.Demo.MonoGame.Modules.SceneViewer.Views
 {
     /// <summary>
-    /// Interaction logic for SceneView.xaml
+    ///     Interaction logic for SceneView.xaml
     /// </summary>
     public partial class SceneView : UserControl, ISceneView, IDisposable
     {
-        private readonly IOutput _output;
         private readonly CubePrimitive _cube;
+        private readonly IOutput _output;
+        private float _pitch = 0.2f;
 
         // A yaw and pitch applied to the viewport based on input
-        private System.Windows.Point _previousPosition;
+        private Point _previousPosition;
         private float _yaw = 0.5f;
-        private float _pitch = 0.2f;
 
         public SceneView()
         {
@@ -30,18 +35,18 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.Views
             _cube = new CubePrimitive();
         }
 
-        public void Invalidate()
-        {
-            GraphicsControl.Invalidate();
-        }
-
         public void Dispose()
         {
             GraphicsControl.Dispose();
         }
 
+        public void Invalidate()
+        {
+            GraphicsControl.Invalidate();
+        }
+
         /// <summary>
-        /// Invoked after either control has created its graphics device.
+        ///     Invoked after either control has created its graphics device.
         /// </summary>
         private void OnGraphicsControlLoadContent(object sender, GraphicsDeviceEventArgs e)
         {
@@ -50,7 +55,7 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.Views
         }
 
         /// <summary>
-        /// Invoked when our second control is ready to render.
+        ///     Invoked when our second control is ready to render.
         /// </summary>
         private void OnGraphicsControlDraw(object sender, DrawEventArgs e)
         {
@@ -58,9 +63,9 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.Views
 
             // Create the world-view-projection matrices for the cube and camera
             var position = ((SceneViewModel) DataContext).Position;
-            Matrix world = Matrix.CreateFromYawPitchRoll(_yaw, _pitch, 0f) * Matrix.CreateTranslation(position);
-            Matrix view = Matrix.CreateLookAt(new Vector3(0, 0, 2.5f), Vector3.Zero, Vector3.Up);
-            Matrix projection = Matrix.CreatePerspectiveFieldOfView(1, e.GraphicsDevice.Viewport.AspectRatio, 1, 10);
+            var world = Matrix.CreateFromYawPitchRoll(_yaw, _pitch, 0f)*Matrix.CreateTranslation(position);
+            var view = Matrix.CreateLookAt(new Vector3(0, 0, 2.5f), Vector3.Zero, Vector3.Up);
+            var projection = Matrix.CreatePerspectiveFieldOfView(1, e.GraphicsDevice.Viewport.AspectRatio, 1, 10);
 
             // Draw a cube
             _cube.Draw(world, view, projection, Color.LightGreen);
@@ -72,11 +77,11 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.Views
             var position = e.GetPosition(this);
 
             // If the left or right buttons are down, we adjust the yaw and pitch of the cube
-            if (e.LeftButton == MouseButtonState.Pressed ||
-                e.RightButton == MouseButtonState.Pressed)
+            if ((e.LeftButton == MouseButtonState.Pressed) ||
+                (e.RightButton == MouseButtonState.Pressed))
             {
-                _yaw += (float) (position.X - _previousPosition.X) * .01f;
-                _pitch += (float) (position.Y - _previousPosition.Y) * .01f;
+                _yaw += (float) (position.X - _previousPosition.X)*.01f;
+                _pitch += (float) (position.Y - _previousPosition.Y)*.01f;
                 GraphicsControl.Invalidate();
             }
 

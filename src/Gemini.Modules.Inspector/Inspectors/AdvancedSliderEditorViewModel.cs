@@ -1,15 +1,34 @@
-﻿using System;
+﻿#region
 
+using System;
 using Caliburn.Micro;
-
 using Gemini.Framework.Controls;
 using Gemini.Framework.Util;
 
+#endregion
+
 namespace Gemini.Modules.Inspector.Inspectors
 {
-    public class AdvancedSliderEditorViewModel<TValue> : SelectiveUndoEditorBase<TValue>, ILabelledInspector, IViewAware where TValue : IComparable<TValue>
+    public class AdvancedSliderEditorViewModel<TValue> : SelectiveUndoEditorBase<TValue>, ILabelledInspector, IViewAware
+        where TValue : IComparable<TValue>
     {
         private static readonly string DefaultValueFormat = "{0:0.#####}";
+
+        private TValue _maximum;
+
+        private TValue _minimum;
+
+        private bool _mouseCaptured;
+
+        private TValue _speed;
+
+        private AdvancedSliderBase.DisplayType _type;
+
+        private string _valueFormat;
+
+        private Type _valueType;
+
+        private AdvancedSliderEditorView _view;
 
         public AdvancedSliderEditorViewModel()
         {
@@ -27,8 +46,6 @@ namespace Gemini.Modules.Inspector.Inspectors
             _type = AdvancedSliderBase.DisplayType.Bar;
         }
 
-        private TValue _minimum;
-
         public TValue Minimum
         {
             get { return _minimum; }
@@ -38,8 +55,6 @@ namespace Gemini.Modules.Inspector.Inspectors
                 NotifyOfPropertyChange(() => Minimum);
             }
         }
-
-        private TValue _maximum;
 
         public TValue Maximum
         {
@@ -51,8 +66,6 @@ namespace Gemini.Modules.Inspector.Inspectors
             }
         }
 
-        private TValue _speed;
-
         public TValue Speed
         {
             get { return _speed; }
@@ -62,8 +75,6 @@ namespace Gemini.Modules.Inspector.Inspectors
                 NotifyOfPropertyChange(() => Speed);
             }
         }
-
-        private bool _mouseCaptured;
 
         public bool MouseCaptured
         {
@@ -82,8 +93,6 @@ namespace Gemini.Modules.Inspector.Inspectors
             }
         }
 
-        private string _valueFormat;
-
         public string ValueFormat
         {
             get { return _valueFormat; }
@@ -94,8 +103,6 @@ namespace Gemini.Modules.Inspector.Inspectors
             }
         }
 
-        private Type _valueType;
-
         public Type ValueType
         {
             get { return _valueType; }
@@ -105,8 +112,6 @@ namespace Gemini.Modules.Inspector.Inspectors
                 NotifyOfPropertyChange(() => ValueType);
             }
         }
-
-        private AdvancedSliderBase.DisplayType _type;
 
         public AdvancedSliderBase.DisplayType Type
         {
@@ -123,6 +128,19 @@ namespace Gemini.Modules.Inspector.Inspectors
             }
         }
 
+        public event EventHandler<ViewAttachedEventArgs> ViewAttached;
+
+        public void AttachView(object view, object context = null)
+        {
+            _view = (AdvancedSliderEditorView) view;
+            ViewAttached?.Invoke(this, new ViewAttachedEventArgs {View = view, Context = context});
+        }
+
+        public object GetView(object context = null)
+        {
+            return _view;
+        }
+
         public void Up()
         {
             _view.Slider.ApplyValueChange(SpeedMultiplier.Get());
@@ -131,21 +149,6 @@ namespace Gemini.Modules.Inspector.Inspectors
         public void Down()
         {
             _view.Slider.ApplyValueChange(-SpeedMultiplier.Get());
-        }
-
-        private AdvancedSliderEditorView _view;
-
-        public event EventHandler<ViewAttachedEventArgs> ViewAttached;
-
-        public void AttachView(object view, object context = null)
-        {
-            _view = (AdvancedSliderEditorView) view;
-            ViewAttached?.Invoke(this, new ViewAttachedEventArgs() { View = view, Context = context });
-        }
-
-        public object GetView(object context = null)
-        {
-            return _view;
         }
     }
 }

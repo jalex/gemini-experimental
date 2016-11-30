@@ -1,4 +1,8 @@
+#region
+
 using Gemini.Framework.ToolBars;
+
+#endregion
 
 namespace Gemini.Modules.ToolBars
 {

@@ -1,10 +1,4 @@
-#region File Description
-//-----------------------------------------------------------------------------
-// Copyright 2011, Nick Gravelyn.
-// Licensed under the terms of the Ms-PL: 
-// http://www.microsoft.com/opensource/licenses.mspx#Ms-PL
-//-----------------------------------------------------------------------------
-#endregion
+#region
 
 using System;
 using System.ComponentModel.Composition;
@@ -14,15 +8,17 @@ using System.Windows.Interop;
 using Caliburn.Micro;
 using Microsoft.Xna.Framework.Graphics;
 
+#endregion
+
 namespace Gemini.Modules.MonoGame.Services
 {
     /// <summary>
-    /// Helper class responsible for creating and managing the GraphicsDevice.
-    /// All GraphicsDeviceControl instances share the same GraphicsDeviceService,
-    /// so even though there can be many controls, there will only ever be a single
-    /// underlying GraphicsDevice. This implements the standard IGraphicsDeviceService
-    /// interface, which provides notification events for when the device is reset
-    /// or disposed.
+    ///     Helper class responsible for creating and managing the GraphicsDevice.
+    ///     All GraphicsDeviceControl instances share the same GraphicsDeviceService,
+    ///     so even though there can be many controls, there will only ever be a single
+    ///     underlying GraphicsDevice. This implements the standard IGraphicsDeviceService
+    ///     interface, which provides notification events for when the device is reset
+    ///     or disposed.
     /// </summary>
     [Export(typeof(IGraphicsDeviceService))]
     [Export(typeof(GraphicsDeviceService))]
@@ -37,7 +33,18 @@ namespace Gemini.Modules.MonoGame.Services
         private PresentationParameters _parameters;
 
         /// <summary>
-        /// Gets the current graphics device.
+        ///     Constructor is private, because this is a singleton class:
+        ///     client controls should use the public AddRef method instead.
+        /// </summary>
+        [Obsolete(
+             "This constructor shouldn't be called directly. Instead, you should get the (singleton) instance from the IoC container."
+         )]
+        public GraphicsDeviceService()
+        {
+        }
+
+        /// <summary>
+        ///     Gets the current graphics device.
         /// </summary>
         public GraphicsDevice GraphicsDevice
         {
@@ -53,13 +60,6 @@ namespace Gemini.Modules.MonoGame.Services
         public event EventHandler<EventArgs> DeviceDisposing;
         public event EventHandler<EventArgs> DeviceReset;
         public event EventHandler<EventArgs> DeviceResetting;
-
-        /// <summary>
-        /// Constructor is private, because this is a singleton class:
-        /// client controls should use the public AddRef method instead.
-        /// </summary>
-        [Obsolete("This constructor shouldn't be called directly. Instead, you should get the (singleton) instance from the IoC container.")]
-        public GraphicsDeviceService() { }
 
         private void EnsureGraphicsDevice()
         {
@@ -97,7 +97,7 @@ namespace Gemini.Modules.MonoGame.Services
         }
 
         /// <summary>
-        /// Gets a reference to the singleton instance.
+        ///     Gets a reference to the singleton instance.
         /// </summary>
         public static GraphicsDeviceService AddRef(int width, int height)
         {
@@ -105,17 +105,13 @@ namespace Gemini.Modules.MonoGame.Services
 
             // Increment the "how many controls sharing the device" reference count.
             if (Interlocked.Increment(ref _referenceCount) == 1)
-            {
-                // If this is the first control to start using the
-                // device, we must create the device.
                 singletonInstance.EnsureGraphicsDevice();
-            }
 
             return singletonInstance;
         }
 
         /// <summary>
-        /// Releases a reference to the singleton instance.
+        ///     Releases a reference to the singleton instance.
         /// </summary>
         public void Release(bool disposing)
         {
@@ -135,18 +131,18 @@ namespace Gemini.Modules.MonoGame.Services
                 _graphicsDevice = null;
             }
         }
-        
+
         /// <summary>
-        /// Resets the graphics device to whichever is bigger out of the specified
-        /// resolution or its current size. This behavior means the device will
-        /// demand-grow to the largest of all its GraphicsDeviceControl clients.
+        ///     Resets the graphics device to whichever is bigger out of the specified
+        ///     resolution or its current size. This behavior means the device will
+        ///     demand-grow to the largest of all its GraphicsDeviceControl clients.
         /// </summary>
         public void ResetDevice(int width, int height)
         {
-            int newWidth = Math.Max(_parameters.BackBufferWidth, width);
-            int newHeight = Math.Max(_parameters.BackBufferHeight, height);
+            var newWidth = Math.Max(_parameters.BackBufferWidth, width);
+            var newHeight = Math.Max(_parameters.BackBufferHeight, height);
 
-            if (newWidth != _parameters.BackBufferWidth || newHeight != _parameters.BackBufferHeight)
+            if ((newWidth != _parameters.BackBufferWidth) || (newHeight != _parameters.BackBufferHeight))
             {
                 if (DeviceResetting != null)
                     DeviceResetting(this, EventArgs.Empty);

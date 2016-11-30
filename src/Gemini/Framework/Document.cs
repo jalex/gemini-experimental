@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿#region
+
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,26 +15,26 @@ using Gemini.Modules.ToolBars.Models;
 using Gemini.Modules.UndoRedo;
 using Gemini.Modules.UndoRedo.Commands;
 using Gemini.Modules.UndoRedo.Services;
+using Gemini.Properties;
 using Microsoft.Win32;
+
+#endregion
 
 namespace Gemini.Framework
 {
-	public abstract class Document : LayoutItemBase, IDocument, 
+    public abstract class Document : LayoutItemBase, IDocument,
         ICommandHandler<UndoCommandDefinition>,
         ICommandHandler<RedoCommandDefinition>,
         ICommandHandler<SaveFileCommandDefinition>,
         ICommandHandler<SaveFileAsCommandDefinition>
-	{
-	    private IUndoRedoManager _undoRedoManager;
-	    public IUndoRedoManager UndoRedoManager => _undoRedoManager ?? (_undoRedoManager = new UndoRedoManager());
+    {
+        private ICommand _closeCommand;
 
-	    private ICommand _closeCommand;
-		public override ICommand CloseCommand
-		{
-		    get { return _closeCommand ?? (_closeCommand = new RelayCommand(p => TryClose(null), p => true)); }
-		}
+        private IToolBar _toolBar;
 
         private ToolBarDefinition _toolBarDefinition;
+        private IUndoRedoManager _undoRedoManager;
+
         public ToolBarDefinition ToolBarDefinition
         {
             get { return _toolBarDefinition; }
@@ -44,7 +46,6 @@ namespace Gemini.Framework
             }
         }
 
-        private IToolBar _toolBar;
         public IToolBar ToolBar
         {
             get
@@ -62,17 +63,6 @@ namespace Gemini.Framework
             }
         }
 
-	    void ICommandHandler<UndoCommandDefinition>.Update(Command command)
-	    {
-            command.Enabled = UndoRedoManager.UndoStack.Any();
-	    }
-
-	    Task ICommandHandler<UndoCommandDefinition>.Run(Command command)
-	    {
-            UndoRedoManager.Undo(1);
-            return TaskUtility.Completed;
-	    }
-
         void ICommandHandler<RedoCommandDefinition>.Update(Command command)
         {
             command.Enabled = UndoRedoManager.RedoStack.Any();
@@ -84,46 +74,64 @@ namespace Gemini.Framework
             return TaskUtility.Completed;
         }
 
-        void ICommandHandler<SaveFileCommandDefinition>.Update(Command command)
-        {
-            var persistedDocument = this as IPersistedDocument;
-            command.Enabled = (persistedDocument != null && persistedDocument.IsDirty);
-        }
-
-	    async Task ICommandHandler<SaveFileCommandDefinition>.Run(Command command)
-	    {
-	        var persistedDocument = this as IPersistedDocument;
-	        if (persistedDocument == null)
-	            return;
-
-	        // If file has never been saved, show Save As dialog.
-	        if (persistedDocument.IsNew)
-	        {
-	            await DoSaveAs(persistedDocument);
-	            return;
-	        }
-
-	        // Save file.
-            var filePath = persistedDocument.FilePath;
-            await persistedDocument.Save(filePath);
-	    }
-
         void ICommandHandler<SaveFileAsCommandDefinition>.Update(Command command)
         {
             command.Enabled = this is IPersistedDocument;
         }
 
-	    async Task ICommandHandler<SaveFileAsCommandDefinition>.Run(Command command)
-	    {
+        async Task ICommandHandler<SaveFileAsCommandDefinition>.Run(Command command)
+        {
             var persistedDocument = this as IPersistedDocument;
             if (persistedDocument == null)
                 return;
 
             await DoSaveAs(persistedDocument);
-	    }
+        }
 
-	    private static async Task DoSaveAs(IPersistedDocument persistedDocument)
-	    {
+        void ICommandHandler<SaveFileCommandDefinition>.Update(Command command)
+        {
+            var persistedDocument = this as IPersistedDocument;
+            command.Enabled = (persistedDocument != null) && persistedDocument.IsDirty;
+        }
+
+        async Task ICommandHandler<SaveFileCommandDefinition>.Run(Command command)
+        {
+            var persistedDocument = this as IPersistedDocument;
+            if (persistedDocument == null)
+                return;
+
+            // If file has never been saved, show Save As dialog.
+            if (persistedDocument.IsNew)
+            {
+                await DoSaveAs(persistedDocument);
+                return;
+            }
+
+            // Save file.
+            var filePath = persistedDocument.FilePath;
+            await persistedDocument.Save(filePath);
+        }
+
+        void ICommandHandler<UndoCommandDefinition>.Update(Command command)
+        {
+            command.Enabled = UndoRedoManager.UndoStack.Any();
+        }
+
+        Task ICommandHandler<UndoCommandDefinition>.Run(Command command)
+        {
+            UndoRedoManager.Undo(1);
+            return TaskUtility.Completed;
+        }
+
+        public IUndoRedoManager UndoRedoManager => _undoRedoManager ?? (_undoRedoManager = new UndoRedoManager());
+
+        public override ICommand CloseCommand
+        {
+            get { return _closeCommand ?? (_closeCommand = new RelayCommand(p => TryClose(null), p => true)); }
+        }
+
+        private static async Task DoSaveAs(IPersistedDocument persistedDocument)
+        {
             // Show user dialog to choose filename.
             var dialog = new SaveFileDialog();
             dialog.FileName = persistedDocument.FileName;
@@ -136,7 +144,7 @@ namespace Gemini.Framework
             if (fileType != null)
                 filter = fileType.Name + "|*" + fileType.FileExtension + "|";
 
-            filter += Properties.Resources.AllFiles + "|*.*";
+            filter += Resources.AllFiles + "|*.*";
             dialog.Filter = filter;
 
             if (dialog.ShowDialog() != true)
@@ -148,8 +156,8 @@ namespace Gemini.Framework
             await persistedDocument.Save(filePath);
 
             // Add to recent files
-            IShell shell = IoC.Get<IShell>();
+            var shell = IoC.Get<IShell>();
             shell.RecentFiles.Update(filePath);
-	    }
-	}
+        }
+    }
 }

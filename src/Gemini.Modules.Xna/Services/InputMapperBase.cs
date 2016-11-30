@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows.Input;
 using Microsoft.Xna.Framework.Input;
+
+#endregion
 
 namespace Gemini.Modules.Xna.Services
 {

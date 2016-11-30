@@ -1,23 +1,24 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
+
+#endregion
 
 namespace Gemini.Modules.GraphEditor.Controls
 {
     internal class ConnectorItemDraggingEventArgs : RoutedEventArgs
     {
-        private readonly double _horizontalChange;
-
-        private readonly double _verticalChange;
-
-        public ConnectorItemDraggingEventArgs(RoutedEvent routedEvent, object source, double horizontalChange, double verticalChange) :
+        public ConnectorItemDraggingEventArgs(RoutedEvent routedEvent, object source, double horizontalChange,
+            double verticalChange) :
             base(routedEvent, source)
         {
-            _horizontalChange = horizontalChange;
-            _verticalChange = verticalChange;
+            HorizontalChange = horizontalChange;
+            VerticalChange = verticalChange;
         }
 
-        public double HorizontalChange => _horizontalChange;
+        public double HorizontalChange { get; }
 
-        public double VerticalChange => _verticalChange;
+        public double VerticalChange { get; }
     }
 
     internal delegate void ConnectorItemDraggingEventHandler(object sender, ConnectorItemDraggingEventArgs e);

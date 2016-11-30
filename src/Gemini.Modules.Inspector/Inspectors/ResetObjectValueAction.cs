@@ -1,7 +1,11 @@
-﻿using Gemini.Modules.Inspector.Properties;
-using Gemini.Modules.UndoRedo;
+﻿#region
+
 using System.Globalization;
 using System.Windows.Data;
+using Gemini.Modules.Inspector.Properties;
+using Gemini.Modules.UndoRedo;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Inspectors
 {
@@ -9,8 +13,22 @@ namespace Gemini.Modules.Inspector.Inspectors
     {
         private readonly BoundPropertyDescriptor _boundPropertyDescriptor;
         private readonly object _originalValue;
-        private object _newValue;
         private readonly IValueConverter _stringConverter;
+        private object _newValue;
+
+        public ResetObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, IValueConverter stringConverter)
+            :
+            this(boundPropertyDescriptor, boundPropertyDescriptor.Value, stringConverter)
+        {
+        }
+
+        public ResetObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, object originalValue,
+            IValueConverter stringConverter)
+        {
+            _boundPropertyDescriptor = boundPropertyDescriptor;
+            _originalValue = originalValue;
+            _stringConverter = stringConverter;
+        }
 
         public string Name
         {
@@ -21,8 +39,11 @@ namespace Gemini.Modules.Inspector.Inspectors
 
                 if (_stringConverter != null)
                 {
-                    origText = (string) _stringConverter.Convert(_originalValue, typeof(string), null, CultureInfo.CurrentUICulture);
-                    newText = (string) _stringConverter.Convert(_newValue, typeof(string), null, CultureInfo.CurrentUICulture);
+                    origText =
+                        (string)
+                        _stringConverter.Convert(_originalValue, typeof(string), null, CultureInfo.CurrentUICulture);
+                    newText =
+                        (string) _stringConverter.Convert(_newValue, typeof(string), null, CultureInfo.CurrentUICulture);
                 }
                 else
                 {
@@ -35,17 +56,6 @@ namespace Gemini.Modules.Inspector.Inspectors
                     origText,
                     newText);
             }
-        }
-
-        public ResetObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, IValueConverter stringConverter) :
-            this(boundPropertyDescriptor, boundPropertyDescriptor.Value, stringConverter)
-        { }
-
-        public ResetObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, object originalValue, IValueConverter stringConverter)
-        {
-            _boundPropertyDescriptor = boundPropertyDescriptor;
-            _originalValue = originalValue;
-            _stringConverter = stringConverter;
         }
 
         public void Execute()

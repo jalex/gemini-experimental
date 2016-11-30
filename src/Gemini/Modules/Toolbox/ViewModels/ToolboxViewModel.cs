@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region
+
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -10,17 +11,15 @@ using Gemini.Framework.Services;
 using Gemini.Modules.Toolbox.Services;
 using Gemini.Properties;
 
+#endregion
+
 namespace Gemini.Modules.Toolbox.ViewModels
 {
     [Export(typeof(IToolbox))]
     public class ToolboxViewModel : Tool, IToolbox
     {
-        private readonly IToolboxService _toolboxService;
-
-        public override PaneLocation PreferredLocation => PaneLocation.Left;
-
         private readonly BindableCollection<ToolboxItemViewModel> _items;
-        public IObservableCollection<ToolboxItemViewModel> Items => _items;
+        private readonly IToolboxService _toolboxService;
 
         [ImportingConstructor]
         public ToolboxViewModel(IShell shell, IToolboxService toolboxService)
@@ -41,11 +40,15 @@ namespace Gemini.Modules.Toolbox.ViewModels
             RefreshToolboxItems(shell);
         }
 
+        public IObservableCollection<ToolboxItemViewModel> Items => _items;
+
+        public override PaneLocation PreferredLocation => PaneLocation.Left;
+
         private void RefreshToolboxItems(IShell shell)
         {
             _items.Clear();
 
-            if (shell.ActiveItem == null) 
+            if (shell.ActiveItem == null)
                 return;
 
             _items.AddRange(_toolboxService.GetToolboxItems(shell.ActiveItem.GetType())

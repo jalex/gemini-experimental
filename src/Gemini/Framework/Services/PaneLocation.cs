@@ -1,9 +1,9 @@
 ﻿namespace Gemini.Framework.Services
 {
-	public enum PaneLocation
-	{
-		Left,
-		Right,
-		Bottom
-	}
+    public enum PaneLocation
+    {
+        Left,
+        Right,
+        Bottom
+    }
 }

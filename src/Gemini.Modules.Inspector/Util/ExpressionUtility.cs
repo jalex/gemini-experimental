@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Linq.Expressions;
 using System.Reflection;
+
+#endregion
 
 namespace Gemini.Modules.Inspector.Util
 {

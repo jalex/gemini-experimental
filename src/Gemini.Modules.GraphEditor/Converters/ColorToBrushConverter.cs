@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
+
+#endregion
 
 namespace Gemini.Modules.GraphEditor.Converters
 {

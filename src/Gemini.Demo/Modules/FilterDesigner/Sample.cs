@@ -1,10 +1,14 @@
-﻿using System.ComponentModel.Composition;
+﻿#region
+
+using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Gemini.Demo.Modules.FilterDesigner.ViewModels;
 using Gemini.Demo.Modules.SampleBrowser;
 using Gemini.Framework.Services;
 using Gemini.Modules.Inspector;
 using Gemini.Modules.Toolbox;
+
+#endregion
 
 namespace Gemini.Demo.Modules.FilterDesigner
 {

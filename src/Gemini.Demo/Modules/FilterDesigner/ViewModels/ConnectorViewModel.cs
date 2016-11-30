@@ -1,29 +1,35 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows;
 using System.Windows.Media;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
 {
     public enum ConnectorDataType
     {
-        
     }
 
     public abstract class ConnectorViewModel : PropertyChangedBase
     {
-        public event EventHandler PositionChanged;
-
-        private readonly ElementViewModel _element;
-        public ElementViewModel Element => _element;
-
-        private readonly string _name;
-        public string Name => _name;
-
-        private readonly Color _color = Colors.Black;
-        public Color Color => _color;
-
         private Point _position;
+
+        protected ConnectorViewModel(ElementViewModel element, string name, Color color)
+        {
+            Element = element;
+            Name = name;
+            Color = color;
+        }
+
+        public ElementViewModel Element { get; }
+
+        public string Name { get; }
+
+        public Color Color { get; } = Colors.Black;
+
         public Point Position
         {
             get { return _position; }
@@ -36,13 +42,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         }
 
         public abstract ConnectorDirection ConnectorDirection { get; }
-
-        protected ConnectorViewModel(ElementViewModel element, string name, Color color)
-        {
-            _element = element;
-            _name = name;
-            _color = color;
-        }
+        public event EventHandler PositionChanged;
 
         private void RaisePositionChanged()
         {

@@ -1,6 +1,10 @@
-﻿using Gemini.Framework.Controls;
+﻿#region
+
+using Gemini.Framework.Controls;
 using Gemini.Modules.Xna.Controls;
 using Microsoft.Xna.Framework.Input;
+
+#endregion
 
 namespace Gemini.Modules.Xna.Services
 {
@@ -45,14 +49,10 @@ namespace Gemini.Modules.Xna.Services
         public override MouseState GetMouseState()
         {
             if (!_mouseEventSinceLastUpdate)
-            {
-                // Reset scroll wheel value if no scroll wheel events have happened since the last time 
-                // GetMouseState() was called.
                 _currentState = new MouseState(
                     _currentState.X, _currentState.Y, 0,
                     _currentState.LeftButton, _currentState.MiddleButton, _currentState.RightButton,
                     _currentState.XButton1, _currentState.XButton2);
-            }
             _mouseEventSinceLastUpdate = false;
             return _currentState;
         }
