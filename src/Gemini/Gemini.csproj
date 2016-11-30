@@ -459,7 +459,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\FullScreen.png" />
-  <ItemGroup />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Framework\ShaderEffects\Scripts\ThemedImage.fx" />
   </ItemGroup>
