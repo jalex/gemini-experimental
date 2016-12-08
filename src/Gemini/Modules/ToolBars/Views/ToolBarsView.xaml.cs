@@ -9,13 +9,13 @@ namespace Gemini.Modules.ToolBars.Views
     /// <summary>
     ///     Interaction logic for ToolBarsView.xaml
     /// </summary>
-    public partial class ToolBarsView : UserControl, IToolBarsView
+    public partial class ToolBarsView : IToolBarsView
     {
+        ToolBarTray IToolBarsView.ToolBarTray => ToolBarTray;
+
         public ToolBarsView()
         {
             InitializeComponent();
         }
-
-        ToolBarTray IToolBarsView.ToolBarTray => ToolBarTray;
     }
 }

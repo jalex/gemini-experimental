@@ -1,7 +1,6 @@
 ﻿#region
 
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Gemini.Modules.UndoRedo.ViewModels;
 
@@ -12,7 +11,7 @@ namespace Gemini.Modules.UndoRedo.Views
     /// <summary>
     ///     Interaction logic for HistoryView.xaml
     /// </summary>
-    public partial class HistoryView : UserControl
+    public partial class HistoryView
     {
         public HistoryView()
         {

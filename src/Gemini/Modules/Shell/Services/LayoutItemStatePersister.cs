@@ -126,8 +126,7 @@ namespace Gemini.Modules.Shell.Services
             }
             finally
             {
-                if (stream != null)
-                    stream.Dispose();
+                stream?.Dispose();
             }
 
             return true;
@@ -196,7 +195,7 @@ namespace Gemini.Modules.Shell.Services
             }
             finally
             {
-                if (stream != null) stream.Close();
+                stream?.Close();
             }
 
             return true;

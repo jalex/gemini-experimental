@@ -10,7 +10,7 @@ namespace Gemini.Modules.ErrorList.Views
     /// <summary>
     ///     Interaction logic for ErrorListView.xaml
     /// </summary>
-    public partial class ErrorListView : UserControl
+    public partial class ErrorListView
     {
         public ErrorListView()
         {
@@ -24,8 +24,7 @@ namespace Gemini.Modules.ErrorList.Views
                 return;
 
             var errorListItem = (ErrorListItem) dataGrid.SelectedItem;
-            if (errorListItem.OnClick != null)
-                errorListItem.OnClick();
+            errorListItem.OnClick?.Invoke();
         }
     }
 }

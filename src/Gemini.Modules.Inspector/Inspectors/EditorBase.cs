@@ -14,14 +14,8 @@ namespace Gemini.Modules.Inspector.Inspectors
 {
     public abstract class EditorBase<TValue> : InspectorBase, IEditor, IDisposable
     {
-        private BoundPropertyDescriptor _boundPropertyDescriptor;
         private readonly IShell _shell;
-
-        public EditorBase()
-        {
-            _shell = IoC.Get<IShell>();
-            IsUndoEnabled = true;
-        }
+        private BoundPropertyDescriptor _boundPropertyDescriptor;
 
         public bool IsUndoEnabled { get; set; }
 
@@ -113,11 +107,6 @@ namespace Gemini.Modules.Inspector.Inspectors
             set { BoundPropertyDescriptor.Value = value; }
         }
 
-        public virtual void Dispose()
-        {
-            CleanupPropertyChanged();
-        }
-
         public bool CanReset
         {
             get
@@ -126,19 +115,6 @@ namespace Gemini.Modules.Inspector.Inspectors
                     return false;
 
                 return BoundPropertyDescriptor.PropertyDescriptor.CanResetValue(BoundPropertyDescriptor.PropertyOwner);
-            }
-        }
-
-        public void Reset()
-        {
-            if (CanReset)
-            {
-                var item = _shell.SelectedDocument;
-                if (IsUndoEnabled && (item != null))
-                    item.UndoRedoManager.ExecuteAction(
-                        new ResetObjectValueAction(BoundPropertyDescriptor, StringConverter));
-                else
-                    BoundPropertyDescriptor.PropertyDescriptor.ResetValue(BoundPropertyDescriptor.PropertyOwner);
             }
         }
 
@@ -160,6 +136,30 @@ namespace Gemini.Modules.Inspector.Inspectors
         }
 
         public override bool IsReadOnly => BoundPropertyDescriptor.PropertyDescriptor.IsReadOnly;
+
+        public EditorBase()
+        {
+            _shell = IoC.Get<IShell>();
+            IsUndoEnabled = true;
+        }
+
+        public virtual void Dispose()
+        {
+            CleanupPropertyChanged();
+        }
+
+        public void Reset()
+        {
+            if (CanReset)
+            {
+                var item = _shell.SelectedDocument;
+                if (IsUndoEnabled && (item != null))
+                    item.UndoRedoManager.ExecuteAction(
+                        new ResetObjectValueAction(BoundPropertyDescriptor, StringConverter));
+                else
+                    BoundPropertyDescriptor.PropertyDescriptor.ResetValue(BoundPropertyDescriptor.PropertyOwner);
+            }
+        }
 
         private void CleanupPropertyChanged()
         {

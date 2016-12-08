@@ -39,7 +39,7 @@ namespace Gemini.Modules.RecentFiles.ViewModels
         public string DisplayName => ShortenPath(_filePath);
 
         // http://stackoverflow.com/questions/8360360/function-to-shrink-file-path-to-be-more-human-readable
-        private string ShortenPath(string path, int maxLength = 50)
+        private string ShortenPath(string path)
         {
             var splits = path.Split('\\');
 

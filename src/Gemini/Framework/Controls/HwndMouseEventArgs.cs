@@ -11,44 +11,6 @@ namespace Gemini.Framework.Controls
     public class HwndMouseEventArgs : EventArgs
     {
         /// <summary>
-        ///     Initializes a new HwndMouseEventArgs.
-        /// </summary>
-        /// <param name="state">The state from which to initialize the properties.</param>
-        public HwndMouseEventArgs(HwndMouseState state)
-        {
-            LeftButton = state.LeftButton;
-            RightButton = state.RightButton;
-            MiddleButton = state.MiddleButton;
-            X1Button = state.X1Button;
-            X2Button = state.X2Button;
-            ScreenPosition = state.ScreenPosition;
-        }
-
-        /// <summary>
-        ///     Initializes a new HwndMouseEventArgs.
-        /// </summary>
-        /// <param name="state">The state from which to initialize the properties.</param>
-        /// <param name="mouseWheelDelta">The mouse wheel rotation delta.</param>
-        /// <param name="mouseHWheelDelta">The horizontal mouse wheel delta.</param>
-        public HwndMouseEventArgs(HwndMouseState state, int mouseWheelDelta, int mouseHWheelDelta)
-            : this(state)
-        {
-            WheelDelta = mouseWheelDelta;
-            HorizontalWheelDelta = mouseHWheelDelta;
-        }
-
-        /// <summary>
-        ///     Initializes a new HwndMouseEventArgs.
-        /// </summary>
-        /// <param name="state">The state from which to initialize the properties.</param>
-        /// <param name="doubleClickButton">The button that was double clicked.</param>
-        public HwndMouseEventArgs(HwndMouseState state, MouseButton doubleClickButton)
-            : this(state)
-        {
-            DoubleClickButton = doubleClickButton;
-        }
-
-        /// <summary>
         ///     Gets the state of the left mouse button.
         /// </summary>
         public MouseButtonState LeftButton { get; private set; }
@@ -92,6 +54,44 @@ namespace Gemini.Framework.Controls
         ///     Gets the position of the mouse in screen coordinates.
         /// </summary>
         public Point ScreenPosition { get; }
+
+        /// <summary>
+        ///     Initializes a new HwndMouseEventArgs.
+        /// </summary>
+        /// <param name="state">The state from which to initialize the properties.</param>
+        public HwndMouseEventArgs(HwndMouseState state)
+        {
+            LeftButton = state.LeftButton;
+            RightButton = state.RightButton;
+            MiddleButton = state.MiddleButton;
+            X1Button = state.X1Button;
+            X2Button = state.X2Button;
+            ScreenPosition = state.ScreenPosition;
+        }
+
+        /// <summary>
+        ///     Initializes a new HwndMouseEventArgs.
+        /// </summary>
+        /// <param name="state">The state from which to initialize the properties.</param>
+        /// <param name="mouseWheelDelta">The mouse wheel rotation delta.</param>
+        /// <param name="mouseHWheelDelta">The horizontal mouse wheel delta.</param>
+        public HwndMouseEventArgs(HwndMouseState state, int mouseWheelDelta, int mouseHWheelDelta)
+            : this(state)
+        {
+            WheelDelta = mouseWheelDelta;
+            HorizontalWheelDelta = mouseHWheelDelta;
+        }
+
+        /// <summary>
+        ///     Initializes a new HwndMouseEventArgs.
+        /// </summary>
+        /// <param name="state">The state from which to initialize the properties.</param>
+        /// <param name="doubleClickButton">The button that was double clicked.</param>
+        public HwndMouseEventArgs(HwndMouseState state, MouseButton doubleClickButton)
+            : this(state)
+        {
+            DoubleClickButton = doubleClickButton;
+        }
 
         /// <summary>
         ///     Calculates the position of the mouse relative to a particular element.

@@ -13,6 +13,8 @@ namespace Gemini.Modules.Inspector.Conventions
 {
     public static class DefaultPropertyInspectors
     {
+        public static List<PropertyEditorBuilder> InspectorBuilders { get; }
+
         static DefaultPropertyInspectors()
         {
             InspectorBuilders = new List<PropertyEditorBuilder>
@@ -30,8 +32,6 @@ namespace Gemini.Modules.Inspector.Conventions
                 new StandardPropertyEditorBuilder<BitmapSource, BitmapSourceEditorViewModel>()
             };
         }
-
-        public static List<PropertyEditorBuilder> InspectorBuilders { get; }
 
         public static IEditor CreateEditor(PropertyDescriptor propertyDescriptor)
         {

@@ -26,6 +26,14 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         private readonly BindableCollection<ElementViewModel> _elements;
         private readonly IInspectorTool _inspectorTool;
 
+        public IObservableCollection<ElementViewModel> Elements => _elements;
+        public IObservableCollection<ConnectionViewModel> Connections => _connections;
+
+        public IEnumerable<ElementViewModel> SelectedElements
+        {
+            get { return _elements.Where(x => x.IsSelected); }
+        }
+
         [ImportingConstructor]
         public GraphViewModel(IInspectorTool inspectorTool)
         {
@@ -55,14 +63,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             element1.IsSelected = true;
         }
 
-        public IObservableCollection<ElementViewModel> Elements => _elements;
-        public IObservableCollection<ConnectionViewModel> Connections => _connections;
-
-        public IEnumerable<ElementViewModel> SelectedElements
-        {
-            get { return _elements.Where(x => x.IsSelected); }
-        }
-
         public TElement AddElement<TElement>(double x, double y)
             where TElement : ElementViewModel, new()
         {
@@ -90,9 +90,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         {
             // If current drag point is close to an input connector, show its snapped position.
             var nearbyConnector = FindNearbyInputConnector(currentDragPoint);
-            connection.ToPosition = nearbyConnector != null
-                ? nearbyConnector.Position
-                : currentDragPoint;
+            connection.ToPosition = nearbyConnector?.Position ?? currentDragPoint;
         }
 
         public void OnConnectionDragCompleted(Point currentDragPoint, ConnectionViewModel newConnection,

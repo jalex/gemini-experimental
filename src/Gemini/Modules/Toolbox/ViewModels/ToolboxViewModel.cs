@@ -21,6 +21,10 @@ namespace Gemini.Modules.Toolbox.ViewModels
         private readonly BindableCollection<ToolboxItemViewModel> _items;
         private readonly IToolboxService _toolboxService;
 
+        public IObservableCollection<ToolboxItemViewModel> Items => _items;
+
+        public override PaneLocation PreferredLocation => PaneLocation.Left;
+
         [ImportingConstructor]
         public ToolboxViewModel(IShell shell, IToolboxService toolboxService)
         {
@@ -39,10 +43,6 @@ namespace Gemini.Modules.Toolbox.ViewModels
             shell.ActiveDocumentChanged += (sender, e) => RefreshToolboxItems(shell);
             RefreshToolboxItems(shell);
         }
-
-        public IObservableCollection<ToolboxItemViewModel> Items => _items;
-
-        public override PaneLocation PreferredLocation => PaneLocation.Left;
 
         private void RefreshToolboxItems(IShell shell)
         {

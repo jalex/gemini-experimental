@@ -335,7 +335,7 @@ namespace Gemini.Modules.Xna.Services
                 case Key.OemClear:
                     return Keys.OemClear;
                 default:
-                    throw new ArgumentOutOfRangeException("key");
+                    throw new ArgumentOutOfRangeException(nameof(key));
             }
         }
 

@@ -1,15 +1,9 @@
-﻿#region
-
-using System.Windows.Controls;
-
-#endregion
-
-namespace Gemini.Modules.Inspector.Views
+﻿namespace Gemini.Modules.Inspector.Views
 {
     /// <summary>
     ///     Interaction logic for InspectorView.xaml
     /// </summary>
-    public partial class InspectorView : UserControl
+    public partial class InspectorView
     {
         public InspectorView()
         {

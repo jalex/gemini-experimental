@@ -1,15 +1,9 @@
-﻿#region
-
-using System.Windows.Controls;
-
-#endregion
-
-namespace Gemini.Modules.PropertyGrid.Views
+﻿namespace Gemini.Modules.PropertyGrid.Views
 {
     /// <summary>
     ///     Interaction logic for PropertyGridView.xaml
     /// </summary>
-    public partial class PropertyGridView : UserControl
+    public partial class PropertyGridView
     {
         public PropertyGridView()
         {

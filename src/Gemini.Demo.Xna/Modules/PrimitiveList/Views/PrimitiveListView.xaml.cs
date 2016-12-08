@@ -1,15 +1,9 @@
-﻿#region
-
-using System.Windows.Controls;
-
-#endregion
-
-namespace Gemini.Demo.Xna.Modules.PrimitiveList.Views
+﻿namespace Gemini.Demo.Xna.Modules.PrimitiveList.Views
 {
     /// <summary>
     ///     Interaction logic for PrimitiveListView.xaml
     /// </summary>
-    public partial class PrimitiveListView : UserControl
+    public partial class PrimitiveListView
     {
         public PrimitiveListView()
         {

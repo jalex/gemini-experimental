@@ -28,12 +28,6 @@ namespace Gemini.Modules.Inspector.Controls
         private TextBlock _textBlock;
         private TextBox _textBox;
 
-        static NumericTextBox()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericTextBox),
-                new FrameworkPropertyMetadata(typeof(NumericTextBox)));
-        }
-
         public double Value
         {
             get { return (double) GetValue(ValueProperty); }
@@ -56,6 +50,12 @@ namespace Gemini.Modules.Inspector.Controls
         {
             get { return (NumericTextBoxMode) GetValue(ModeProperty); }
             set { SetValue(ModeProperty, value); }
+        }
+
+        static NumericTextBox()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericTextBox),
+                new FrameworkPropertyMetadata(typeof(NumericTextBox)));
         }
 
         private static object OnCoerceValue(DependencyObject d, object basevalue)
@@ -122,11 +122,5 @@ namespace Gemini.Modules.Inspector.Controls
                 return Maximum.Value;
             return newValue;
         }
-    }
-
-    public enum NumericTextBoxMode
-    {
-        Normal,
-        TextBox
     }
 }

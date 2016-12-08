@@ -21,8 +21,7 @@ namespace Gemini.Framework.Results
             _lambda(context);
 
             var completedHandler = Completed;
-            if (completedHandler != null)
-                completedHandler(this, new ResultCompletionEventArgs());
+            completedHandler?.Invoke(this, new ResultCompletionEventArgs());
         }
 
         public event EventHandler<ResultCompletionEventArgs> Completed;

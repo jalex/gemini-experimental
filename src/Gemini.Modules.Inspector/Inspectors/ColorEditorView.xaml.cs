@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Windows.Controls;
 using System.Windows.Media;
 using Gemini.Modules.Inspector.Controls;
 
@@ -9,7 +8,7 @@ using Gemini.Modules.Inspector.Controls;
 
 namespace Gemini.Modules.Inspector.Inspectors
 {
-    public partial class ColorEditorView : UserControl
+    public partial class ColorEditorView
     {
         private Color _originalColor;
 

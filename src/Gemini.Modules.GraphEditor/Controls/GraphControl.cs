@@ -17,6 +17,8 @@ namespace Gemini.Modules.GraphEditor.Controls
     {
         private ElementItemsControl _elementItemsControl;
 
+        public IList SelectedElements => _elementItemsControl.SelectedItems;
+
         static GraphControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(GraphControl),
@@ -33,8 +35,6 @@ namespace Gemini.Modules.GraphEditor.Controls
                 new ConnectorItemDragCompletedEventHandler(OnConnectorItemDragCompleted));
         }
 
-        public IList SelectedElements => _elementItemsControl.SelectedItems;
-
         public event SelectionChangedEventHandler SelectionChanged;
 
         public override void OnApplyTemplate()
@@ -47,9 +47,8 @@ namespace Gemini.Modules.GraphEditor.Controls
         private void OnElementItemsControlSelectChanged(object sender, SelectionChangedEventArgs e)
         {
             var handler = SelectionChanged;
-            if (handler != null)
-                handler(this,
-                    new SelectionChangedEventArgs(Selector.SelectionChangedEvent, e.RemovedItems, e.AddedItems));
+            handler?.Invoke(this,
+                new SelectionChangedEventArgs(Selector.SelectionChangedEvent, e.RemovedItems, e.AddedItems));
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

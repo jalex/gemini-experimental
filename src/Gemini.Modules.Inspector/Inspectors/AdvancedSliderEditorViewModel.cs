@@ -30,22 +30,6 @@ namespace Gemini.Modules.Inspector.Inspectors
 
         private AdvancedSliderEditorView _view;
 
-        public AdvancedSliderEditorViewModel()
-        {
-            _valueFormat = DefaultValueFormat;
-            _valueType = typeof(TValue);
-            _type = AdvancedSliderBase.DisplayType.Number;
-        }
-
-        public AdvancedSliderEditorViewModel(TValue min, TValue max)
-        {
-            _minimum = min;
-            _maximum = max;
-            _valueFormat = DefaultValueFormat;
-            _valueType = typeof(TValue);
-            _type = AdvancedSliderBase.DisplayType.Bar;
-        }
-
         public TValue Minimum
         {
             get { return _minimum; }
@@ -126,6 +110,22 @@ namespace Gemini.Modules.Inspector.Inspectors
 
                 NotifyOfPropertyChange(() => Type);
             }
+        }
+
+        public AdvancedSliderEditorViewModel()
+        {
+            _valueFormat = DefaultValueFormat;
+            _valueType = typeof(TValue);
+            _type = AdvancedSliderBase.DisplayType.Number;
+        }
+
+        public AdvancedSliderEditorViewModel(TValue min, TValue max)
+        {
+            _minimum = min;
+            _maximum = max;
+            _valueFormat = DefaultValueFormat;
+            _valueType = typeof(TValue);
+            _type = AdvancedSliderBase.DisplayType.Bar;
         }
 
         public event EventHandler<ViewAttachedEventArgs> ViewAttached;

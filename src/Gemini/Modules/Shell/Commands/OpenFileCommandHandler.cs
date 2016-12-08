@@ -31,10 +31,12 @@ namespace Gemini.Modules.Shell.Commands
 
         public override async Task Run(Command command)
         {
-            var dialog = new OpenFileDialog();
+            var dialog = new OpenFileDialog
+            {
+                Filter = Resources.AllSupportedFiles + "|" + string.Join(";", _editorProviders
+                             .SelectMany(x => x.FileTypes).Select(x => "*" + x.FileExtension))
+            };
 
-            dialog.Filter = Resources.AllSupportedFiles + "|" + string.Join(";", _editorProviders
-                                .SelectMany(x => x.FileTypes).Select(x => "*" + x.FileExtension));
 
             dialog.Filter += "|" + string.Join("|", _editorProviders
                                  .SelectMany(x => x.FileTypes)

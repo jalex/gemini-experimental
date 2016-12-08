@@ -13,6 +13,9 @@ namespace Gemini.Framework.Results
     {
         private readonly Func<TWindow> _windowLocator = () => IoC.Get<TWindow>();
 
+        [Import]
+        public IWindowManager WindowManager { get; set; }
+
         public ShowWindowResult()
         {
         }
@@ -22,26 +25,20 @@ namespace Gemini.Framework.Results
             _windowLocator = () => window;
         }
 
-        [Import]
-        public IWindowManager WindowManager { get; set; }
-
         public override void Execute(CoroutineExecutionContext context)
         {
             var window = _windowLocator();
 
-            if (SetData != null)
-                SetData(window);
+            SetData?.Invoke(window);
 
-            if (_onConfigure != null)
-                _onConfigure(window);
+            _onConfigure?.Invoke(window);
 
             window.Deactivated += (s, e) =>
             {
                 if (!e.WasClosed)
                     return;
 
-                if (_onShutDown != null)
-                    _onShutDown(window);
+                _onShutDown?.Invoke(window);
 
                 OnCompleted(null, false);
             };

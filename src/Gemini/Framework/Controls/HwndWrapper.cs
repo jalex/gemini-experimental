@@ -455,7 +455,7 @@ namespace Gemini.Framework.Controls
                     if (IsMouseCaptured)
                         break;
 
-                    // Reset the state which releases all buttons and 
+                    // Reset the state which releases all buttons and
                     // marks the mouse as not being in the window.
                     ResetMouseState();
 
@@ -472,134 +472,115 @@ namespace Gemini.Framework.Controls
         protected virtual void RaiseHwndLButtonDown(HwndMouseEventArgs args)
         {
             var handler = HwndLButtonDown;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndLButtonUp(HwndMouseEventArgs args)
         {
             var handler = HwndLButtonUp;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndRButtonDown(HwndMouseEventArgs args)
         {
             var handler = HwndRButtonDown;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndRButtonUp(HwndMouseEventArgs args)
         {
             var handler = HwndRButtonUp;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndMButtonDown(HwndMouseEventArgs args)
         {
             var handler = HwndMButtonDown;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndMButtonUp(HwndMouseEventArgs args)
         {
             var handler = HwndMButtonUp;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndLButtonDblClick(HwndMouseEventArgs args)
         {
             var handler = HwndLButtonDblClick;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndRButtonDblClick(HwndMouseEventArgs args)
         {
             var handler = HwndRButtonDblClick;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndMButtonDblClick(HwndMouseEventArgs args)
         {
             var handler = HwndMButtonDblClick;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndMouseEnter(HwndMouseEventArgs args)
         {
             var handler = HwndMouseEnter;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndX1ButtonDown(HwndMouseEventArgs args)
         {
             var handler = HwndX1ButtonDown;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndX1ButtonUp(HwndMouseEventArgs args)
         {
             var handler = HwndX1ButtonUp;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndX2ButtonDown(HwndMouseEventArgs args)
         {
             var handler = HwndX2ButtonDown;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndX2ButtonUp(HwndMouseEventArgs args)
         {
             var handler = HwndX2ButtonUp;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndX1ButtonDblClick(HwndMouseEventArgs args)
         {
             var handler = HwndX1ButtonDblClick;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndX2ButtonDblClick(HwndMouseEventArgs args)
         {
             var handler = HwndX2ButtonDblClick;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndMouseLeave(HwndMouseEventArgs args)
         {
             var handler = HwndMouseLeave;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndMouseMove(HwndMouseEventArgs args)
         {
             var handler = HwndMouseMove;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseHwndMouseWheel(HwndMouseEventArgs args)
         {
             var handler = HwndMouseWheel;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         #endregion

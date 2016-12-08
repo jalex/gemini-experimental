@@ -25,22 +25,6 @@ namespace Gemini.Modules.UndoRedo.ViewModels
 
         private IUndoRedoManager _undoRedoManager;
 
-        [ImportingConstructor]
-        public HistoryViewModel(IShell shell)
-        {
-            DisplayName = Resources.HistoryDisplayName;
-
-            _historyItems = new BindableCollection<HistoryItemViewModel>();
-
-            if (shell == null)
-                return;
-
-            shell.ActiveDocumentChanged +=
-                (sender, e) => { UndoRedoManager = shell.SelectedDocument != null ? shell.SelectedDocument.UndoRedoManager : null; };
-            if (shell.SelectedDocument != null)
-                UndoRedoManager = shell.SelectedDocument.UndoRedoManager;
-        }
-
         public int SelectedIndex
         {
             get { return _selectedIndex; }
@@ -81,6 +65,22 @@ namespace Gemini.Modules.UndoRedo.ViewModels
             }
         }
 
+        [ImportingConstructor]
+        public HistoryViewModel(IShell shell)
+        {
+            DisplayName = Resources.HistoryDisplayName;
+
+            _historyItems = new BindableCollection<HistoryItemViewModel>();
+
+            if (shell == null)
+                return;
+
+            shell.ActiveDocumentChanged +=
+                (sender, e) => { UndoRedoManager = shell.SelectedDocument?.UndoRedoManager; };
+            if (shell.SelectedDocument != null)
+                UndoRedoManager = shell.SelectedDocument.UndoRedoManager;
+        }
+
         private void OnUndoRedoStackChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             RefreshHistory();
@@ -119,7 +119,8 @@ namespace Gemini.Modules.UndoRedo.ViewModels
             NotifyOfPropertyChange(() => HistoryItems);
 
             if (!_internallyTriggeredChange)
-                UpdateSelectedIndexOnly(_historyItems.IndexOf(_historyItems.First(x => x.ItemType == HistoryItemType.Current)) + 1);
+                UpdateSelectedIndexOnly(
+                    _historyItems.IndexOf(_historyItems.First(x => x.ItemType == HistoryItemType.Current)) + 1);
         }
 
         public void UndoOrRedoTo(HistoryItemViewModel item)

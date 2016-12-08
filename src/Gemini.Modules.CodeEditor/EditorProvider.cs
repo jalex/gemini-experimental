@@ -20,12 +20,6 @@ namespace Gemini.Modules.CodeEditor
     {
         private readonly LanguageDefinitionManager _languageDefinitionManager;
 
-        [ImportingConstructor]
-        public EditorProvider(LanguageDefinitionManager languageDefinitionManager)
-        {
-            _languageDefinitionManager = languageDefinitionManager;
-        }
-
         public IEnumerable<EditorFileType> FileTypes
         {
             get
@@ -40,6 +34,12 @@ namespace Gemini.Modules.CodeEditor
         }
 
         public bool CanCreateNew => true;
+
+        [ImportingConstructor]
+        public EditorProvider(LanguageDefinitionManager languageDefinitionManager)
+        {
+            _languageDefinitionManager = languageDefinitionManager;
+        }
 
         public bool Handles(string path)
         {

@@ -41,9 +41,7 @@ namespace Gemini.Framework.Commands
         public KeyGesture GetPrimaryKeyGesture(CommandDefinitionBase commandDefinition)
         {
             var keyboardShortcut = _keyboardShortcuts.FirstOrDefault(x => x.CommandDefinition == commandDefinition);
-            return keyboardShortcut != null
-                ? keyboardShortcut.KeyGesture
-                : null;
+            return keyboardShortcut?.KeyGesture;
         }
     }
 }

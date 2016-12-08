@@ -379,7 +379,7 @@ namespace Gemini.Modules.GraphEditor.Controls
 
         //
         // These data members are for the implementation of the IScrollInfo interface.
-        // This interface works with the ScrollViewer such that when ZoomAndPanControl is 
+        // This interface works with the ScrollViewer such that when ZoomAndPanControl is
         // wrapped (in XAML) with a ScrollViewer the IScrollInfo interface allows the ZoomAndPanControl to
         // handle the the scrollbar offsets.
         //
@@ -542,8 +542,7 @@ namespace Gemini.Modules.GraphEditor.Controls
                 {
                     _enableContentOffsetUpdateFromScale = false;
 
-                    if (callback != null)
-                        callback(this, EventArgs.Empty);
+                    callback?.Invoke(this, EventArgs.Empty);
                 });
 
             AnimationHelper.StartAnimation(this, ViewportZoomFocusXProperty, ViewportWidth/2, AnimationDuration);
@@ -590,7 +589,7 @@ namespace Gemini.Modules.GraphEditor.Controls
             if (c._enableContentOffsetUpdateFromScale)
                 try
                 {
-                    // 
+                    //
                     // Disable content focus syncronization.  We are about to update content offset whilst zooming
                     // to ensure that the viewport is focused on our desired content focus point.  Setting this
                     // to 'true' stops the automatic update of the content focus when content offset changes.
@@ -599,7 +598,7 @@ namespace Gemini.Modules.GraphEditor.Controls
 
                     //
                     // Whilst zooming in or out keep the content offset up-to-date so that the viewport is always
-                    // focused on the content focus point (and also so that the content focus is locked to the 
+                    // focused on the content focus point (and also so that the content focus is locked to the
                     // viewport focus point - this is how the google maps style zooming works).
                     //
                     var viewportOffsetX = c.ViewportZoomFocusX - c.ViewportWidth/2;
@@ -614,11 +613,9 @@ namespace Gemini.Modules.GraphEditor.Controls
                     c._disableContentFocusSync = false;
                 }
 
-            if (c.ContentScaleChanged != null)
-                c.ContentScaleChanged(c, EventArgs.Empty);
+            c.ContentScaleChanged?.Invoke(c, EventArgs.Empty);
 
-            if (c.ScrollOwner != null)
-                c.ScrollOwner.InvalidateScrollInfo();
+            c.ScrollOwner?.InvalidateScrollInfo();
         }
 
         /// <summary>
@@ -654,11 +651,10 @@ namespace Gemini.Modules.GraphEditor.Controls
             if (!c._disableContentFocusSync)
                 c.UpdateContentZoomFocusX();
 
-            if (c.ContentOffsetXChanged != null)
-                c.ContentOffsetXChanged(c, EventArgs.Empty);
+            c.ContentOffsetXChanged?.Invoke(c, EventArgs.Empty);
 
-            if (!c._disableScrollOffsetSync && (c.ScrollOwner != null))
-                c.ScrollOwner.InvalidateScrollInfo();
+            if (!c._disableScrollOffsetSync)
+                c.ScrollOwner?.InvalidateScrollInfo();
         }
 
         /// <summary>
@@ -686,11 +682,10 @@ namespace Gemini.Modules.GraphEditor.Controls
             if (!c._disableContentFocusSync)
                 c.UpdateContentZoomFocusY();
 
-            if (c.ContentOffsetYChanged != null)
-                c.ContentOffsetYChanged(c, EventArgs.Empty);
+            c.ContentOffsetYChanged?.Invoke(c, EventArgs.Empty);
 
-            if (!c._disableScrollOffsetSync && (c.ScrollOwner != null))
-                c.ScrollOwner.InvalidateScrollInfo();
+            if (!c._disableScrollOffsetSync)
+                c.ScrollOwner?.InvalidateScrollInfo();
         }
 
         /// <summary>
@@ -748,8 +743,7 @@ namespace Gemini.Modules.GraphEditor.Controls
             ContentOffsetX = ContentOffsetX;
             ContentOffsetY = ContentOffsetY;
 
-            if (ScrollOwner != null)
-                ScrollOwner.InvalidateScrollInfo();
+            ScrollOwner?.InvalidateScrollInfo();
         }
 
         /// <summary>
@@ -828,8 +822,7 @@ namespace Gemini.Modules.GraphEditor.Controls
                 //
                 _unScaledExtent = childSize;
 
-                if (ScrollOwner != null)
-                    ScrollOwner.InvalidateScrollInfo();
+                ScrollOwner?.InvalidateScrollInfo();
             }
 
             //
@@ -866,8 +859,7 @@ namespace Gemini.Modules.GraphEditor.Controls
                 //
                 _unScaledExtent = _content.DesiredSize;
 
-                if (ScrollOwner != null)
-                    ScrollOwner.InvalidateScrollInfo();
+                ScrollOwner?.InvalidateScrollInfo();
             }
 
             //

@@ -21,9 +21,7 @@ namespace Gemini.Framework.Services
                                    UriKind.Relative))
                                ?? Application.GetResourceStream(new Uri(relativeUri, UriKind.Relative));
 
-                return resource != null
-                    ? resource.Stream
-                    : null;
+                return resource?.Stream;
             }
             catch
             {

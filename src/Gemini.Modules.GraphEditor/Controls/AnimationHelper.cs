@@ -15,26 +15,19 @@ namespace Gemini.Modules.GraphEditor.Controls
     {
         /// <summary>
         ///     Starts an animation to a particular value on the specified dependency property.
-        /// </summary>
-        public static void StartAnimation(UIElement animatableElement, DependencyProperty dependencyProperty,
-            double toValue, double animationDurationSeconds)
-        {
-            StartAnimation(animatableElement, dependencyProperty, toValue, animationDurationSeconds, null);
-        }
-
-        /// <summary>
-        ///     Starts an animation to a particular value on the specified dependency property.
         ///     You can pass in an event handler to call when the animation has completed.
         /// </summary>
         public static void StartAnimation(UIElement animatableElement, DependencyProperty dependencyProperty,
-            double toValue, double animationDurationSeconds, EventHandler completedEvent)
+            double toValue, double animationDurationSeconds, EventHandler completedEvent = null)
         {
             var fromValue = (double) animatableElement.GetValue(dependencyProperty);
 
-            var animation = new DoubleAnimation();
-            animation.From = fromValue;
-            animation.To = toValue;
-            animation.Duration = TimeSpan.FromSeconds(animationDurationSeconds);
+            var animation = new DoubleAnimation
+            {
+                From = fromValue,
+                To = toValue,
+                Duration = TimeSpan.FromSeconds(animationDurationSeconds)
+            };
 
             animation.Completed += delegate(object sender, EventArgs e)
             {
@@ -45,8 +38,7 @@ namespace Gemini.Modules.GraphEditor.Controls
                 animatableElement.SetValue(dependencyProperty, animatableElement.GetValue(dependencyProperty));
                 CancelAnimation(animatableElement, dependencyProperty);
 
-                if (completedEvent != null)
-                    completedEvent(sender, e);
+                completedEvent?.Invoke(sender, e);
             };
 
             animation.Freeze();

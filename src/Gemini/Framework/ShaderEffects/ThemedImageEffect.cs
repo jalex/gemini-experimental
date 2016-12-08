@@ -20,13 +20,6 @@ namespace Gemini.Framework.ShaderEffects
         public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register("IsEnabled",
             typeof(double), typeof(ThemedImageEffect), new UIPropertyMetadata(1D, PixelShaderConstantCallback(1)));
 
-        public ThemedImageEffect()
-        {
-            UpdateShaderValue(InputProperty);
-            UpdateShaderValue(BackgroundProperty);
-            UpdateShaderValue(IsEnabledProperty);
-        }
-
         public Brush Input
         {
             get { return (Brush) GetValue(InputProperty); }
@@ -45,6 +38,13 @@ namespace Gemini.Framework.ShaderEffects
         {
             get { return (double) GetValue(IsEnabledProperty); }
             set { SetValue(IsEnabledProperty, value); }
+        }
+
+        public ThemedImageEffect()
+        {
+            UpdateShaderValue(InputProperty);
+            UpdateShaderValue(BackgroundProperty);
+            UpdateShaderValue(IsEnabledProperty);
         }
     }
 }

@@ -100,6 +100,7 @@
     <Compile Include="Framework\Commands\CommandDefinition.cs" />
     <Compile Include="Framework\Commands\CommandDefinitionAttribute.cs" />
     <Compile Include="Framework\Commands\CommandDefinitionBase.cs" />
+    <Compile Include="Framework\Commands\CommandHandlerBase.cs" />
     <Compile Include="Framework\Commands\CommandHandlerWrapper.cs" />
     <Compile Include="Framework\Commands\CommandKeyboardShortcut.cs" />
     <Compile Include="Framework\Commands\ExcludeCommandKeyboardShortcut.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Framework\Commands\CommandRouter.cs" />
     <Compile Include="Framework\Commands\CommandService.cs" />
     <Compile Include="Framework\Commands\ICommandKeyGestureService.cs" />
+    <Compile Include="Framework\Commands\ICommandListHandler.cs" />
     <Compile Include="Framework\Commands\ICommandRerouter.cs" />
     <Compile Include="Framework\Commands\ICommandService.cs" />
     <Compile Include="Framework\Commands\ICommandUiItem.cs" />
@@ -129,7 +131,7 @@
     <Compile Include="Framework\Controls\SliderEx.cs" />
     <Compile Include="Framework\Converters.cs" />
     <Compile Include="Framework\IExecutableItem.cs" />
-    <Compile Include="Framework\ILayoutItem.cs" />
+    <Compile Include="Framework\ILayoutPanel.cs" />
     <Compile Include="Framework\IPersistedDocument.cs" />
     <Compile Include="Framework\Menus\CommandMenuItemDefinition.cs" />
     <Compile Include="Framework\Menus\ExcludeMenuDefinition.cs" />
@@ -164,6 +166,7 @@
     <Compile Include="Framework\ToolBars\ExcludeToolBarItemGroupDefinition.cs" />
     <Compile Include="Framework\ToolBars\ToolBarDefinition.cs" />
     <Compile Include="Framework\ToolBars\ToolBarItemDefinition.cs" />
+    <Compile Include="Framework\ToolBars\ToolBarItemDisplay.cs" />
     <Compile Include="Framework\ToolBars\ToolBarItemGroupDefinition.cs" />
     <Compile Include="Framework\Util\SpeedMultiplier.cs" />
     <Compile Include="Framework\VisualTreeUtility.cs" />
@@ -288,7 +291,7 @@
     <Compile Include="Modules\StatusBar\Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\ToolBars\Views\IToolBarView.cs" />
+    <Compile Include="Modules\ToolBars\Views\IToolBarsView.cs" />
     <Compile Include="Modules\ToolBars\Views\ToolBarsView.xaml.cs">
       <DependentUpon>ToolBarsView.xaml</DependentUpon>
     </Compile>

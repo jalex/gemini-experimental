@@ -119,9 +119,7 @@ namespace Gemini.Modules.CodeEditor.ViewModels
 
         private void SetLanguage(ILanguageDefinition languageDefinition)
         {
-            _view.TextEditor.SyntaxHighlighting = languageDefinition != null
-                ? languageDefinition.SyntaxHighlighting
-                : null;
+            _view.TextEditor.SyntaxHighlighting = languageDefinition?.SyntaxHighlighting;
         }
     }
 }

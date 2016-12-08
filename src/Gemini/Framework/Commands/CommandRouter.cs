@@ -120,29 +120,26 @@ namespace Gemini.Framework.Commands
             do
             {
                 var frameworkElement = visualObject as FrameworkElement;
-                if (frameworkElement != null)
+                var dataContext = frameworkElement?.DataContext;
+                if ((dataContext != null) && !ReferenceEquals(dataContext, previousDataContext))
                 {
-                    var dataContext = frameworkElement.DataContext;
-                    if ((dataContext != null) && !ReferenceEquals(dataContext, previousDataContext))
+                    if (dataContext is ICommandRerouter)
                     {
-                        if (dataContext is ICommandRerouter)
+                        var commandRerouter = (ICommandRerouter) dataContext;
+                        var commandTarget = commandRerouter.GetHandler(commandDefinition);
+                        if (commandTarget != null)
                         {
-                            var commandRerouter = (ICommandRerouter) dataContext;
-                            var commandTarget = commandRerouter.GetHandler(commandDefinition);
-                            if (commandTarget != null)
-                            {
-                                if (IsCommandHandlerForCommandDefinitionType(commandTarget, commandDefinition.GetType()))
-                                    return CreateCommandHandlerWrapper(commandDefinition.GetType(), commandTarget);
-                                throw new InvalidOperationException(
-                                    "This object does not handle the specified command definition.");
-                            }
+                            if (IsCommandHandlerForCommandDefinitionType(commandTarget, commandDefinition.GetType()))
+                                return CreateCommandHandlerWrapper(commandDefinition.GetType(), commandTarget);
+                            throw new InvalidOperationException(
+                                "This object does not handle the specified command definition.");
                         }
-
-                        if (IsCommandHandlerForCommandDefinitionType(dataContext, commandDefinition.GetType()))
-                            return CreateCommandHandlerWrapper(commandDefinition.GetType(), dataContext);
-
-                        previousDataContext = dataContext;
                     }
+
+                    if (IsCommandHandlerForCommandDefinitionType(dataContext, commandDefinition.GetType()))
+                        return CreateCommandHandlerWrapper(commandDefinition.GetType(), dataContext);
+
+                    previousDataContext = dataContext;
                 }
                 visualObject = VisualTreeHelper.GetParent(visualObject);
             } while (visualObject != null);

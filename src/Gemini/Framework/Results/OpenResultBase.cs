@@ -40,8 +40,7 @@ namespace Gemini.Framework.Results
 
         protected virtual void OnCompleted(Exception exception, bool wasCancelled)
         {
-            if (Completed != null)
-                Completed(this, new ResultCompletionEventArgs {Error = exception, WasCancelled = wasCancelled});
+            Completed?.Invoke(this, new ResultCompletionEventArgs {Error = exception, WasCancelled = wasCancelled});
         }
     }
 }

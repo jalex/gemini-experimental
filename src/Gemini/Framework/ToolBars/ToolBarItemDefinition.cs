@@ -10,13 +10,6 @@ namespace Gemini.Framework.ToolBars
 {
     public abstract class ToolBarItemDefinition
     {
-        protected ToolBarItemDefinition(ToolBarItemGroupDefinition group, int sortOrder, ToolBarItemDisplay display)
-        {
-            Group = group;
-            SortOrder = sortOrder;
-            Display = display;
-        }
-
         public ToolBarItemGroupDefinition Group { get; }
 
         public int SortOrder { get; }
@@ -27,11 +20,12 @@ namespace Gemini.Framework.ToolBars
         public abstract Uri IconSource { get; }
         public abstract KeyGesture KeyGesture { get; }
         public abstract CommandDefinitionBase CommandDefinition { get; }
-    }
 
-    public enum ToolBarItemDisplay
-    {
-        IconOnly,
-        IconAndText
+        protected ToolBarItemDefinition(ToolBarItemGroupDefinition group, int sortOrder, ToolBarItemDisplay display)
+        {
+            Group = group;
+            SortOrder = sortOrder;
+            Display = display;
+        }
     }
 }

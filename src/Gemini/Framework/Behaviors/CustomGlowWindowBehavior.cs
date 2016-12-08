@@ -94,9 +94,8 @@ namespace Gemini.Framework.Behaviors
         /// </summary>
         private void StartOpacityStoryboard()
         {
-            if ((_left == null) || (_left.OpacityStoryboard == null) || (_right == null) ||
-                (_right.OpacityStoryboard == null) || (_top == null) || (_top.OpacityStoryboard == null) ||
-                (_bottom == null) || (_bottom.OpacityStoryboard == null))
+            if ((_left?.OpacityStoryboard == null) || (_right?.OpacityStoryboard == null) ||
+                (_top?.OpacityStoryboard == null) || (_bottom?.OpacityStoryboard == null))
                 return;
             _left.BeginStoryboard(_left.OpacityStoryboard);
             _right.BeginStoryboard(_right.OpacityStoryboard);

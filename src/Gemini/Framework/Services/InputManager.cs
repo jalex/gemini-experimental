@@ -15,8 +15,10 @@ namespace Gemini.Framework.Services
     {
         public void SetShortcut(DependencyObject view, InputGesture gesture, object handler)
         {
-            var inputBindingTrigger = new InputBindingTrigger();
-            inputBindingTrigger.InputBinding = new InputBinding(new RoutedCommand(), gesture);
+            var inputBindingTrigger = new InputBindingTrigger
+            {
+                InputBinding = new InputBinding(new RoutedCommand(), gesture)
+            };
 
             //var target = ViewLocator.LocateForModel(handler, null, null);
             Interaction.GetTriggers(view).Add(inputBindingTrigger);

@@ -1,15 +1,9 @@
-﻿#region
-
-using System.Windows.Controls;
-
-#endregion
-
-namespace Gemini.Modules.Output.Views
+﻿namespace Gemini.Modules.Output.Views
 {
     /// <summary>
     ///     Interaction logic for OutputView.xaml
     /// </summary>
-    public partial class OutputView : UserControl, IOutputView
+    public partial class OutputView : IOutputView
     {
         public OutputView()
         {

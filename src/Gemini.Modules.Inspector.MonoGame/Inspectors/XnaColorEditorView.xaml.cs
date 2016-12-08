@@ -1,6 +1,5 @@
 ﻿#region
 
-using System.Windows.Controls;
 using Gemini.Modules.Inspector.Controls;
 using Gemini.Modules.Inspector.MonoGame.Converters;
 
@@ -11,7 +10,7 @@ namespace Gemini.Modules.Inspector.MonoGame.Inspectors
     /// <summary>
     ///     Interaction logic for XnaColorEditorView.xaml
     /// </summary>
-    public partial class XnaColorEditorView : UserControl
+    public partial class XnaColorEditorView
     {
         public XnaColorEditorView()
         {

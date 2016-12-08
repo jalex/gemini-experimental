@@ -8,15 +8,11 @@ using System.Linq;
 
 namespace Gemini.Modules.Inspector.Inspectors
 {
-    public class EnumValueViewModel<TEnum>
-    {
-        public TEnum Value { get; set; }
-        public string Text { get; set; }
-    }
-
     public class EnumEditorViewModel<TEnum> : EditorBase<TEnum>, ILabelledInspector
     {
         private readonly List<EnumValueViewModel<TEnum>> _items;
+
+        public IEnumerable<EnumValueViewModel<TEnum>> Items => _items;
 
         public EnumEditorViewModel()
         {
@@ -26,8 +22,6 @@ namespace Gemini.Modules.Inspector.Inspectors
                 Text = Enum.GetName(typeof(TEnum), x)
             }).ToList();
         }
-
-        public IEnumerable<EnumValueViewModel<TEnum>> Items => _items;
     }
 
     public class EnumValueViewModel
@@ -40,6 +34,8 @@ namespace Gemini.Modules.Inspector.Inspectors
     {
         private readonly List<EnumValueViewModel> _items;
 
+        public IEnumerable<EnumValueViewModel> Items => _items;
+
         public EnumEditorViewModel(Type enumType)
         {
             _items = Enum.GetValues(enumType).Cast<object>().Select(x => new EnumValueViewModel
@@ -48,7 +44,5 @@ namespace Gemini.Modules.Inspector.Inspectors
                 Text = Enum.GetName(enumType, x)
             }).ToList();
         }
-
-        public IEnumerable<EnumValueViewModel> Items => _items;
     }
 }

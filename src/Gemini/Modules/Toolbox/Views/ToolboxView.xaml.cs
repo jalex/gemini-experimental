@@ -14,7 +14,7 @@ namespace Gemini.Modules.Toolbox.Views
     /// <summary>
     ///     Interaction logic for ToolboxView.xaml
     /// </summary>
-    public partial class ToolboxView : UserControl
+    public partial class ToolboxView
     {
         private bool _draggingItem;
         private Point _mouseStartPosition;

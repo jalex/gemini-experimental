@@ -17,14 +17,14 @@ namespace Gemini.Framework.ShaderEffects.Converters
     {
         private static IsNullConverter _instance;
 
+        public static IsNullConverter Instance => _instance ?? (_instance = new IsNullConverter());
+
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
 
         private IsNullConverter()
         {
         }
-
-        public static IsNullConverter Instance => _instance ?? (_instance = new IsNullConverter());
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

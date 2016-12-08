@@ -20,6 +20,10 @@ namespace Gemini.Framework.Themes
 
         private ResourceDictionary _applicationResourceDictionary;
 
+        public List<ITheme> Themes { get; }
+
+        public ITheme CurrentTheme { get; private set; }
+
         [ImportingConstructor]
         public ThemeManager([ImportMany] ITheme[] themes)
         {
@@ -28,10 +32,6 @@ namespace Gemini.Framework.Themes
         }
 
         public event EventHandler CurrentThemeChanged;
-
-        public List<ITheme> Themes { get; }
-
-        public ITheme CurrentTheme { get; private set; }
 
         public bool SetCurrentTheme(string name)
         {
@@ -80,8 +80,7 @@ namespace Gemini.Framework.Themes
         private void RaiseCurrentThemeChanged(EventArgs args)
         {
             var handler = CurrentThemeChanged;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
     }
 }

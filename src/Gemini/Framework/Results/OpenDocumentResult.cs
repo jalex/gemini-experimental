@@ -48,19 +48,16 @@ namespace Gemini.Framework.Results
                 return;
             }
 
-            if (SetData != null)
-                SetData(editor);
+            SetData?.Invoke(editor);
 
-            if (_onConfigure != null)
-                _onConfigure(editor);
+            _onConfigure?.Invoke(editor);
 
             editor.Deactivated += (s, e) =>
             {
                 if (!e.WasClosed)
                     return;
 
-                if (_onShutDown != null)
-                    _onShutDown(editor);
+                _onShutDown?.Invoke(editor);
             };
 
             _shell.OpenDocument(editor);

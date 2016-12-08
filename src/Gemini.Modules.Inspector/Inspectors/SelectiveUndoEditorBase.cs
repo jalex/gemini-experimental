@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using Caliburn.Micro;
 using Gemini.Framework.Services;
 
@@ -15,7 +14,7 @@ namespace Gemini.Modules.Inspector.Inspectors
     ///     OnEndEdit to commit the old and new value to the undo / redo manager.
     /// </summary>
     /// <typeparam name="TValue">Type of the value</typeparam>
-    public abstract class SelectiveUndoEditorBase<TValue> : EditorBase<TValue>, IDisposable
+    public abstract class SelectiveUndoEditorBase<TValue> : EditorBase<TValue>
     {
         private object _originalValue;
 

@@ -19,14 +19,6 @@ namespace Gemini.Modules.Settings.ViewModels
         private SettingsPageViewModel _selectedPage;
         private IEnumerable<ISettingsEditor> _settingsEditors;
 
-        public SettingsViewModel()
-        {
-            CancelCommand = new RelayCommand(o => TryClose(false));
-            OkCommand = new RelayCommand(SaveChanges);
-
-            DisplayName = Resources.SettingsDisplayName;
-        }
-
         public List<SettingsPageViewModel> Pages { get; private set; }
 
         public SettingsPageViewModel SelectedPage
@@ -41,6 +33,14 @@ namespace Gemini.Modules.Settings.ViewModels
 
         public ICommand CancelCommand { get; private set; }
         public ICommand OkCommand { get; private set; }
+
+        public SettingsViewModel()
+        {
+            CancelCommand = new RelayCommand(o => TryClose(false));
+            OkCommand = new RelayCommand(SaveChanges);
+
+            DisplayName = Resources.SettingsDisplayName;
+        }
 
         protected override void OnInitialize()
         {

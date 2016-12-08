@@ -14,15 +14,6 @@ namespace Gemini.Modules.UndoRedo.Services
 
         private int? _undoCountLimit;
 
-        public UndoRedoManager()
-        {
-            _undoStack = new BindableCollection<IUndoableAction>();
-            _redoStack = new BindableCollection<IUndoableAction>();
-        }
-
-        public event EventHandler BatchBegin;
-        public event EventHandler BatchEnd;
-
         public IObservableCollection<IUndoableAction> UndoStack => _undoStack;
 
         public IObservableCollection<IUndoableAction> RedoStack => _redoStack;
@@ -37,6 +28,15 @@ namespace Gemini.Modules.UndoRedo.Services
                 EnforceLimit();
             }
         }
+
+        public UndoRedoManager()
+        {
+            _undoStack = new BindableCollection<IUndoableAction>();
+            _redoStack = new BindableCollection<IUndoableAction>();
+        }
+
+        public event EventHandler BatchBegin;
+        public event EventHandler BatchEnd;
 
         public void ExecuteAction(IUndoableAction action)
         {
@@ -147,15 +147,13 @@ namespace Gemini.Modules.UndoRedo.Services
         private void OnBegin()
         {
             var handler = BatchBegin;
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnEnd()
         {
             var handler = BatchEnd;
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         private static IUndoableAction Peek(BindableCollection<IUndoableAction> stack)
@@ -175,11 +173,10 @@ namespace Gemini.Modules.UndoRedo.Services
             return item;
         }
 
-        private static IUndoableAction PopFront(BindableCollection<IUndoableAction> stack)
+        private static void PopFront(BindableCollection<IUndoableAction> stack)
         {
             var item = stack[0];
             stack.RemoveAt(0);
-            return item;
         }
     }
 }

@@ -13,12 +13,6 @@ namespace Gemini.Modules.StatusBar.ViewModels
 
         private string _message;
 
-        public StatusBarItemViewModel(string message, GridLength width)
-        {
-            _message = message;
-            Width = width;
-        }
-
         public int Index
         {
             get { return _index; }
@@ -40,5 +34,11 @@ namespace Gemini.Modules.StatusBar.ViewModels
         }
 
         public GridLength Width { get; }
+
+        public StatusBarItemViewModel(string message, GridLength width)
+        {
+            _message = message;
+            Width = width;
+        }
     }
 }

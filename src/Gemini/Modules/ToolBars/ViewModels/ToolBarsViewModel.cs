@@ -20,14 +20,6 @@ namespace Gemini.Modules.ToolBars.ViewModels
 
         private bool _visible;
 
-        [ImportingConstructor]
-        public ToolBarsViewModel(IToolBarBuilder toolBarBuilder)
-        {
-            _toolBarBuilder = toolBarBuilder;
-            _items = new BindableCollection<IToolBar>();
-            _locked = false;
-        }
-
         public IObservableCollection<IToolBar> Items => _items;
 
         public bool Visible
@@ -48,6 +40,14 @@ namespace Gemini.Modules.ToolBars.ViewModels
                 _locked = value;
                 NotifyOfPropertyChange();
             }
+        }
+
+        [ImportingConstructor]
+        public ToolBarsViewModel(IToolBarBuilder toolBarBuilder)
+        {
+            _toolBarBuilder = toolBarBuilder;
+            _items = new BindableCollection<IToolBar>();
+            _locked = false;
         }
 
         protected override void OnViewLoaded(object view)

@@ -28,12 +28,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
 
         private double _y;
 
-        protected ElementViewModel()
-        {
-            _inputConnectors = new BindableCollection<InputConnectorViewModel>();
-            _name = GetType().Name;
-        }
-
         [Browsable(false)]
         public double X
         {
@@ -101,6 +95,12 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             }
         }
 
+        protected ElementViewModel()
+        {
+            _inputConnectors = new BindableCollection<InputConnectorViewModel>();
+            _name = GetType().Name;
+        }
+
         public event EventHandler OutputChanged;
 
         protected void AddInputConnector(string name, Color color)
@@ -122,7 +122,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         protected virtual void RaiseOutputChanged()
         {
             var handler = OutputChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
         }
     }
 }

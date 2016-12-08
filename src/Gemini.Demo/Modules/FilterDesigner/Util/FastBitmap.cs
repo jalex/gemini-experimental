@@ -14,8 +14,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
         public void Dispose()
         {
             Dispose(true);
-            if (_stream != null)
-                _stream.Close();
+            _stream?.Close();
             GC.SuppressFinalize(this);
         }
 

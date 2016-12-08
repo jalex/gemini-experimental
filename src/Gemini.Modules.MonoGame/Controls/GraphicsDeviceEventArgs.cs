@@ -13,6 +13,11 @@ namespace Gemini.Modules.MonoGame.Controls
     public class GraphicsDeviceEventArgs : EventArgs
     {
         /// <summary>
+        ///     Gets the GraphicsDevice.
+        /// </summary>
+        public GraphicsDevice GraphicsDevice { get; private set; }
+
+        /// <summary>
         ///     Initializes a new GraphicsDeviceEventArgs.
         /// </summary>
         /// <param name="graphicsDevice">The GraphicsDevice associated with the event.</param>
@@ -20,10 +25,5 @@ namespace Gemini.Modules.MonoGame.Controls
         {
             GraphicsDevice = graphicsDevice;
         }
-
-        /// <summary>
-        ///     Gets the GraphicsDevice.
-        /// </summary>
-        public GraphicsDevice GraphicsDevice { get; private set; }
     }
 }

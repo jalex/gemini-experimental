@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Gemini.Demo.Xna.Modules.SceneViewer.ViewModels;
@@ -18,7 +17,7 @@ namespace Gemini.Demo.Xna.Modules.SceneViewer.Views
     /// <summary>
     ///     Interaction logic for SceneView.xaml
     /// </summary>
-    public partial class SceneView : UserControl, IDisposable
+    public partial class SceneView : IDisposable
     {
         private readonly CubePrimitive _cube;
         private readonly IOutput _output;

@@ -36,21 +36,6 @@ namespace Gemini.Demo.Modules.Home.ViewModels
 
         private TextAlignment _textAlignment;
 
-        public HomeViewModel()
-        {
-            DisplayName = "Home";
-            Background = Colors.CornflowerBlue;
-            Foreground = Colors.White;
-            TextAlignment = TextAlignment.Center;
-            Text = "Welcome to the Gemini Demo!";
-            IntegerValue = 3;
-            NullableIntegerValue = null;
-            FloatValue = 5.2f;
-            NullableFloatValue = null;
-            DoubleValue = Math.PI;
-            NullableDoubleValue = 4.5;
-        }
-
         public Color Background
         {
             get { return _background; }
@@ -159,6 +144,21 @@ namespace Gemini.Demo.Modules.Home.ViewModels
         }
 
         public override bool ShouldReopenOnStart => true;
+
+        public HomeViewModel()
+        {
+            DisplayName = "Home";
+            Background = Colors.CornflowerBlue;
+            Foreground = Colors.White;
+            TextAlignment = TextAlignment.Center;
+            Text = "Welcome to the Gemini Demo!";
+            IntegerValue = 3;
+            NullableIntegerValue = null;
+            FloatValue = 5.2f;
+            NullableFloatValue = null;
+            DoubleValue = Math.PI;
+            NullableDoubleValue = 4.5;
+        }
 
         public override void SaveState(BinaryWriter writer)
         {

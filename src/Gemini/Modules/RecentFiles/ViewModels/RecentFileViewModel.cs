@@ -11,12 +11,12 @@ namespace Gemini.Modules.RecentFiles.ViewModels
     [Export(typeof(IRecentFiles))]
     public class RecentFileViewModel : PropertyChangedBase, IRecentFiles
     {
+        public IObservableCollection<RecentFileItemViewModel> Items => Properties.Settings.Default.RecentDocuments;
+
         public RecentFileViewModel()
         {
             InitializeList();
         }
-
-        public IObservableCollection<RecentFileItemViewModel> Items => Properties.Settings.Default.RecentDocuments;
 
         public void Update(string filePath)
         {

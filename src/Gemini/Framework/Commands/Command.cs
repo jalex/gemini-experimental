@@ -16,14 +16,6 @@ namespace Gemini.Framework.Commands
         private string _toolTip;
         private bool _visible = true;
 
-        public Command(CommandDefinitionBase commandDefinition)
-        {
-            CommandDefinition = commandDefinition;
-            Text = commandDefinition.Text;
-            ToolTip = commandDefinition.ToolTip;
-            IconSource = commandDefinition.IconSource;
-        }
-
         public CommandDefinitionBase CommandDefinition { get; }
 
         public bool Visible
@@ -87,5 +79,13 @@ namespace Gemini.Framework.Commands
         }
 
         public object Tag { get; set; }
+
+        public Command(CommandDefinitionBase commandDefinition)
+        {
+            CommandDefinition = commandDefinition;
+            Text = commandDefinition.Text;
+            ToolTip = commandDefinition.ToolTip;
+            IconSource = commandDefinition.IconSource;
+        }
     }
 }

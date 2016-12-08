@@ -19,15 +19,7 @@ namespace Gemini.Modules.CodeEditor
         private List<ILanguageDefinition> _languageDefinitions;
 
         public IEnumerable<ILanguageDefinition> LanguageDefinitions
-        {
-            get
-            {
-                if (_languageDefinitions == null)
-                    _languageDefinitions = Initialize();
-
-                return _languageDefinitions;
-            }
-        }
+            => _languageDefinitions ?? (_languageDefinitions = Initialize());
 
         public ILanguageDefinition GetDefinitionByExtension(string extension)
         {

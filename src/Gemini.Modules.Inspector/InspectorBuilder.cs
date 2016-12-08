@@ -19,12 +19,12 @@ namespace Gemini.Modules.Inspector
     public class InspectorBuilder<TBuilder>
         where TBuilder : InspectorBuilder<TBuilder>
     {
+        protected List<IInspector> Inspectors { get; }
+
         public InspectorBuilder()
         {
             Inspectors = new List<IInspector>();
         }
-
-        protected List<IInspector> Inspectors { get; }
 
         public TBuilder WithCollapsibleGroup(string name,
             Func<CollapsibleGroupBuilder, CollapsibleGroupBuilder> callback)

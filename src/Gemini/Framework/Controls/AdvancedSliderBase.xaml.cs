@@ -3,7 +3,6 @@
 using System;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Gemini.Framework.Util;
@@ -13,7 +12,7 @@ using Gemini.Framework.Win32;
 
 namespace Gemini.Framework.Controls
 {
-    public abstract partial class AdvancedSliderBase : UserControl, IDisposable
+    public abstract partial class AdvancedSliderBase : IDisposable
     {
         public enum DisplayType
         {
@@ -65,19 +64,6 @@ namespace Gemini.Framework.Controls
 
         private double _startValue;
 
-        static AdvancedSliderBase()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(AdvancedSliderBase),
-                new FrameworkPropertyMetadata(typeof(AdvancedSliderBase)));
-        }
-
-        public AdvancedSliderBase()
-        {
-            _clickTimer = new Timer(NativeMethods.GetDoubleClickTime());
-            _clickTimer.Elapsed += ClickTimer_Elapsed;
-            InitializeComponent();
-        }
-
         public string DisplayText
         {
             get { return (string) GetValue(DisplayTextProperty); }
@@ -112,6 +98,19 @@ namespace Gemini.Framework.Controls
         {
             get { return (bool) GetValue(MouseCapturedProperty); }
             set { SetValue(MouseCapturedProperty, value); }
+        }
+
+        static AdvancedSliderBase()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(AdvancedSliderBase),
+                new FrameworkPropertyMetadata(typeof(AdvancedSliderBase)));
+        }
+
+        public AdvancedSliderBase()
+        {
+            _clickTimer = new Timer(NativeMethods.GetDoubleClickTime());
+            _clickTimer.Elapsed += ClickTimer_Elapsed;
+            InitializeComponent();
         }
 
         private void Update()

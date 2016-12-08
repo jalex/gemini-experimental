@@ -14,12 +14,12 @@ namespace Gemini.Modules.Xna.Controls
     {
         private readonly DrawingSurface _drawingSurface;
 
+        public GraphicsDevice GraphicsDevice => _drawingSurface.GraphicsDevice;
+
         public DrawEventArgs(DrawingSurface drawingSurface)
         {
             _drawingSurface = drawingSurface;
         }
-
-        public GraphicsDevice GraphicsDevice => _drawingSurface.GraphicsDevice;
 
         public void InvalidateSurface()
         {

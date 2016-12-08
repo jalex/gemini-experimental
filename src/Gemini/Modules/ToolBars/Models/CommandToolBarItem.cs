@@ -19,16 +19,6 @@ namespace Gemini.Modules.ToolBars.Models
         private readonly IToolBar _parent;
         private readonly ToolBarItemDefinition _toolBarItem;
 
-        public CommandToolBarItem(ToolBarItemDefinition toolBarItem, Command command, IToolBar parent)
-        {
-            _toolBarItem = toolBarItem;
-            _command = command;
-            _keyGesture = IoC.Get<ICommandKeyGestureService>().GetPrimaryKeyGesture(_command.CommandDefinition);
-            _parent = parent;
-
-            command.PropertyChanged += OnCommandPropertyChanged;
-        }
-
         public string Text => _command.Text;
 
         public ToolBarItemDisplay Display => _toolBarItem.Display;
@@ -54,6 +44,16 @@ namespace Gemini.Modules.ToolBars.Models
         public bool IsChecked => _command.Checked;
 
         CommandDefinitionBase ICommandUiItem.CommandDefinition => _command.CommandDefinition;
+
+        public CommandToolBarItem(ToolBarItemDefinition toolBarItem, Command command, IToolBar parent)
+        {
+            _toolBarItem = toolBarItem;
+            _command = command;
+            _keyGesture = IoC.Get<ICommandKeyGestureService>().GetPrimaryKeyGesture(_command.CommandDefinition);
+            _parent = parent;
+
+            command.PropertyChanged += OnCommandPropertyChanged;
+        }
 
         void ICommandUiItem.Update(CommandHandlerWrapper commandHandler)
         {

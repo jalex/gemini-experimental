@@ -10,15 +10,6 @@ namespace Gemini.Modules.MainMenu.Models
 {
     public class MenuItemBase : PropertyChangedBase, IEnumerable<MenuItemBase>
     {
-        #region Constructors
-
-        protected MenuItemBase()
-        {
-            Children = new BindableCollection<MenuItemBase>();
-        }
-
-        #endregion
-
         #region Static stuff
 
         public static MenuItemBase Separator => new MenuItemSeparator();
@@ -28,6 +19,15 @@ namespace Gemini.Modules.MainMenu.Models
         #region Properties
 
         public IObservableCollection<MenuItemBase> Children { get; }
+
+        #endregion
+
+        #region Constructors
+
+        protected MenuItemBase()
+        {
+            Children = new BindableCollection<MenuItemBase>();
+        }
 
         #endregion
 

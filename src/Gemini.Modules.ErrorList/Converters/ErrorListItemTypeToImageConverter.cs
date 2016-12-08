@@ -26,7 +26,7 @@ namespace Gemini.Modules.ErrorList.Converters
                 case ErrorListItemType.Message:
                     return MessageImageSource;
                 default:
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
             }
         }
 

@@ -53,8 +53,8 @@ namespace Gemini.Framework
         {
             if (IsDirty)
             {
-                // Show save prompt.  
-                // Note that CanClose method of Demo ShellViewModel blocks this. 
+                // Show save prompt.
+                // Note that CanClose method of Demo ShellViewModel blocks this.
                 var title = IoC.Get<IMainWindow>().Title;
                 var fileName = Path.GetFileNameWithoutExtension(FileName);
                 var fileExtension = Path.GetExtension(FileName);
@@ -71,8 +71,7 @@ namespace Gemini.Framework
                     {
                         // Ask new file path.
                         var filter = string.Empty;
-                        if (fileType != null)
-                            filter = fileType.Name + "|*" + fileType.FileExtension + "|";
+                        filter = fileType.Name + "|*" + fileType.FileExtension + "|";
                         filter += Resources.AllFiles + "|*.*";
 
                         var dialog = new SaveFileDialog {FileName = FileName, Filter = filter};

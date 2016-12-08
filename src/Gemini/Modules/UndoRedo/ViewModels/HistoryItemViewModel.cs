@@ -10,6 +10,11 @@ namespace Gemini.Modules.UndoRedo.ViewModels
     {
         private readonly string _name;
 
+        public IUndoableAction Action { get; }
+
+        public string Name => _name ?? Action.Name;
+        public HistoryItemType ItemType { get; }
+
         public HistoryItemViewModel(IUndoableAction action, HistoryItemType itemType)
         {
             Action = action;
@@ -21,10 +26,5 @@ namespace Gemini.Modules.UndoRedo.ViewModels
             _name = name;
             ItemType = itemType;
         }
-
-        public IUndoableAction Action { get; }
-
-        public string Name => _name ?? Action.Name;
-        public HistoryItemType ItemType { get; }
     }
 }

@@ -34,9 +34,9 @@ namespace Gemini.Modules.Inspector.Controls
 
         #region CTOR - SimpleGridSplitter()
 
-        // The below code throws for some reason, so the focus properties 
+        // The below code throws for some reason, so the focus properties
         // for keyboard support had to be moved to the constructor.
-        // 
+        //
         //static SimpleGridSplitter()
         //{
         //    FocusableProperty.OverrideMetadata(
@@ -187,10 +187,7 @@ namespace Gemini.Modules.Inspector.Controls
             var effectiveResizeDirection =
                 DetermineEffectiveResizeDirection();
 
-            if (effectiveResizeDirection == GridResizeDirection.Columns)
-                Cursor = Cursors.SizeWE;
-            else
-                Cursor = Cursors.SizeNS;
+            Cursor = effectiveResizeDirection == GridResizeDirection.Columns ? Cursors.SizeWE : Cursors.SizeNS;
         }
 
         #endregion
@@ -664,11 +661,6 @@ namespace Gemini.Modules.Inspector.Controls
         #endregion
 
         #region Mouse event handlers
-
-        protected override void OnDragEnter(DragEventArgs e)
-        {
-            base.OnDragEnter(e);
-        }
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {

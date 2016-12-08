@@ -15,11 +15,6 @@ namespace Gemini.Demo.Xna.Modules.SceneViewer.ViewModels
     {
         private Vector3 _position;
 
-        public SceneViewModel()
-        {
-            DisplayName = "3D Scene";
-        }
-
         public Vector3 Position
         {
             get { return _position; }
@@ -30,13 +25,17 @@ namespace Gemini.Demo.Xna.Modules.SceneViewer.ViewModels
             }
         }
 
+        public SceneViewModel()
+        {
+            DisplayName = "3D Scene";
+        }
+
         protected override void OnDeactivate(bool close)
         {
             if (close)
             {
                 var view = GetView() as IDisposable;
-                if (view != null)
-                    view.Dispose();
+                view?.Dispose();
             }
 
             base.OnDeactivate(close);

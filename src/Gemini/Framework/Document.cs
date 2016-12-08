@@ -63,6 +63,13 @@ namespace Gemini.Framework
             }
         }
 
+        public IUndoRedoManager UndoRedoManager => _undoRedoManager ?? (_undoRedoManager = new UndoRedoManager());
+
+        public override ICommand CloseCommand
+        {
+            get { return _closeCommand ?? (_closeCommand = new RelayCommand(p => TryClose(null), p => true)); }
+        }
+
         void ICommandHandler<RedoCommandDefinition>.Update(Command command)
         {
             command.Enabled = UndoRedoManager.RedoStack.Any();
@@ -123,18 +130,10 @@ namespace Gemini.Framework
             return TaskUtility.Completed;
         }
 
-        public IUndoRedoManager UndoRedoManager => _undoRedoManager ?? (_undoRedoManager = new UndoRedoManager());
-
-        public override ICommand CloseCommand
-        {
-            get { return _closeCommand ?? (_closeCommand = new RelayCommand(p => TryClose(null), p => true)); }
-        }
-
         private static async Task DoSaveAs(IPersistedDocument persistedDocument)
         {
             // Show user dialog to choose filename.
-            var dialog = new SaveFileDialog();
-            dialog.FileName = persistedDocument.FileName;
+            var dialog = new SaveFileDialog {FileName = persistedDocument.FileName};
             var filter = string.Empty;
 
             var fileExtension = Path.GetExtension(persistedDocument.FileName);

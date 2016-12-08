@@ -17,13 +17,6 @@ namespace Gemini.Modules.Inspector.ViewModels
     {
         private IInspectableObject _selectedObject;
 
-        public InspectorViewModel()
-        {
-            DisplayName = Resources.InspectorDisplayName;
-        }
-
-        public event EventHandler SelectedObjectChanged;
-
         public override PaneLocation PreferredLocation => PaneLocation.Right;
 
         public override double PreferredWidth => 300;
@@ -39,10 +32,17 @@ namespace Gemini.Modules.Inspector.ViewModels
             }
         }
 
+        public InspectorViewModel()
+        {
+            DisplayName = Resources.InspectorDisplayName;
+        }
+
+        public event EventHandler SelectedObjectChanged;
+
         private void RaiseSelectedObjectChanged()
         {
             var handler = SelectedObjectChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         public void ResetAll()

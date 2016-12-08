@@ -13,6 +13,11 @@ namespace Gemini.Modules.Xna.Controls
     public class GraphicsDeviceEventArgs : EventArgs
     {
         /// <summary>
+        ///     Gets the GraphicsDevice.
+        /// </summary>
+        public GraphicsDevice GraphicsDevice { get; private set; }
+
+        /// <summary>
         ///     Initializes a new GraphicsDeviceEventArgs.
         /// </summary>
         /// <param name="device">The GraphicsDevice associated with the event.</param>
@@ -20,10 +25,5 @@ namespace Gemini.Modules.Xna.Controls
         {
             GraphicsDevice = device;
         }
-
-        /// <summary>
-        ///     Gets the GraphicsDevice.
-        /// </summary>
-        public GraphicsDevice GraphicsDevice { get; private set; }
     }
 }

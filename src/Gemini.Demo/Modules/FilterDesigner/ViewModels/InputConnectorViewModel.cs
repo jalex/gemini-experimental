@@ -12,11 +12,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
     {
         private ConnectionViewModel _connection;
 
-        public InputConnectorViewModel(ElementViewModel element, string name, Color color)
-            : base(element, name, color)
-        {
-        }
-
         public override ConnectorDirection ConnectorDirection => ConnectorDirection.Input;
 
         public ConnectionViewModel Connection
@@ -34,15 +29,11 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             }
         }
 
-        public BitmapSource Value
-        {
-            get
-            {
-                if ((Connection == null) || (Connection.From == null))
-                    return null;
+        public BitmapSource Value => Connection?.From?.Value;
 
-                return Connection.From.Value;
-            }
+        public InputConnectorViewModel(ElementViewModel element, string name, Color color)
+            : base(element, name, color)
+        {
         }
 
         public event EventHandler SourceChanged;
@@ -55,8 +46,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         private void RaiseSourceChanged()
         {
             var handler = SourceChanged;
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
         }
     }
 }

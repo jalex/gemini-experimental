@@ -33,17 +33,6 @@ namespace Gemini.Modules.MonoGame.Services
         private PresentationParameters _parameters;
 
         /// <summary>
-        ///     Constructor is private, because this is a singleton class:
-        ///     client controls should use the public AddRef method instead.
-        /// </summary>
-        [Obsolete(
-             "This constructor shouldn't be called directly. Instead, you should get the (singleton) instance from the IoC container."
-         )]
-        public GraphicsDeviceService()
-        {
-        }
-
-        /// <summary>
         ///     Gets the current graphics device.
         /// </summary>
         public GraphicsDevice GraphicsDevice
@@ -53,6 +42,17 @@ namespace Gemini.Modules.MonoGame.Services
                 EnsureGraphicsDevice();
                 return _graphicsDevice;
             }
+        }
+
+        /// <summary>
+        ///     Constructor is private, because this is a singleton class:
+        ///     client controls should use the public AddRef method instead.
+        /// </summary>
+        [Obsolete(
+             "This constructor shouldn't be called directly. Instead, you should get the (singleton) instance from the IoC container."
+         )]
+        public GraphicsDeviceService()
+        {
         }
 
         // IGraphicsDeviceService events.
@@ -92,8 +92,7 @@ namespace Gemini.Modules.MonoGame.Services
                 GraphicsProfile.HiDef,
                 _parameters);
 
-            if (DeviceCreated != null)
-                DeviceCreated(this, EventArgs.Empty);
+            DeviceCreated?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -122,8 +121,7 @@ namespace Gemini.Modules.MonoGame.Services
                 // device, we should dispose the singleton instance.
                 if (disposing)
                 {
-                    if (DeviceDisposing != null)
-                        DeviceDisposing(this, EventArgs.Empty);
+                    DeviceDisposing?.Invoke(this, EventArgs.Empty);
 
                     _graphicsDevice.Dispose();
                 }
@@ -144,8 +142,7 @@ namespace Gemini.Modules.MonoGame.Services
 
             if ((newWidth != _parameters.BackBufferWidth) || (newHeight != _parameters.BackBufferHeight))
             {
-                if (DeviceResetting != null)
-                    DeviceResetting(this, EventArgs.Empty);
+                DeviceResetting?.Invoke(this, EventArgs.Empty);
 
                 _parameters.BackBufferWidth = newWidth;
                 _parameters.BackBufferHeight = newHeight;
@@ -153,8 +150,7 @@ namespace Gemini.Modules.MonoGame.Services
                 // TODO
                 //_graphicsDevice.Reset(_parameters);
 
-                if (DeviceReset != null)
-                    DeviceReset(this, EventArgs.Empty);
+                DeviceReset?.Invoke(this, EventArgs.Empty);
             }
         }
     }

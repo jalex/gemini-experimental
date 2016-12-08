@@ -37,20 +37,6 @@ namespace Gemini.Demo.Modules.Home.ViewModels
 
         private double _rotationAngle;
 
-        [ImportingConstructor]
-        public HelixViewModel(ICodeCompiler codeCompiler)
-        {
-            DisplayName = "Helix";
-
-            _codeCompiler = codeCompiler;
-            _scripts = new List<IDemoScript>();
-
-            CameraPosition = new Point3D(6, 5, 4);
-            CameraFieldOfView = 45;
-            LightPosition = new Point3D(0, 5, 0);
-            RotationAngle = 0;
-        }
-
         [DisplayName("Camera Position")]
         [Description("Position of the camera in 3D space")]
         [Category("Camera")]
@@ -98,6 +84,20 @@ namespace Gemini.Demo.Modules.Home.ViewModels
                 _rotationAngle = value;
                 NotifyOfPropertyChange(() => RotationAngle);
             }
+        }
+
+        [ImportingConstructor]
+        public HelixViewModel(ICodeCompiler codeCompiler)
+        {
+            DisplayName = "Helix";
+
+            _codeCompiler = codeCompiler;
+            _scripts = new List<IDemoScript>();
+
+            CameraPosition = new Point3D(6, 5, 4);
+            CameraFieldOfView = 45;
+            LightPosition = new Point3D(0, 5, 0);
+            RotationAngle = 0;
         }
 
         protected override void OnViewLoaded(object view)

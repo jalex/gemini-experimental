@@ -15,11 +15,6 @@ namespace Gemini.Demo.Modules.Shell.ViewModels
     {
         private bool _confirmExit;
 
-        public DemoApplicationSettingsViewModel()
-        {
-            ConfirmExit = Settings.Default.ConfirmExit;
-        }
-
         public bool ConfirmExit
         {
             get { return _confirmExit; }
@@ -34,6 +29,11 @@ namespace Gemini.Demo.Modules.Shell.ViewModels
         public string SettingsPageName => Resources.SettingsPageGeneral;
 
         public string SettingsPagePath => Resources.SettingsPathEnvironment;
+
+        public DemoApplicationSettingsViewModel()
+        {
+            ConfirmExit = Settings.Default.ConfirmExit;
+        }
 
         public void ApplyChanges()
         {

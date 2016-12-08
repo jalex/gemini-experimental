@@ -1,21 +1,15 @@
-﻿#region
-
-using System.Windows.Controls;
-
-#endregion
-
-namespace Gemini.Demo.Modules.Home.Views
+﻿namespace Gemini.Demo.Modules.Home.Views
 {
     /// <summary>
     ///     Interaction logic for HelixView.xaml
     /// </summary>
-    public partial class HelixView : UserControl, IHelixView
+    public partial class HelixView : IHelixView
     {
+        public ICSharpCode.AvalonEdit.TextEditor TextEditor => CodeEditor;
+
         public HelixView()
         {
             InitializeComponent();
         }
-
-        public ICSharpCode.AvalonEdit.TextEditor TextEditor => CodeEditor;
     }
 }

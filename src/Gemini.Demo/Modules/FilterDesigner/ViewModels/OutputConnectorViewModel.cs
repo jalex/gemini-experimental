@@ -14,6 +14,11 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         private readonly BindableCollection<ConnectionViewModel> _connections;
         private readonly Func<BitmapSource> _valueCallback;
 
+        public override ConnectorDirection ConnectorDirection => ConnectorDirection.Output;
+        public IObservableCollection<ConnectionViewModel> Connections => _connections;
+
+        public BitmapSource Value => _valueCallback();
+
         public OutputConnectorViewModel(ElementViewModel element, string name, Color color,
             Func<BitmapSource> valueCallback)
             : base(element, name, color)
@@ -21,10 +26,5 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
             _connections = new BindableCollection<ConnectionViewModel>();
             _valueCallback = valueCallback;
         }
-
-        public override ConnectorDirection ConnectorDirection => ConnectorDirection.Output;
-        public IObservableCollection<ConnectionViewModel> Connections => _connections;
-
-        public BitmapSource Value => _valueCallback();
     }
 }

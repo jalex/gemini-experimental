@@ -107,6 +107,7 @@
     <Compile Include="Modules\PrimitiveList\Controls\RotatableCubeControl.cs" />
     <Compile Include="Modules\PrimitiveList\MenuDefinitions.cs" />
     <Compile Include="Modules\PrimitiveList\ViewModels\PrimitiveListViewModel.cs" />
+    <Compile Include="Modules\PrimitiveList\ViewModels\PrimitiveWithColor.cs" />
     <Compile Include="Modules\PrimitiveList\Views\PrimitiveListView.xaml.cs">
       <DependentUpon>PrimitiveListView.xaml</DependentUpon>
     </Compile>

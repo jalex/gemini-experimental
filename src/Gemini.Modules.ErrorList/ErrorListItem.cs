@@ -20,21 +20,6 @@ namespace Gemini.Modules.ErrorList
 
         private string _path;
 
-        public ErrorListItem(ErrorListItemType itemType, int number, string description,
-            string path = null, int? line = null, int? column = null)
-        {
-            _itemType = itemType;
-            _number = number;
-            _description = description;
-            _path = path;
-            _line = line;
-            _column = column;
-        }
-
-        public ErrorListItem()
-        {
-        }
-
         public ErrorListItemType ItemType
         {
             get { return _itemType; }
@@ -72,7 +57,7 @@ namespace Gemini.Modules.ErrorList
             {
                 _path = value;
                 NotifyOfPropertyChange(() => _path);
-                NotifyOfPropertyChange("File");
+                NotifyOfPropertyChange(nameof(File));
             }
         }
 
@@ -99,5 +84,20 @@ namespace Gemini.Modules.ErrorList
         }
 
         public Action OnClick { get; set; }
+
+        public ErrorListItem(ErrorListItemType itemType, int number, string description,
+            string path = null, int? line = null, int? column = null)
+        {
+            _itemType = itemType;
+            _number = number;
+            _description = description;
+            _path = path;
+            _line = line;
+            _column = column;
+        }
+
+        public ErrorListItem()
+        {
+        }
     }
 }

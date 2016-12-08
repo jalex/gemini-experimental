@@ -14,12 +14,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
     {
         private Color _color;
 
-        public ColorInput()
-        {
-            Color = Colors.Red;
-            UpdatePreviewImage();
-        }
-
         public Color Color
         {
             get { return _color; }
@@ -29,6 +23,12 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
                 UpdatePreviewImage();
                 NotifyOfPropertyChange(() => Color);
             }
+        }
+
+        public ColorInput()
+        {
+            Color = Colors.Red;
+            UpdatePreviewImage();
         }
 
         protected override void Draw(DrawingContext drawingContext, Rect bounds)

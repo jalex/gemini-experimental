@@ -116,22 +116,19 @@ namespace Gemini.Modules.Xna.Controls
         protected virtual void RaiseLoadContent(GraphicsDeviceEventArgs args)
         {
             var handler = LoadContent;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseRenderXna(GraphicsDeviceEventArgs args)
         {
             var handler = RenderXna;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         private void OnXnaWindowHostSizeChanged(object sender, SizeChangedEventArgs e)
         {
             // If we have a reference to the GraphicsDeviceService, we must reset it based on our updated size
-            if (_graphicsService != null)
-                _graphicsService.ResetDevice((int) ActualWidth, (int) ActualHeight);
+            _graphicsService?.ResetDevice((int) ActualWidth, (int) ActualHeight);
         }
 
         private enum GraphicsDeviceResetStatus

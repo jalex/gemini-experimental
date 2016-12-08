@@ -15,13 +15,13 @@ namespace Gemini.Modules.GraphEditor.Controls
         private bool _isLeftMouseButtonDown;
         private Point _lastMousePosition;
 
+        private GraphControl ParentGraphControl => VisualTreeUtility.FindParent<GraphControl>(this);
+
         static ElementItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ElementItem),
                 new FrameworkPropertyMetadata(typeof(ElementItem)));
         }
-
-        private GraphControl ParentGraphControl => VisualTreeUtility.FindParent<GraphControl>(this);
 
         internal void BringToFront()
         {

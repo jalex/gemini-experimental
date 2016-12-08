@@ -18,16 +18,16 @@ namespace Gemini.Demo.Modules.Startup
         private readonly IInspectorTool _inspectorTool;
         private readonly IOutput _output;
 
+        public override IEnumerable<Type> DefaultTools
+        {
+            get { yield return typeof(IInspectorTool); }
+        }
+
         [ImportingConstructor]
         public Module(IOutput output, IInspectorTool inspectorTool)
         {
             _output = output;
             _inspectorTool = inspectorTool;
-        }
-
-        public override IEnumerable<Type> DefaultTools
-        {
-            get { yield return typeof(IInspectorTool); }
         }
 
         public override void Initialize()
@@ -52,7 +52,8 @@ namespace Gemini.Demo.Modules.Startup
         {
             if (Shell.SelectedDocument != null)
                 _inspectorTool.SelectedObject = new InspectableObjectBuilder()
-                    .WithObjectProperties(Shell.SelectedDocument, pd => pd.ComponentType == Shell.SelectedDocument.GetType())
+                    .WithObjectProperties(Shell.SelectedDocument,
+                        pd => pd.ComponentType == Shell.SelectedDocument.GetType())
                     .ToInspectableObject();
             else
                 _inspectorTool.SelectedObject = null;

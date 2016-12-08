@@ -1,15 +1,9 @@
-﻿#region
-
-using System.Windows.Controls;
-
-#endregion
-
-namespace Gemini.Modules.Inspector.MonoGame.Inspectors
+﻿namespace Gemini.Modules.Inspector.MonoGame.Inspectors
 {
     /// <summary>
     ///     Interaction logic for Vector3EditorView.xaml
     /// </summary>
-    public partial class Vector3EditorView : UserControl
+    public partial class Vector3EditorView
     {
         public Vector3EditorView()
         {

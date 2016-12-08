@@ -31,19 +31,16 @@ namespace Gemini.Framework.Results
         {
             var tool = _toolLocator();
 
-            if (SetData != null)
-                SetData(tool);
+            SetData?.Invoke(tool);
 
-            if (_onConfigure != null)
-                _onConfigure(tool);
+            _onConfigure?.Invoke(tool);
 
             tool.Deactivated += (s, e) =>
             {
                 if (!e.WasClosed)
                     return;
 
-                if (_onShutDown != null)
-                    _onShutDown(tool);
+                _onShutDown?.Invoke(tool);
 
                 OnCompleted(null, false);
             };

@@ -10,13 +10,6 @@ namespace Gemini.Framework.Menus
 {
     public class TextMenuItemDefinition : MenuItemDefinition
     {
-        public TextMenuItemDefinition(MenuItemGroupDefinition group, int sortOrder, string text, Uri iconSource = null)
-            : base(group, sortOrder)
-        {
-            Text = text;
-            IconSource = iconSource;
-        }
-
         public override string Text { get; }
 
         public override Uri IconSource { get; }
@@ -24,5 +17,12 @@ namespace Gemini.Framework.Menus
         public override KeyGesture KeyGesture => null;
 
         public override CommandDefinitionBase CommandDefinition => null;
+
+        public TextMenuItemDefinition(MenuItemGroupDefinition group, int sortOrder, string text, Uri iconSource = null)
+            : base(group, sortOrder)
+        {
+            Text = text;
+            IconSource = iconSource;
+        }
     }
 }

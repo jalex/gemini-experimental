@@ -23,15 +23,15 @@ namespace Gemini
     {
         private List<Assembly> _priorityAssemblies;
 
+        protected CompositionContainer Container { get; set; }
+
+        internal IList<Assembly> PriorityAssemblies => _priorityAssemblies;
+
         public AppBootstrapper()
         {
             PreInitialize();
             Initialize();
         }
-
-        protected CompositionContainer Container { get; set; }
-
-        internal IList<Assembly> PriorityAssemblies => _priorityAssemblies;
 
         protected virtual void PreInitialize()
         {

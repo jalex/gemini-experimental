@@ -33,6 +33,15 @@ namespace Gemini.Modules.Xna.Controls
         private GraphicsDeviceService _graphicsDeviceService;
         private RenderTarget2D _renderTarget;
 
+        /// <summary>
+        ///     Gets or sets a value indicating whether this control will redraw every time the CompositionTarget.Rendering event
+        ///     is fired.
+        ///     Defaults to false.
+        /// </summary>
+        public bool AlwaysRefresh { get; set; }
+
+        public GraphicsDevice GraphicsDevice => _graphicsDeviceService.GraphicsDevice;
+
         public DrawingSurface()
         {
             _d3DImage = new D3DImage();
@@ -45,15 +54,6 @@ namespace Gemini.Modules.Xna.Controls
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
         }
-
-        /// <summary>
-        ///     Gets or sets a value indicating whether this control will redraw every time the CompositionTarget.Rendering event
-        ///     is fired.
-        ///     Defaults to false.
-        /// </summary>
-        public bool AlwaysRefresh { get; set; }
-
-        public GraphicsDevice GraphicsDevice => _graphicsDeviceService.GraphicsDevice;
 
         /// <summary>
         ///     Occurs when the control has initialized the GraphicsDevice.
@@ -175,15 +175,13 @@ namespace Gemini.Modules.Xna.Controls
         protected virtual void RaiseLoadContent(GraphicsDeviceEventArgs args)
         {
             var handler = LoadContent;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         protected virtual void RaiseDraw(DrawEventArgs args)
         {
             var handler = Draw;
-            if (handler != null)
-                handler(this, args);
+            handler?.Invoke(this, args);
         }
 
         private bool BeginDraw()
@@ -258,10 +256,8 @@ namespace Gemini.Modules.Xna.Controls
         {
             if (!IsDisposed)
             {
-                if (_renderTarget != null)
-                    _renderTarget.Dispose();
-                if (_graphicsDeviceService != null)
-                    _graphicsDeviceService.Release(disposing);
+                _renderTarget?.Dispose();
+                _graphicsDeviceService?.Release(disposing);
                 IsDisposed = true;
             }
         }

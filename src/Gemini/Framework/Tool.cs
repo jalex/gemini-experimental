@@ -21,11 +21,6 @@ namespace Gemini.Framework
 
         private ToolBarDefinition _toolBarDefinition;
 
-        protected Tool()
-        {
-            IsVisible = true;
-        }
-
         public ToolBarDefinition ToolBarDefinition
         {
             get { return _toolBarDefinition; }
@@ -76,5 +71,10 @@ namespace Gemini.Framework
         }
 
         public override bool ShouldReopenOnStart => true;
+
+        protected Tool()
+        {
+            IsVisible = true;
+        }
     }
 }

@@ -15,6 +15,10 @@ namespace Gemini.Modules.GraphEditor.Controls
         private bool _isDragging;
         private Point _lastMousePosition;
 
+        private GraphControl ParentGraphControl => VisualTreeUtility.FindParent<GraphControl>(this);
+
+        internal ElementItem ParentElementItem => VisualTreeUtility.FindParent<ElementItem>(this);
+
         static ConnectorItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ConnectorItem),
@@ -25,10 +29,6 @@ namespace Gemini.Modules.GraphEditor.Controls
         {
             LayoutUpdated += OnLayoutUpdated;
         }
-
-        private GraphControl ParentGraphControl => VisualTreeUtility.FindParent<GraphControl>(this);
-
-        internal ElementItem ParentElementItem => VisualTreeUtility.FindParent<ElementItem>(this);
 
         private void OnLayoutUpdated(object sender, EventArgs e)
         {

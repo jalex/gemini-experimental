@@ -2,11 +2,11 @@
 {
     public class ExcludeMenuItemGroupDefinition
     {
+        public MenuItemGroupDefinition MenuItemGroupDefinitionToExclude { get; }
+
         public ExcludeMenuItemGroupDefinition(MenuItemGroupDefinition menuItemGroupDefinition)
         {
             MenuItemGroupDefinitionToExclude = menuItemGroupDefinition;
         }
-
-        public MenuItemGroupDefinition MenuItemGroupDefinitionToExclude { get; }
     }
 }

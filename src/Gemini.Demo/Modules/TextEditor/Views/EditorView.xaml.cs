@@ -1,13 +1,12 @@
 ﻿#region
 
-using System.Windows.Controls;
 using System.Windows.Input;
 
 #endregion
 
 namespace Gemini.Demo.Modules.TextEditor.Views
 {
-    public partial class EditorView : UserControl
+    public partial class EditorView
     {
         public EditorView()
         {

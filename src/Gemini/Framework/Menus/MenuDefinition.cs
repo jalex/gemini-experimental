@@ -10,13 +10,6 @@ namespace Gemini.Framework.Menus
 {
     public class MenuDefinition : MenuDefinitionBase
     {
-        public MenuDefinition(MenuBarDefinition menuBar, int sortOrder, string text)
-        {
-            MenuBar = menuBar;
-            SortOrder = sortOrder;
-            Text = text;
-        }
-
         public MenuBarDefinition MenuBar { get; }
 
         public override int SortOrder { get; }
@@ -28,5 +21,12 @@ namespace Gemini.Framework.Menus
         public override KeyGesture KeyGesture => null;
 
         public override CommandDefinitionBase CommandDefinition => null;
+
+        public MenuDefinition(MenuBarDefinition menuBar, int sortOrder, string text)
+        {
+            MenuBar = menuBar;
+            SortOrder = sortOrder;
+            Text = text;
+        }
     }
 }

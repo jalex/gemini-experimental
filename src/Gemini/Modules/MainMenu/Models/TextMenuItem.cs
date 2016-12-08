@@ -13,11 +13,6 @@ namespace Gemini.Modules.MainMenu.Models
     {
         private readonly MenuDefinitionBase _menuDefinition;
 
-        public TextMenuItem(MenuDefinitionBase menuDefinition)
-        {
-            _menuDefinition = menuDefinition;
-        }
-
         public override string Text => _menuDefinition.Text;
 
         public override Uri IconSource => _menuDefinition.IconSource;
@@ -31,5 +26,10 @@ namespace Gemini.Modules.MainMenu.Models
         public override bool IsChecked => false;
 
         public override bool IsVisible => true;
+
+        public TextMenuItem(MenuDefinitionBase menuDefinition)
+        {
+            _menuDefinition = menuDefinition;
+        }
     }
 }

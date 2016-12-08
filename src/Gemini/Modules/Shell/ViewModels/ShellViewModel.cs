@@ -35,18 +35,9 @@ namespace Gemini.Modules.Shell.ViewModels
 
         private bool _showFloatingWindowsInTaskbar;
 
-        public ShellViewModel()
-        {
-            ((IActivate) this).Activate();
-
-            _tools = new BindableCollection<ITool>();
-        }
-
         public virtual string StateFile => @".\ApplicationState.bin";
 
         public bool HasPersistedState => File.Exists(StateFile);
-        public event EventHandler ActiveDocumentChanging;
-        public event EventHandler ActiveDocumentChanged;
 
         public IMenu MainMenu => _mainMenu;
 
@@ -55,6 +46,7 @@ namespace Gemini.Modules.Shell.ViewModels
         public IStatusBar StatusBar => _statusBar;
 
         public IRecentFiles RecentFiles => _recentFiles;
+
         public ILayoutPanel ActivePanel
         {
             get { return _activePanel; }
@@ -66,7 +58,7 @@ namespace Gemini.Modules.Shell.ViewModels
                 _activePanel = value;
 
                 if (value is IDocument)
-                    ActivateItem((IDocument)value);
+                    ActivateItem((IDocument) value);
 
                 NotifyOfPropertyChange();
             }
@@ -74,10 +66,7 @@ namespace Gemini.Modules.Shell.ViewModels
 
         public IObservableCollection<ITool> Tools => _tools;
 
-        public IDocument SelectedDocument
-        {
-            get { return ActiveItem; }
-        }
+        public IDocument SelectedDocument => ActiveItem;
 
         public IObservableCollection<IDocument> Documents => Items;
 
@@ -88,10 +77,19 @@ namespace Gemini.Modules.Shell.ViewModels
             {
                 _showFloatingWindowsInTaskbar = value;
                 NotifyOfPropertyChange(() => ShowFloatingWindowsInTaskbar);
-                if (_shellView != null)
-                    _shellView.UpdateFloatingWindows();
+                _shellView?.UpdateFloatingWindows();
             }
         }
+
+        public ShellViewModel()
+        {
+            ((IActivate) this).Activate();
+
+            _tools = new BindableCollection<ITool>();
+        }
+
+        public event EventHandler ActiveDocumentChanging;
+        public event EventHandler ActiveDocumentChanged;
 
         public void ShowTool<TTool>()
             where TTool : ITool
@@ -193,8 +191,6 @@ namespace Gemini.Modules.Shell.ViewModels
 
                 RaiseActiveDocumentChanging();
 
-                var currentActiveItem = ActiveItem;
-
                 base.ActivateItem(item);
 
                 RaiseActiveDocumentChanged();
@@ -208,15 +204,13 @@ namespace Gemini.Modules.Shell.ViewModels
         private void RaiseActiveDocumentChanging()
         {
             var handler = ActiveDocumentChanging;
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         private void RaiseActiveDocumentChanged()
         {
             var handler = ActiveDocumentChanged;
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         protected override void OnActivationProcessed(IDocument item, bool success)

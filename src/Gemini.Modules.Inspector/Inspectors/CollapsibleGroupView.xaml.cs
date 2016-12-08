@@ -1,15 +1,9 @@
-﻿#region
-
-using System.Windows.Controls;
-
-#endregion
-
-namespace Gemini.Modules.Inspector.Inspectors
+﻿namespace Gemini.Modules.Inspector.Inspectors
 {
     /// <summary>
     ///     Interaction logic for CollapsibleGroupView.xaml
     /// </summary>
-    public partial class CollapsibleGroupView : UserControl
+    public partial class CollapsibleGroupView
     {
         public CollapsibleGroupView()
         {

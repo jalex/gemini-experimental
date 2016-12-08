@@ -12,15 +12,15 @@ namespace Gemini.Framework.ShaderEffects
         public static readonly DependencyProperty InputProperty = RegisterPixelShaderSamplerProperty("Input",
             typeof(GrayscaleEffect), 0);
 
-        public GrayscaleEffect()
-        {
-            UpdateShaderValue(InputProperty);
-        }
-
         public Brush Input
         {
             get { return (Brush) GetValue(InputProperty); }
             set { SetValue(InputProperty, value); }
+        }
+
+        public GrayscaleEffect()
+        {
+            UpdateShaderValue(InputProperty);
         }
     }
 }

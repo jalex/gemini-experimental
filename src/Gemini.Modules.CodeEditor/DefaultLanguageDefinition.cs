@@ -15,6 +15,15 @@ namespace Gemini.Modules.CodeEditor
         private IHighlightingDefinition _highlightingDefinition;
         private XshdSyntaxDefinition _syntaxDefinition;
 
+        public string Name { get; }
+
+        public IEnumerable<string> FileExtensions { get; set; }
+
+        public IHighlightingDefinition SyntaxHighlighting
+            => _highlightingDefinition ?? (_highlightingDefinition = LoadHighlightingDefinition());
+
+        public string CustomSyntaxHighlightingFileName { get; set; }
+
         public DefaultLanguageDefinition(string name, IEnumerable<string> fileExtensions)
         {
             Name = name;
@@ -26,23 +35,6 @@ namespace Gemini.Modules.CodeEditor
         {
             _syntaxDefinition = syntaxDefinition;
         }
-
-        public string Name { get; }
-
-        public IEnumerable<string> FileExtensions { get; set; }
-
-        public IHighlightingDefinition SyntaxHighlighting
-        {
-            get
-            {
-                if (_highlightingDefinition == null)
-                    _highlightingDefinition = LoadHighlightingDefinition();
-
-                return _highlightingDefinition;
-            }
-        }
-
-        public string CustomSyntaxHighlightingFileName { get; set; }
 
         private IHighlightingDefinition LoadHighlightingDefinition()
         {

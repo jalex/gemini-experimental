@@ -18,17 +18,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
 
         private Point _toPosition;
 
-        public ConnectionViewModel(OutputConnectorViewModel from, InputConnectorViewModel to)
-        {
-            From = from;
-            To = to;
-        }
-
-        public ConnectionViewModel(OutputConnectorViewModel from)
-        {
-            From = from;
-        }
-
         public OutputConnectorViewModel From
         {
             get { return _from; }
@@ -95,6 +84,17 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
                 _toPosition = value;
                 NotifyOfPropertyChange(() => ToPosition);
             }
+        }
+
+        public ConnectionViewModel(OutputConnectorViewModel from, InputConnectorViewModel to)
+        {
+            From = from;
+            To = to;
+        }
+
+        public ConnectionViewModel(OutputConnectorViewModel from)
+        {
+            From = from;
         }
 
         private void OnFromPositionChanged(object sender, EventArgs e)

@@ -31,15 +31,6 @@ namespace Gemini.Modules.MainMenu.ViewModels
 
         private ITheme _selectedTheme;
 
-        [ImportingConstructor]
-        public MainMenuSettingsViewModel(IThemeManager themeManager)
-        {
-            _themeManager = themeManager;
-            SelectedTheme = themeManager.CurrentTheme;
-            AutoHideMainMenu = Properties.Settings.Default.AutoHideMainMenu;
-            SelectedLanguage = Properties.Settings.Default.LanguageCode;
-        }
-
         public IEnumerable<ITheme> Themes => _themeManager.Themes;
 
         public ITheme SelectedTheme
@@ -81,6 +72,15 @@ namespace Gemini.Modules.MainMenu.ViewModels
         public string SettingsPageName => Resources.SettingsPageGeneral;
 
         public string SettingsPagePath => Resources.SettingsPathEnvironment;
+
+        [ImportingConstructor]
+        public MainMenuSettingsViewModel(IThemeManager themeManager)
+        {
+            _themeManager = themeManager;
+            SelectedTheme = themeManager.CurrentTheme;
+            AutoHideMainMenu = Properties.Settings.Default.AutoHideMainMenu;
+            SelectedLanguage = Properties.Settings.Default.LanguageCode;
+        }
 
         public void ApplyChanges()
         {

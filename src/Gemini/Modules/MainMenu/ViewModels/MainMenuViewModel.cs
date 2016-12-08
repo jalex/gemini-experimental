@@ -18,14 +18,6 @@ namespace Gemini.Modules.MainMenu.ViewModels
 
         private bool _autoHide;
 
-        [ImportingConstructor]
-        public MainMenuViewModel(IMenuBuilder menuBuilder)
-        {
-            _menuBuilder = menuBuilder;
-            _autoHide = Properties.Settings.Default.AutoHideMainMenu;
-            _settingsEventManager.AddListener(s => s.AutoHideMainMenu, value => { AutoHide = value; });
-        }
-
         public bool AutoHide
         {
             get { return _autoHide; }
@@ -38,6 +30,14 @@ namespace Gemini.Modules.MainMenu.ViewModels
 
                 NotifyOfPropertyChange(ExtensionMethods.GetPropertyName(() => AutoHide));
             }
+        }
+
+        [ImportingConstructor]
+        public MainMenuViewModel(IMenuBuilder menuBuilder)
+        {
+            _menuBuilder = menuBuilder;
+            _autoHide = Properties.Settings.Default.AutoHideMainMenu;
+            _settingsEventManager.AddListener(s => s.AutoHideMainMenu, value => { AutoHide = value; });
         }
 
         void IPartImportsSatisfiedNotification.OnImportsSatisfied()

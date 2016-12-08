@@ -16,21 +16,6 @@ namespace Gemini.Modules.Inspector.Inspectors
         private readonly object _originalValue;
         private readonly IValueConverter _stringConverter;
 
-        public ChangeObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, object newValue,
-            IValueConverter stringConverter) :
-            this(boundPropertyDescriptor, boundPropertyDescriptor.Value, newValue, stringConverter)
-        {
-        }
-
-        public ChangeObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, object originalValue,
-            object newValue, IValueConverter stringConverter)
-        {
-            _boundPropertyDescriptor = boundPropertyDescriptor;
-            _originalValue = originalValue;
-            _newValue = newValue;
-            _stringConverter = stringConverter;
-        }
-
         public string Name
         {
             get
@@ -57,6 +42,21 @@ namespace Gemini.Modules.Inspector.Inspectors
                     origText,
                     newText);
             }
+        }
+
+        public ChangeObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, object newValue,
+            IValueConverter stringConverter) :
+            this(boundPropertyDescriptor, boundPropertyDescriptor.Value, newValue, stringConverter)
+        {
+        }
+
+        public ChangeObjectValueAction(BoundPropertyDescriptor boundPropertyDescriptor, object originalValue,
+            object newValue, IValueConverter stringConverter)
+        {
+            _boundPropertyDescriptor = boundPropertyDescriptor;
+            _originalValue = originalValue;
+            _newValue = newValue;
+            _stringConverter = stringConverter;
         }
 
         public void Execute()

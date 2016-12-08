@@ -21,8 +21,7 @@ namespace Gemini.Modules.Inspector.Controls
             {
                 _propertyNameColumnWidth = value;
                 var handler = PropertyNameColumnWidthChanged;
-                if (handler != null)
-                    handler(null, EventArgs.Empty);
+                handler?.Invoke(null, EventArgs.Empty);
             }
         }
 
@@ -33,8 +32,7 @@ namespace Gemini.Modules.Inspector.Controls
             {
                 _propertyValueColumnWidth = value;
                 var handler = PropertyValueColumnWidthChanged;
-                if (handler != null)
-                    handler(null, EventArgs.Empty);
+                handler?.Invoke(null, EventArgs.Empty);
             }
         }
 

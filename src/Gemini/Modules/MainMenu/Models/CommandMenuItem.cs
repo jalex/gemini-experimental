@@ -18,23 +18,6 @@ namespace Gemini.Modules.MainMenu.Models
         private readonly List<StandardMenuItem> _listItems;
         private readonly StandardMenuItem _parent;
 
-        public CommandMenuItem(Command command, StandardMenuItem parent)
-        {
-            _command = command;
-            _keyGesture = IoC.Get<ICommandKeyGestureService>().GetPrimaryKeyGesture(_command.CommandDefinition);
-            _parent = parent;
-
-            _listItems = new List<StandardMenuItem>();
-
-            _command.PropertyChanged += (s, e) =>
-            {
-                if ((e.PropertyName == "Visible") || (e.PropertyName == "Checked"))
-                    NotifyOfPropertyChange("Is" + e.PropertyName);
-                else if ((e.PropertyName == "Text") || (e.PropertyName == "IconSource"))
-                    NotifyOfPropertyChange(e.PropertyName);
-            };
-        }
-
         public override string Text => _command.Text;
 
         public override Uri IconSource => _command.IconSource;
@@ -52,6 +35,23 @@ namespace Gemini.Modules.MainMenu.Models
         private bool IsListItem { get; set; }
 
         CommandDefinitionBase ICommandUiItem.CommandDefinition => _command.CommandDefinition;
+
+        public CommandMenuItem(Command command, StandardMenuItem parent)
+        {
+            _command = command;
+            _keyGesture = IoC.Get<ICommandKeyGestureService>().GetPrimaryKeyGesture(_command.CommandDefinition);
+            _parent = parent;
+
+            _listItems = new List<StandardMenuItem>();
+
+            _command.PropertyChanged += (s, e) =>
+            {
+                if ((e.PropertyName == "Visible") || (e.PropertyName == "Checked"))
+                    NotifyOfPropertyChange("Is" + e.PropertyName);
+                else if ((e.PropertyName == "Text") || (e.PropertyName == "IconSource"))
+                    NotifyOfPropertyChange(e.PropertyName);
+            };
+        }
 
         void ICommandUiItem.Update(CommandHandlerWrapper commandHandler)
         {

@@ -13,6 +13,10 @@ namespace Gemini.Demo.Modules.SampleBrowser.ViewModels
     {
         private readonly IShell _shell;
 
+        public override string DisplayName => "Sample Browser";
+
+        public ISample[] Samples { get; }
+
         [ImportingConstructor]
         public SampleBrowserViewModel([Import] IShell shell,
             [ImportMany] ISample[] samples)
@@ -20,10 +24,6 @@ namespace Gemini.Demo.Modules.SampleBrowser.ViewModels
             _shell = shell;
             Samples = samples;
         }
-
-        public override string DisplayName => "Sample Browser";
-
-        public ISample[] Samples { get; }
 
         public void Activate(ISample sample)
         {

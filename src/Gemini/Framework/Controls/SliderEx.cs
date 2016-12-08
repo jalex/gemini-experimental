@@ -22,16 +22,14 @@ namespace Gemini.Framework.Controls
 
         protected override void OnThumbDragStarted(DragStartedEventArgs e)
         {
-            if (ThumbDragStarted != null)
-                ThumbDragStarted(this, e);
+            ThumbDragStarted?.Invoke(this, e);
 
             base.OnThumbDragStarted(e);
         }
 
         protected override void OnThumbDragCompleted(DragCompletedEventArgs e)
         {
-            if (ThumbDragCompleted != null)
-                ThumbDragCompleted(this, e);
+            ThumbDragCompleted?.Invoke(this, e);
 
             base.OnThumbDragCompleted(e);
         }

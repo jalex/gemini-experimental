@@ -16,16 +16,16 @@ namespace Gemini.Demo.Modules.FilterDesigner.Views
     /// <summary>
     ///     Interaction logic for GraphView.xaml
     /// </summary>
-    public partial class GraphView : UserControl
+    public partial class GraphView
     {
         private Point _originalContentMouseDownPoint;
+
+        private GraphViewModel ViewModel => (GraphViewModel) DataContext;
 
         public GraphView()
         {
             InitializeComponent();
         }
-
-        private GraphViewModel ViewModel => (GraphViewModel) DataContext;
 
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
         {

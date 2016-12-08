@@ -116,7 +116,7 @@ namespace Gemini.Modules.CodeCompiler
                 case DiagnosticSeverity.Error:
                     return ErrorListItemType.Error;
                 default:
-                    throw new ArgumentOutOfRangeException("severity");
+                    throw new ArgumentOutOfRangeException(nameof(severity));
             }
         }
     }

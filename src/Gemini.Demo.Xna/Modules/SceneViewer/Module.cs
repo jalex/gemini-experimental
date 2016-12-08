@@ -17,15 +17,15 @@ namespace Gemini.Demo.Xna.Modules.SceneViewer
     {
         private readonly IInspectorTool _inspectorTool;
 
+        public override IEnumerable<IDocument> DefaultDocuments
+        {
+            get { yield return new SceneViewModel(); }
+        }
+
         [ImportingConstructor]
         public Module(IInspectorTool inspectorTool)
         {
             _inspectorTool = inspectorTool;
-        }
-
-        public override IEnumerable<IDocument> DefaultDocuments
-        {
-            get { yield return new SceneViewModel(); }
         }
 
         public override void Initialize()

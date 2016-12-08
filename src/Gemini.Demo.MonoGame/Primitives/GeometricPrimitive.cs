@@ -52,7 +52,7 @@ namespace Gemini.Demo.MonoGame.Primitives
         protected void AddIndex(int index)
         {
             if (index > ushort.MaxValue)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
 
             _indices.Add((ushort) index);
         }
@@ -116,14 +116,11 @@ namespace Gemini.Demo.MonoGame.Primitives
         {
             if (disposing)
             {
-                if (_vertexBuffer != null)
-                    _vertexBuffer.Dispose();
+                _vertexBuffer?.Dispose();
 
-                if (_indexBuffer != null)
-                    _indexBuffer.Dispose();
+                _indexBuffer?.Dispose();
 
-                if (_basicEffect != null)
-                    _basicEffect.Dispose();
+                _basicEffect?.Dispose();
             }
         }
 
@@ -152,8 +149,10 @@ namespace Gemini.Demo.MonoGame.Primitives
 
                 var primitiveCount = _indices.Count/3;
 
-                graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
-                    _vertices.Count, 0, primitiveCount);
+                graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, primitiveCount);
+                // NOTE OBSOLETE
+                //graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
+                //    _vertices.Count, 0, primitiveCount);
             }
         }
 
@@ -176,10 +175,7 @@ namespace Gemini.Demo.MonoGame.Primitives
             var device = _basicEffect.GraphicsDevice;
             device.DepthStencilState = DepthStencilState.Default;
 
-            if (color.A < 255)
-                device.BlendState = BlendState.AlphaBlend;
-            else
-                device.BlendState = BlendState.Opaque;
+            device.BlendState = color.A < 255 ? BlendState.AlphaBlend : BlendState.Opaque;
 
             // Draw the model, using BasicEffect.
             Draw(_basicEffect);

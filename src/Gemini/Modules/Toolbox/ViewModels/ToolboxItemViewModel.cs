@@ -9,11 +9,6 @@ namespace Gemini.Modules.Toolbox.ViewModels
 {
     public class ToolboxItemViewModel
     {
-        public ToolboxItemViewModel(ToolboxItem model)
-        {
-            Model = model;
-        }
-
         public ToolboxItem Model { get; }
 
         public string Name => Model.Name;
@@ -21,5 +16,10 @@ namespace Gemini.Modules.Toolbox.ViewModels
         public virtual string Category => Model.Category;
 
         public virtual Uri IconSource => Model.IconSource;
+
+        public ToolboxItemViewModel(ToolboxItem model)
+        {
+            Model = model;
+        }
     }
 }

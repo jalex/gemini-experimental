@@ -15,12 +15,6 @@ namespace Gemini.Demo.Modules.FilterDesigner.ShaderEffects
         public static readonly DependencyProperty Input2Property = RegisterPixelShaderSamplerProperty(
             "Input2", typeof(MultiplyEffect), 1);
 
-        public MultiplyEffect()
-        {
-            UpdateShaderValue(Input1Property);
-            UpdateShaderValue(Input2Property);
-        }
-
         public Brush Input1
         {
             get { return (Brush) GetValue(Input1Property); }
@@ -31,6 +25,12 @@ namespace Gemini.Demo.Modules.FilterDesigner.ShaderEffects
         {
             get { return (Brush) GetValue(Input2Property); }
             set { SetValue(Input2Property, value); }
+        }
+
+        public MultiplyEffect()
+        {
+            UpdateShaderValue(Input1Property);
+            UpdateShaderValue(Input2Property);
         }
     }
 }

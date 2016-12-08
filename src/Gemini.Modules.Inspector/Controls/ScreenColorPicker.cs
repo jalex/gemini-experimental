@@ -70,8 +70,7 @@ namespace Gemini.Modules.Inspector.Controls
         {
             if (!IsMouseCaptured)
             {
-                if (_bitmap != null)
-                    _bitmap.Dispose();
+                _bitmap?.Dispose();
                 _bitmap = ScreenShotUtility.Take();
 
                 if (Focus()) // So that we get the Escape key.
@@ -114,35 +113,25 @@ namespace Gemini.Modules.Inspector.Controls
         private void RaisePickingStarted(EventArgs e)
         {
             var handler = PickingStarted;
-            if (handler != null) handler(this, e);
+            handler?.Invoke(this, e);
         }
 
         private void RaisePickingCancelled(EventArgs e)
         {
             var handler = PickingCancelled;
-            if (handler != null) handler(this, e);
+            handler?.Invoke(this, e);
         }
 
         private void RaiseColorHovered(ColorEventArgs e)
         {
             var handler = ColorHovered;
-            if (handler != null) handler(this, e);
+            handler?.Invoke(this, e);
         }
 
         private void RaiseColorPicked(ColorEventArgs e)
         {
             var handler = ColorPicked;
-            if (handler != null) handler(this, e);
+            handler?.Invoke(this, e);
         }
-    }
-
-    public class ColorEventArgs : EventArgs
-    {
-        public ColorEventArgs(Color color)
-        {
-            Color = color;
-        }
-
-        public Color Color { get; private set; }
     }
 }

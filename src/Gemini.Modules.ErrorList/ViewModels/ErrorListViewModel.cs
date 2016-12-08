@@ -24,22 +24,6 @@ namespace Gemini.Modules.ErrorList.ViewModels
 
         private bool _showWarnings = true;
 
-        public ErrorListViewModel()
-        {
-            DisplayName = Resources.ViewErrorListCommandToolTip;
-
-            ToolBarDefinition = ToolBarDefinitions.ErrorListToolBar;
-
-            _items = new BindableCollection<ErrorListItem>();
-            _items.CollectionChanged += (sender, e) =>
-            {
-                NotifyOfPropertyChange("FilteredItems");
-                NotifyOfPropertyChange("ErrorItemCount");
-                NotifyOfPropertyChange("WarningItemCount");
-                NotifyOfPropertyChange("MessageItemCount");
-            };
-        }
-
         public IEnumerable<ErrorListItem> FilteredItems
         {
             get
@@ -66,7 +50,7 @@ namespace Gemini.Modules.ErrorList.ViewModels
             {
                 _showErrors = value;
                 NotifyOfPropertyChange(() => ShowErrors);
-                NotifyOfPropertyChange("FilteredItems");
+                NotifyOfPropertyChange(nameof(FilteredItems));
             }
         }
 
@@ -77,7 +61,7 @@ namespace Gemini.Modules.ErrorList.ViewModels
             {
                 _showWarnings = value;
                 NotifyOfPropertyChange(() => ShowWarnings);
-                NotifyOfPropertyChange("FilteredItems");
+                NotifyOfPropertyChange(nameof(FilteredItems));
             }
         }
 
@@ -88,8 +72,24 @@ namespace Gemini.Modules.ErrorList.ViewModels
             {
                 _showMessages = value;
                 NotifyOfPropertyChange(() => ShowMessages);
-                NotifyOfPropertyChange("FilteredItems");
+                NotifyOfPropertyChange(nameof(FilteredItems));
             }
+        }
+
+        public ErrorListViewModel()
+        {
+            DisplayName = Resources.ViewErrorListCommandToolTip;
+
+            ToolBarDefinition = ToolBarDefinitions.ErrorListToolBar;
+
+            _items = new BindableCollection<ErrorListItem>();
+            _items.CollectionChanged += (sender, e) =>
+            {
+                NotifyOfPropertyChange(nameof(FilteredItems));
+                NotifyOfPropertyChange("ErrorItemCount");
+                NotifyOfPropertyChange("WarningItemCount");
+                NotifyOfPropertyChange("MessageItemCount");
+            };
         }
 
         public void AddItem(ErrorListItemType itemType, string description,

@@ -13,30 +13,25 @@ namespace Gemini.Framework
     /// </summary>
     public class RelayCommand : ICommand
     {
-        #region Fields
-
-        private readonly Action<object> _execute;
-        private readonly Predicate<object> _canExecute;
-
-        #endregion // Fields
-
         #region Constructors
 
-        public RelayCommand(Action<object> execute)
-            : this(execute, null)
-        {
-        }
-
-        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
             if (execute == null)
-                throw new ArgumentNullException("execute");
+                throw new ArgumentNullException(nameof(execute));
 
             _execute = execute;
             _canExecute = canExecute;
         }
 
         #endregion // Constructors
+
+        #region Fields
+
+        private readonly Action<object> _execute;
+        private readonly Predicate<object> _canExecute;
+
+        #endregion // Fields
 
         #region ICommand Members
 

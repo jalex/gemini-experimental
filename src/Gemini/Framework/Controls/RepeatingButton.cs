@@ -19,6 +19,20 @@ namespace Gemini.Framework.Controls
     {
         private Timer _loopTimer;
 
+        /// <summary>
+        ///     How many times the button has repeated so far.
+        /// </summary>
+        public uint RepeatCount { get; private set; }
+
+        /// <summary>
+        ///     A mapping of repetitions to intervals in milliseconds.
+        ///     When the number of repetitions in the dictionaries key is reached,
+        ///     the repetition timers speed is set to the value. This is used to
+        ///     make the repetitions go faster after a certain ammount of
+        ///     repetitions.
+        /// </summary>
+        public Dictionary<uint, uint> RepeatSpeed { get; set; }
+
         public RepeatingButton()
         {
             RepeatSpeed = new Dictionary<uint, uint>
@@ -33,24 +47,9 @@ namespace Gemini.Framework.Controls
             PreviewMouseDown += RepeatingButton_MouseDown;
             PreviewMouseUp += RepeatingButton_MouseUp;
 
-            _loopTimer = new Timer();
-            _loopTimer.AutoReset = true;
+            _loopTimer = new Timer {AutoReset = true};
             _loopTimer.Elapsed += _loopTimer_Elapsed;
         }
-
-        /// <summary>
-        ///     How many times the button has repeated so far.
-        /// </summary>
-        public uint RepeatCount { get; private set; }
-
-        /// <summary>
-        ///     A mapping of repetitions to intervals in milliseconds.
-        ///     When the number of repetitions in the dictionaries key is reached,
-        ///     the repetition timers speed is set to the value. This is used to
-        ///     make the repetitions go faster after a certain ammount of
-        ///     repetitions.
-        /// </summary>
-        public Dictionary<uint, uint> RepeatSpeed { get; set; }
 
         private void RepeatingButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -84,7 +83,7 @@ namespace Gemini.Framework.Controls
             if (RepeatSpeed.ContainsKey(RepeatCount))
                 _loopTimer.Interval = RepeatSpeed[RepeatCount];
 
-            Execute.OnUIThread(() => OnClick());
+            Execute.OnUIThread(OnClick);
         }
 
         #region IDisposable Support

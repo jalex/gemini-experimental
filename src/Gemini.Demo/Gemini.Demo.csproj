@@ -148,6 +148,7 @@
     <Compile Include="Modules\FilterDesigner\Util\FastBitmap.cs" />
     <Compile Include="Modules\FilterDesigner\Util\ShaderEffectUtility.cs" />
     <Compile Include="Modules\FilterDesigner\ViewModels\ConnectionViewModel.cs" />
+    <Compile Include="Modules\FilterDesigner\ViewModels\ConnectorDataType.cs" />
     <Compile Include="Modules\FilterDesigner\ViewModels\ConnectorDirection.cs" />
     <Compile Include="Modules\FilterDesigner\ViewModels\ConnectorViewModel.cs" />
     <Compile Include="Modules\FilterDesigner\ViewModels\Elements\Add.cs" />

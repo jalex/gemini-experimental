@@ -13,12 +13,12 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
     {
         private BitmapSource _previewImage;
 
+        public override BitmapSource PreviewImage => _previewImage;
+
         protected DynamicElement()
         {
             SetOutputConnector("Output", Colors.DarkSeaGreen, () => PreviewImage);
         }
-
-        public override BitmapSource PreviewImage => _previewImage;
 
         protected virtual void PrepareDrawingVisual(DrawingVisual drawingVisual)
         {
@@ -42,7 +42,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
                 ((IDisposable) dv.Effect).Dispose();
 
             _previewImage = rtb;
-            NotifyOfPropertyChange("PreviewImage");
+            NotifyOfPropertyChange(nameof(PreviewImage));
 
             RaiseOutputChanged();
         }

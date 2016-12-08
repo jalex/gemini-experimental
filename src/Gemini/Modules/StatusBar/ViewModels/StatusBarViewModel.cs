@@ -13,12 +13,12 @@ namespace Gemini.Modules.StatusBar.ViewModels
     {
         private readonly StatusBarItemCollection _items;
 
+        public IObservableCollection<StatusBarItemViewModel> Items => _items;
+
         public StatusBarViewModel()
         {
             _items = new StatusBarItemCollection();
         }
-
-        public IObservableCollection<StatusBarItemViewModel> Items => _items;
 
         public void AddItem(string message, GridLength width)
         {

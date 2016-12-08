@@ -9,12 +9,6 @@ namespace Gemini.Modules.Inspector
 {
     public class BoundPropertyDescriptor
     {
-        public BoundPropertyDescriptor(object propertyOwner, PropertyDescriptor propertyDescriptor)
-        {
-            PropertyOwner = propertyOwner;
-            PropertyDescriptor = propertyDescriptor;
-        }
-
         public PropertyDescriptor PropertyDescriptor { get; }
         public object PropertyOwner { get; }
 
@@ -22,6 +16,12 @@ namespace Gemini.Modules.Inspector
         {
             get { return PropertyDescriptor.GetValue(PropertyOwner); }
             set { PropertyDescriptor.SetValue(PropertyOwner, value); }
+        }
+
+        public BoundPropertyDescriptor(object propertyOwner, PropertyDescriptor propertyDescriptor)
+        {
+            PropertyOwner = propertyOwner;
+            PropertyDescriptor = propertyDescriptor;
         }
 
         public event EventHandler ValueChanged

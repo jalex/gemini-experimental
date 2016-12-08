@@ -12,7 +12,7 @@ namespace Gemini.Modules.StatusBar.Views
     /// <summary>
     ///     Interaction logic for StatusBarView.xaml
     /// </summary>
-    public partial class StatusBarView : UserControl
+    public partial class StatusBarView
     {
         private Grid _statusBarGrid;
 

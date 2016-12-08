@@ -32,7 +32,7 @@ namespace Gemini.Modules.Shell.Views
         public void UpdateFloatingWindows()
         {
             var mainWindow = Window.GetWindow(this);
-            var mainWindowIcon = mainWindow != null ? mainWindow.Icon : null;
+            var mainWindowIcon = mainWindow?.Icon;
             var showFloatingWindowsInTaskbar = ((ShellViewModel) DataContext).ShowFloatingWindowsInTaskbar;
             foreach (var window in Manager.FloatingWindows)
             {

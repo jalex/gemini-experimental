@@ -17,11 +17,6 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.ViewModels
         private Vector3 _position;
         private ISceneView _sceneView;
 
-        public SceneViewModel()
-        {
-            DisplayName = "3D Scene";
-        }
-
         public override bool ShouldReopenOnStart => true;
 
         public Vector3 Position
@@ -32,9 +27,13 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.ViewModels
                 _position = value;
                 NotifyOfPropertyChange(() => Position);
 
-                if (_sceneView != null)
-                    _sceneView.Invalidate();
+                _sceneView?.Invalidate();
             }
+        }
+
+        public SceneViewModel()
+        {
+            DisplayName = "3D Scene";
         }
 
         protected override void OnViewLoaded(object view)
@@ -48,8 +47,7 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.ViewModels
             if (close)
             {
                 var view = GetView() as IDisposable;
-                if (view != null)
-                    view.Dispose();
+                view?.Dispose();
             }
 
             base.OnDeactivate(close);
