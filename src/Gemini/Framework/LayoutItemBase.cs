@@ -10,7 +10,7 @@ using Caliburn.Micro;
 
 namespace Gemini.Framework
 {
-    public abstract class LayoutItemBase : Screen, ILayoutItem
+    public abstract class LayoutItemBase : Screen, ILayoutPanel
     {
         private bool _isSelected;
 

@@ -40,7 +40,7 @@ namespace Gemini.Modules.Inspector.Inspectors
             {
                 var value = RawValue;
                 if (!_originalValue.Equals(value))
-                    IoC.Get<IShell>().ActiveItem.UndoRedoManager.ExecuteAction(
+                    IoC.Get<IShell>().SelectedDocument.UndoRedoManager.ExecuteAction(
                         new ChangeObjectValueAction(BoundPropertyDescriptor, _originalValue, value, StringConverter));
             }
             finally

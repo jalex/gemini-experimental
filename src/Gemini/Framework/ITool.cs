@@ -6,7 +6,7 @@ using Gemini.Framework.Services;
 
 namespace Gemini.Framework
 {
-    public interface ITool : ILayoutItem
+    public interface ITool : ILayoutPanel
     {
         PaneLocation PreferredLocation { get; }
         double PreferredWidth { get; }

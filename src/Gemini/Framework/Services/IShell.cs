@@ -20,11 +20,9 @@ namespace Gemini.Framework.Services
         IStatusBar StatusBar { get; }
         IRecentFiles RecentFiles { get; }
 
-        // TODO: Rename this to ActiveItem.
-        ILayoutItem ActiveLayoutItem { get; set; }
+        ILayoutPanel ActivePanel { get; set; }
 
-        // TODO: Rename this to SelectedDocument.
-        IDocument ActiveItem { get; }
+        IDocument SelectedDocument { get; }
 
         IObservableCollection<IDocument> Documents { get; }
         IObservableCollection<ITool> Tools { get; }

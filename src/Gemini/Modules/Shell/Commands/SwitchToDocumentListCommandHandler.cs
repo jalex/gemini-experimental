@@ -30,7 +30,7 @@ namespace Gemini.Modules.Shell.Commands
                 var document = _shell.Documents[i];
                 commands.Add(new Command(command.CommandDefinition)
                 {
-                    Checked = _shell.ActiveItem == document,
+                    Checked = _shell.SelectedDocument == document,
                     Text = $"_{i + 1} {document.DisplayName}",
                     Tag = document
                 });

@@ -9,7 +9,7 @@ using Caliburn.Micro;
 
 namespace Gemini.Framework
 {
-    public interface ILayoutItem : IScreen
+    public interface ILayoutPanel : IScreen
     {
         Guid Id { get; }
         string ContentId { get; }

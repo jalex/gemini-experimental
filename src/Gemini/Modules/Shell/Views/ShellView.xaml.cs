@@ -19,7 +19,7 @@ namespace Gemini.Modules.Shell.Views
         }
 
         public void LoadLayout(Stream stream, Action<ITool> addToolCallback, Action<IDocument> addDocumentCallback,
-            Dictionary<string, ILayoutItem> itemsState)
+            Dictionary<string, ILayoutPanel> itemsState)
         {
             LayoutUtility.LoadLayout(Manager, stream, addDocumentCallback, addToolCallback, itemsState);
         }

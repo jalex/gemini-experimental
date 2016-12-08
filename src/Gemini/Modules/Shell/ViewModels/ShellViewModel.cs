@@ -28,7 +28,7 @@ namespace Gemini.Modules.Shell.ViewModels
 
         private bool _activateItemGuard;
 
-        private ILayoutItem _activeLayoutItem;
+        private ILayoutPanel _activePanel;
         private bool _closing;
 
         private IShellView _shellView;
@@ -55,25 +55,29 @@ namespace Gemini.Modules.Shell.ViewModels
         public IStatusBar StatusBar => _statusBar;
 
         public IRecentFiles RecentFiles => _recentFiles;
-
-        public ILayoutItem ActiveLayoutItem
+        public ILayoutPanel ActivePanel
         {
-            get { return _activeLayoutItem; }
+            get { return _activePanel; }
             set
             {
-                if (ReferenceEquals(_activeLayoutItem, value))
+                if (ReferenceEquals(_activePanel, value))
                     return;
 
-                _activeLayoutItem = value;
+                _activePanel = value;
 
                 if (value is IDocument)
-                    ActivateItem((IDocument) value);
+                    ActivateItem((IDocument)value);
 
-                NotifyOfPropertyChange(() => ActiveLayoutItem);
+                NotifyOfPropertyChange();
             }
         }
 
         public IObservableCollection<ITool> Tools => _tools;
+
+        public IDocument SelectedDocument
+        {
+            get { return ActiveItem; }
+        }
 
         public IObservableCollection<IDocument> Documents => Items;
 
@@ -102,7 +106,7 @@ namespace Gemini.Modules.Shell.ViewModels
             else
                 Tools.Add(model);
             model.IsSelected = true;
-            ActiveLayoutItem = model;
+            ActivePanel = model;
         }
 
         public bool TryActivateDocumentByPath(string path)
@@ -217,8 +221,8 @@ namespace Gemini.Modules.Shell.ViewModels
 
         protected override void OnActivationProcessed(IDocument item, bool success)
         {
-            if (!ReferenceEquals(ActiveLayoutItem, item))
-                ActiveLayoutItem = item;
+            if (!ReferenceEquals(ActivePanel, item))
+                ActivePanel = item;
 
             base.OnActivationProcessed(item, success);
         }
@@ -237,12 +241,12 @@ namespace Gemini.Modules.Shell.ViewModels
             // Workaround for a complex bug that occurs when
             // (a) the window has multiple documents open, and
             // (b) the last document is NOT active
-            // 
+            //
             // The issue manifests itself with a crash in
             // the call to base.ActivateItem(item), above,
             // saying that the collection can't be changed
             // in a CollectionChanged event handler.
-            // 
+            //
             // The issue occurs because:
             // - Caliburn.Micro sees the window is closing, and calls Items.Clear()
             // - AvalonDock handles the CollectionChanged event, and calls Remove()

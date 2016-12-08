@@ -37,7 +37,7 @@ namespace Gemini.Framework.Commands
 
             var shell = IoC.Get<IShell>();
 
-            var activeItemViewModel = shell.ActiveLayoutItem;
+            var activeItemViewModel = shell.ActivePanel;
             if (activeItemViewModel != null)
             {
                 commandHandler = GetCommandHandlerForLayoutItem(commandDefinition, activeItemViewModel);
@@ -45,7 +45,7 @@ namespace Gemini.Framework.Commands
                     return commandHandler;
             }
 
-            var activeDocumentViewModel = shell.ActiveItem;
+            var activeDocumentViewModel = shell.SelectedDocument;
             if ((activeDocumentViewModel != null) && !Equals(activeDocumentViewModel, activeItemViewModel))
             {
                 commandHandler = GetCommandHandlerForLayoutItem(commandDefinition, activeDocumentViewModel);

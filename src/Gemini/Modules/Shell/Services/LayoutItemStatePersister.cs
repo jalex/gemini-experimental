@@ -29,7 +29,7 @@ namespace Gemini.Modules.Shell.Services
                 {
                     stream = null;
 
-                    var itemStates = shell.Documents.Concat(shell.Tools.Cast<ILayoutItem>());
+                    var itemStates = shell.Documents.Concat(shell.Tools.Cast<ILayoutPanel>());
 
                     var itemCount = 0;
                     // reserve some space for items count, it'll be updated later
@@ -45,7 +45,7 @@ namespace Gemini.Modules.Shell.Services
                             .GetCustomAttributes(typeof(ExportAttribute), false)
                             .Cast<ExportAttribute>().ToList();
 
-                        var layoutType = typeof(ILayoutItem);
+                        var layoutType = typeof(ILayoutPanel);
                         // get exports with explicit types or names that inherit from ILayoutItem
                         var exportTypes = (from att in exportAttributes
                             // select the contract type if it is of type ILayoutitem. else null
@@ -135,7 +135,7 @@ namespace Gemini.Modules.Shell.Services
 
         public bool LoadState(IShell shell, IShellView shellView, string fileName)
         {
-            var layoutItems = new Dictionary<string, ILayoutItem>();
+            var layoutItems = new Dictionary<string, ILayoutPanel>();
 
             if (!File.Exists(fileName))
                 return false;
@@ -164,7 +164,7 @@ namespace Gemini.Modules.Shell.Services
 
                         if (contentType != null)
                         {
-                            var contentInstance = IoC.GetInstance(contentType, null) as ILayoutItem;
+                            var contentInstance = IoC.GetInstance(contentType, null) as ILayoutPanel;
 
                             if (contentInstance != null)
                             {
@@ -212,7 +212,7 @@ namespace Gemini.Modules.Shell.Services
                 return null;
 
             var type = Type.GetType(typeName);
-            if ((type == null) || !typeof(ILayoutItem).IsInstanceOfType(type))
+            if ((type == null) || !typeof(ILayoutPanel).IsInstanceOfType(type))
                 return null;
             return type;
         }

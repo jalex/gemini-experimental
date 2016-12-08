@@ -36,9 +36,9 @@ namespace Gemini.Modules.UndoRedo.ViewModels
                 return;
 
             shell.ActiveDocumentChanged +=
-                (sender, e) => { UndoRedoManager = shell.ActiveItem != null ? shell.ActiveItem.UndoRedoManager : null; };
-            if (shell.ActiveItem != null)
-                UndoRedoManager = shell.ActiveItem.UndoRedoManager;
+                (sender, e) => { UndoRedoManager = shell.SelectedDocument != null ? shell.SelectedDocument.UndoRedoManager : null; };
+            if (shell.SelectedDocument != null)
+                UndoRedoManager = shell.SelectedDocument.UndoRedoManager;
         }
 
         public int SelectedIndex

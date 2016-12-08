@@ -50,9 +50,9 @@ namespace Gemini.Demo.Modules.Startup
 
         private void RefreshInspector()
         {
-            if (Shell.ActiveItem != null)
+            if (Shell.SelectedDocument != null)
                 _inspectorTool.SelectedObject = new InspectableObjectBuilder()
-                    .WithObjectProperties(Shell.ActiveItem, pd => pd.ComponentType == Shell.ActiveItem.GetType())
+                    .WithObjectProperties(Shell.SelectedDocument, pd => pd.ComponentType == Shell.SelectedDocument.GetType())
                     .ToInspectableObject();
             else
                 _inspectorTool.SelectedObject = null;

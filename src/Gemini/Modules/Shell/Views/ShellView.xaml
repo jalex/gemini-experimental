@@ -28,7 +28,7 @@
 
         <xcad:DockingManager x:Name="Manager" DocumentsSource="{Binding Items}"
                              AnchorablesSource="{Binding Tools}"
-                             ActiveContent="{Binding ActiveLayoutItem, Mode=TwoWay}"
+                             ActiveContent="{Binding ActivePanel, Mode=TwoWay}"
                              LayoutUpdated="OnManagerLayoutUpdated"
                              b:DropFilesBehavior.AllowOpen="True"
                              AllowDrop="True">

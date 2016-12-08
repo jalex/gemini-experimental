@@ -23,13 +23,13 @@ namespace Gemini.Modules.Shell.Commands
 
         public override void Update(Command command)
         {
-            command.Enabled = _shell.ActiveItem != null;
+            command.Enabled = _shell.SelectedDocument != null;
             base.Update(command);
         }
 
         public override Task Run(Command command)
         {
-            _shell.CloseDocument(_shell.ActiveItem);
+            _shell.CloseDocument(_shell.SelectedDocument);
             return TaskUtility.Completed;
         }
     }

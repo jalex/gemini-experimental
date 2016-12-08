@@ -91,7 +91,7 @@ namespace Gemini.Modules.Inspector.Inspectors
 
                 try
                 {
-                    var item = _shell.ActiveItem;
+                    var item = _shell.SelectedDocument;
                     if (IsUndoEnabled && (item != null))
                         item.UndoRedoManager.ExecuteAction(
                             new ChangeObjectValueAction(BoundPropertyDescriptor, newValue, StringConverter));
@@ -133,7 +133,7 @@ namespace Gemini.Modules.Inspector.Inspectors
         {
             if (CanReset)
             {
-                var item = _shell.ActiveItem;
+                var item = _shell.SelectedDocument;
                 if (IsUndoEnabled && (item != null))
                     item.UndoRedoManager.ExecuteAction(
                         new ResetObjectValueAction(BoundPropertyDescriptor, StringConverter));

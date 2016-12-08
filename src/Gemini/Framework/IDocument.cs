@@ -6,7 +6,7 @@ using Gemini.Modules.UndoRedo;
 
 namespace Gemini.Framework
 {
-    public interface IDocument : ILayoutItem
+    public interface IDocument : ILayoutPanel
     {
         IUndoRedoManager UndoRedoManager { get; }
     }

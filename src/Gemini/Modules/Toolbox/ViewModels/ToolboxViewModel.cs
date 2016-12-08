@@ -48,10 +48,10 @@ namespace Gemini.Modules.Toolbox.ViewModels
         {
             _items.Clear();
 
-            if (shell.ActiveItem == null)
+            if (shell.SelectedDocument == null)
                 return;
 
-            _items.AddRange(_toolboxService.GetToolboxItems(shell.ActiveItem.GetType())
+            _items.AddRange(_toolboxService.GetToolboxItems(shell.SelectedDocument.GetType())
                 .Select(x => new ToolboxItemViewModel(x)));
         }
     }

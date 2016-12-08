@@ -21,13 +21,13 @@ namespace Gemini.Modules.Shell.Views
         }
 
         public static void LoadLayout(DockingManager manager, Stream stream, Action<IDocument> addDocumentCallback,
-            Action<ITool> addToolCallback, Dictionary<string, ILayoutItem> items)
+            Action<ITool> addToolCallback, Dictionary<string, ILayoutPanel> items)
         {
             var layoutSerializer = new XmlLayoutSerializer(manager);
 
             layoutSerializer.LayoutSerializationCallback += (s, e) =>
             {
-                ILayoutItem item;
+                ILayoutPanel item;
                 if (items.TryGetValue(e.Model.ContentId, out item))
                 {
                     e.Content = item;
