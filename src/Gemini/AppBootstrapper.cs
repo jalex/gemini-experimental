@@ -98,6 +98,10 @@ namespace Gemini
 
         protected override object GetInstance(Type serviceType, string key)
         {
+            // https://github.com/Caliburn-Micro/Caliburn.Micro/pull/339
+            if (typeof(UIElement).IsAssignableFrom(serviceType))
+                return null;
+
             var contract = string.IsNullOrEmpty(key) ? AttributedModelServices.GetContractName(serviceType) : key;
             var exports = Container.GetExports<object>(contract);
 
