@@ -29,6 +29,7 @@ namespace Gemini.Modules.Toolbox.Services
                         Name = attribute.Name,
                         Category = attribute.Category,
                         IconSource = attribute.IconSource != null ? new Uri(attribute.IconSource) : null,
+                        AllowedEffects = attribute.AllowedEffects,
                         ItemType = x
                     };
                 })

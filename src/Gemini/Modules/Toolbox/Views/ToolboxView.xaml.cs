@@ -56,7 +56,7 @@ namespace Gemini.Modules.Toolbox.Views
                     ItemFromContainer(listBoxItem);
 
                 var dragData = new DataObject(ToolboxDragDrop.DataFormat, itemViewModel.Model);
-                DragDrop.DoDragDrop(listBoxItem, dragData, DragDropEffects.Move);
+                DragDrop.DoDragDrop(listBoxItem, dragData, itemViewModel.Model.AllowedEffects);
             }
         }
     }
