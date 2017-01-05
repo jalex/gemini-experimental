@@ -19,10 +19,28 @@ namespace Gemini.Framework
         private bool _isDirty;
 
         public bool IsNew { get; private set; }
-        public string FileName { get; private set; }
-        public string FilePath { get; private set; }
 
-        public override string ToolTip { get { return FilePath; } }
+        public string FileName {
+            get { return _fileName; }
+            private set {
+                if(value == _fileName) return;
+                _fileName = value;
+                NotifyOfPropertyChange(nameof(ToolTip));
+            }
+        }
+        string _fileName;
+
+        public string FilePath {
+            get { return _filePath; }
+            private set {
+                if(value == _filePath) return;
+                _filePath = value;
+                NotifyOfPropertyChange(nameof(ToolTip));
+            }
+        }
+        string _filePath;
+
+        public override string ToolTip { get { return FilePath ?? FileName; } }
 
         public bool IsDirty
         {
@@ -122,7 +140,6 @@ namespace Gemini.Framework
         public async Task Load(string filePath)
         {
             FilePath = filePath;
-            NotifyOfPropertyChange(nameof(ToolTip));
             FileName = Path.GetFileName(filePath);
             UpdateDisplayName();
 
@@ -135,7 +152,6 @@ namespace Gemini.Framework
         public async Task Save(string filePath)
         {
             FilePath = filePath;
-            NotifyOfPropertyChange(nameof(ToolTip));
             FileName = Path.GetFileName(filePath);
             UpdateDisplayName();
 
