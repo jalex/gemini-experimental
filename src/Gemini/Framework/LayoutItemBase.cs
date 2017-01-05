@@ -20,6 +20,9 @@ namespace Gemini.Framework
         public Guid Id { get; } = Guid.NewGuid();
 
         [Browsable(false)]
+        public virtual string ToolTip { get { return DisplayName; } }
+
+        [Browsable(false)]
         public string ContentId => Id.ToString();
 
         [Browsable(false)]

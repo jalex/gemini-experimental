@@ -12,6 +12,7 @@ namespace Gemini.Framework
     public interface ILayoutPanel : IScreen
     {
         Guid Id { get; }
+        string ToolTip { get; }
         string ContentId { get; }
         ICommand CloseCommand { get; }
         Uri IconSource { get; }

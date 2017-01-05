@@ -22,6 +22,8 @@ namespace Gemini.Framework
         public string FileName { get; private set; }
         public string FilePath { get; private set; }
 
+        public override string ToolTip { get { return FilePath; } }
+
         public bool IsDirty
         {
             get { return _isDirty; }
@@ -120,6 +122,7 @@ namespace Gemini.Framework
         public async Task Load(string filePath)
         {
             FilePath = filePath;
+            NotifyOfPropertyChange(nameof(ToolTip));
             FileName = Path.GetFileName(filePath);
             UpdateDisplayName();
 
@@ -132,6 +135,7 @@ namespace Gemini.Framework
         public async Task Save(string filePath)
         {
             FilePath = filePath;
+            NotifyOfPropertyChange(nameof(ToolTip));
             FileName = Path.GetFileName(filePath);
             UpdateDisplayName();
 
