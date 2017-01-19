@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.ComponentModel.Composition;
 using Caliburn.Micro;
 
 #endregion
@@ -38,7 +39,7 @@ namespace Gemini.Modules.UndoRedo.Services
         public event EventHandler BatchBegin;
         public event EventHandler BatchEnd;
 
-        public void ExecuteAction(IUndoableAction action)
+        public virtual void ExecuteAction(IUndoableAction action)
         {
             action.Execute();
             Push(_undoStack, action);
@@ -135,7 +136,7 @@ namespace Gemini.Modules.UndoRedo.Services
             }
         }
 
-        private void EnforceLimit()
+        protected void EnforceLimit()
         {
             if (!_undoCountLimit.HasValue)
                 return;
@@ -156,24 +157,24 @@ namespace Gemini.Modules.UndoRedo.Services
             handler?.Invoke(this, EventArgs.Empty);
         }
 
-        private static IUndoableAction Peek(BindableCollection<IUndoableAction> stack)
+        protected static IUndoableAction Peek(IObservableCollection<IUndoableAction> stack)
         {
             return stack[stack.Count - 1];
         }
 
-        private static void Push(BindableCollection<IUndoableAction> stack, IUndoableAction action)
+        protected static void Push(IObservableCollection<IUndoableAction> stack, IUndoableAction action)
         {
             stack.Add(action);
         }
 
-        private static IUndoableAction Pop(BindableCollection<IUndoableAction> stack)
+        protected static IUndoableAction Pop(IObservableCollection<IUndoableAction> stack)
         {
             var item = stack[stack.Count - 1];
             stack.RemoveAt(stack.Count - 1);
             return item;
         }
 
-        private static void PopFront(BindableCollection<IUndoableAction> stack)
+        protected static void PopFront(IObservableCollection<IUndoableAction> stack)
         {
             var item = stack[0];
             stack.RemoveAt(0);

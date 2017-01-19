@@ -63,7 +63,11 @@ namespace Gemini.Framework
             }
         }
 
-        public IUndoRedoManager UndoRedoManager => _undoRedoManager ?? (_undoRedoManager = new UndoRedoManager());
+        protected virtual IUndoRedoManager CreateUndoRedoManager() {
+            return new UndoRedoManager();
+        }
+
+        public IUndoRedoManager UndoRedoManager => _undoRedoManager ?? (_undoRedoManager = CreateUndoRedoManager());
 
         public override ICommand CloseCommand
         {
