@@ -21,14 +21,18 @@ namespace Gemini.Modules.Shell.Services
 
         public bool SaveState(IShell shell, IShellView shellView, string fileName)
         {
+            SaveStateInternal(shell, shellView, fileName);
+
+            return true;
+        }
+
+        async void SaveStateInternal(IShell shell, IShellView shellView, string fileName) {
             FileStream stream = null;
 
-            try
-            {
+            try {
                 stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
 
-                using (var writer = new BinaryWriter(stream))
-                {
+                using(var writer = new BinaryWriter(stream)) {
                     stream = null;
 
                     var itemStates = shell.Documents.Concat(shell.Tools.Cast<ILayoutPanel>());
@@ -37,9 +41,8 @@ namespace Gemini.Modules.Shell.Services
                     // reserve some space for items count, it'll be updated later
                     writer.Write(itemCount);
 
-                    foreach (var item in itemStates)
-                    {
-                        if (!item.ShouldReopenOnStart)
+                    foreach(var item in itemStates) {
+                        if(!item.ShouldReopenOnStart)
                             continue;
 
                         var itemType = item.GetType();
@@ -50,33 +53,33 @@ namespace Gemini.Modules.Shell.Services
                         var layoutType = typeof(ILayoutPanel);
                         // get exports with explicit types or names that inherit from ILayoutItem
                         var exportTypes = (from att in exportAttributes
-                            // select the contract type if it is of type ILayoutitem. else null
-                            let typeFromContract = (att.ContractType != null)
-                                                   && layoutType.IsAssignableFrom(att.ContractType)
-                                ? att.ContractType
-                                : null
-                            // select the contract name if it is of type ILayoutItem. else null
-                            let typeFromQualifiedName = GetTypeFromContractNameAsILayoutItem(att)
-                            // select the viewmodel tpye if it is of type ILayoutItem. else null
-                            let typeFromViewModel = layoutType.IsAssignableFrom(itemType) ? itemType : null
-                            // att.ContractType overrides att.ContractName if both are set.
-                            // fall back to the ViewModel type of neither are defined.
-                            let type = typeFromContract ?? typeFromQualifiedName ?? typeFromViewModel
-                            where type != null
-                            select type).ToList();
+                                               // select the contract type if it is of type ILayoutitem. else null
+                                           let typeFromContract = (att.ContractType != null)
+                                                                  && layoutType.IsAssignableFrom(att.ContractType)
+                                               ? att.ContractType
+                                               : null
+                                           // select the contract name if it is of type ILayoutItem. else null
+                                           let typeFromQualifiedName = GetTypeFromContractNameAsILayoutItem(att)
+                                           // select the viewmodel tpye if it is of type ILayoutItem. else null
+                                           let typeFromViewModel = layoutType.IsAssignableFrom(itemType) ? itemType : null
+                                           // att.ContractType overrides att.ContractName if both are set.
+                                           // fall back to the ViewModel type of neither are defined.
+                                           let type = typeFromContract ?? typeFromQualifiedName ?? typeFromViewModel
+                                           where type != null
+                                           select type).ToList();
 
                         // throw exceptions here, instead of failing silently. These are design time errors.
                         var firstExport = exportTypes.FirstOrDefault();
-                        if (firstExport == null)
+                        if(firstExport == null)
                             throw new InvalidOperationException(
                                 $"A ViewModel that participates in LayoutItem.ShouldReopenOnStart must be decorated with an ExportAttribute who's ContractType that inherits from ILayoutItem, infringing type is {itemType}.");
-                        if (exportTypes.Count > 1)
+                        if(exportTypes.Count > 1)
                             throw new InvalidOperationException(
                                 $"A ViewModel that participates in LayoutItem.ShouldReopenOnStart can't be decorated with more than one ExportAttribute which inherits from ILayoutItem. infringing type is {itemType}.");
 
                         var selectedTypeName = firstExport.AssemblyQualifiedName;
 
-                        if (string.IsNullOrEmpty(selectedTypeName))
+                        if(string.IsNullOrEmpty(selectedTypeName))
                             throw new InvalidOperationException(
                                 $"Could not retrieve the assembly qualified type name for {firstExport}, most likely because the type is generic.");
                         // TODO: it is possible to save generic types. It requires that every generic parameter is saved, along with its position in the generic tree... A lot of work.
@@ -94,14 +97,11 @@ namespace Gemini.Modules.Shell.Services
 
                         long stateSize;
 
-                        try
-                        {
+                        try {
                             var stateStartPosition = writer.BaseStream.Position;
-                            item.SaveState(writer).Wait();
+                            await item.SaveState(writer);
                             stateSize = writer.BaseStream.Position - stateStartPosition;
-                        }
-                        catch(Exception ex)
-                        {
+                        } catch(Exception ex) {
                             stateSize = 0;
 
                             _Log.Error(ex);
@@ -111,7 +111,7 @@ namespace Gemini.Modules.Shell.Services
                         writer.BaseStream.Seek(stateSizePosition, SeekOrigin.Begin);
                         writer.Write(stateSize);
 
-                        if (stateSize > 0)
+                        if(stateSize > 0)
                             writer.BaseStream.Seek(0, SeekOrigin.End);
 
                         itemCount++;
@@ -123,26 +123,25 @@ namespace Gemini.Modules.Shell.Services
 
                     shellView.SaveLayout(writer.BaseStream);
                 }
-            }
-            catch(Exception ex)
-            {
+            } catch(Exception ex) {
                 _Log.Error(ex);
-                return false;
-            }
-            finally
-            {
+            } finally {
                 stream?.Dispose();
             }
-
-            return true;
         }
 
         public bool LoadState(IShell shell, IShellView shellView, string fileName)
         {
-            var layoutItems = new Dictionary<string, ILayoutPanel>();
+            if(!File.Exists(fileName)) return false;
 
-            if (!File.Exists(fileName))
-                return false;
+            LoadStateInternal(shell, shellView, fileName);
+
+            return true;
+        }
+
+        async void LoadStateInternal(IShell shell, IShellView shellView, string fileName)
+        {
+            var layoutItems = new Dictionary<string, ILayoutPanel>();
 
             FileStream stream = null;
 
@@ -174,7 +173,7 @@ namespace Gemini.Modules.Shell.Services
                             {
                                 try
                                 {
-                                    contentInstance.LoadState(reader).Wait();
+                                    await contentInstance.LoadState(reader);
                                     layoutItems.Add(contentId, contentInstance);
                                     skipStateData = false;
                                 }
@@ -198,14 +197,11 @@ namespace Gemini.Modules.Shell.Services
             catch(Exception ex)
             {
                 _Log.Error(ex);
-                return false;
             }
             finally
             {
                 stream?.Close();
             }
-
-            return true;
         }
 
         private Type GetTypeFromContractNameAsILayoutItem(ExportAttribute attribute)
