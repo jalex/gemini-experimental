@@ -3,8 +3,10 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Caliburn.Micro;
+using Gemini.Framework.Threading;
 
 #endregion
 
@@ -42,12 +44,14 @@ namespace Gemini.Framework
         [Browsable(false)]
         public virtual bool ShouldReopenOnStart => false;
 
-        public virtual void LoadState(BinaryReader reader)
+        public virtual Task LoadState(BinaryReader reader)
         {
+            return TaskUtility.Completed;
         }
 
-        public virtual void SaveState(BinaryWriter writer)
+        public virtual Task SaveState(BinaryWriter writer)
         {
+            return TaskUtility.Completed;
         }
     }
 }

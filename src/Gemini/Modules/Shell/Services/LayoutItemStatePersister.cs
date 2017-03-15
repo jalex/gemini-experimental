@@ -17,6 +17,8 @@ namespace Gemini.Modules.Shell.Services
     [Export(typeof(ILayoutItemStatePersister))]
     public class LayoutItemStatePersister : ILayoutItemStatePersister
     {
+        static readonly ILog _Log = LogManager.GetLog(typeof(LayoutItemStatePersister));
+
         public bool SaveState(IShell shell, IShellView shellView, string fileName)
         {
             FileStream stream = null;
@@ -95,12 +97,14 @@ namespace Gemini.Modules.Shell.Services
                         try
                         {
                             var stateStartPosition = writer.BaseStream.Position;
-                            item.SaveState(writer);
+                            item.SaveState(writer).Wait();
                             stateSize = writer.BaseStream.Position - stateStartPosition;
                         }
-                        catch
+                        catch(Exception ex)
                         {
                             stateSize = 0;
+
+                            _Log.Error(ex);
                         }
 
                         // Go back to the position before item's state and write the actual value.
@@ -120,8 +124,9 @@ namespace Gemini.Modules.Shell.Services
                     shellView.SaveLayout(writer.BaseStream);
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                _Log.Error(ex);
                 return false;
             }
             finally
@@ -167,16 +172,17 @@ namespace Gemini.Modules.Shell.Services
 
                             if (contentInstance != null)
                             {
-                                layoutItems.Add(contentId, contentInstance);
-
                                 try
                                 {
-                                    contentInstance.LoadState(reader);
+                                    contentInstance.LoadState(reader).Wait();
+                                    layoutItems.Add(contentId, contentInstance);
                                     skipStateData = false;
                                 }
-                                catch
+                                catch(Exception ex)
                                 {
                                     skipStateData = true;
+
+                                    _Log.Error(ex);
                                 }
                             }
                         }
@@ -189,8 +195,9 @@ namespace Gemini.Modules.Shell.Services
                     shellView.LoadLayout(reader.BaseStream, shell.ShowTool, shell.OpenDocument, layoutItems);
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                _Log.Error(ex);
                 return false;
             }
             finally

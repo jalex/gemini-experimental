@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using Gemini.Framework.Services;
+using Gemini.Framework.Threading;
 using Gemini.Properties;
 using Microsoft.Win32;
 
@@ -59,12 +60,13 @@ namespace Gemini.Framework
         // ShouldReopenOnStart, SaveState and LoadState are default methods of PersistedDocument.
         public override bool ShouldReopenOnStart => FilePath != null;
 
-        public override void SaveState(BinaryWriter writer)
+        public override Task SaveState(BinaryWriter writer)
         {
             writer.Write(FilePath);
+            return TaskUtility.Completed;
         }
 
-        public override async void LoadState(BinaryReader reader)
+        public override async Task LoadState(BinaryReader reader)
         {
             await Load(reader.ReadString());
         }

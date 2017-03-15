@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Caliburn.Micro;
 
@@ -18,7 +19,7 @@ namespace Gemini.Framework
         Uri IconSource { get; }
         bool IsSelected { get; set; }
         bool ShouldReopenOnStart { get; }
-        void LoadState(BinaryReader reader);
-        void SaveState(BinaryWriter writer);
+        Task LoadState(BinaryReader reader);
+        Task SaveState(BinaryWriter writer);
     }
 }
