@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -141,13 +142,16 @@ namespace Gemini.Framework
 
             var fileExtension = Path.GetExtension(persistedDocument.FileName);
             var fileTypes = IoC.GetAll<IEditorProvider>()
-                .Where(ep => ep.FileTypes.Any(ft => ft.FileExtension.Equals(fileExtension, System.StringComparison.InvariantCultureIgnoreCase)))
+                .Where(ep => ep.FileTypes.Any(ft => ft.FileExtension.Equals(fileExtension, StringComparison.InvariantCultureIgnoreCase)))
                 .SelectMany(x => x.FileTypes)
-                .ToArray();
-            if(fileTypes.Length > 0) filter = string.Join("|", fileTypes.Select(ft => $"{ft.Name}|*{ft.FileExtension}")) + "|";
+                .ToList();
+            if(fileTypes.Count > 0) filter = string.Join("|", fileTypes.Select(ft => $"{ft.Name}|*{ft.FileExtension}")) + "|";
 
             filter += Resources.AllFiles + "|*.*";
             dialog.Filter = filter;
+
+            var filterIndex = fileTypes.FindIndex(ft => ft.FileExtension.Equals(fileExtension, StringComparison.InvariantCultureIgnoreCase));
+            dialog.FilterIndex = filterIndex < 0 ? 1 : (filterIndex + 1);
 
             if(dialog.ShowDialog() != true) return;
 
