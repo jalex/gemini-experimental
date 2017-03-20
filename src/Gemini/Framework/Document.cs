@@ -134,24 +134,22 @@ namespace Gemini.Framework
             return TaskUtility.Completed;
         }
 
-        private static async Task DoSaveAs(IPersistedDocument persistedDocument)
-        {
+        private static async Task DoSaveAs(IPersistedDocument persistedDocument) {
             // Show user dialog to choose filename.
-            var dialog = new SaveFileDialog {FileName = persistedDocument.FileName};
+            var dialog = new SaveFileDialog { FileName = persistedDocument.FileName };
             var filter = string.Empty;
 
             var fileExtension = Path.GetExtension(persistedDocument.FileName);
-            var fileType = IoC.GetAll<IEditorProvider>()
+            var fileTypes = IoC.GetAll<IEditorProvider>()
+                .Where(ep => ep.FileTypes.Any(ft => ft.FileExtension.Equals(fileExtension, System.StringComparison.InvariantCultureIgnoreCase)))
                 .SelectMany(x => x.FileTypes)
-                .SingleOrDefault(x => x.FileExtension == fileExtension);
-            if (fileType != null)
-                filter = fileType.Name + "|*" + fileType.FileExtension + "|";
+                .ToArray();
+            if(fileTypes.Length > 0) filter = string.Join("|", fileTypes.Select(ft => $"{ft.Name}|*{ft.FileExtension}")) + "|";
 
             filter += Resources.AllFiles + "|*.*";
             dialog.Filter = filter;
 
-            if (dialog.ShowDialog() != true)
-                return;
+            if(dialog.ShowDialog() != true) return;
 
             var filePath = dialog.FileName;
 
@@ -162,5 +160,6 @@ namespace Gemini.Framework
             var shell = IoC.Get<IShell>();
             shell.RecentFiles.Update(filePath);
         }
+
     }
 }
