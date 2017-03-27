@@ -6,6 +6,9 @@ using Gemini.Framework.Commands;
 
 namespace Gemini.Demo.MonoGame.Modules.SceneViewer.Commands
 {
+    /// <summary>
+    ///     Represents a <see cref="CommandDefinition"/> for opening the SceneViewer.
+    /// </summary>
     [CommandDefinition]
     public class ViewSceneViewerCommandDefinition : CommandDefinition
     {

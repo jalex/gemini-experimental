@@ -5,35 +5,43 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Windows.Media;
+// ReSharper disable UnusedVariable
 
 #endregion
 
 namespace Gemini.Framework.Behaviors
 {
-    // From http://stackoverflow.com/a/20636049/208817
+    // http://stackoverflow.com/a/20636049/208817
+    /// <summary>
+    ///     Represents a <see cref="Behavior{T}" /> for the <see cref="TreeView" /> which allows
+    ///     binding to the current <see cref="TreeView.SelectedItem" />.
+    /// </summary>
     public class BindableTreeViewSelectedItemBehavior : Behavior<TreeView>
     {
-        #region SelectedItem Property
+        /// <summary>
+        ///     Specifies the <see cref="DependencyProperty" /> for the <see cref="SelectedItem" />.
+        /// </summary>
+        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(
+            nameof(SelectedItem), typeof(object), typeof(BindableTreeViewSelectedItemBehavior),
+            new UIPropertyMetadata(null, OnSelectedItemChanged));
 
+        /// <summary>
+        ///     Gets or sets the currently selected item.
+        /// </summary>
         public object SelectedItem
         {
             get { return GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }
         }
 
-        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(
-            "SelectedItem", typeof(object), typeof(BindableTreeViewSelectedItemBehavior),
-            new UIPropertyMetadata(null, OnSelectedItemChanged));
-
         private static void OnSelectedItemChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             Action<TreeViewItem> selectTreeViewItem = tvi2 =>
             {
-                if (tvi2 != null)
-                {
-                    tvi2.IsSelected = true;
-                    tvi2.Focus();
-                }
+                if (tvi2 == null)
+                    return;
+                tvi2.IsSelected = true;
+                tvi2.Focus();
             };
 
             var tvi = e.NewValue as TreeViewItem;
@@ -63,9 +71,6 @@ namespace Gemini.Framework.Behaviors
             selectTreeViewItem(tvi);
         }
 
-        #endregion
-
-        #region Private
 
         private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
@@ -74,96 +79,72 @@ namespace Gemini.Framework.Behaviors
 
         private static TreeViewItem GetTreeViewItem(ItemsControl container, object item)
         {
-            if (container != null)
+            if (container == null)
+                return null;
+
+            if (container.DataContext == item)
+                return container as TreeViewItem;
+
+            // Expand the current container
+            var viewItem = container as TreeViewItem;
+            if ((viewItem != null) && !viewItem.IsExpanded)
+                viewItem.SetValue(TreeViewItem.IsExpandedProperty, true);
+
+            // Try to generate the ItemsPresenter and the ItemsPanel.
+            // by calling ApplyTemplate.  Note that in the
+            // virtualizing case even if the item is marked
+            // expanded we still need to do this step in order to
+            // regenerate the visuals because they may have been virtualized away.
+
+            container.ApplyTemplate();
+            var itemsPresenter =
+                (ItemsPresenter) container.Template.FindName("ItemsHost", container);
+            if (itemsPresenter != null)
             {
-                if (container.DataContext == item)
-                    return container as TreeViewItem;
-
-                // Expand the current container
-                if (container is TreeViewItem && !((TreeViewItem) container).IsExpanded)
-                    container.SetValue(TreeViewItem.IsExpandedProperty, true);
-
-                // Try to generate the ItemsPresenter and the ItemsPanel.
-                // by calling ApplyTemplate.  Note that in the 
-                // virtualizing case even if the item is marked 
-                // expanded we still need to do this step in order to 
-                // regenerate the visuals because they may have been virtualized away.
-
-                container.ApplyTemplate();
-                var itemsPresenter =
-                    (ItemsPresenter) container.Template.FindName("ItemsHost", container);
-                if (itemsPresenter != null)
+                itemsPresenter.ApplyTemplate();
+            }
+            else
+            {
+                // The Tree template has not named the ItemsPresenter,
+                // so walk the descendents and find the child.
+                itemsPresenter = container.FindChild<ItemsPresenter>();
+                if (itemsPresenter == null)
                 {
-                    itemsPresenter.ApplyTemplate();
+                    container.UpdateLayout();
+                    itemsPresenter = container.FindChild<ItemsPresenter>();
                 }
-                else
-                {
-                    // The Tree template has not named the ItemsPresenter, 
-                    // so walk the descendents and find the child.
-                    itemsPresenter = FindVisualChild<ItemsPresenter>(container);
-                    if (itemsPresenter == null)
-                    {
-                        container.UpdateLayout();
-                        itemsPresenter = FindVisualChild<ItemsPresenter>(container);
-                    }
-                }
+            }
 
-                var itemsHostPanel = (Panel) VisualTreeHelper.GetChild(itemsPresenter, 0);
+            var itemsHostPanel = (Panel) VisualTreeHelper.GetChild(itemsPresenter, 0);
 
-                // Ensure that the generator for this panel has been created.
+            // Ensure that the generator for this panel has been created.
 #pragma warning disable 168
-                var children = itemsHostPanel.Children;
+            var children = itemsHostPanel.Children;
 #pragma warning restore 168
 
-                for (int i = 0, count = container.Items.Count; i < count; i++)
-                {
-                    var subContainer = (TreeViewItem) container.ItemContainerGenerator.
-                        ContainerFromIndex(i);
-                    if (subContainer == null)
-                        continue;
+            for (int i = 0, count = container.Items.Count; i < count; i++)
+            {
+                var subContainer = (TreeViewItem) container.ItemContainerGenerator.
+                    ContainerFromIndex(i);
+                if (subContainer == null)
+                    continue;
 
-                    subContainer.BringIntoView();
+                subContainer.BringIntoView();
 
-                    // Search the next level for the object.
-                    var resultContainer = GetTreeViewItem(subContainer, item);
-                    if (resultContainer != null)
-                        return resultContainer;
-                }
+                // Search the next level for the object.
+                var resultContainer = GetTreeViewItem(subContainer, item);
+                if (resultContainer != null)
+                    return resultContainer;
             }
 
             return null;
         }
+
 
         /// <summary>
-        ///     Search for an element of a certain type in the visual tree.
+        ///     Called after the behavior is attached to an AssociatedObject.
         /// </summary>
-        /// <typeparam name="T">The type of element to find.</typeparam>
-        /// <param name="visual">The parent element.</param>
-        /// <returns></returns>
-        private static T FindVisualChild<T>(Visual visual) where T : Visual
-        {
-            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(visual); i++)
-            {
-                var child = (Visual) VisualTreeHelper.GetChild(visual, i);
-                if (child != null)
-                {
-                    var correctlyTyped = child as T;
-                    if (correctlyTyped != null)
-                        return correctlyTyped;
-
-                    var descendent = FindVisualChild<T>(child);
-                    if (descendent != null)
-                        return descendent;
-                }
-            }
-
-            return null;
-        }
-
-        #endregion
-
-        #region Protected
-
+        /// <remarks>Override this to hook up functionality to the AssociatedObject.</remarks>
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -171,6 +152,10 @@ namespace Gemini.Framework.Behaviors
             AssociatedObject.SelectedItemChanged += OnTreeViewSelectedItemChanged;
         }
 
+        /// <summary>
+        ///     Called when the behavior is being detached from its AssociatedObject, but before it has actually occurred.
+        /// </summary>
+        /// <remarks>Override this to unhook functionality from the AssociatedObject.</remarks>
         protected override void OnDetaching()
         {
             base.OnDetaching();
@@ -178,7 +163,5 @@ namespace Gemini.Framework.Behaviors
             if (AssociatedObject != null)
                 AssociatedObject.SelectedItemChanged -= OnTreeViewSelectedItemChanged;
         }
-
-        #endregion
     }
 }

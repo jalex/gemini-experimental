@@ -26,7 +26,7 @@ namespace Gemini.Modules.Toolbox.Views
 
         private void OnListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var listBoxItem = VisualTreeUtility.FindParent<ListBoxItem>(
+            var listBoxItem = DependencyObjectExtensions.FindParent<ListBoxItem>(
                 (DependencyObject) e.OriginalSource);
             _draggingItem = listBoxItem != null;
 
@@ -46,7 +46,7 @@ namespace Gemini.Modules.Toolbox.Views
                 ((Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance) ||
                  (Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)))
             {
-                var listBoxItem = VisualTreeUtility.FindParent<ListBoxItem>(
+                var listBoxItem = DependencyObjectExtensions.FindParent<ListBoxItem>(
                     (DependencyObject) e.OriginalSource);
 
                 if (listBoxItem == null)
