@@ -70,7 +70,7 @@ namespace Gemini.Modules.Shell.Commands
 
             _shell.OpenDocument(editor);
 
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         private class NewFileTag

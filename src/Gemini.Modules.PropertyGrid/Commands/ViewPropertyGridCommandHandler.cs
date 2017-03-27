@@ -24,7 +24,7 @@ namespace Gemini.Modules.PropertyGrid.Commands
         public override Task Run(Command command)
         {
             _shell.ShowTool<IPropertyGrid>();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

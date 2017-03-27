@@ -24,7 +24,7 @@ namespace Gemini.Modules.Output.Commands
         public override Task Run(Command command)
         {
             _shell.ShowTool<IOutput>();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

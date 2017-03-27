@@ -46,12 +46,12 @@ namespace Gemini.Framework
 
         public virtual Task LoadState(BinaryReader reader)
         {
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         public virtual Task SaveState(BinaryWriter writer)
         {
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

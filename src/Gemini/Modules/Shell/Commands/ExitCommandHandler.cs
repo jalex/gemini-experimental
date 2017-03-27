@@ -24,7 +24,7 @@ namespace Gemini.Modules.Shell.Commands
         public override Task Run(Command command)
         {
             _shell.Close();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

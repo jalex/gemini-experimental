@@ -25,7 +25,7 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Commands
         public override Task Run(Command command)
         {
             _shell.ShowTool<PrimitiveListViewModel>();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

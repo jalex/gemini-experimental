@@ -24,7 +24,7 @@ namespace Gemini.Modules.ErrorList.Commands
         public override Task Run(Command command)
         {
             _shell.ShowTool<IErrorList>();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

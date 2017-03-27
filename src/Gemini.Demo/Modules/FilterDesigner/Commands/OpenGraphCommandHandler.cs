@@ -27,7 +27,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.Commands
         public override Task Run(Command command)
         {
             _shell.OpenDocument(new GraphViewModel(IoC.Get<IInspectorTool>()));
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

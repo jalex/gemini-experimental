@@ -25,7 +25,7 @@ namespace Gemini.Demo.Xna.Modules.SceneViewer.Commands
         public override Task Run(Command command)
         {
             _shell.OpenDocument(new SceneViewModel());
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

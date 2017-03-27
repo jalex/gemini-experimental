@@ -27,7 +27,7 @@ namespace Gemini.Demo.Modules.Home.Commands
         public override Task Run(Command command)
         {
             _shell.OpenDocument((IDocument) IoC.GetInstance(typeof(HomeViewModel), null));
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

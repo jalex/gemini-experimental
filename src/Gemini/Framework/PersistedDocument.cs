@@ -63,7 +63,7 @@ namespace Gemini.Framework
         public override Task SaveState(BinaryWriter writer)
         {
             writer.Write(FilePath);
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         public override async Task LoadState(BinaryReader reader)

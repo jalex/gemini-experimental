@@ -24,7 +24,7 @@ namespace Gemini.Modules.Inspector.Commands
         public override Task Run(Command command)
         {
             _shell.ShowTool<IInspectorTool>();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

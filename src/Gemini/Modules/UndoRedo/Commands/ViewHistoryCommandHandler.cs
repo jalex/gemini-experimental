@@ -24,7 +24,7 @@ namespace Gemini.Modules.UndoRedo.Commands
         public override Task Run(Command command)
         {
             _shell.ShowTool<IHistoryTool>();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

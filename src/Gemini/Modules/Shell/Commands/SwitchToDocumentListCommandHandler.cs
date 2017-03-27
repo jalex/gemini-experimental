@@ -40,7 +40,7 @@ namespace Gemini.Modules.Shell.Commands
         public Task Run(Command command)
         {
             _shell.OpenDocument((IDocument) command.Tag);
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }
