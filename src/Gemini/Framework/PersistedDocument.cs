@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 using Gemini.Properties;
 using Microsoft.Win32;
 

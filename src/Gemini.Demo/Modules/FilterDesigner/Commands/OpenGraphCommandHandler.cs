@@ -6,7 +6,6 @@ using Caliburn.Micro;
 using Gemini.Demo.Modules.FilterDesigner.ViewModels;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 using Gemini.Modules.Inspector;
 
 #endregion

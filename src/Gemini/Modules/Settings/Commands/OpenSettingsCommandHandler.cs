@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using Gemini.Framework.Commands;
-using Gemini.Framework.Threading;
 using Gemini.Modules.Settings.ViewModels;
 
 #endregion

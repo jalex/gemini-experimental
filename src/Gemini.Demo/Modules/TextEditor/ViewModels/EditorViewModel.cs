@@ -6,7 +6,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Gemini.Demo.Modules.TextEditor.Views;
 using Gemini.Framework;
-using Gemini.Framework.Threading;
 
 #endregion
 

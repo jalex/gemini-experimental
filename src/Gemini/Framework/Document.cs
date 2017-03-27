@@ -8,7 +8,6 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 using Gemini.Framework.ToolBars;
 using Gemini.Modules.Shell.Commands;
 using Gemini.Modules.ToolBars;

@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.ComponentModel.Composition;
 using Caliburn.Micro;
 
 #endregion

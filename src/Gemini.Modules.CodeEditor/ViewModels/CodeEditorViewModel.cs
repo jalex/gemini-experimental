@@ -6,7 +6,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using Gemini.Framework;
-using Gemini.Framework.Threading;
 using Gemini.Modules.CodeEditor.Views;
 using Gemini.Modules.StatusBar;
 

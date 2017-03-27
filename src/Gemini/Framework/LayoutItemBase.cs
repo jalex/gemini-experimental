@@ -6,7 +6,6 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Caliburn.Micro;
-using Gemini.Framework.Threading;
 
 #endregion
 

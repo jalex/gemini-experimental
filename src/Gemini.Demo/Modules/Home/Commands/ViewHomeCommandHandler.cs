@@ -7,7 +7,6 @@ using Gemini.Demo.Modules.Home.ViewModels;
 using Gemini.Framework;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 
 #endregion
 

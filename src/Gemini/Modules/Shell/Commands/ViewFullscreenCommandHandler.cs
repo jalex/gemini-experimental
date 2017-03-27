@@ -3,7 +3,6 @@
 using System.Threading.Tasks;
 using System.Windows;
 using Gemini.Framework.Commands;
-using Gemini.Framework.Threading;
 
 #endregion
 

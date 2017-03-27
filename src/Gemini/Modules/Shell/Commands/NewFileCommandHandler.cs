@@ -7,7 +7,6 @@ using System.Windows;
 using Caliburn.Micro;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 using Gemini.Properties;
 
 #endregion

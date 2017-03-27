@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Gemini.Framework.Commands;
-using Gemini.Framework.Threading;
 using Gemini.Modules.ErrorList.Properties;
 
 #endregion

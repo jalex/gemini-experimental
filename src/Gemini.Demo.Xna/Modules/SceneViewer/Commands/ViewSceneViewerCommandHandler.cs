@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Gemini.Demo.Xna.Modules.SceneViewer.ViewModels;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 
 #endregion
 
