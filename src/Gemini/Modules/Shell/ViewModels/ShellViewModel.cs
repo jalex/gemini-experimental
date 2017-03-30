@@ -258,7 +258,16 @@ namespace Gemini.Modules.Shell.ViewModels
 
             _layoutItemStatePersister.SaveState(this, _shellView, StateFile);
 
-            base.OnDeactivate(close);
+            try
+            {
+                // TODO argument null exception occurs where, but I'm not sure why
+                //      -> investigate
+                base.OnDeactivate(close);
+            }
+            catch
+            {
+
+            }
         }
 
 #pragma warning disable 649
