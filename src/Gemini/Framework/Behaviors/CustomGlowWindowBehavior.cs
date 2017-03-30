@@ -10,6 +10,9 @@ using MahApps.Metro.Controls;
 namespace Gemini.Framework.Behaviors
 {
     // Copied from MahApp's GlowWindowBehavior, because that one has a bug if GlowBrush is set in a style, rather than directly.
+    /// <summary>
+    ///     Represents a glow behavior for <see cref="MetroWindow"/>.
+    /// </summary>
     public class CustomGlowWindowBehavior : Behavior<MetroWindow>
     {
         private GlowWindow _bottom;

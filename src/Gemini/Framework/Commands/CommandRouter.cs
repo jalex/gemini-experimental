@@ -14,6 +14,9 @@ using Gemini.Framework.Services;
 
 namespace Gemini.Framework.Commands
 {
+    /// <summary>
+    ///     Represents the default implementation of the <see cref="ICommandRouter" />.
+    /// </summary>
     [Export(typeof(ICommandRouter))]
     public class CommandRouter : ICommandRouter
     {
@@ -23,6 +26,10 @@ namespace Gemini.Framework.Commands
 
         private readonly Dictionary<Type, CommandHandlerWrapper> _globalCommandHandlerWrappers;
 
+        /// <summary>
+        ///     Creates a new <see cref="CommandRouter" />.
+        /// </summary>
+        /// <param name="globalCommandHandlers">A list of available <see cref="ICommandHandler" />s.</param>
         [ImportingConstructor]
         public CommandRouter(
             [ImportMany(typeof(ICommandHandler))] ICommandHandler[] globalCommandHandlers)
@@ -31,6 +38,12 @@ namespace Gemini.Framework.Commands
             _globalCommandHandlerWrappers = BuildCommandHandlerWrappers(globalCommandHandlers);
         }
 
+        /// <summary>
+        ///     Returns the <see cref="CommandHandlerWrapper" /> for invoking an underlying command handler
+        ///     associated with the specified <see cref="CommandDefinitionBase" />.
+        /// </summary>
+        /// <param name="commandDefinition">The <see cref="CommandDefinitionBase" /> for lookup up the command handler.</param>
+        /// <returns>A <see cref="CommandHandlerWrapper" /> instance, or null if not available.</returns>
         public CommandHandlerWrapper GetCommandHandler(CommandDefinitionBase commandDefinition)
         {
             CommandHandlerWrapper commandHandler;
@@ -46,19 +59,19 @@ namespace Gemini.Framework.Commands
             }
 
             var activeDocumentViewModel = shell.SelectedDocument;
-            if ((activeDocumentViewModel != null) && !Equals(activeDocumentViewModel, activeItemViewModel))
-            {
-                commandHandler = GetCommandHandlerForLayoutItem(commandDefinition, activeDocumentViewModel);
-                if (commandHandler != null)
-                    return commandHandler;
-            }
+            if ((activeDocumentViewModel == null) || Equals(activeDocumentViewModel, activeItemViewModel))
+                return !_globalCommandHandlerWrappers.TryGetValue(commandDefinition.GetType(), out commandHandler)
+                    ? null
+                    : commandHandler;
+            commandHandler = GetCommandHandlerForLayoutItem(commandDefinition, activeDocumentViewModel);
+            if (commandHandler != null)
+                return commandHandler;
 
             // If none of the objects in the DataContext hierarchy handle the command,
             // fallback to the global handler.
-            if (!_globalCommandHandlerWrappers.TryGetValue(commandDefinition.GetType(), out commandHandler))
-                return null;
-
-            return commandHandler;
+            return !_globalCommandHandlerWrappers.TryGetValue(commandDefinition.GetType(), out commandHandler)
+                ? null
+                : commandHandler;
         }
 
         private Dictionary<Type, CommandHandlerWrapper> BuildCommandHandlerWrappers(ICommandHandler[] commandHandlers)
@@ -82,7 +95,7 @@ namespace Gemini.Framework.Commands
             return result;
         }
 
-        private static List<ICommandHandler> SortCommandHandlers(ICommandHandler[] commandHandlers)
+        private static IEnumerable<ICommandHandler> SortCommandHandlers(IEnumerable<ICommandHandler> commandHandlers)
         {
             // Put command handlers defined in priority assemblies, last. This allows applications
             // to override built-in command handlers.
@@ -123,9 +136,10 @@ namespace Gemini.Framework.Commands
                 var dataContext = frameworkElement?.DataContext;
                 if ((dataContext != null) && !ReferenceEquals(dataContext, previousDataContext))
                 {
-                    if (dataContext is ICommandRerouter)
+                    var context = dataContext as ICommandRerouter;
+                    if (context != null)
                     {
-                        var commandRerouter = (ICommandRerouter) dataContext;
+                        var commandRerouter = context;
                         var commandTarget = commandRerouter.GetHandler(commandDefinition);
                         if (commandTarget != null)
                         {

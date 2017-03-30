@@ -15,7 +15,7 @@ using Point = System.Windows.Point;
 namespace Gemini.Demo.MonoGame.Modules.SceneViewer.Views
 {
     /// <summary>
-    ///     Interaction logic for SceneView.xaml
+    ///     Represents the view of the scene.
     /// </summary>
     public partial class SceneView : ISceneView, IDisposable
     {
@@ -27,6 +27,9 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.Views
         private Point _previousPosition;
         private float _yaw = 0.5f;
 
+        /// <summary>
+        ///     Creates a new <see cref="SceneView" />.
+        /// </summary>
         public SceneView()
         {
             InitializeComponent();
@@ -34,11 +37,16 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer.Views
             _cube = new CubePrimitive();
         }
 
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        /// <filterpriority>2</filterpriority>
         public void Dispose()
         {
             GraphicsControl.Dispose();
         }
 
+        /// <summary>
+        ///     Invalidates the current scene.
+        /// </summary>
         public void Invalidate()
         {
             GraphicsControl.Invalidate();

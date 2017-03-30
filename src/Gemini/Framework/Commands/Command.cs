@@ -7,6 +7,10 @@ using Caliburn.Micro;
 
 namespace Gemini.Framework.Commands
 {
+
+    /// <summary>
+    ///     Represents the state of an executable operation which can be persisted across UI elements.
+    /// </summary>
     public class Command : PropertyChangedBase
     {
         private bool _checked;
@@ -16,8 +20,14 @@ namespace Gemini.Framework.Commands
         private string _toolTip;
         private bool _visible = true;
 
+        /// <summary>
+        ///     Returns the <see cref="CommandDefinitionBase"/> associated with the command.
+        /// </summary>
         public CommandDefinitionBase CommandDefinition { get; }
 
+        /// <summary>
+        ///     Gets or sets whether the command and associated UI elements are visible on the UI.
+        /// </summary>
         public bool Visible
         {
             get { return _visible; }
@@ -28,6 +38,9 @@ namespace Gemini.Framework.Commands
             }
         }
 
+        /// <summary>
+        ///     Gets or sets whether the command and associated UI elements are enabled.
+        /// </summary>
         public bool Enabled
         {
             get { return _enabled; }
@@ -38,6 +51,9 @@ namespace Gemini.Framework.Commands
             }
         }
 
+        /// <summary>
+        ///     Gets or sets whether the command and associated UI elements are in a checked state.
+        /// </summary>
         public bool Checked
         {
             get { return _checked; }
@@ -48,6 +64,9 @@ namespace Gemini.Framework.Commands
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the display text of the command and associated UI elements.
+        /// </summary>
         public string Text
         {
             get { return _text; }
@@ -58,6 +77,9 @@ namespace Gemini.Framework.Commands
             }
         }
 
+        /// <summary>
+        ///     Gets or sets a tooltip associated with the command and associated UI elements.
+        /// </summary>
         public string ToolTip
         {
             get { return _toolTip; }
@@ -68,6 +90,9 @@ namespace Gemini.Framework.Commands
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the <see cref="Uri"/> of an icon of the command and associated UI elements.
+        /// </summary>
         public Uri IconSource
         {
             get { return _iconSource; }
@@ -78,8 +103,15 @@ namespace Gemini.Framework.Commands
             }
         }
 
+        /// <summary>
+        ///     Gets or sets a custom tag which can be used to associated payload with the command.
+        /// </summary>
         public object Tag { get; set; }
 
+        /// <summary>
+        ///     Creates a new <see cref="Command"/>.
+        /// </summary>
+        /// <param name="commandDefinition">The <see cref="CommandDefinitionBase"/> associated with the command.</param>
         public Command(CommandDefinitionBase commandDefinition)
         {
             CommandDefinition = commandDefinition;
