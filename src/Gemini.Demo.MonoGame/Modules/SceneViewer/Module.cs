@@ -12,6 +12,9 @@ using Gemini.Modules.Inspector.MonoGame;
 
 namespace Gemini.Demo.MonoGame.Modules.SceneViewer
 {
+    /// <summary>
+    ///     Represents the Scene Viewer <see cref="IModule"/>.
+    /// </summary>
     [Export(typeof(IModule))]
     public class Module : ModuleBase
     {
