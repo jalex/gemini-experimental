@@ -9,6 +9,7 @@ namespace Gemini.Modules.Settings.ViewModels
     public class SettingsPageViewModel
     {
         public string Name { get; set; }
+        public int Order { get; set; }
         public List<ISettingsEditor> Editors { get; private set; }
         public List<SettingsPageViewModel> Children { get; private set; }
 

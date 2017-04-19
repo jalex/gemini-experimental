@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Gemini.Framework;
@@ -58,18 +59,51 @@ namespace Gemini.Modules.Settings.ViewModels
 
                 if (page == null)
                 {
+                    var name = settingsEditor.SettingsPageName;
+                    var order = ExtractOrderFromName(ref name);
                     page = new SettingsPageViewModel
                     {
-                        Name = settingsEditor.SettingsPageName
+                        Name = name,
+                        Order = order
                     };
                     parentCollection.Add(page);
                 }
 
                 page.Editors.Add(settingsEditor);
             }
+            SortAndTrimExcess(pages);
 
             Pages = pages;
             SelectedPage = GetFirstLeafPageRecursive(pages);
+        }
+
+        private static readonly Regex _OrderFromNameRE = new Regex(@"^\[(\d+)] (.*)$");
+        private static int ExtractOrderFromName(ref string name) {
+            var m = _OrderFromNameRE.Match(name);
+            if(m.Success) {
+                name = m.Groups[2].Value;
+                return int.Parse(m.Groups[1].Value);
+            } else {
+                return 0;
+            }
+        }
+
+        private static void SortAndTrimExcess(List<SettingsPageViewModel> pages) {
+            if(pages.Count > 1) {
+                pages.Sort((p1, p2) => {
+                    var r = p1.Order.CompareTo(p2.Order);
+                    if(r == 0) r = p1.Name.CompareTo(p2.Name);
+                    return r;
+                });
+            }
+            foreach(var p in pages) {
+                SortAndTrimExcess(p.Children);
+                if(p.Editors.Count > 1) {
+                    p.Editors.Sort((e1, e2) => ((e1 is ISettingsEditorOrder) ? ((ISettingsEditorOrder)e1).Order : 0).CompareTo((e2 is ISettingsEditorOrder) ? ((ISettingsEditorOrder)e2).Order : 0));
+                    p.Editors.TrimExcess();
+                }
+            }
+            pages.TrimExcess();
         }
 
         private static SettingsPageViewModel GetFirstLeafPageRecursive(List<SettingsPageViewModel> pages)
@@ -98,7 +132,12 @@ namespace Gemini.Modules.Settings.ViewModels
 
                 if (page == null)
                 {
-                    page = new SettingsPageViewModel {Name = pathElement};
+                    var name = pathElement;
+                    var order = ExtractOrderFromName(ref name);
+                    page = new SettingsPageViewModel {
+                        Name = name,
+                        Order = order
+                    };
                     pages.Add(page);
                 }
 

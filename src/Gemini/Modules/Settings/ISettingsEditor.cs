@@ -7,4 +7,9 @@
 
         void ApplyChanges();
     }
+
+    public interface ISettingsEditorOrder {
+
+        int Order { get; }
+    }
 }
