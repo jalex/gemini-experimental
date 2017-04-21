@@ -54,7 +54,7 @@ namespace Gemini.Modules.Shell.Commands
             }
         }
 
-        internal static Task<IDocument> GetEditor(string path)
+        public static Task<IDocument> GetEditor(string path)
         {
             var provider = IoC.GetAllInstances(typeof(IEditorProvider))
                 .Cast<IEditorProvider>()
