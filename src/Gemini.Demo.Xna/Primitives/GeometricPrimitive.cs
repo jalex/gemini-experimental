@@ -49,6 +49,7 @@ namespace Gemini.Demo.Xna.Primitives
         ///     Adds a new index to the primitive model. This should only be called
         ///     during the initialization process, before InitializePrimitive.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="index"/> is larger than <see cref="ushort.MaxValue"/>.</exception>
         protected void AddIndex(int index)
         {
             if (index > ushort.MaxValue)

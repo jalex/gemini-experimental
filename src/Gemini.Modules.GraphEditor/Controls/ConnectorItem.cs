@@ -15,9 +15,9 @@ namespace Gemini.Modules.GraphEditor.Controls
         private bool _isDragging;
         private Point _lastMousePosition;
 
-        private GraphControl ParentGraphControl => VisualTreeUtility.FindParent<GraphControl>(this);
+        private GraphControl ParentGraphControl => DependencyObjectExtensions.FindParent<GraphControl>(this);
 
-        internal ElementItem ParentElementItem => VisualTreeUtility.FindParent<ElementItem>(this);
+        internal ElementItem ParentElementItem => DependencyObjectExtensions.FindParent<ElementItem>(this);
 
         static ConnectorItem()
         {
@@ -42,7 +42,7 @@ namespace Gemini.Modules.GraphEditor.Controls
         /// </summary>
         private void UpdatePosition()
         {
-            var parentGraphControl = VisualTreeUtility.FindParent<GraphControl>(this);
+            var parentGraphControl = DependencyObjectExtensions.FindParent<GraphControl>(this);
             if (parentGraphControl == null)
                 return;
 

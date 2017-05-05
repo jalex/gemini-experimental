@@ -7,7 +7,6 @@ using System.Windows;
 using Caliburn.Micro;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 using Gemini.Properties;
 
 #endregion
@@ -70,7 +69,7 @@ namespace Gemini.Modules.Shell.Commands
 
             _shell.OpenDocument(editor);
 
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         private class NewFileTag

@@ -8,7 +8,6 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 using Gemini.Framework.ToolBars;
 using Gemini.Modules.Shell.Commands;
 using Gemini.Modules.ToolBars;
@@ -83,7 +82,7 @@ namespace Gemini.Framework
         Task ICommandHandler<RedoCommandDefinition>.Run(Command command)
         {
             UndoRedoManager.Redo(1);
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         void ICommandHandler<SaveFileAsCommandDefinition>.Update(Command command)
@@ -132,7 +131,7 @@ namespace Gemini.Framework
         Task ICommandHandler<UndoCommandDefinition>.Run(Command command)
         {
             UndoRedoManager.Undo(1);
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         private static async Task DoSaveAs(IPersistedDocument persistedDocument) {

@@ -6,7 +6,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Gemini.Demo.Modules.TextEditor.Views;
 using Gemini.Framework;
-using Gemini.Framework.Threading;
 
 #endregion
 
@@ -26,14 +25,14 @@ namespace Gemini.Demo.Modules.TextEditor.ViewModels
         {
             _originalText = string.Empty;
             ApplyOriginalText();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         protected override Task DoLoad(string filePath)
         {
             _originalText = File.ReadAllText(filePath);
             ApplyOriginalText();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         protected override Task DoSave(string filePath)
@@ -41,7 +40,7 @@ namespace Gemini.Demo.Modules.TextEditor.ViewModels
             var newText = _view.TextBox.Text;
             File.WriteAllText(filePath, newText);
             _originalText = newText;
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         private void ApplyOriginalText()

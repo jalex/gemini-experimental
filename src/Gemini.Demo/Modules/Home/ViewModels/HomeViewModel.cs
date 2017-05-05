@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Media;
 using Gemini.Framework;
 using System.Threading.Tasks;
-using Gemini.Framework.Threading;
 
 #endregion
 
@@ -179,7 +178,7 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             // save TextAlignment as a string
             writer.Write(TextAlignment.ToString());
 
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         public override Task LoadState(BinaryReader reader)
@@ -203,7 +202,7 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             // load TextAlignment as a string
             TextAlignment = (TextAlignment) Enum.Parse(typeof(TextAlignment), reader.ReadString());
 
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

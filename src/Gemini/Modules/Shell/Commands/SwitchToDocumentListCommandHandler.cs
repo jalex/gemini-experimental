@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Gemini.Framework;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 
 #endregion
 
@@ -40,7 +39,7 @@ namespace Gemini.Modules.Shell.Commands
         public Task Run(Command command)
         {
             _shell.OpenDocument((IDocument) command.Tag);
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

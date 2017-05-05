@@ -10,6 +10,9 @@ using MahApps.Metro.Controls;
 namespace Gemini.Framework.Behaviors
 {
     // Copied from MahApp's GlowWindowBehavior, because that one has a bug if GlowBrush is set in a style, rather than directly.
+    /// <summary>
+    ///     Represents a glow behavior for <see cref="MetroWindow"/>.
+    /// </summary>
     public class CustomGlowWindowBehavior : Behavior<MetroWindow>
     {
         private GlowWindow _bottom;
@@ -17,6 +20,10 @@ namespace Gemini.Framework.Behaviors
         private GlowWindow _right;
         private GlowWindow _top;
 
+        /// <summary>
+        /// Called after the behavior is attached to an AssociatedObject.
+        /// </summary>
+        /// <remarks>Override this to hook up functionality to the AssociatedObject.</remarks>
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -35,10 +42,11 @@ namespace Gemini.Framework.Behaviors
             Show();
             Update();
 
+            // ReSharper disable once PossibleNullReferenceException
             metroWindow.LocationChanged += (s, e) => Update();
             metroWindow.SizeChanged += (s, e) => Update();
 
-            if ((metroWindow == null) || !metroWindow.WindowTransitionsEnabled)
+            if (!metroWindow.WindowTransitionsEnabled)
             {
                 SetOpacityTo(1.0);
             }

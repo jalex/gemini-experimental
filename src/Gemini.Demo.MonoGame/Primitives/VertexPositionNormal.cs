@@ -13,11 +13,19 @@ namespace Gemini.Demo.MonoGame.Primitives
     /// </summary>
     public struct VertexPositionNormal : IVertexType
     {
+
+        /// <summary>
+        ///     Specifies the position of the vertex as <see cref="Vector3"/>.
+        /// </summary>
         public Vector3 Position;
+
+        /// <summary>
+        ///     Specifies the normal of the vertex as <see cref="Vector3"/>.
+        /// </summary>
         public Vector3 Normal;
 
         /// <summary>
-        ///     Constructor.
+        ///     Creates a new <see cref="VertexPositionNormal"/>.
         /// </summary>
         public VertexPositionNormal(Vector3 position, Vector3 normal)
         {

@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 
 #endregion
 
@@ -24,7 +23,7 @@ namespace Gemini.Modules.Toolbox.Commands
         public override Task Run(Command command)
         {
             _shell.ShowTool<IToolbox>();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

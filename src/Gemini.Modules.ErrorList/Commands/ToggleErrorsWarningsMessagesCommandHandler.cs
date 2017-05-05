@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Gemini.Framework.Commands;
-using Gemini.Framework.Threading;
 using Gemini.Modules.ErrorList.Properties;
 
 #endregion
@@ -51,7 +50,7 @@ namespace Gemini.Modules.ErrorList.Commands
         Task ICommandHandler<ToggleErrorsCommandDefinition>.Run(Command command)
         {
             _errorList.ShowErrors = !_errorList.ShowErrors;
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         void ICommandHandler<ToggleMessagesCommandDefinition>.Update(Command command)
@@ -66,7 +65,7 @@ namespace Gemini.Modules.ErrorList.Commands
         Task ICommandHandler<ToggleMessagesCommandDefinition>.Run(Command command)
         {
             _errorList.ShowMessages = !_errorList.ShowMessages;
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         void ICommandHandler<ToggleWarningsCommandDefinition>.Update(Command command)
@@ -81,7 +80,7 @@ namespace Gemini.Modules.ErrorList.Commands
         Task ICommandHandler<ToggleWarningsCommandDefinition>.Run(Command command)
         {
             _errorList.ShowWarnings = !_errorList.ShowWarnings;
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
         private static string Pluralize(string singular, string plural, int number)

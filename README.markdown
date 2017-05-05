@@ -165,14 +165,14 @@ public class EditorViewModel : PersistedDocument
 	{
 		_originalText = string.Empty;
 		ApplyOriginalText();
-		return TaskUtility.Completed;
+		return Task.CompletedTask;
 	}
 
 	protected override Task DoLoad(string filePath)
 	{
 		_originalText = File.ReadAllText(filePath);
 		ApplyOriginalText();
-		return TaskUtility.Completed;
+		return Task.CompletedTask;
 	}
 
 	protected override Task DoSave(string filePath)
@@ -180,7 +180,7 @@ public class EditorViewModel : PersistedDocument
 		var newText = _view.textBox.Text;
 		File.WriteAllText(filePath, newText);
 		_originalText = newText;
-		return TaskUtility.Completed;
+		return Task.CompletedTask;
 	}
 
 	private void ApplyOriginalText()
@@ -314,7 +314,7 @@ public class MyDocument : Document, ICommandHandler<ClearTextCommandDefinition>
 	Task ICommandHandler<ClearTextCommandDefinition>.Run(Command command)
 	{
 		this.Text = string.Empty;
-		return TaskUtility.Completed;
+		return Task.CompletedTask;
 	}
 }
 ```

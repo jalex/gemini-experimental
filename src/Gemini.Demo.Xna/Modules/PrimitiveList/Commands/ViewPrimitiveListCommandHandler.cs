@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Gemini.Demo.Xna.Modules.PrimitiveList.ViewModels;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 
 #endregion
 
@@ -25,7 +24,7 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Commands
         public override Task Run(Command command)
         {
             _shell.ShowTool<PrimitiveListViewModel>();
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

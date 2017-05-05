@@ -3,7 +3,6 @@
 using System.Threading.Tasks;
 using System.Windows;
 using Gemini.Framework.Commands;
-using Gemini.Framework.Threading;
 
 #endregion
 
@@ -16,7 +15,7 @@ namespace Gemini.Modules.Shell.Commands
         {
             var window = Application.Current.MainWindow;
             if (window == null)
-                return TaskUtility.Completed;
+                return Task.CompletedTask;
 
             if (window.WindowState != WindowState.Maximized)
             {
@@ -30,7 +29,7 @@ namespace Gemini.Modules.Shell.Commands
                 window.WindowStyle = WindowStyle.SingleBorderWindow;
             }
 
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

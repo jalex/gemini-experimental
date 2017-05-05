@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using Gemini.Framework.Commands;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 
 #endregion
 
@@ -30,7 +29,7 @@ namespace Gemini.Modules.Shell.Commands
         public override Task Run(Command command)
         {
             _shell.CloseDocument(_shell.SelectedDocument);
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
     }
 }

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using Gemini.Framework.Services;
-using Gemini.Framework.Threading;
 using Gemini.Properties;
 using Microsoft.Win32;
 
@@ -15,12 +14,22 @@ using Microsoft.Win32;
 
 namespace Gemini.Framework
 {
+
+    /// <summary>
+    ///     Represents a base implementation of a <see cref="IPersistedDocument"/>.
+    /// </summary>
     public abstract class PersistedDocument : Document, IPersistedDocument
     {
         private bool _isDirty;
 
+        /// <summary>
+        ///     Returns whether the document is currently in a transient state.
+        /// </summary>
         public bool IsNew { get; private set; }
 
+        /// <summary>
+        ///     Returns the file name of the document.
+        /// </summary>
         public string FileName {
             get { return _fileName; }
             private set {
@@ -31,6 +40,9 @@ namespace Gemini.Framework
         }
         string _fileName;
 
+        /// <summary>
+        ///     Returns the full file path of the document.
+        /// </summary>
         public string FilePath {
             get { return _filePath; }
             private set {
@@ -41,8 +53,15 @@ namespace Gemini.Framework
         }
         string _filePath;
 
-        public override string ToolTip { get { return FilePath ?? FileName; } }
+        /// <summary>
+        ///     Returns a tooltip associated with the panel.
+        /// </summary>
+        /// <remarks>Defaults to <see cref="IHaveDisplayName.DisplayName"/> if not specified.</remarks>
+        public override string ToolTip => FilePath ?? FileName;
 
+        /// <summary>
+        ///     Returns whether the document has unpersisted changes.
+        /// </summary>
         public bool IsDirty
         {
             get { return _isDirty; }
@@ -58,19 +77,40 @@ namespace Gemini.Framework
         }
 
         // ShouldReopenOnStart, SaveState and LoadState are default methods of PersistedDocument.
+        /// <summary>
+        ///     Returns whether the panel should be re-opened when the application starts.
+        /// </summary>
         public override bool ShouldReopenOnStart => FilePath != null;
 
+        /// <summary>
+        ///     Asynchronously saves the state of the panel using the specified <see cref="BinaryWriter"/>.
+        /// </summary>
+        /// <param name="writer">A <see cref="BinaryWriter"/> for persisting the state.</param>
+        /// <returns>A <see cref="Task"/> representing the operation.</returns>
+        /// <exception cref="IOException">An I/O error occurs. </exception>
+        /// <exception cref="ArgumentNullException">
+        ///         <paramref name="writer" /> is null. </exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed. </exception>
         public override Task SaveState(BinaryWriter writer)
         {
             writer.Write(FilePath);
-            return TaskUtility.Completed;
+            return Task.CompletedTask;
         }
 
-        public override async Task LoadState(BinaryReader reader)
-        {
-            await Load(reader.ReadString());
-        }
+        /// <summary>
+        ///     Asynchronously loads the state of the panel using the specified <see cref="BinaryReader"/>.
+        /// </summary>
+        /// <param name="reader">A <see cref="BinaryReader"/> for reading the state.</param>
+        /// <returns>A <see cref="Task"/> representing the operation.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream is reached. </exception>
+        /// <exception cref="IOException">An I/O error occurs. </exception>
+        /// <exception cref="ObjectDisposedException">The stream is closed. </exception>
+        public override async Task LoadState(BinaryReader reader) => await Load(reader.ReadString());
 
+        /// <summary>
+        /// Called to check whether or not this instance can close.
+        /// </summary>
+        /// <param name="callback">The implementor calls this action with the result of the close check.</param>
         public override async void CanClose(Action<bool> callback)
         {
             if (IsDirty)
@@ -128,6 +168,11 @@ namespace Gemini.Framework
             callback(true);
         }
 
+        /// <summary>
+        ///     Asynchronously a new document content using the specified file name.
+        /// </summary>
+        /// <param name="fileName">The file name of the document.</param>
+        /// <returns>A <see cref="Task"/> representing the operation.</returns>
         public async Task New(string fileName)
         {
             FileName = fileName;
@@ -139,6 +184,11 @@ namespace Gemini.Framework
             await DoNew();
         }
 
+        /// <summary>
+        ///     Loads the contents of a file into the document using the specified file path.
+        /// </summary>
+        /// <param name="filePath">The path of a file to load.</param>
+        /// <returns>A <see cref="Task"/> representing the operation.</returns>
         public async Task Load(string filePath)
         {
             FilePath = filePath;
@@ -151,6 +201,11 @@ namespace Gemini.Framework
             await DoLoad(filePath);
         }
 
+        /// <summary>
+        ///     Saves the contents of the the document into a file using the specified file path.
+        /// </summary>
+        /// <param name="filePath">The path of the file to save.</param>
+        /// <returns>A <see cref="Task"/> representing the operation.</returns>
         public async Task Save(string filePath)
         {
             FilePath = filePath;
@@ -168,10 +223,24 @@ namespace Gemini.Framework
             DisplayName = IsDirty ? FileName + "*" : FileName;
         }
 
+        /// <summary>
+        ///     Invoked when creating a new document.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the operation.</returns>
         protected abstract Task DoNew();
 
+        /// <summary>
+        ///     Invoked when loading the contents of a file into the document.
+        /// </summary>
+        /// <param name="filePath">The path of a file to load.</param>
+        /// <returns>A <see cref="Task"/> representing the operation.</returns>
         protected abstract Task DoLoad(string filePath);
 
+        /// <summary>
+        ///     Invoked when persisting the contents of the document into a file.
+        /// </summary>
+        /// <param name="filePath">The path of the file to save.</param>
+        /// <returns>A <see cref="Task"/> representing the operation.</returns>
         protected abstract Task DoSave(string filePath);
     }
 }
