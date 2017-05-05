@@ -225,7 +225,12 @@ namespace Gemini.Modules.Shell.ViewModels
         {
             RaiseActiveDocumentChanging();
 
-            base.DeactivateItem(item, close);
+            try {
+                // TODO since the update to latest Xceed.AvalonDock we get an exception here now. ignore
+                base.DeactivateItem(item, close);
+            } catch {
+
+            }
 
             RaiseActiveDocumentChanged();
         }
