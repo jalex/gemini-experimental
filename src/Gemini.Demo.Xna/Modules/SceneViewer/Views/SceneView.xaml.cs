@@ -25,6 +25,7 @@ namespace Gemini.Demo.Xna.Modules.SceneViewer.Views
 
         // A yaw and pitch applied to the viewport based on input
         private Point _previousPosition;
+
         private float _yaw;
 
         public SceneView()
@@ -57,7 +58,7 @@ namespace Gemini.Demo.Xna.Modules.SceneViewer.Views
 
             // Create the world-view-projection matrices for the cube and camera
             var position = ((SceneViewModel) DataContext).Position;
-            var world = Matrix.CreateFromYawPitchRoll(_yaw, _pitch, 0f)*Matrix.CreateTranslation(position);
+            var world = Matrix.CreateFromYawPitchRoll(_yaw, _pitch, 0f) * Matrix.CreateTranslation(position);
             var view = Matrix.CreateLookAt(new Vector3(0, 0, 2.5f), Vector3.Zero, Vector3.Up);
             var projection = Matrix.CreatePerspectiveFieldOfView(1, e.GraphicsDevice.Viewport.AspectRatio, 1, 10);
 
@@ -71,11 +72,11 @@ namespace Gemini.Demo.Xna.Modules.SceneViewer.Views
             var position = e.GetPosition(this);
 
             // If the left or right buttons are down, we adjust the yaw and pitch of the cube
-            if ((e.LeftButton == MouseButtonState.Pressed) ||
-                (e.RightButton == MouseButtonState.Pressed))
+            if (e.LeftButton == MouseButtonState.Pressed ||
+                e.RightButton == MouseButtonState.Pressed)
             {
-                _yaw += (float) (position.X - _previousPosition.X)*.01f;
-                _pitch += (float) (position.Y - _previousPosition.Y)*.01f;
+                _yaw += (float) (position.X - _previousPosition.X) * .01f;
+                _pitch += (float) (position.Y - _previousPosition.Y) * .01f;
                 GraphicsControl.Invalidate();
             }
 

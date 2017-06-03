@@ -12,9 +12,8 @@ using Gemini.Modules.Toolbox;
 
 namespace Gemini.Demo.Modules.FilterDesigner
 {
-
     /// <summary>
-    ///     Represents a default implementation of the <see cref="ISample"/>.
+    ///     Represents a default implementation of the <see cref="ISample" />.
     /// </summary>
     [Export(typeof(ISample))]
     public class Sample : ISample
@@ -25,9 +24,9 @@ namespace Gemini.Demo.Modules.FilterDesigner
         public string Name => "Filter Designer";
 
         /// <summary>
-        ///     Activates the example using the specified <see cref="IShell"/>.
+        ///     Activates the example using the specified <see cref="IShell" />.
         /// </summary>
-        /// <param name="shell">The <see cref="IShell"/>.</param>
+        /// <param name="shell">The <see cref="IShell" />.</param>
         public void Activate(IShell shell)
         {
             shell.OpenDocument(IoC.Get<GraphViewModel>());

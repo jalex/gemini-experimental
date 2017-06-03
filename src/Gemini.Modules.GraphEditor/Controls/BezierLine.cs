@@ -60,7 +60,7 @@ namespace Gemini.Modules.GraphEditor.Controls
 
         protected override Size MeasureOverride(Size constraint)
         {
-            var midX = X1 + (X2 - X1)/2;
+            var midX = X1 + (X2 - X1) / 2;
 
             _geometry = new PathGeometry
             {

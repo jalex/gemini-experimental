@@ -4,10 +4,10 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Gemini.Framework;
-using System.Threading.Tasks;
 
 #endregion
 

@@ -9,22 +9,20 @@ using Gemini.Modules.MainMenu;
 
 namespace Gemini.Demo.Xna.Modules.Startup
 {
-
     /// <summary>
     ///     Represents the startup module of the XNA demo.
     /// </summary>
     [Export(typeof(IModule))]
     public class Module : ModuleBase
     {
-
         /// <summary>
-        ///     Specifies the <see cref="MenuDefinition"/> of the demos menu.
+        ///     Specifies the <see cref="MenuDefinition" /> of the demos menu.
         /// </summary>
         [Export] public static MenuDefinition DemosMenu = new MenuDefinition(
             MenuDefinitions.MainMenuBar, 5, "De_mos");
 
         /// <summary>
-        ///     Specifies the <see cref="MenuItemGroupDefinition"/> of the demos menu.
+        ///     Specifies the <see cref="MenuItemGroupDefinition" /> of the demos menu.
         /// </summary>
         [Export] public static MenuItemGroupDefinition DemosMenuGroup = new MenuItemGroupDefinition(
             DemosMenu, 0);

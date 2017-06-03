@@ -12,9 +12,9 @@ namespace Gemini.Modules.Inspector.Conventions
     {
         public override bool IsApplicable(PropertyDescriptor propertyDescriptor)
         {
-            var isNumberType = (propertyDescriptor.PropertyType == typeof(int))
-                               || (propertyDescriptor.PropertyType == typeof(double))
-                               || (propertyDescriptor.PropertyType == typeof(float));
+            var isNumberType = propertyDescriptor.PropertyType == typeof(int)
+                               || propertyDescriptor.PropertyType == typeof(double)
+                               || propertyDescriptor.PropertyType == typeof(float);
 
             return isNumberType;
         }

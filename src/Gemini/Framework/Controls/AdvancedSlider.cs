@@ -93,7 +93,7 @@ namespace Gemini.Framework.Controls
         public override void ApplyValueChange(double ammount)
         {
             var s = (dynamic) Speed;
-            var change = s*ammount;
+            var change = s * ammount;
 
             var newValue = (dynamic) Value + Convert.ChangeType(change, ValueType);
             newValue = CoerceValue(this, newValue);
@@ -155,13 +155,13 @@ namespace Gemini.Framework.Controls
             if (Type == DisplayType.Number)
                 return;
 
-            if ((ValueMin != null) && (ValueMax != null))
+            if (ValueMin != null && ValueMax != null)
                 try
                 {
                     var v = (dynamic) Value;
                     var vmin = (dynamic) ValueMin;
                     var vmax = (dynamic) ValueMax;
-                    Ratio = (v - vmin)/(vmax - vmin);
+                    Ratio = (v - vmin) / (vmax - vmin);
                 }
                 catch (DivideByZeroException)
                 {

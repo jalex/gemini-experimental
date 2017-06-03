@@ -57,7 +57,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.Views
 
         private void OnGraphControlMouseMove(object sender, MouseEventArgs e)
         {
-            if ((e.RightButton == MouseButtonState.Pressed) && GraphControl.IsMouseCaptured)
+            if (e.RightButton == MouseButtonState.Pressed && GraphControl.IsMouseCaptured)
             {
                 var currentContentMousePoint = e.GetPosition(GraphControl);
                 var dragOffset = currentContentMousePoint - _originalContentMouseDownPoint;
@@ -72,7 +72,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.Views
         private void OnGraphControlMouseWheel(object sender, MouseWheelEventArgs e)
         {
             ZoomAndPanControl.ZoomAboutPoint(
-                ZoomAndPanControl.ContentScale + e.Delta/1000.0f,
+                ZoomAndPanControl.ContentScale + e.Delta / 1000.0f,
                 e.GetPosition(GraphControl));
 
             e.Handled = true;

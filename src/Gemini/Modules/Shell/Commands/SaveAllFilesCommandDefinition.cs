@@ -25,7 +25,7 @@ namespace Gemini.Modules.Shell.Commands
 
         public override string ToolTip => Resources.FileSaveAllCommandToolTip;
 
-        public override Uri IconSource => new Uri("pack://application:,,,/Gemini;component/Resources/Icons/SaveAll.png")
-            ;
+        public override Uri IconSource =>
+            new Uri("pack://application:,,,/Gemini;component/Resources/Icons/SaveAll.png");
     }
 }

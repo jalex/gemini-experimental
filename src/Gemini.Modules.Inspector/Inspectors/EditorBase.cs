@@ -86,7 +86,7 @@ namespace Gemini.Modules.Inspector.Inspectors
                 try
                 {
                     var item = _shell.SelectedDocument;
-                    if (IsUndoEnabled && (item != null))
+                    if (IsUndoEnabled && item != null)
                         item.UndoRedoManager.ExecuteAction(
                             new ChangeObjectValueAction(BoundPropertyDescriptor, newValue, StringConverter));
                     else
@@ -153,7 +153,7 @@ namespace Gemini.Modules.Inspector.Inspectors
             if (CanReset)
             {
                 var item = _shell.SelectedDocument;
-                if (IsUndoEnabled && (item != null))
+                if (IsUndoEnabled && item != null)
                     item.UndoRedoManager.ExecuteAction(
                         new ResetObjectValueAction(BoundPropertyDescriptor, StringConverter));
                 else
@@ -166,7 +166,8 @@ namespace Gemini.Modules.Inspector.Inspectors
             if (_boundPropertyDescriptor != null)
                 if (_boundPropertyDescriptor.PropertyDescriptor.SupportsChangeEvents)
                     _boundPropertyDescriptor.ValueChanged -= OnValueChanged;
-                else if (typeof(INotifyPropertyChanged).IsAssignableFrom(_boundPropertyDescriptor.PropertyOwner.GetType()))
+                else if (typeof(INotifyPropertyChanged).IsAssignableFrom(
+                    _boundPropertyDescriptor.PropertyOwner.GetType()))
                     ((INotifyPropertyChanged) _boundPropertyDescriptor.PropertyOwner).PropertyChanged -=
                         OnPropertyChanged;
         }

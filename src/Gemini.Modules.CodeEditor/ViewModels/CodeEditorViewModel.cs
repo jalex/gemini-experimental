@@ -46,7 +46,7 @@ namespace Gemini.Modules.CodeEditor.ViewModels
         public override bool Equals(object obj)
         {
             var other = obj as CodeEditorViewModel;
-            return (other != null)
+            return other != null
                    && string.Equals(FilePath, other.FilePath, StringComparison.InvariantCultureIgnoreCase)
                    && string.Equals(FileName, other.FileName, StringComparison.InvariantCultureIgnoreCase);
         }
@@ -109,7 +109,7 @@ namespace Gemini.Modules.CodeEditor.ViewModels
             // TODO: Now I don't know about Ch#
             //int charPosition = _view.TextEditor.CaretOffset;
 
-            if ((_statusBar != null) && (_statusBar.Items.Count >= 3))
+            if (_statusBar != null && _statusBar.Items.Count >= 3)
             {
                 _statusBar.Items[1].Message = $"Ln {lineNumber}";
                 _statusBar.Items[2].Message = $"Col {colPosition}";

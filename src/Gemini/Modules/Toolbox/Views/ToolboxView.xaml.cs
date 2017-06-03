@@ -26,8 +26,7 @@ namespace Gemini.Modules.Toolbox.Views
 
         private void OnListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var listBoxItem = DependencyObjectExtensions.FindParent<ListBoxItem>(
-                (DependencyObject) e.OriginalSource);
+            var listBoxItem = ((DependencyObject) e.OriginalSource).FindParent<ListBoxItem>();
             _draggingItem = listBoxItem != null;
 
             _mouseStartPosition = e.GetPosition(ListBox);
@@ -42,18 +41,17 @@ namespace Gemini.Modules.Toolbox.Views
             var mousePosition = e.GetPosition(null);
             var diff = _mouseStartPosition - mousePosition;
 
-            if ((e.LeftButton == MouseButtonState.Pressed) &&
-                ((Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance) ||
-                 (Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)))
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                 Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
             {
-                var listBoxItem = DependencyObjectExtensions.FindParent<ListBoxItem>(
-                    (DependencyObject) e.OriginalSource);
+                var listBoxItem = ((DependencyObject) e.OriginalSource).FindParent<ListBoxItem>();
 
                 if (listBoxItem == null)
                     return;
 
-                var itemViewModel = (ToolboxItemViewModel) ListBox.ItemContainerGenerator.
-                    ItemFromContainer(listBoxItem);
+                var itemViewModel =
+                    (ToolboxItemViewModel) ListBox.ItemContainerGenerator.ItemFromContainer(listBoxItem);
 
                 var dragData = new DataObject(ToolboxDragDrop.DataFormat, itemViewModel.Model);
                 DragDrop.DoDragDrop(listBoxItem, dragData, itemViewModel.Model.AllowedEffects);

@@ -1,10 +1,15 @@
 ﻿#region
 
+#region
+
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Windows.Media;
+
+#endregion
+
 // ReSharper disable UnusedVariable
 
 #endregion
@@ -87,7 +92,7 @@ namespace Gemini.Framework.Behaviors
 
             // Expand the current container
             var viewItem = container as TreeViewItem;
-            if ((viewItem != null) && !viewItem.IsExpanded)
+            if (viewItem != null && !viewItem.IsExpanded)
                 viewItem.SetValue(TreeViewItem.IsExpandedProperty, true);
 
             // Try to generate the ItemsPresenter and the ItemsPanel.
@@ -124,8 +129,7 @@ namespace Gemini.Framework.Behaviors
 
             for (int i = 0, count = container.Items.Count; i < count; i++)
             {
-                var subContainer = (TreeViewItem) container.ItemContainerGenerator.
-                    ContainerFromIndex(i);
+                var subContainer = (TreeViewItem) container.ItemContainerGenerator.ContainerFromIndex(i);
                 if (subContainer == null)
                     continue;
 

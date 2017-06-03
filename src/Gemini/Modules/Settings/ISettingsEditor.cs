@@ -8,8 +8,8 @@
         void ApplyChanges();
     }
 
-    public interface ISettingsEditorOrder {
-
+    public interface ISettingsEditorOrder
+    {
         int Order { get; }
     }
 }

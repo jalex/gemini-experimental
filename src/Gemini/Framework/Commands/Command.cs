@@ -7,7 +7,6 @@ using Caliburn.Micro;
 
 namespace Gemini.Framework.Commands
 {
-
     /// <summary>
     ///     Represents the state of an executable operation which can be persisted across UI elements.
     /// </summary>
@@ -21,7 +20,7 @@ namespace Gemini.Framework.Commands
         private bool _visible = true;
 
         /// <summary>
-        ///     Returns the <see cref="CommandDefinitionBase"/> associated with the command.
+        ///     Returns the <see cref="CommandDefinitionBase" /> associated with the command.
         /// </summary>
         public CommandDefinitionBase CommandDefinition { get; }
 
@@ -91,7 +90,7 @@ namespace Gemini.Framework.Commands
         }
 
         /// <summary>
-        ///     Gets or sets the <see cref="Uri"/> of an icon of the command and associated UI elements.
+        ///     Gets or sets the <see cref="Uri" /> of an icon of the command and associated UI elements.
         /// </summary>
         public Uri IconSource
         {
@@ -109,9 +108,9 @@ namespace Gemini.Framework.Commands
         public object Tag { get; set; }
 
         /// <summary>
-        ///     Creates a new <see cref="Command"/>.
+        ///     Creates a new <see cref="Command" />.
         /// </summary>
-        /// <param name="commandDefinition">The <see cref="CommandDefinitionBase"/> associated with the command.</param>
+        /// <param name="commandDefinition">The <see cref="CommandDefinitionBase" /> associated with the command.</param>
         public Command(CommandDefinitionBase commandDefinition)
         {
             CommandDefinition = commandDefinition;

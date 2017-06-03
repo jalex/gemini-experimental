@@ -59,7 +59,7 @@ namespace Gemini.Framework.Commands
             }
 
             var activeDocumentViewModel = shell.SelectedDocument;
-            if ((activeDocumentViewModel == null) || Equals(activeDocumentViewModel, activeItemViewModel))
+            if (activeDocumentViewModel == null || Equals(activeDocumentViewModel, activeItemViewModel))
                 return !_globalCommandHandlerWrappers.TryGetValue(commandDefinition.GetType(), out commandHandler)
                     ? null
                     : commandHandler;
@@ -134,7 +134,7 @@ namespace Gemini.Framework.Commands
             {
                 var frameworkElement = visualObject as FrameworkElement;
                 var dataContext = frameworkElement?.DataContext;
-                if ((dataContext != null) && !ReferenceEquals(dataContext, previousDataContext))
+                if (dataContext != null && !ReferenceEquals(dataContext, previousDataContext))
                 {
                     var context = dataContext as ICommandRerouter;
                     if (context != null)
@@ -211,7 +211,7 @@ namespace Gemini.Framework.Commands
             while (type != null)
             {
                 result.AddRange(type.GetInterfaces()
-                    .Where(x => x.IsGenericType && (x.GetGenericTypeDefinition() == genericInterfaceType))
+                    .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == genericInterfaceType)
                     .Select(x => x.GetGenericArguments().First()));
 
                 type = type.BaseType;

@@ -12,37 +12,35 @@ using Gemini.Modules.ToolBars;
 
 namespace Gemini.Framework
 {
-
     /// <summary>
-    ///     Represents a base implementation of a <see cref="IModule"/>.
+    ///     Represents a base implementation of a <see cref="IModule" />.
     /// </summary>
     public abstract class ModuleBase : IModule
     {
-
         /// <summary>
-        ///     Returns the <see cref="IMainWindow"/> of the application.
+        ///     Returns the <see cref="IMainWindow" /> of the application.
         /// </summary>
         protected IMainWindow MainWindow => _mainWindow;
 
         /// <summary>
-        ///     Returns the <see cref="IShell"/> of the application.
+        ///     Returns the <see cref="IShell" /> of the application.
         /// </summary>
         protected IShell Shell => _shell;
 
         /// <summary>
-        ///     Returns the <see cref="IMenu"/> of the shell.
+        ///     Returns the <see cref="IMenu" /> of the shell.
         /// </summary>
         protected IMenu MainMenu => _shell.MainMenu;
 
         /// <summary>
-        ///     Returns the <see cref="IToolBars"/>s of the shell.
+        ///     Returns the <see cref="IToolBars" />s of the shell.
         /// </summary>
         protected IToolBars ToolBars => _shell.ToolBars;
 
         /// <summary>
         ///     Returns resource dictionaries which should be globally registered.
         /// </summary>
-        /// <value>A <see cref="IEnumerable{T}"/> of <see cref="ResourceDictionary"/>.</value>
+        /// <value>A <see cref="IEnumerable{T}" /> of <see cref="ResourceDictionary" />.</value>
         public virtual IEnumerable<ResourceDictionary> GlobalResourceDictionaries
         {
             get { yield break; }
@@ -51,7 +49,7 @@ namespace Gemini.Framework
         /// <summary>
         ///     Returns a range of documents to load by default.
         /// </summary>
-        /// <value>A <see cref="IEnumerable{T}"/> of <see cref="IDocument"/>.</value>
+        /// <value>A <see cref="IEnumerable{T}" /> of <see cref="IDocument" />.</value>
         public virtual IEnumerable<IDocument> DefaultDocuments
         {
             get { yield break; }
@@ -60,7 +58,7 @@ namespace Gemini.Framework
         /// <summary>
         ///     Returns a range of tool type contracts to load by default.
         /// </summary>
-        /// <value>A <see cref="IEnumerable{T}"/> of <see cref="Type"/>.</value>
+        /// <value>A <see cref="IEnumerable{T}" /> of <see cref="Type" />.</value>
         public virtual IEnumerable<Type> DefaultTools
         {
             get { yield break; }

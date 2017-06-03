@@ -40,7 +40,7 @@ namespace Gemini.Framework
         ///     be set to null.
         /// </param>
         [DebuggerStepThrough]
-        public bool CanExecute(object parameter) => (_canExecute == null) || _canExecute(parameter);
+        public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
 
         /// <summary>Occurs when changes occur that affect whether or not the command should execute.</summary>
         public event EventHandler CanExecuteChanged

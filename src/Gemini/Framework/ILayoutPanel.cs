@@ -11,14 +11,12 @@ using Gemini.Framework.Services;
 
 namespace Gemini.Framework
 {
-
     /// <summary>
     ///     Represents a common contract for layout panels which can be loaded into the
-    ///     workspace of the <see cref="IShell"/>.
+    ///     workspace of the <see cref="IShell" />.
     /// </summary>
     public interface ILayoutPanel : IScreen
     {
-
         /// <summary>
         ///     Returns the unique identifier of the panel.
         /// </summary>
@@ -35,12 +33,12 @@ namespace Gemini.Framework
         string ContentId { get; }
 
         /// <summary>
-        ///     Returns an <see cref="ICommand"/> which is being triggered for closing the panel.
+        ///     Returns an <see cref="ICommand" /> which is being triggered for closing the panel.
         /// </summary>
         ICommand CloseCommand { get; }
 
         /// <summary>
-        ///     Returns the <see cref="Uri"/> of an icon associated with the panel.
+        ///     Returns the <see cref="Uri" /> of an icon associated with the panel.
         /// </summary>
         Uri IconSource { get; }
 
@@ -55,17 +53,17 @@ namespace Gemini.Framework
         bool ShouldReopenOnStart { get; }
 
         /// <summary>
-        ///     Asynchronously loads the state of the panel using the specified <see cref="BinaryReader"/>.
+        ///     Asynchronously loads the state of the panel using the specified <see cref="BinaryReader" />.
         /// </summary>
-        /// <param name="reader">A <see cref="BinaryReader"/> for reading the state.</param>
-        /// <returns>A <see cref="Task"/> representing the operation.</returns>
+        /// <param name="reader">A <see cref="BinaryReader" /> for reading the state.</param>
+        /// <returns>A <see cref="Task" /> representing the operation.</returns>
         Task LoadState(BinaryReader reader);
 
         /// <summary>
-        ///     Asynchronously saves the state of the panel using the specified <see cref="BinaryWriter"/>.
+        ///     Asynchronously saves the state of the panel using the specified <see cref="BinaryWriter" />.
         /// </summary>
-        /// <param name="writer">A <see cref="BinaryWriter"/> for persisting the state.</param>
-        /// <returns>A <see cref="Task"/> representing the operation.</returns>
+        /// <param name="writer">A <see cref="BinaryWriter" /> for persisting the state.</param>
+        /// <returns>A <see cref="Task" /> representing the operation.</returns>
         Task SaveState(BinaryWriter writer);
     }
 }

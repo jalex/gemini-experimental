@@ -13,7 +13,7 @@ using Gemini.Modules.Inspector.MonoGame;
 namespace Gemini.Demo.MonoGame.Modules.SceneViewer
 {
     /// <summary>
-    ///     Represents the Scene Viewer <see cref="IModule"/>.
+    ///     Represents the Scene Viewer <see cref="IModule" />.
     /// </summary>
     [Export(typeof(IModule))]
     public class Module : ModuleBase
@@ -23,16 +23,16 @@ namespace Gemini.Demo.MonoGame.Modules.SceneViewer
         /// <summary>
         ///     Returns a range of documents to load by default.
         /// </summary>
-        /// <value>A <see cref="IEnumerable{T}"/> of <see cref="IDocument"/>.</value>
+        /// <value>A <see cref="IEnumerable{T}" /> of <see cref="IDocument" />.</value>
         public override IEnumerable<IDocument> DefaultDocuments
         {
             get { yield return new SceneViewModel(); }
         }
 
         /// <summary>
-        ///     Creates a new <see cref="Module"/>.
+        ///     Creates a new <see cref="Module" />.
         /// </summary>
-        /// <param name="inspectorTool">The <see cref="IInspectorTool"/>.</param>
+        /// <param name="inspectorTool">The <see cref="IInspectorTool" />.</param>
         [ImportingConstructor]
         public Module(IInspectorTool inspectorTool)
         {

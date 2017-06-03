@@ -84,7 +84,7 @@ namespace Gemini.Modules.MainMenu
                     menuModel.Add(menuItemModel);
                 }
 
-                if ((i < groups.Count - 1) && menuItems.Any())
+                if (i < groups.Count - 1 && menuItems.Any())
                     menuModel.Add(new MenuItemSeparator());
             }
         }

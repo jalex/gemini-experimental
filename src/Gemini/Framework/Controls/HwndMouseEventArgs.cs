@@ -13,42 +13,42 @@ namespace Gemini.Framework.Controls
         /// <summary>
         ///     Gets the state of the left mouse button.
         /// </summary>
-        public MouseButtonState LeftButton { get; private set; }
+        public MouseButtonState LeftButton { get; }
 
         /// <summary>
         ///     Gets the state of the right mouse button.
         /// </summary>
-        public MouseButtonState RightButton { get; private set; }
+        public MouseButtonState RightButton { get; }
 
         /// <summary>
         ///     Gets the state of the middle mouse button.
         /// </summary>
-        public MouseButtonState MiddleButton { get; private set; }
+        public MouseButtonState MiddleButton { get; }
 
         /// <summary>
         ///     Gets the state of the first extra mouse button.
         /// </summary>
-        public MouseButtonState X1Button { get; private set; }
+        public MouseButtonState X1Button { get; }
 
         /// <summary>
         ///     Gets the state of the second extra mouse button.
         /// </summary>
-        public MouseButtonState X2Button { get; private set; }
+        public MouseButtonState X2Button { get; }
 
         /// <summary>
         ///     Gets the button that was double clicked.
         /// </summary>
-        public MouseButton? DoubleClickButton { get; private set; }
+        public MouseButton? DoubleClickButton { get; }
 
         /// <summary>
         ///     Gets the mouse wheel delta.
         /// </summary>
-        public int WheelDelta { get; private set; }
+        public int WheelDelta { get; }
 
         /// <summary>
         ///     Gets the horizontal mouse wheel delta.
         /// </summary>
-        public int HorizontalWheelDelta { get; private set; }
+        public int HorizontalWheelDelta { get; }
 
         /// <summary>
         ///     Gets the position of the mouse in screen coordinates.

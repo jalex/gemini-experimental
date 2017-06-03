@@ -6,14 +6,12 @@ using Gemini.Framework.Commands;
 
 namespace Gemini.Demo.Modules.FilterDesigner.Commands
 {
-
     /// <summary>
-    ///     Represents the <see cref="CommandDefinition"/> for opening the graph.
+    ///     Represents the <see cref="CommandDefinition" /> for opening the graph.
     /// </summary>
     [CommandDefinition]
     public class OpenGraphCommandDefinition : CommandDefinition
     {
-
         /// <summary>
         ///     Specifies the name of the command.
         /// </summary>

@@ -7,9 +7,8 @@ using System.Windows.Media;
 
 namespace Gemini.Framework
 {
-
     /// <summary>
-    ///     Extensions for <see cref="DependencyObject"/>.
+    ///     Extensions for <see cref="DependencyObject" />.
     /// </summary>
     public static class DependencyObjectExtensions
     {

@@ -29,10 +29,12 @@ namespace Gemini.Framework.Win32
 
         // Define the window styles we use
         public const int WsChild = 0x40000000;
+
         public const int WsVisible = 0x10000000;
 
         // Define the Windows messages we will handle
         public const int WmMousemove = 0x0200;
+
         public const int WmLbuttondown = 0x0201;
         public const int WmLbuttonup = 0x0202;
         public const int WmLbuttondblclk = 0x0203;
@@ -50,6 +52,7 @@ namespace Gemini.Framework.Win32
 
         // Define the values that let us differentiate between the two extra mouse buttons
         public const int MkXbutton1 = 0x020;
+
         public const int MkXbutton2 = 0x040;
 
         // Define the cursor icons we use

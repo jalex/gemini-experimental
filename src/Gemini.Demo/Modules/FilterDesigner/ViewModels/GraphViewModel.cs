@@ -98,7 +98,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.ViewModels
         {
             var nearbyConnector = FindNearbyInputConnector(currentDragPoint);
 
-            if ((nearbyConnector == null) || (sourceConnector.Element == nearbyConnector.Element))
+            if (nearbyConnector == null || sourceConnector.Element == nearbyConnector.Element)
             {
                 Connections.Remove(newConnection);
                 return;

@@ -6,7 +6,6 @@ using System;
 
 namespace Gemini.Framework.Commands
 {
-
     /// <summary>
     ///     Represents a base type for defining executable operations within the Gemini framework.
     /// </summary>
@@ -28,7 +27,7 @@ namespace Gemini.Framework.Commands
         public virtual string ToolTip => Name;
 
         /// <summary>
-        ///     Returns the <see cref="Uri"/> of an icon associated with the command.
+        ///     Returns the <see cref="Uri" /> of an icon associated with the command.
         /// </summary>
         public virtual Uri IconSource { get; } = null;
 

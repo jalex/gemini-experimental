@@ -12,9 +12,9 @@ using Gemini.Modules.Inspector;
 
 namespace Gemini.Demo.Modules.FilterDesigner.Commands
 {
-
     /// <summary>
-    ///     Represents the <see cref="ICommandHandler{TCommandDefinition}"/> for the <see cref="OpenGraphCommandDefinition"/>.
+    ///     Represents the <see cref="ICommandHandler{TCommandDefinition}" /> for the <see cref="OpenGraphCommandDefinition" />
+    ///     .
     /// </summary>
     [CommandHandler]
     public class OpenGraphCommandHandler : CommandHandlerBase<OpenGraphCommandDefinition>
@@ -22,9 +22,9 @@ namespace Gemini.Demo.Modules.FilterDesigner.Commands
         private readonly IShell _shell;
 
         /// <summary>
-        ///     Creates a new <see cref="OpenGraphCommandHandler"/>.
+        ///     Creates a new <see cref="OpenGraphCommandHandler" />.
         /// </summary>
-        /// <param name="shell">The <see cref="IShell"/> for opening the graph document.</param>
+        /// <param name="shell">The <see cref="IShell" /> for opening the graph document.</param>
         [ImportingConstructor]
         public OpenGraphCommandHandler(IShell shell)
         {
@@ -32,10 +32,10 @@ namespace Gemini.Demo.Modules.FilterDesigner.Commands
         }
 
         /// <summary>
-        ///     Asynchronously handles the execution of the specified <see cref="Command"/>.
+        ///     Asynchronously handles the execution of the specified <see cref="Command" />.
         /// </summary>
-        /// <param name="command">The <see cref="Command"/> to execute.</param>
-        /// <returns>A <see cref="Task"/> representing the operation.</returns>
+        /// <param name="command">The <see cref="Command" /> to execute.</param>
+        /// <returns>A <see cref="Task" /> representing the operation.</returns>
         public override Task Run(Command command)
         {
             _shell.OpenDocument(new GraphViewModel(IoC.Get<IInspectorTool>()));

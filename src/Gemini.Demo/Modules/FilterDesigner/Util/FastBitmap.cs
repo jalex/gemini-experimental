@@ -71,11 +71,11 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
                 if (!_locked)
                     throw new InvalidOperationException("Must call Lock() before getting pixel values");
 
-                if ((x < 0) || (y < 0) || (x >= Width) || (y >= Height))
+                if (x < 0 || y < 0 || x >= Width || y >= Height)
                     throw new ArgumentOutOfRangeException();
 #endif
 
-                var b = (byte*) _startingPosition + y*_strideWidth + x*BitsPerPixel;
+                var b = (byte*) _startingPosition + y * _strideWidth + x * BitsPerPixel;
                 return Color.FromArgb(*(b + 3), *(b + 2), *(b + 1), *b);
             }
 
@@ -85,11 +85,11 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
                 if (!_locked)
                     throw new InvalidOperationException("Must call Lock() before setting pixel values");
 
-                if ((x < 0) || (y < 0) || (x >= Width) || (y >= Height))
+                if (x < 0 || y < 0 || x >= Width || y >= Height)
                     throw new ArgumentOutOfRangeException();
 #endif
 
-                var b = (byte*) _startingPosition + y*_strideWidth + x*BitsPerPixel;
+                var b = (byte*) _startingPosition + y * _strideWidth + x * BitsPerPixel;
                 *b = value.B;
                 *(b + 1) = value.G;
                 *(b + 2) = value.R;
@@ -116,7 +116,7 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
             _stream = new MemoryStream(bytes);
             lock (_stream)
             {
-                if (!_stream.CanRead || (_stream.Length == 0))
+                if (!_stream.CanRead || _stream.Length == 0)
                     return;
 
                 try

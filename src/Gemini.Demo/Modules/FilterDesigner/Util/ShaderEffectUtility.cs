@@ -14,7 +14,8 @@ namespace Gemini.Demo.Modules.FilterDesigner.Util
             return new PixelShader
             {
                 UriSource =
-                    new Uri(@"pack://application:,,,/Gemini.Demo;component/Modules/FilterDesigner/ShaderEffects/" + name +
+                    new Uri(@"pack://application:,,,/Gemini.Demo;component/Modules/FilterDesigner/ShaderEffects/" +
+                            name +
                             ".ps")
             };
         }

@@ -9,7 +9,7 @@ using Gemini.Modules.Toolbox;
 namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
 {
     [ToolboxItem(typeof(GraphViewModel), "Color", "Generators",
-         "pack://application:,,,/Modules/FilterDesigner/Resources/color_swatch.png")]
+        "pack://application:,,,/Modules/FilterDesigner/Resources/color_swatch.png")]
     public class ColorInput : DynamicElement
     {
         private Color _color;

@@ -16,7 +16,8 @@ namespace Gemini.Modules.Toolbox
         public string IconSource { get; set; }
         public DragDropEffects AllowedEffects { get; set; }
 
-        public ToolboxItemAttribute(Type documentType, string name, string category, string iconSource = null, DragDropEffects allowedEffects = DragDropEffects.Move)
+        public ToolboxItemAttribute(Type documentType, string name, string category, string iconSource = null,
+            DragDropEffects allowedEffects = DragDropEffects.Move)
         {
             DocumentType = documentType;
             Name = name;

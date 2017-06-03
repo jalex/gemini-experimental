@@ -21,7 +21,7 @@ namespace Gemini.Themes.VS2013.Controls.Converters
             if (item == null)
                 return new Thickness(0);
 
-            return new Thickness(Indent*GetItemDepth(item), 0, 0, 0);
+            return new Thickness(Indent * GetItemDepth(item), 0, 0, 0);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

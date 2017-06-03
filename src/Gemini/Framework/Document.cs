@@ -63,10 +63,6 @@ namespace Gemini.Framework
             }
         }
 
-        protected virtual IUndoRedoManager CreateUndoRedoManager() {
-            return new UndoRedoManager();
-        }
-
         public IUndoRedoManager UndoRedoManager => _undoRedoManager ?? (_undoRedoManager = CreateUndoRedoManager());
 
         public override ICommand CloseCommand
@@ -102,7 +98,7 @@ namespace Gemini.Framework
         void ICommandHandler<SaveFileCommandDefinition>.Update(Command command)
         {
             var persistedDocument = this as IPersistedDocument;
-            command.Enabled = (persistedDocument != null) && persistedDocument.IsDirty;
+            command.Enabled = persistedDocument != null && persistedDocument.IsDirty;
         }
 
         async Task ICommandHandler<SaveFileCommandDefinition>.Run(Command command)
@@ -134,25 +130,35 @@ namespace Gemini.Framework
             return Task.CompletedTask;
         }
 
-        private static async Task DoSaveAs(IPersistedDocument persistedDocument) {
+        protected virtual IUndoRedoManager CreateUndoRedoManager()
+        {
+            return new UndoRedoManager();
+        }
+
+        private static async Task DoSaveAs(IPersistedDocument persistedDocument)
+        {
             // Show user dialog to choose filename.
-            var dialog = new SaveFileDialog { FileName = persistedDocument.FileName };
+            var dialog = new SaveFileDialog {FileName = persistedDocument.FileName};
             var filter = string.Empty;
 
             var fileExtension = Path.GetExtension(persistedDocument.FileName);
             var fileTypes = IoC.GetAll<IEditorProvider>()
-                .Where(ep => ep.FileTypes.Any(ft => ft.FileExtension.Equals(fileExtension, StringComparison.InvariantCultureIgnoreCase)))
+                .Where(ep => ep.FileTypes.Any(
+                    ft => ft.FileExtension.Equals(fileExtension, StringComparison.InvariantCultureIgnoreCase)))
                 .SelectMany(x => x.FileTypes)
                 .ToList();
-            if(fileTypes.Count > 0) filter = string.Join("|", fileTypes.Select(ft => $"{ft.Name}|*{ft.FileExtension}")) + "|";
+            if (fileTypes.Count > 0)
+                filter = string.Join("|", fileTypes.Select(ft => $"{ft.Name}|*{ft.FileExtension}")) + "|";
 
             filter += Resources.AllFiles + "|*.*";
             dialog.Filter = filter;
 
-            var filterIndex = fileTypes.FindIndex(ft => ft.FileExtension.Equals(fileExtension, StringComparison.InvariantCultureIgnoreCase));
-            dialog.FilterIndex = filterIndex < 0 ? 1 : (filterIndex + 1);
+            var filterIndex =
+                fileTypes.FindIndex(
+                    ft => ft.FileExtension.Equals(fileExtension, StringComparison.InvariantCultureIgnoreCase));
+            dialog.FilterIndex = filterIndex < 0 ? 1 : filterIndex + 1;
 
-            if(dialog.ShowDialog() != true) return;
+            if (dialog.ShowDialog() != true) return;
 
             var filePath = dialog.FileName;
 
@@ -163,6 +169,5 @@ namespace Gemini.Framework
             var shell = IoC.Get<IShell>();
             shell.RecentFiles.Update(filePath);
         }
-
     }
 }

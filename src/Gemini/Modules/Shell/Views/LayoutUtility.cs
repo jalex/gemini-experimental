@@ -38,7 +38,7 @@ namespace Gemini.Modules.Shell.Views
                     var document = item as IDocument;
                     var layoutDocument = e.Model as LayoutDocument;
 
-                    if ((tool != null) && (anchorable != null))
+                    if (tool != null && anchorable != null)
                     {
                         addToolCallback(tool);
                         tool.IsVisible = anchorable.IsVisible;
@@ -51,7 +51,7 @@ namespace Gemini.Modules.Shell.Views
                         return;
                     }
 
-                    if ((document != null) && (layoutDocument != null))
+                    if (document != null && layoutDocument != null)
                     {
                         addDocumentCallback(document);
 

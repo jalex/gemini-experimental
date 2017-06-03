@@ -11,7 +11,7 @@ namespace Gemini.Framework.Behaviors
 {
     // Copied from MahApp's GlowWindowBehavior, because that one has a bug if GlowBrush is set in a style, rather than directly.
     /// <summary>
-    ///     Represents a glow behavior for <see cref="MetroWindow"/>.
+    ///     Represents a glow behavior for <see cref="MetroWindow" />.
     /// </summary>
     public class CustomGlowWindowBehavior : Behavior<MetroWindow>
     {
@@ -21,7 +21,7 @@ namespace Gemini.Framework.Behaviors
         private GlowWindow _top;
 
         /// <summary>
-        /// Called after the behavior is attached to an AssociatedObject.
+        ///     Called after the behavior is attached to an AssociatedObject.
         /// </summary>
         /// <remarks>Override this to hook up functionality to the AssociatedObject.</remarks>
         protected override void OnAttached()
@@ -33,7 +33,7 @@ namespace Gemini.Framework.Behaviors
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             var metroWindow = AssociatedObject;
-            if ((metroWindow != null) && metroWindow.UseNoneWindowStyle)
+            if (metroWindow != null && metroWindow.UseNoneWindowStyle)
                 return;
             _left = new GlowWindow(AssociatedObject, GlowDirection.Left);
             _right = new GlowWindow(AssociatedObject, GlowDirection.Right);
@@ -76,7 +76,7 @@ namespace Gemini.Framework.Behaviors
         /// </summary>
         private void Update()
         {
-            if ((_left == null) || (_right == null) || (_top == null) || (_bottom == null))
+            if (_left == null || _right == null || _top == null || _bottom == null)
                 return;
             _left.Update();
             _right.Update();
@@ -89,7 +89,7 @@ namespace Gemini.Framework.Behaviors
         /// </summary>
         private void SetOpacityTo(double newOpacity)
         {
-            if ((_left == null) || (_right == null) || (_top == null) || (_bottom == null))
+            if (_left == null || _right == null || _top == null || _bottom == null)
                 return;
             _left.Opacity = newOpacity;
             _right.Opacity = newOpacity;
@@ -102,8 +102,8 @@ namespace Gemini.Framework.Behaviors
         /// </summary>
         private void StartOpacityStoryboard()
         {
-            if ((_left?.OpacityStoryboard == null) || (_right?.OpacityStoryboard == null) ||
-                (_top?.OpacityStoryboard == null) || (_bottom?.OpacityStoryboard == null))
+            if (_left?.OpacityStoryboard == null || _right?.OpacityStoryboard == null ||
+                _top?.OpacityStoryboard == null || _bottom?.OpacityStoryboard == null)
                 return;
             _left.BeginStoryboard(_left.OpacityStoryboard);
             _right.BeginStoryboard(_right.OpacityStoryboard);

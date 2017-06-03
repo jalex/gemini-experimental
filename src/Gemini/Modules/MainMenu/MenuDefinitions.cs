@@ -20,9 +20,11 @@ namespace Gemini.Modules.MainMenu
 
         [Export] public static MenuItemGroupDefinition FileSaveMenuGroup = new MenuItemGroupDefinition(FileMenu, 6);
 
-        [Export] public static MenuItemGroupDefinition FileOpenRecentMenuGroup = new MenuItemGroupDefinition(FileMenu, 9);
+        [Export] public static MenuItemGroupDefinition FileOpenRecentMenuGroup =
+            new MenuItemGroupDefinition(FileMenu, 9);
 
-        [Export] public static MenuItemGroupDefinition FileExitOpenMenuGroup = new MenuItemGroupDefinition(FileMenu, 10);
+        [Export]
+        public static MenuItemGroupDefinition FileExitOpenMenuGroup = new MenuItemGroupDefinition(FileMenu, 10);
 
         [Export] public static MenuDefinition EditMenu = new MenuDefinition(MainMenuBar, 1, Resources.EditMenuText);
 
@@ -40,7 +42,8 @@ namespace Gemini.Modules.MainMenu
         [Export] public static MenuItemGroupDefinition ToolsOptionsMenuGroup = new MenuItemGroupDefinition(ToolsMenu,
             100);
 
-        [Export] public static MenuDefinition WindowMenu = new MenuDefinition(MainMenuBar, 20, Resources.WindowMenuText);
+        [Export]
+        public static MenuDefinition WindowMenu = new MenuDefinition(MainMenuBar, 20, Resources.WindowMenuText);
 
         [Export] public static MenuItemGroupDefinition WindowDocumentListMenuGroup =
             new MenuItemGroupDefinition(WindowMenu, 10);

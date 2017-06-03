@@ -71,7 +71,7 @@ namespace Gemini.Modules.ToolBars
                     result.Add(new CommandToolBarItem(toolBarItem,
                         _commandService.GetCommand(toolBarItem.CommandDefinition), result));
 
-                if ((i < groups.Count - 1) && toolBarItems.Any())
+                if (i < groups.Count - 1 && toolBarItems.Any())
                     result.Add(new ToolBarItemSeparator());
             }
         }

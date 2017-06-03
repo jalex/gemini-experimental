@@ -234,7 +234,7 @@ namespace Gemini.Modules.Shell.Services
                 return null;
 
             var type = Type.GetType(typeName);
-            if ((type == null) || !typeof(ILayoutPanel).IsAssignableFrom(type))
+            if (type == null || !typeof(ILayoutPanel).IsAssignableFrom(type))
                 return null;
             return type;
         }

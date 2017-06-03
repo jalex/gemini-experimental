@@ -131,7 +131,7 @@ namespace Gemini.Framework.Controls
                     Bar.Visibility = Visibility.Visible;
                     Bar.HorizontalAlignment = HorizontalAlignment.Left;
                     Bar.Margin = new Thickness(0.0);
-                    Bar.Width = width*Ratio;
+                    Bar.Width = width * Ratio;
                     break;
                 case DisplayType.Line:
                     if (Ratio == 0.5)
@@ -142,17 +142,17 @@ namespace Gemini.Framework.Controls
                     {
                         Bar.Visibility = Visibility.Visible;
 
-                        var hwidth = width/2.0;
+                        var hwidth = width / 2.0;
                         if (Ratio > 0.5)
                         {
                             Bar.HorizontalAlignment = HorizontalAlignment.Left;
-                            Bar.Width = Math.Ceiling(hwidth*((Ratio - 0.5)*2.0));
+                            Bar.Width = Math.Ceiling(hwidth * ((Ratio - 0.5) * 2.0));
                             Bar.Margin = new Thickness(Math.Floor(hwidth), 0.0, 0.0, 0.0);
                         }
                         else
                         {
                             Bar.HorizontalAlignment = HorizontalAlignment.Right;
-                            Bar.Width = Math.Ceiling(hwidth*(1.0 - Ratio*2.0));
+                            Bar.Width = Math.Ceiling(hwidth * (1.0 - Ratio * 2.0));
                             Bar.Margin = new Thickness(0.0, 0.0, Math.Floor(hwidth), 0.0);
                         }
                     }
@@ -208,7 +208,7 @@ namespace Gemini.Framework.Controls
 
             _lastPos = _originalPos = PointToScreen(Mouse.GetPosition(this));
             Mouse.OverrideCursor = Cursors.None;
-            _resetPos = new Point(SystemParameters.PrimaryScreenWidth/2, SystemParameters.PrimaryScreenHeight/2);
+            _resetPos = new Point(SystemParameters.PrimaryScreenWidth / 2, SystemParameters.PrimaryScreenHeight / 2);
             _relativeMouse = NativeMethods.SetCursorPos(_resetPos);
 
             _clickTimer.Stop();
@@ -267,7 +267,7 @@ namespace Gemini.Framework.Controls
             var diff = (pos - (_relativeMouse ? _resetPos : _lastPos)).X;
             var multi = SpeedMultiplier.Get();
 
-            ApplyValueChange(multi*diff);
+            ApplyValueChange(multi * diff);
 
             /*
              * TODO: There seems to be a bug with Synergy where setting the cursor position can fail.

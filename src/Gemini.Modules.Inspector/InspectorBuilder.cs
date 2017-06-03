@@ -92,11 +92,11 @@ namespace Gemini.Modules.Inspector
             // If any properties are not in the default group, show all properties in collapsible groups.
             if (
                 properties.Any(
-                    x => !string.IsNullOrEmpty(x.Category) && (x.Category != CategoryAttribute.Default.Category)))
+                    x => !string.IsNullOrEmpty(x.Category) && x.Category != CategoryAttribute.Default.Category))
                 foreach (var category in properties.GroupBy(x => x.Category))
                 {
                     var actualCategory = string.IsNullOrEmpty(category.Key) ||
-                                         (category.Key == CategoryAttribute.Default.Category)
+                                         category.Key == CategoryAttribute.Default.Category
                         ? Resources.InspectorBuilderMiscellaneous
                         : category.Key;
 

@@ -15,7 +15,7 @@ namespace Gemini.Modules.MonoGame.Controls
         /// <summary>
         ///     Gets the GraphicsDevice.
         /// </summary>
-        public GraphicsDevice GraphicsDevice { get; private set; }
+        public GraphicsDevice GraphicsDevice { get; }
 
         /// <summary>
         ///     Initializes a new GraphicsDeviceEventArgs.

@@ -9,7 +9,7 @@ namespace Gemini.Modules.Inspector.Controls
 {
     public class ColorEventArgs : EventArgs
     {
-        public Color Color { get; private set; }
+        public Color Color { get; }
 
         public ColorEventArgs(Color color)
         {

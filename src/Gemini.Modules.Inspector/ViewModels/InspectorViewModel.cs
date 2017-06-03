@@ -52,7 +52,7 @@ namespace Gemini.Modules.Inspector.ViewModels
 
             RecurseEditors(SelectedObject.Inspectors, delegate(IEditor editor)
             {
-                if ((editor != null) && editor.CanReset)
+                if (editor != null && editor.CanReset)
                     editor.Reset();
             });
         }

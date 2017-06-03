@@ -87,7 +87,7 @@ namespace Gemini.Modules.Inspector.Controls
                 mouseMoved = true;
 
                 var newPosition = e.GetPosition(_textBlock);
-                Value = CoerceValue(originalValue + (newPosition.X - originalPosition.X)/50.0);
+                Value = CoerceValue(originalValue + (newPosition.X - originalPosition.X) / 50.0);
             };
 
             _textBlock.MouseUp += (sender, e) =>
@@ -106,7 +106,7 @@ namespace Gemini.Modules.Inspector.Controls
             _textBox = (TextBox) Template.FindName("TextBox", this);
             _textBox.KeyUp += (sender, e) =>
             {
-                if ((e.Key == Key.Escape) || (e.Key == Key.Enter))
+                if (e.Key == Key.Escape || e.Key == Key.Enter)
                     Mode = NumericTextBoxMode.Normal;
             };
             _textBox.LostFocus += (sender, e) => Mode = NumericTextBoxMode.Normal;
@@ -116,9 +116,9 @@ namespace Gemini.Modules.Inspector.Controls
 
         private double CoerceValue(double newValue)
         {
-            if ((Minimum != null) && (newValue < Minimum.Value))
+            if (Minimum != null && newValue < Minimum.Value)
                 return Minimum.Value;
-            if ((Maximum != null) && (newValue > Maximum.Value))
+            if (Maximum != null && newValue > Maximum.Value)
                 return Maximum.Value;
             return newValue;
         }

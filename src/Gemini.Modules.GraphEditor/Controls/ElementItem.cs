@@ -15,7 +15,7 @@ namespace Gemini.Modules.GraphEditor.Controls
         private bool _isLeftMouseButtonDown;
         private Point _lastMousePosition;
 
-        private GraphControl ParentGraphControl => DependencyObjectExtensions.FindParent<GraphControl>(this);
+        private GraphControl ParentGraphControl => this.FindParent<GraphControl>();
 
         static ElementItem()
         {

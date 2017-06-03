@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework;
 
 namespace Gemini.Demo.Xna.Modules.SceneViewer.ViewModels
 {
-
     /// <summary>
     ///     Rperesents the view model of the scene.
     /// </summary>
@@ -20,7 +19,7 @@ namespace Gemini.Demo.Xna.Modules.SceneViewer.ViewModels
         private Vector3 _position;
 
         /// <summary>
-        ///     Returns the position of the model as <see cref="Vector3"/>.
+        ///     Returns the position of the model as <see cref="Vector3" />.
         /// </summary>
         public Vector3 Position
         {
@@ -33,7 +32,7 @@ namespace Gemini.Demo.Xna.Modules.SceneViewer.ViewModels
         }
 
         /// <summary>
-        ///     Creates a new <see cref="SceneViewModel"/>.
+        ///     Creates a new <see cref="SceneViewModel" />.
         /// </summary>
         public SceneViewModel()
         {

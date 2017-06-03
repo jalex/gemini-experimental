@@ -49,14 +49,15 @@ namespace Gemini.Modules.MonoGame.Services
         ///     client controls should use the public AddRef method instead.
         /// </summary>
         [Obsolete(
-             "This constructor shouldn't be called directly. Instead, you should get the (singleton) instance from the IoC container."
-         )]
+            "This constructor shouldn't be called directly. Instead, you should get the (singleton) instance from the IoC container."
+        )]
         public GraphicsDeviceService()
         {
         }
 
         // IGraphicsDeviceService events.
         public event EventHandler<EventArgs> DeviceCreated;
+
         public event EventHandler<EventArgs> DeviceDisposing;
         public event EventHandler<EventArgs> DeviceReset;
         public event EventHandler<EventArgs> DeviceResetting;
@@ -140,7 +141,7 @@ namespace Gemini.Modules.MonoGame.Services
             var newWidth = Math.Max(_parameters.BackBufferWidth, width);
             var newHeight = Math.Max(_parameters.BackBufferHeight, height);
 
-            if ((newWidth != _parameters.BackBufferWidth) || (newHeight != _parameters.BackBufferHeight))
+            if (newWidth != _parameters.BackBufferWidth || newHeight != _parameters.BackBufferHeight)
             {
                 DeviceResetting?.Invoke(this, EventArgs.Empty);
 

@@ -82,8 +82,8 @@ namespace Gemini.Modules.Xna.Controls
                     // If the device state is ok, check whether it is big enough.
                     var pp = _graphicsService.GraphicsDevice.PresentationParameters;
 
-                    deviceNeedsReset = (width > pp.BackBufferWidth) ||
-                                       (height > pp.BackBufferHeight);
+                    deviceNeedsReset = width > pp.BackBufferWidth ||
+                                       height > pp.BackBufferHeight;
                     break;
             }
 

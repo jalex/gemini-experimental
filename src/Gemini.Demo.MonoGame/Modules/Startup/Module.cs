@@ -9,22 +9,20 @@ using Gemini.Modules.MainMenu;
 
 namespace Gemini.Demo.MonoGame.Modules.Startup
 {
-
     /// <summary>
-    ///     Represents the startup <see cref="IModule"/> of the demo.
+    ///     Represents the startup <see cref="IModule" /> of the demo.
     /// </summary>
     [Export(typeof(IModule))]
     public class Module : ModuleBase
     {
-
         /// <summary>
-        ///     Specifies the <see cref="MenuDefinition"/> for the demo menu.
+        ///     Specifies the <see cref="MenuDefinition" /> for the demo menu.
         /// </summary>
         [Export] public static MenuDefinition DemosMenu = new MenuDefinition(
             MenuDefinitions.MainMenuBar, 5, "De_mos");
 
         /// <summary>
-        ///     Specifies the <see cref="MenuItemGroupDefinition"/> for the demo menu.
+        ///     Specifies the <see cref="MenuItemGroupDefinition" /> for the demo menu.
         /// </summary>
         [Export] public static MenuItemGroupDefinition DemosMenuGroup = new MenuItemGroupDefinition(
             DemosMenu, 0);

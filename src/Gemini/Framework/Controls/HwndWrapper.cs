@@ -227,7 +227,7 @@ namespace Gemini.Framework.Controls
             var height = (int) ActualHeight;
 
             // If the control has no width or no height, skip drawing since it's not visible
-            if ((width < 1) || (height < 1))
+            if (width < 1 || height < 1)
                 return;
 
             Render(_hWnd);

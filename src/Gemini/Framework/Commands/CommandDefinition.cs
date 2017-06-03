@@ -6,14 +6,13 @@ using System;
 
 namespace Gemini.Framework.Commands
 {
-
     /// <summary>
     ///     Represents a base type for standard command definitions.
     /// </summary>
     public abstract class CommandDefinition : CommandDefinitionBase
     {
         /// <summary>
-        ///     Returns the <see cref="Uri"/> of an icon associated with the command.
+        ///     Returns the <see cref="Uri" /> of an icon associated with the command.
         /// </summary>
         public override Uri IconSource => null;
 

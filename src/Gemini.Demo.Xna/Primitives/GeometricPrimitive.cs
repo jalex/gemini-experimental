@@ -23,12 +23,14 @@ namespace Gemini.Demo.Xna.Primitives
         // During the process of constructing a primitive model, vertex
         // and index data is stored on the CPU in these managed lists.
         private readonly List<VertexPositionNormal> _vertices = new List<VertexPositionNormal>();
+
         private readonly List<ushort> _indices = new List<ushort>();
 
         // Once all the geometry has been specified, the InitializePrimitive
         // method copies the vertex and index data into these buffers, which
         // store it on the GPU ready for efficient rendering.
         private VertexBuffer _vertexBuffer;
+
         private IndexBuffer _indexBuffer;
         private BasicEffect _basicEffect;
 
@@ -49,7 +51,10 @@ namespace Gemini.Demo.Xna.Primitives
         ///     Adds a new index to the primitive model. This should only be called
         ///     during the initialization process, before InitializePrimitive.
         /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="index"/> is larger than <see cref="ushort.MaxValue"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     Thrown when the <paramref name="index" /> is larger than
+        ///     <see cref="ushort.MaxValue" />.
+        /// </exception>
         protected void AddIndex(int index)
         {
             if (index > ushort.MaxValue)
@@ -148,7 +153,7 @@ namespace Gemini.Demo.Xna.Primitives
             {
                 effectPass.Apply();
 
-                var primitiveCount = _indices.Count/3;
+                var primitiveCount = _indices.Count / 3;
 
                 graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
                     _vertices.Count, 0, primitiveCount);
@@ -169,7 +174,7 @@ namespace Gemini.Demo.Xna.Primitives
             _basicEffect.View = view;
             _basicEffect.Projection = projection;
             _basicEffect.DiffuseColor = color.ToVector3();
-            _basicEffect.Alpha = color.A/255.0f;
+            _basicEffect.Alpha = color.A / 255.0f;
 
             var device = _basicEffect.GraphicsDevice;
             device.DepthStencilState = DepthStencilState.Default;

@@ -70,7 +70,7 @@ namespace Gemini.Demo.Modules.TextEditor.ViewModels
         public override bool Equals(object obj)
         {
             var other = obj as EditorViewModel;
-            return (other != null)
+            return other != null
                    && string.Equals(FilePath, other.FilePath, StringComparison.InvariantCultureIgnoreCase)
                    && string.Equals(FileName, other.FileName, StringComparison.InvariantCultureIgnoreCase);
         }

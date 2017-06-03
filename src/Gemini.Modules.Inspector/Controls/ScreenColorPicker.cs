@@ -100,8 +100,8 @@ namespace Gemini.Modules.Inspector.Controls
                 cursorPosition.X -= (int) SystemParameters.VirtualScreenLeft;
                 cursorPosition.Y -= (int) SystemParameters.VirtualScreenTop;
 
-                if ((cursorPosition.X > 0) && (cursorPosition.X < _bitmap.Width) &&
-                    (cursorPosition.Y > 0) && (cursorPosition.Y < _bitmap.Height))
+                if (cursorPosition.X > 0 && cursorPosition.X < _bitmap.Width &&
+                    cursorPosition.Y > 0 && cursorPosition.Y < _bitmap.Height)
                 {
                     var pixel = _bitmap.GetPixel(cursorPosition.X, cursorPosition.Y);
                     return new ColorEventArgs(Color.FromArgb(pixel.A, pixel.R, pixel.G, pixel.B));

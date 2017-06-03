@@ -36,7 +36,8 @@ namespace Gemini.Modules.Shell.Controls
                                 InsertPosition.End);
                             break;
                         case PaneLocation.Bottom:
-                            toolsPane = CreateAnchorablePane(layout, Orientation.Vertical, paneName, InsertPosition.End);
+                            toolsPane = CreateAnchorablePane(layout, Orientation.Vertical, paneName,
+                                InsertPosition.End);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -55,7 +56,7 @@ namespace Gemini.Modules.Shell.Controls
             if (tool != null)
             {
                 var anchorablePane = anchorableShown.Parent as LayoutAnchorablePane;
-                if ((anchorablePane != null) && (anchorablePane.ChildrenCount == 1))
+                if (anchorablePane != null && anchorablePane.ChildrenCount == 1)
                     switch (tool.PreferredLocation)
                     {
                         case PaneLocation.Left:

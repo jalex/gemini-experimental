@@ -52,10 +52,10 @@ namespace Gemini.Demo.MonoGame.Primitives
                 AddIndex(CurrentVertex + 3);
 
                 // Four vertices per face.
-                AddVertex((normal - side1 - side2)*size/2, normal);
-                AddVertex((normal - side1 + side2)*size/2, normal);
-                AddVertex((normal + side1 + side2)*size/2, normal);
-                AddVertex((normal + side1 - side2)*size/2, normal);
+                AddVertex((normal - side1 - side2) * size / 2, normal);
+                AddVertex((normal - side1 + side2) * size / 2, normal);
+                AddVertex((normal + side1 + side2) * size / 2, normal);
+                AddVertex((normal + side1 - side2) * size / 2, normal);
             }
         }
     }

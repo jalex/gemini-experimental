@@ -14,9 +14,9 @@ namespace Gemini.Modules.Inspector.Conventions
     {
         public override bool IsApplicable(PropertyDescriptor propertyDescriptor)
         {
-            var isNumberType = (propertyDescriptor.PropertyType == typeof(int))
-                               || (propertyDescriptor.PropertyType == typeof(double))
-                               || (propertyDescriptor.PropertyType == typeof(float));
+            var isNumberType = propertyDescriptor.PropertyType == typeof(int)
+                               || propertyDescriptor.PropertyType == typeof(double)
+                               || propertyDescriptor.PropertyType == typeof(float);
 
             if (!isNumberType)
                 return false;
@@ -34,7 +34,8 @@ namespace Gemini.Modules.Inspector.Conventions
                 return new RangeEditorViewModel<int>((int) rangeAttribute.Minimum, (int) rangeAttribute.Maximum);
 
             if (propertyDescriptor.PropertyType == typeof(double))
-                return new RangeEditorViewModel<double>((double) rangeAttribute.Minimum, (double) rangeAttribute.Maximum);
+                return new RangeEditorViewModel<double>((double) rangeAttribute.Minimum,
+                    (double) rangeAttribute.Maximum);
 
             if (propertyDescriptor.PropertyType == typeof(float))
                 return new RangeEditorViewModel<float>((float) rangeAttribute.Minimum, (float) rangeAttribute.Maximum);

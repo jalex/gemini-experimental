@@ -58,7 +58,8 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Controls
                 // Create the world-view-projection matrices for the cube and camera
                 var world = Matrix.CreateFromYawPitchRoll(_yaw, _pitch, 0f);
                 var view = Matrix.CreateLookAt(new Vector3(0, 0, 2.5f), Vector3.Zero, Vector3.Up);
-                var projection = Matrix.CreatePerspectiveFieldOfView(1, args.GraphicsDevice.Viewport.AspectRatio, 1, 10);
+                var projection =
+                    Matrix.CreatePerspectiveFieldOfView(1, args.GraphicsDevice.Viewport.AspectRatio, 1, 10);
 
                 // Draw a cube
                 Primitive.Draw(world, view, projection, Color);
@@ -78,8 +79,8 @@ namespace Gemini.Demo.Xna.Modules.PrimitiveList.Controls
             {
                 var position = HwndMouse.GetCursorPosition();
 
-                _yaw += (float) (position.X - _originalPosition.X)*.01f;
-                _pitch += (float) (position.Y - _originalPosition.Y)*.01f;
+                _yaw += (float) (position.X - _originalPosition.X) * .01f;
+                _pitch += (float) (position.Y - _originalPosition.Y) * .01f;
 
                 HwndMouse.SetCursorPosition(_originalPosition);
             }

@@ -10,29 +10,27 @@ using Gemini.Framework.Win32;
 
 namespace Gemini.Framework.Behaviors
 {
-
     /// <summary>
-    ///     Represents a <see cref="Behavior{T}"/> for <see cref="Window"/> which provides common window options.
+    ///     Represents a <see cref="Behavior{T}" /> for <see cref="Window" /> which provides common window options.
     /// </summary>
     public class WindowOptionsBehavior : Behavior<Window>
     {
-
         /// <summary>
-        ///     Specifies the <see cref="DependencyProperty"/> for <see cref="ShowIcon"/>.
+        ///     Specifies the <see cref="DependencyProperty" /> for <see cref="ShowIcon" />.
         /// </summary>
         public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register(
             nameof(ShowIcon), typeof(bool), typeof(WindowOptionsBehavior),
             new PropertyMetadata(true, OnWindowOptionChanged));
 
         /// <summary>
-        ///     Specifies the <see cref="DependencyProperty"/> for <see cref="ShowMinimizeBox"/>.
+        ///     Specifies the <see cref="DependencyProperty" /> for <see cref="ShowMinimizeBox" />.
         /// </summary>
         public static readonly DependencyProperty ShowMinimizeBoxProperty = DependencyProperty.Register(
             nameof(ShowMinimizeBox), typeof(bool), typeof(WindowOptionsBehavior),
             new PropertyMetadata(true, OnWindowOptionChanged));
 
         /// <summary>
-        ///     Specifies the <see cref="DependencyProperty"/> for <see cref="ShowMaximizeBox"/>.
+        ///     Specifies the <see cref="DependencyProperty" /> for <see cref="ShowMaximizeBox" />.
         /// </summary>
         public static readonly DependencyProperty ShowMaximizeBoxProperty = DependencyProperty.Register(
             nameof(ShowMaximizeBox), typeof(bool), typeof(WindowOptionsBehavior),
@@ -110,7 +108,7 @@ namespace Gemini.Framework.Behaviors
         }
 
         /// <summary>
-        /// Called after the behavior is attached to an AssociatedObject.
+        ///     Called after the behavior is attached to an AssociatedObject.
         /// </summary>
         /// <remarks>Override this to hook up functionality to the AssociatedObject.</remarks>
         protected override void OnAttached()
@@ -120,7 +118,7 @@ namespace Gemini.Framework.Behaviors
         }
 
         /// <summary>
-        /// Called when the behavior is being detached from its AssociatedObject, but before it has actually occurred.
+        ///     Called when the behavior is being detached from its AssociatedObject, but before it has actually occurred.
         /// </summary>
         /// <remarks>Override this to unhook functionality from the AssociatedObject.</remarks>
         protected override void OnDetaching()

@@ -143,8 +143,8 @@ namespace Gemini.Modules.Shell.ViewModels
         protected override void OnViewLoaded(object view)
         {
             foreach (var module in _modules)
-                foreach (var globalResourceDictionary in module.GlobalResourceDictionaries)
-                    Application.Current.Resources.MergedDictionaries.Add(globalResourceDictionary);
+            foreach (var globalResourceDictionary in module.GlobalResourceDictionaries)
+                Application.Current.Resources.MergedDictionaries.Add(globalResourceDictionary);
 
             foreach (var module in _modules)
                 module.PreInitialize();
@@ -225,11 +225,13 @@ namespace Gemini.Modules.Shell.ViewModels
         {
             RaiseActiveDocumentChanging();
 
-            try {
+            try
+            {
                 // TODO since the update to latest Xceed.AvalonDock we get an exception here now. ignore
                 base.DeactivateItem(item, close);
-            } catch {
-
+            }
+            catch
+            {
             }
 
             RaiseActiveDocumentChanged();
@@ -271,7 +273,6 @@ namespace Gemini.Modules.Shell.ViewModels
             }
             catch
             {
-
             }
         }
 

@@ -14,7 +14,8 @@ namespace Gemini.Demo.Modules.FilterDesigner
     public static class MenuDefinitions
     {
         /// <summary>
-        ///     Specifies the <see cref="CommandMenuItemDefinition{TCommandDefinition}"/> for the <see cref="OpenGraphCommandDefinition"/>.
+        ///     Specifies the <see cref="CommandMenuItemDefinition{TCommandDefinition}" /> for the
+        ///     <see cref="OpenGraphCommandDefinition" />.
         /// </summary>
         [Export] public static MenuItemDefinition OpenGraphMenuItem = new CommandMenuItemDefinition
             <OpenGraphCommandDefinition>(

@@ -10,7 +10,7 @@ using Gemini.Modules.Toolbox;
 namespace Gemini.Demo.Modules.FilterDesigner.ViewModels.Elements
 {
     [ToolboxItem(typeof(GraphViewModel), "Multiply", "Maths",
-         "pack://application:,,,/Modules/FilterDesigner/Resources/active_x_16xLG.png")]
+        "pack://application:,,,/Modules/FilterDesigner/Resources/active_x_16xLG.png")]
     public class Multiply : ShaderEffectElement
     {
         public Multiply()

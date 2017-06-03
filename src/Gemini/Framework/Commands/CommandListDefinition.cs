@@ -6,11 +6,10 @@ using System;
 
 namespace Gemini.Framework.Commands
 {
-
     /// <summary>
     ///     Represents a definition of a command list. Command list definitions can be used for
     ///     declaring commands which are being dynamically created using an associated
-    ///     <see cref="ICommandListHandler{TCommandListDefinition}"/>.
+    ///     <see cref="ICommandListHandler{TCommandListDefinition}" />.
     /// </summary>
     public abstract class CommandListDefinition : CommandDefinitionBase
     {
@@ -25,7 +24,7 @@ namespace Gemini.Framework.Commands
         public sealed override string ToolTip => "[NotUsed]";
 
         /// <summary>
-        ///     Returns the <see cref="Uri"/> of an icon associated with the command.
+        ///     Returns the <see cref="Uri" /> of an icon associated with the command.
         /// </summary>
         public sealed override Uri IconSource => null;
 

@@ -75,17 +75,17 @@ namespace Gemini.Modules.Inspector.Controls
                 return GridResizeDirection.Columns;
 
             // * If the HorizontalAlignment is set to Stretch and the VerticalAlignment is not set to Stretch, space is redistributed between rows.
-            if ((HorizontalAlignment == HorizontalAlignment.Stretch) &&
-                (VerticalAlignment != VerticalAlignment.Stretch))
+            if (HorizontalAlignment == HorizontalAlignment.Stretch &&
+                VerticalAlignment != VerticalAlignment.Stretch)
                 return GridResizeDirection.Rows;
 
             // * If the following conditions are true, space is redistributed between columns:
             //   * The HorizontalAlignment is set to Stretch.
             //   * The VerticalAlignment is set to Stretch.
             //   * The ActualWidth is less than or equal to the ActualHeight.
-            if ((HorizontalAlignment == HorizontalAlignment.Stretch) &&
-                (VerticalAlignment == VerticalAlignment.Stretch) &&
-                (ActualWidth <= ActualHeight))
+            if (HorizontalAlignment == HorizontalAlignment.Stretch &&
+                VerticalAlignment == VerticalAlignment.Stretch &&
+                ActualWidth <= ActualHeight)
                 return GridResizeDirection.Columns;
 
             // * If the following conditions are true, space is redistributed between rows:
@@ -262,10 +262,10 @@ namespace Gemini.Modules.Inspector.Controls
             double totalStarColumnsWidth = 0;
             var starColumnsAvailableWidth = grid.ActualWidth;
 
-            if ((leftColumnGridUnitType ==
-                 GridUnitType.Star) ||
-                (rightColumnGridUnitType ==
-                 GridUnitType.Star))
+            if (leftColumnGridUnitType ==
+                GridUnitType.Star ||
+                rightColumnGridUnitType ==
+                GridUnitType.Star)
                 foreach (var columnDefinition in grid.ColumnDefinitions)
                     if (columnDefinition.Width.GridUnitType ==
                         GridUnitType.Star)
@@ -291,7 +291,7 @@ namespace Gemini.Modules.Inspector.Controls
                     var oldStarWidth = leftColumnDefinition.Width.Value;
                     var newStarWidth = Math.Max(
                         0,
-                        totalStarColumnsWidth*newLeftColumnActualWidth/
+                        totalStarColumnsWidth * newLeftColumnActualWidth /
                         starColumnsAvailableWidth);
                     leftColumnDefinition.Width =
                         new GridLength(newStarWidth, GridUnitType.Star);
@@ -316,8 +316,8 @@ namespace Gemini.Modules.Inspector.Controls
                         var newStarWidth = Math.Max(
                             0,
                             (totalStarColumnsWidth -
-                             leftColumnDefinition.Width.Value)*
-                            newLeftColumnActualWidth/
+                             leftColumnDefinition.Width.Value) *
+                            newLeftColumnActualWidth /
                             (newStarColumnsAvailableWidth - newLeftColumnActualWidth));
 
                         leftColumnDefinition.Width =
@@ -345,8 +345,8 @@ namespace Gemini.Modules.Inspector.Controls
                         var newStarWidth = Math.Max(
                             0,
                             (totalStarColumnsWidth -
-                             rightColumnDefinition.Width.Value)*
-                            newRightColumnActualWidth/
+                             rightColumnDefinition.Width.Value) *
+                            newRightColumnActualWidth /
                             (newStarColumnsAvailableWidth - newRightColumnActualWidth));
                         rightColumnDefinition.Width =
                             new GridLength(newStarWidth, GridUnitType.Star);
@@ -436,10 +436,10 @@ namespace Gemini.Modules.Inspector.Controls
             double totalStarRowsHeight = 0;
             var starRowsAvailableHeight = grid.ActualHeight;
 
-            if ((upperRowGridUnitType ==
-                 GridUnitType.Star) ||
-                (lowerRowGridUnitType ==
-                 GridUnitType.Star))
+            if (upperRowGridUnitType ==
+                GridUnitType.Star ||
+                lowerRowGridUnitType ==
+                GridUnitType.Star)
                 foreach (var rowDefinition in grid.RowDefinitions)
                     if (rowDefinition.Height.GridUnitType ==
                         GridUnitType.Star)
@@ -465,7 +465,7 @@ namespace Gemini.Modules.Inspector.Controls
                     var oldStarHeight = upperRowDefinition.Height.Value;
                     var newStarHeight = Math.Max(
                         0,
-                        totalStarRowsHeight*newUpperRowActualHeight/
+                        totalStarRowsHeight * newUpperRowActualHeight /
                         starRowsAvailableHeight);
                     upperRowDefinition.Height =
                         new GridLength(newStarHeight, GridUnitType.Star);
@@ -490,8 +490,8 @@ namespace Gemini.Modules.Inspector.Controls
                         var newStarHeight = Math.Max(
                             0,
                             (totalStarRowsHeight -
-                             upperRowDefinition.Height.Value)*
-                            newUpperRowActualHeight/
+                             upperRowDefinition.Height.Value) *
+                            newUpperRowActualHeight /
                             (newStarRowsAvailableHeight - newUpperRowActualHeight));
 
                         upperRowDefinition.Height =
@@ -519,8 +519,8 @@ namespace Gemini.Modules.Inspector.Controls
                         var newStarHeight = Math.Max(
                             0,
                             (totalStarRowsHeight -
-                             lowerRowDefinition.Height.Value)*
-                            newLowerRowActualHeight/
+                             lowerRowDefinition.Height.Value) *
+                            newLowerRowActualHeight /
                             (newStarRowsAvailableHeight - newLowerRowActualHeight));
                         lowerRowDefinition.Height =
                             new GridLength(newStarHeight, GridUnitType.Star);

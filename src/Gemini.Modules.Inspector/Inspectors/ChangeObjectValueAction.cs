@@ -29,7 +29,8 @@ namespace Gemini.Modules.Inspector.Inspectors
                         (string)
                         _stringConverter.Convert(_originalValue, typeof(string), null, CultureInfo.CurrentUICulture);
                     newText =
-                        (string) _stringConverter.Convert(_newValue, typeof(string), null, CultureInfo.CurrentUICulture);
+                        (string) _stringConverter.Convert(_newValue, typeof(string), null,
+                            CultureInfo.CurrentUICulture);
                 }
                 else
                 {

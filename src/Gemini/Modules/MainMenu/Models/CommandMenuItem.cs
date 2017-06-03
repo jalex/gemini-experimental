@@ -46,16 +46,16 @@ namespace Gemini.Modules.MainMenu.Models
 
             _command.PropertyChanged += (s, e) =>
             {
-                if ((e.PropertyName == "Visible") || (e.PropertyName == "Checked"))
+                if (e.PropertyName == "Visible" || e.PropertyName == "Checked")
                     NotifyOfPropertyChange("Is" + e.PropertyName);
-                else if ((e.PropertyName == "Text") || (e.PropertyName == "IconSource"))
+                else if (e.PropertyName == "Text" || e.PropertyName == "IconSource")
                     NotifyOfPropertyChange(e.PropertyName);
             };
         }
 
         void ICommandUiItem.Update(CommandHandlerWrapper commandHandler)
         {
-            if ((_command != null) && _command.CommandDefinition.IsList && !IsListItem)
+            if (_command != null && _command.CommandDefinition.IsList && !IsListItem)
             {
                 foreach (var listItem in _listItems)
                     _parent.Children.Remove(listItem);

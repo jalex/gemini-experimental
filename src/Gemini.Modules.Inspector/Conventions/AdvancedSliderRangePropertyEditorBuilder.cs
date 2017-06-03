@@ -14,9 +14,9 @@ namespace Gemini.Modules.Inspector.Conventions
     {
         public override bool IsApplicable(PropertyDescriptor propertyDescriptor)
         {
-            var isNumberType = (propertyDescriptor.PropertyType == typeof(int))
-                               || (propertyDescriptor.PropertyType == typeof(double))
-                               || (propertyDescriptor.PropertyType == typeof(float));
+            var isNumberType = propertyDescriptor.PropertyType == typeof(int)
+                               || propertyDescriptor.PropertyType == typeof(double)
+                               || propertyDescriptor.PropertyType == typeof(float);
 
             if (!isNumberType)
                 return false;
@@ -31,7 +31,8 @@ namespace Gemini.Modules.Inspector.Conventions
                 .First();
 
             if (propertyDescriptor.PropertyType == typeof(int))
-                return new AdvancedSliderEditorViewModel<int>((int) rangeAttribute.Minimum, (int) rangeAttribute.Maximum)
+                return new AdvancedSliderEditorViewModel<int>((int) rangeAttribute.Minimum,
+                    (int) rangeAttribute.Maximum)
                 {
                     Speed = 1
                 };

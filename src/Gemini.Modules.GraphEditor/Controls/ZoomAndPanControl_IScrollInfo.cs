@@ -32,12 +32,12 @@ namespace Gemini.Modules.GraphEditor.Controls
         /// <summary>
         ///     The width of the content (with 'ContentScale' applied).
         /// </summary>
-        public double ExtentWidth => _unScaledExtent.Width*ContentScale;
+        public double ExtentWidth => _unScaledExtent.Width * ContentScale;
 
         /// <summary>
         ///     The height of the content (with 'ContentScale' applied).
         /// </summary>
-        public double ExtentHeight => _unScaledExtent.Height*ContentScale;
+        public double ExtentHeight => _unScaledExtent.Height * ContentScale;
 
         /// <summary>
         ///     Get the width of the viewport onto the content.
@@ -58,12 +58,12 @@ namespace Gemini.Modules.GraphEditor.Controls
         /// <summary>
         ///     The offset of the horizontal scrollbar.
         /// </summary>
-        public double HorizontalOffset => ContentOffsetX*ContentScale;
+        public double HorizontalOffset => ContentOffsetX * ContentScale;
 
         /// <summary>
         ///     The offset of the vertical scrollbar.
         /// </summary>
-        public double VerticalOffset => ContentOffsetY*ContentScale;
+        public double VerticalOffset => ContentOffsetY * ContentScale;
 
         /// <summary>
         ///     Called when the offset of the horizontal scrollbar has been set.
@@ -77,7 +77,7 @@ namespace Gemini.Modules.GraphEditor.Controls
             {
                 _disableScrollOffsetSync = true;
 
-                ContentOffsetX = offset/ContentScale;
+                ContentOffsetX = offset / ContentScale;
             }
             finally
             {
@@ -97,7 +97,7 @@ namespace Gemini.Modules.GraphEditor.Controls
             {
                 _disableScrollOffsetSync = true;
 
-                ContentOffsetY = offset/ContentScale;
+                ContentOffsetY = offset / ContentScale;
             }
             finally
             {
@@ -110,7 +110,7 @@ namespace Gemini.Modules.GraphEditor.Controls
         /// </summary>
         public void LineUp()
         {
-            ContentOffsetY -= ContentViewportHeight/10;
+            ContentOffsetY -= ContentViewportHeight / 10;
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Gemini.Modules.GraphEditor.Controls
         /// </summary>
         public void LineDown()
         {
-            ContentOffsetY += ContentViewportHeight/10;
+            ContentOffsetY += ContentViewportHeight / 10;
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Gemini.Modules.GraphEditor.Controls
         /// </summary>
         public void LineLeft()
         {
-            ContentOffsetX -= ContentViewportWidth/10;
+            ContentOffsetX -= ContentViewportWidth / 10;
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Gemini.Modules.GraphEditor.Controls
         /// </summary>
         public void LineRight()
         {
-            ContentOffsetX += ContentViewportWidth/10;
+            ContentOffsetX += ContentViewportWidth / 10;
         }
 
         /// <summary>
@@ -217,7 +217,8 @@ namespace Gemini.Modules.GraphEditor.Controls
             if (_content.IsAncestorOf(visual))
             {
                 var transformedRect = visual.TransformToAncestor(_content).TransformBounds(rectangle);
-                var viewportRect = new Rect(ContentOffsetX, ContentOffsetY, ContentViewportWidth, ContentViewportHeight);
+                var viewportRect = new Rect(ContentOffsetX, ContentOffsetY, ContentViewportWidth,
+                    ContentViewportHeight);
                 if (!transformedRect.Contains(viewportRect))
                 {
                     double horizOffset = 0;

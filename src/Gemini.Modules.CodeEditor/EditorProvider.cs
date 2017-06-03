@@ -44,7 +44,7 @@ namespace Gemini.Modules.CodeEditor
         public bool Handles(string path)
         {
             var extension = Path.GetExtension(path);
-            return (extension != null) && (_languageDefinitionManager.GetDefinitionByExtension(extension) != null);
+            return extension != null && _languageDefinitionManager.GetDefinitionByExtension(extension) != null;
         }
 
         public IDocument Create()

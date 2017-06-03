@@ -20,7 +20,7 @@ namespace Gemini.Modules.ErrorList.Views
         private void OnDataGridMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var dataGrid = (DataGrid) sender;
-            if ((dataGrid.SelectedItems == null) || (dataGrid.SelectedItems.Count != 1))
+            if (dataGrid.SelectedItems == null || dataGrid.SelectedItems.Count != 1)
                 return;
 
             var errorListItem = (ErrorListItem) dataGrid.SelectedItem;
