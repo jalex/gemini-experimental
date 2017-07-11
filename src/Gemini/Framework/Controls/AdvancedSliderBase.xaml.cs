@@ -54,7 +54,7 @@ namespace Gemini.Framework.Controls
 
         private Timer _clickTimer;
 
-        private bool _failing = false;
+        //private bool _failing = false;
         private DateTime _firstClickTime;
         private Point _lastPos;
         private bool _lostMouseGuard;
