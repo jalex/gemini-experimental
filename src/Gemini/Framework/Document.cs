@@ -137,8 +137,9 @@ namespace Gemini.Framework
 
         private static async Task DoSaveAs(IPersistedDocument persistedDocument)
         {
+            try { 
             // Show user dialog to choose filename.
-            var dialog = new SaveFileDialog {FileName = persistedDocument.FileName};
+            var dialog = new SaveFileDialog { FileName = persistedDocument.FileName };
             var filter = string.Empty;
 
             var fileExtension = Path.GetExtension(persistedDocument.FileName);
@@ -168,6 +169,9 @@ namespace Gemini.Framework
             // Add to recent files
             var shell = IoC.Get<IShell>();
             shell.RecentFiles.Update(filePath);
+            }
+            catch {
+            }
         }
     }
 }

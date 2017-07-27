@@ -1,4 +1,4 @@
-#region
+﻿#region
 
 using System;
 using System.IO;
@@ -117,58 +117,64 @@ namespace Gemini.Framework
         /// <param name="callback">The implementor calls this action with the result of the close check.</param>
         public override async void CanClose(Action<bool> callback)
         {
-            if (IsDirty)
-            {
-                // Show save prompt.
-                // Note that CanClose method of Demo ShellViewModel blocks this.
-                var title = IoC.Get<IMainWindow>().Title;
-                var fileName = Path.GetFileNameWithoutExtension(FileName);
-                var fileExtension = Path.GetExtension(FileName);
-                var fileType = IoC.GetAll<IEditorProvider>()
-                    .SelectMany(x => x.FileTypes)
-                    .SingleOrDefault(x => x.FileExtension == fileExtension);
-
-                var message = string.Format(Resources.SaveChangesBeforeClosingMessage, fileType.Name, fileName);
-                var result = MessageBox.Show(message, title, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
-
-                if (result == MessageBoxResult.Yes)
+            try { 
+                if (IsDirty)
                 {
-                    if (IsNew)
+                    // Show save prompt.
+                    // Note that CanClose method of Demo ShellViewModel blocks this.
+                    var title = IoC.Get<IMainWindow>().Title;
+                    var fileName = Path.GetFileNameWithoutExtension(FileName);
+                    var fileExtension = Path.GetExtension(FileName);
+                    var fileType = IoC.GetAll<IEditorProvider>()
+                        .SelectMany(x => x.FileTypes)
+                        .SingleOrDefault(x => x.FileExtension == fileExtension);
+                    if (fileType==null) {
+                            callback(true);
+                            return;
+                        }
+
+                    var message = string.Format(Resources.SaveChangesBeforeClosingMessage, fileType.Name, fileName);
+                    var result = MessageBox.Show(message, title, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+
+                    if (result == MessageBoxResult.Yes)
                     {
-                        // Ask new file path.
-                        var filter = string.Empty;
-                        filter = fileType.Name + "|*" + fileType.FileExtension + "|";
-                        filter += Resources.AllFiles + "|*.*";
-
-                        var dialog = new SaveFileDialog {FileName = FileName, Filter = filter};
-                        if (dialog.ShowDialog() == true)
+                        if (IsNew)
                         {
-                            // Save file.
-                            await Save(dialog.FileName);
+                            // Ask new file path.
+                            var filter = string.Empty;
+                            filter = fileType.Name + "|*" + fileType.FileExtension + "|";
+                            filter += Resources.AllFiles + "|*.*";
 
-                            // Add to recent files. Temporally, commented out.
-                            //IShell _shell = IoC.Get<IShell>();
-                            //_shell.RecentFiles.Update(dialog.FileName);
+                            var dialog = new SaveFileDialog {FileName = FileName, Filter = filter};
+                            if (dialog.ShowDialog() == true)
+                            {
+                                // Save file.
+                                await Save(dialog.FileName);
+
+                                // Add to recent files. Temporally, commented out.
+                                //IShell _shell = IoC.Get<IShell>();
+                                //_shell.RecentFiles.Update(dialog.FileName);
+                            }
+                            else
+                            {
+                                callback(false);
+                                return;
+                            }
                         }
                         else
                         {
-                            callback(false);
-                            return;
+                            // Save file.
+                            await Save(FilePath);
                         }
                     }
-                    else
+                    else if (result == MessageBoxResult.Cancel)
                     {
-                        // Save file.
-                        await Save(FilePath);
+                        callback(false);
+                        return;
                     }
                 }
-                else if (result == MessageBoxResult.Cancel)
-                {
-                    callback(false);
-                    return;
-                }
+            } catch {
             }
-
             callback(true);
         }
 
