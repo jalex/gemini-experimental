@@ -58,7 +58,16 @@ namespace Gemini.Modules.Shell.Services
             try
             {
                 //stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
-
+                try {
+                    var dirname = Path.GetDirectoryName(fileName);
+                    Directory.CreateDirectory(dirname);
+                    //if (!Directory.Exists(dirname)) {
+                        
+                    //}
+                }
+                catch (Exception ex) {
+                    Log.Error(ex);
+                }
                 using (var writer = new BinaryWriter(new FileStream(fileName, FileMode.Create, FileAccess.Write)))
                 {
                     var itemStates = shell.Documents.Concat(shell.Tools.Cast<ILayoutPanel>());

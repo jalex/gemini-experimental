@@ -20,7 +20,8 @@ namespace Gemini.Modules.MainMenu.Models
 
         public override string Text => _command.Text;
 
-        public override Uri IconSource => _command.IconSource;
+        //public override Uri IconSource => _command.IconSource;
+        public override object IconSource => _command.IconSource;
 
         public override string InputGestureText => _keyGesture == null
             ? string.Empty

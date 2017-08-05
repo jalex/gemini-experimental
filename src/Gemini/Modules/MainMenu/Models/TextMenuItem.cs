@@ -15,7 +15,8 @@ namespace Gemini.Modules.MainMenu.Models
 
         public override string Text => _menuDefinition.Text;
 
-        public override Uri IconSource => _menuDefinition.IconSource;
+        //public override Uri IconSource => _menuDefinition.IconSource;
+        public override object IconSource => _menuDefinition.IconSource;
 
         public override string InputGestureText => _menuDefinition.KeyGesture == null
             ? string.Empty

@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Caliburn.Micro;
+using System.Runtime.CompilerServices;
 
 #endregion
 
@@ -18,7 +19,7 @@ namespace Gemini.Modules.MainMenu.Models
 
         #region Properties
 
-        public IObservableCollection<MenuItemBase> Children { get; }
+        public virtual IObservableCollection<MenuItemBase> Children { get; }
 
         #endregion
 
@@ -45,5 +46,37 @@ namespace Gemini.Modules.MainMenu.Models
         {
             menuItems.Apply(Children.Add);
         }
+
+        #region from Dynamic Data AbstractNotifyPropertyChanged
+        
+        /// <summary>
+        /// If the value has changed, sets referenced backing field and raise notify property changed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="backingField">The backing field.</param>
+        /// <param name="newValue">The new value.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        protected virtual void SetAndRaise<T>(ref T backingField, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            // ReSharper disable once ExplicitCallerInfoArgument
+            SetAndRaise(ref backingField, newValue, EqualityComparer<T>.Default, propertyName);
+        }
+        /// <summary>
+        /// If the value has changed, sets referenced backing field and raise notify property changed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="backingField">The backing field.</param>
+        /// <param name="newValue">The new value.</param>
+        /// <param name="comparer">The comparer.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        protected virtual void SetAndRaise<T>(ref T backingField, T newValue, IEqualityComparer<T> comparer, [CallerMemberName] string propertyName = null)
+        {
+            comparer = comparer ?? EqualityComparer<T>.Default;
+            if (comparer.Equals(backingField, newValue)) return;
+            backingField = newValue;
+            NotifyOfPropertyChange(propertyName);
+        }
+
+        #endregion
     }
 }
