@@ -22,9 +22,7 @@ namespace Gemini
     public class AppBootstrapper : BootstrapperBase
     {
         private List<Assembly> _priorityAssemblies;
-
         protected CompositionContainer Container { get; set; }
-
         internal IList<Assembly> PriorityAssemblies => _priorityAssemblies;
 
         public AppBootstrapper()
@@ -33,7 +31,7 @@ namespace Gemini
             Initialize();
         }
 
-        protected virtual void PreInitialize()
+        public virtual void PreInitialize()
         {
             var code = Settings.Default.LanguageCode;
 
@@ -50,18 +48,18 @@ namespace Gemini
                     // fallback to default
                 }
         }
-
+        public virtual string CatalogPath => @"./";
         /// <summary>
         ///     By default, we are configured to use MEF
         /// </summary>
-        protected override void Configure()
-        {
+        protected override void Configure()  {
             // Add all assemblies to AssemblySource (using a temporary DirectoryCatalog).
-            var directoryCatalog = new DirectoryCatalog(@"./");
+            var directoryCatalog = new DirectoryCatalog(CatalogPath);
+            
             AssemblySource.Instance.AddRange(
-                directoryCatalog.Parts
-                    .Select(part => ReflectionModelServices.GetPartType(part).Value.Assembly)
-                    .Where(assembly => !AssemblySource.Instance.Contains(assembly)));
+            directoryCatalog.Parts
+                .Select(part => ReflectionModelServices.GetPartType(part).Value.Assembly)
+                .Where(assembly => !AssemblySource.Instance.Contains(assembly)));
 
             // Prioritise the executable assembly. This allows the client project to override exports, including IShell.
             // The client project can override SelectAssemblies to choose which assemblies are prioritised.

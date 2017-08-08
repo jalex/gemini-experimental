@@ -27,6 +27,7 @@ namespace Gemini.Modules.Shell.Views
 
             layoutSerializer.LayoutSerializationCallback += (s, e) =>
             {
+                try { 
                 ILayoutPanel item;
                 if (items.TryGetValue(e.Model.ContentId, out item))
                 {
@@ -65,7 +66,10 @@ namespace Gemini.Modules.Shell.Views
                         return;
                     }
                 }
+                }
+                catch {
 
+                }
                 // Don't create any panels if something went wrong.
                 e.Cancel = true;
             };
