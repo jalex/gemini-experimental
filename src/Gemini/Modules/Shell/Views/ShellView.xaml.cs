@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,8 @@ namespace Gemini.Modules.Shell.Views
         {
             InitializeComponent();
         }
+
+        Xceed.Wpf.AvalonDock.DockingManager IShellView.Manager => Manager;
 
         public void LoadLayout(Stream stream, Action<ITool> addToolCallback, Action<IDocument> addDocumentCallback,
             Dictionary<string, ILayoutPanel> itemsState)
