@@ -36,24 +36,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Caliburn.Micro, Version=3.0.3.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.Core.3.1.0\lib\net45\Caliburn.Micro.dll</HintPath>
-    </Reference>
-    <Reference Include="Caliburn.Micro.Platform, Version=3.0.3.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.3.1.0\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Caliburn.Micro.Platform.Core, Version=3.0.3.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.3.1.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.3.1.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
@@ -88,6 +75,18 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Caliburn.Micro\src\Caliburn.Micro.Platform\Caliburn.Micro.Platform.Core.csproj">
+      <Project>{0ecbe3d9-aed4-419d-a6e3-c53d5ce2a02a}</Project>
+      <Name>Caliburn.Micro.Platform.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Caliburn.Micro\src\Caliburn.Micro.Platform\Caliburn.Micro.Platform.NET45.csproj">
+      <Project>{ef2c0c7d-3ffe-4884-9aac-7622fee66809}</Project>
+      <Name>Caliburn.Micro.Platform.NET45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Caliburn.Micro\src\Caliburn.Micro\Caliburn.Micro.csproj">
+      <Project>{6d772b52-da8f-4784-971a-4bf50cb6d306}</Project>
+      <Name>Caliburn.Micro</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gemini\Gemini.csproj">
       <Project>{13dbfc87-c152-4a86-94b0-d9944beef647}</Project>
       <Name>Gemini</Name>
@@ -98,7 +97,6 @@
     <None Include="Gemini.Modules.Output.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.de.resx">
