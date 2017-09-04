@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -49,15 +49,21 @@ namespace Gemini
                 }
         }
         public virtual string CatalogPath => @"./";
+
+        protected virtual System.ComponentModel.Composition.Primitives.ComposablePartCatalog MakeCatalog() {
+            // Make composable part catalog (using a DirectoryCatalog).
+            return new DirectoryCatalog(CatalogPath);
+        }
+
         /// <summary>
         ///     By default, we are configured to use MEF
         /// </summary>
         protected override void Configure()  {
-            // Add all assemblies to AssemblySource (using a temporary DirectoryCatalog).
-            var directoryCatalog = new DirectoryCatalog(CatalogPath);
+            // Add all assemblies to AssemblySource.
+            var catalog = MakeCatalog();
             
             AssemblySource.Instance.AddRange(
-            directoryCatalog.Parts
+            catalog.Parts
                 .Select(part => ReflectionModelServices.GetPartType(part).Value.Assembly)
                 .Where(assembly => !AssemblySource.Instance.Contains(assembly)));
 
