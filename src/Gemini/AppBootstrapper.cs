@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,7 @@ using Caliburn.Micro;
 using Gemini.Framework.Services;
 using Gemini.Properties;
 using Gu.Localization;
+using NLog;
 
 #endregion
 
@@ -25,10 +26,71 @@ namespace Gemini
         protected CompositionContainer Container { get; set; }
         internal IList<Assembly> PriorityAssemblies => _priorityAssemblies;
 
+        readonly static Logger _Log = NLog.LogManager.GetCurrentClassLogger();
+        private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            _Log.Error($"\nCurrent_DispatcherUnhandledException: UNHANDLED_LOG_BEGIN");
+            _Log.Error(e);
+            _Log.Error(e.Exception);
+            _Log.Error(e.Exception.StackTrace);
+            _Log.Error($"\n\nCurrent_DispatcherUnhandledException: UNHANDLED_LOG_END");
+        }
+
+        public void UnhandledExceptionEventHandler(object sender, System.UnhandledExceptionEventArgs e)
+        {
+            // in case of unhandled exception - delete the user setting file, a workaround
+            _Log.Error($"\n\nUnhandledExceptionEventHandler: CRASH_LOG_BEGIN");
+            _Log.Error(e);
+            _Log.Error(e.ExceptionObject);
+            _Log.Error(e.ExceptionObject as Exception);
+
+            _Log.Error($"Save this logs for analysis, terminating the app...");
+            _Log.Error($"\n\nUnhandledExceptionEventHandler: CRASH_LOG_END");
+        }
+
+
         public AppBootstrapper()
         {
-            PreInitialize();
-            Initialize();
+            try
+            {
+                //AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(this.LoadFromSameFolder);
+                AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionEventHandler);
+                Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+
+                PreInitialize();
+                Initialize();
+            }
+            catch (System.TypeLoadException tle)
+            {
+                _Log.Error(tle);
+                System.IO.File.AppendAllLines("./LOGLOGLOG.txt", new[] { $"{tle?.TypeName} ---- {tle?.Message}" });
+                System.IO.File.AppendAllLines("./LOGLOGLOG.txt", new[] { $"{tle?.InnerException}" });
+
+                System.IO.File.AppendAllLines("c:\\logs\\LOGLOGLOG.txt", new[] { $"{tle?.TypeName} ---- {tle?.Message}" });
+                System.IO.File.AppendAllLines("c:\\logs\\LOGLOGLOG.txt", new[] { $"{tle?.InnerException}" });
+
+                _Log.Error(tle?.InnerException);
+                throw;
+            }
+            catch(Exception e) {
+                _Log.Error(e);
+                System.IO.File.AppendAllLines("./LOGLOGLOG.txt", new[] { $"{e}" });
+                System.IO.File.AppendAllLines("c:\\logs\\LOGLOGLOG.txt", new[] { $"{e}" });
+
+                if (e is System.Reflection.ReflectionTypeLoadException)
+                {
+                    var typeLoadException = e as System.Reflection.ReflectionTypeLoadException;
+                    var loaderExceptions = typeLoadException.LoaderExceptions;
+                    foreach (var ee in loaderExceptions)
+                    {
+                        System.IO.File.AppendAllLines("./LOGLOGLOG.txt", new[] { $"{ee}" });
+                        System.IO.File.AppendAllLines("c:\\logs\\LOGLOGLOG.txt", new[] { $"{ee}" });
+                        _Log.Error(ee);
+                    }
+                }
+                throw;
+            }
         }
 
         public virtual void PreInitialize()
