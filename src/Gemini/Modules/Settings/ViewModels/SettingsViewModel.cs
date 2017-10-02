@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -113,11 +113,11 @@ namespace Gemini.Modules.Settings.ViewModels
 
         private static SettingsPageViewModel GetFirstLeafPageRecursive(List<SettingsPageViewModel> pages)
         {
-            if (!pages.Any())
+            if (!pages.Any(p => p.IsVisible))
                 return null;
 
-            var firstPage = pages.First();
-            if (!firstPage.Children.Any())
+            var firstPage = pages.First(p => p.IsVisible);
+            if (!firstPage.Children.Any(p => p.IsVisible))
                 return firstPage;
 
             return GetFirstLeafPageRecursive(firstPage.Children);
@@ -155,7 +155,7 @@ namespace Gemini.Modules.Settings.ViewModels
 
         private void SaveChanges(object obj)
         {
-            foreach (var settingsEditor in _settingsEditors)
+            foreach (var settingsEditor in _settingsEditors.Where(e => !(e is ISettingsEditorEx ee) || ee.IsVisible))
                 settingsEditor.ApplyChanges();
 
             TryClose(true);

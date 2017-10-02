@@ -1,4 +1,4 @@
-﻿namespace Gemini.Modules.Settings
+namespace Gemini.Modules.Settings
 {
     public interface ISettingsEditor
     {
@@ -11,5 +11,11 @@
     public interface ISettingsEditorOrder
     {
         int Order { get; }
+    }
+
+    public interface ISettingsEditorEx: ISettingsEditor
+    {
+        bool IsVisible { get; }
+
     }
 }
