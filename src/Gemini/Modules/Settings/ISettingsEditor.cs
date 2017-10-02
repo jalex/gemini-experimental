@@ -4,6 +4,7 @@ namespace Gemini.Modules.Settings
     {
         string SettingsPageName { get; }
         string SettingsPagePath { get; }
+        bool IsVisible { get; }
 
         void ApplyChanges();
     }
@@ -11,11 +12,5 @@ namespace Gemini.Modules.Settings
     public interface ISettingsEditorOrder
     {
         int Order { get; }
-    }
-
-    public interface ISettingsEditorEx: ISettingsEditor
-    {
-        bool IsVisible { get; }
-
     }
 }

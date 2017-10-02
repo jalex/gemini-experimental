@@ -155,7 +155,7 @@ namespace Gemini.Modules.Settings.ViewModels
 
         private void SaveChanges(object obj)
         {
-            foreach (var settingsEditor in _settingsEditors.Where(e => !(e is ISettingsEditorEx ee) || ee.IsVisible))
+            foreach (var settingsEditor in _settingsEditors.Where(e => e.IsVisible))
                 settingsEditor.ApplyChanges();
 
             TryClose(true);

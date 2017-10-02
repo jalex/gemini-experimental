@@ -14,7 +14,7 @@ namespace Gemini.Modules.Settings.ViewModels
         public List<ISettingsEditor> Editors { get; }
         public List<SettingsPageViewModel> Children { get; }
 
-        public bool IsVisible => Editors.Any(e => !(e is ISettingsEditorEx ee) || ee.IsVisible) || Children.Any(p => p.IsVisible);
+        public bool IsVisible => Editors.Any(e => e.IsVisible) || Children.Any(p => p.IsVisible);
 
         public SettingsPageViewModel()
         {
