@@ -1,7 +1,8 @@
-﻿#region
+#region
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Configuration;
 using Caliburn.Micro;
 using Gemini.Framework.Themes;
 using Gemini.Modules.Settings;
@@ -44,6 +45,14 @@ namespace Gemini.Modules.MainMenu.ViewModels
             }
         }
 
+        public bool ThemeAllowEditing {
+            get {
+                var s = ConfigurationManager.AppSettings["Gemini_Settings_ThemeName_PreventEditing"];
+                if(s == null || !bool.TryParse(s, out var r)) return true;
+                return !r;
+            }
+        }
+
         public IEnumerable<string> Languages => AvailableLanguages;
 
         public string SelectedLanguage
@@ -55,6 +64,14 @@ namespace Gemini.Modules.MainMenu.ViewModels
                     return;
                 _selectedLanguage = value;
                 NotifyOfPropertyChange(() => SelectedLanguage);
+            }
+        }
+
+        public bool LanguageAllowEditing {
+            get {
+                var s = ConfigurationManager.AppSettings["Gemini_Settings_LanguageCode_PreventEditing"];
+                if(s == null || !bool.TryParse(s, out var r)) return true;
+                return !r;
             }
         }
 
@@ -72,6 +89,8 @@ namespace Gemini.Modules.MainMenu.ViewModels
         public string SettingsPageName => Resources.SettingsPageGeneral;
 
         public string SettingsPagePath => Resources.SettingsPathEnvironment;
+
+        public bool IsVisible => true;
 
         [ImportingConstructor]
         public MainMenuSettingsViewModel(IThemeManager themeManager)
