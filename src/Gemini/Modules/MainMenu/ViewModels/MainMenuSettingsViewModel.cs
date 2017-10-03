@@ -96,7 +96,10 @@ namespace Gemini.Modules.MainMenu.ViewModels
         public MainMenuSettingsViewModel(IThemeManager themeManager)
         {
             _themeManager = themeManager;
-            SelectedTheme = themeManager.CurrentTheme;
+        }
+
+        public void Load() {
+            SelectedTheme = _themeManager.CurrentTheme;
             AutoHideMainMenu = Properties.Settings.Default.AutoHideMainMenu;
             SelectedLanguage = Properties.Settings.Default.LanguageCode;
         }

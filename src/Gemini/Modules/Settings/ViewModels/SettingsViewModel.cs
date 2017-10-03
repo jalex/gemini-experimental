@@ -20,6 +20,7 @@ namespace Gemini.Modules.Settings.ViewModels
         private static readonly Regex _OrderFromNameRE = new Regex(@"^\[(\d+)] (.*)$");
         private SettingsPageViewModel _selectedPage;
         private IEnumerable<ISettingsEditor> _settingsEditors;
+        private string _toSelectPath, _toSelectName;
 
         public List<SettingsPageViewModel> Pages { get; private set; }
 
@@ -60,10 +61,12 @@ namespace Gemini.Modules.Settings.ViewModels
 
                 if (page == null)
                 {
+                    var path = settingsEditor.SettingsPagePath;
+                    ExtractOrderFromName(ref path);
                     var name = settingsEditor.SettingsPageName;
                     var order = ExtractOrderFromName(ref name);
-                    page = new SettingsPageViewModel
-                    {
+                    page = new SettingsPageViewModel {
+                        Path = path,
                         Name = name,
                         Order = order
                     };
@@ -75,7 +78,52 @@ namespace Gemini.Modules.Settings.ViewModels
             SortAndTrimExcess(pages);
 
             Pages = pages;
-            SelectedPage = GetFirstLeafPageRecursive(pages);
+            SelectedPage = GetFirstLeafPageRecursive(Pages);
+        }
+
+        //protected override void OnViewAttached(object view, object context) {
+        //    base.OnViewAttached(view, context);
+        //}
+        protected override void OnViewLoaded(object view) {
+            base.OnViewLoaded(view);
+
+            NotifyIsVisible(Pages);
+
+            foreach(var p in Pages.Where(p => p.IsVisible)) p.Load();
+
+            if(_toSelectPath != null || _toSelectName != null) {
+                var page = FindFirstPage(Pages, path: _toSelectPath, name: _toSelectName);
+                if(page != null && page.IsVisible) SelectedPage = page;
+                _toSelectPath = null;
+                _toSelectName = null;
+            }
+
+            if(SelectedPage == null || !SelectedPage.IsVisible) SelectedPage = GetFirstLeafPageRecursive(Pages);
+        }
+
+        public void SelectPage(string path = null, string name = null) {
+            _toSelectPath = path;
+            _toSelectName = name;
+        }
+
+        private static void NotifyIsVisible(List<SettingsPageViewModel> pages) {
+            foreach(var p in pages) {
+                p.NotifyOfPropertyChange(nameof(p.IsVisible));
+                NotifyIsVisible(p.Children);
+            }
+        }
+
+        private static SettingsPageViewModel FindFirstPage(List<SettingsPageViewModel> pages, string path = null, string name = null, bool withEditors = true) {
+            foreach(var p in pages.Where(p => p.IsVisible)) {
+                if((!withEditors || p.Editors.Any(e => e.IsVisible)) &&
+                   (path == null || string.Equals(p.Path, path, StringComparison.CurrentCultureIgnoreCase)) &&
+                   (name == null || string.Equals(p.Name, name, StringComparison.CurrentCultureIgnoreCase))) {
+                    return p;
+                }
+                var cp = FindFirstPage(p.Children, path: path, name: name, withEditors: withEditors);
+                if(cp != null) return cp;
+            }
+            return null;
         }
 
         private static int ExtractOrderFromName(ref string name)

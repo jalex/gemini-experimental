@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 #region
 
@@ -30,6 +30,8 @@ namespace Gemini.Framework.Behaviors
             nameof(SelectedItem), typeof(object), typeof(BindableTreeViewSelectedItemBehavior),
             new UIPropertyMetadata(null, OnSelectedItemChanged));
 
+        RoutedEventHandler _treeLoadedHandler;
+
         /// <summary>
         ///     Gets or sets the currently selected item.
         /// </summary>
@@ -41,6 +43,7 @@ namespace Gemini.Framework.Behaviors
 
         private static void OnSelectedItemChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
+            var behavior = (BindableTreeViewSelectedItemBehavior)sender;
             Action<TreeViewItem> selectTreeViewItem = tvi2 =>
             {
                 if (tvi2 == null)
@@ -57,16 +60,21 @@ namespace Gemini.Framework.Behaviors
                 if (tree == null)
                     return;
 
-                if (!tree.IsLoaded)
+                if(behavior._treeLoadedHandler != null) {
+                    tree.Loaded -= behavior._treeLoadedHandler;
+                    behavior._treeLoadedHandler = null;
+                }
+                if(!tree.IsLoaded)
                 {
-                    RoutedEventHandler handler = null;
-                    handler = (sender2, e2) =>
+                    //RoutedEventHandler handler = null;
+                    behavior._treeLoadedHandler = (sender2, e2) =>
                     {
                         tvi = GetTreeViewItem(tree, e.NewValue);
                         selectTreeViewItem(tvi);
-                        tree.Loaded -= handler;
+                        tree.Loaded -= behavior._treeLoadedHandler;
                     };
-                    tree.Loaded += handler;
+                    tree.Loaded += behavior._treeLoadedHandler;
+                    //behavior._treeLoadedHandler = handler;
 
                     return;
                 }

@@ -2,13 +2,15 @@
 
 using System.Linq;
 using System.Collections.Generic;
+using Caliburn.Micro;
 
 #endregion
 
 namespace Gemini.Modules.Settings.ViewModels
 {
-    public class SettingsPageViewModel
+    public class SettingsPageViewModel: PropertyChangedBase
     {
+        public string Path { get; set; }
         public string Name { get; set; }
         public int Order { get; set; }
         public List<ISettingsEditor> Editors { get; }
@@ -20,6 +22,11 @@ namespace Gemini.Modules.Settings.ViewModels
         {
             Children = new List<SettingsPageViewModel>();
             Editors = new List<ISettingsEditor>();
+        }
+
+        public void Load() {
+            foreach(var e in Editors.Where(e => e.IsVisible)) e.Load();
+            foreach(var p in Children.Where(e => e.IsVisible)) p.Load();
         }
     }
 }

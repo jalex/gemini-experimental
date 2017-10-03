@@ -6,6 +6,7 @@ namespace Gemini.Modules.Settings
         string SettingsPagePath { get; }
         bool IsVisible { get; }
 
+        void Load();
         void ApplyChanges();
     }
 
