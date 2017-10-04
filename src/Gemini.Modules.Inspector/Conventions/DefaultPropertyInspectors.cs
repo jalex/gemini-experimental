@@ -29,7 +29,9 @@ namespace Gemini.Modules.Inspector.Conventions
                 new StandardPropertyEditorBuilder<int?, TextBoxEditorViewModel<int?>>(),
                 new StandardPropertyEditorBuilder<Point3D, Point3DEditorViewModel>(),
                 new StandardPropertyEditorBuilder<string, TextBoxEditorViewModel<string>>(),
-                new StandardPropertyEditorBuilder<BitmapSource, BitmapSourceEditorViewModel>()
+
+                new StandardPropertyEditorBuilder<BitmapSource, BitmapSourceEditorViewModel>(),
+                new StandardPropertyEditorBuilder<InspectorList, InspectorListEditorViewModel>()
             };
         }
 
