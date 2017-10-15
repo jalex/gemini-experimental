@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Globalization;
@@ -26,7 +26,7 @@ namespace Gemini.Modules.MainMenu.Models
 
         public override bool IsChecked => false;
 
-        public override bool IsVisible => true;
+        public override bool IsVisible => !(_menuDefinition is IMenuDefinitionEx mdEx) || mdEx.IsVisible;
 
         public TextMenuItem(MenuDefinitionBase menuDefinition)
         {

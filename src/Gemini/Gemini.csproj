@@ -151,6 +151,7 @@
     <Compile Include="Framework\Menus\ExcludeMenuDefinition.cs" />
     <Compile Include="Framework\Menus\ExcludeMenuItemDefinition.cs" />
     <Compile Include="Framework\Menus\ExcludeMenuItemGroupDefinition.cs" />
+    <Compile Include="Framework\Menus\IMenuDefinitionEx.cs" />
     <Compile Include="Framework\Menus\MenuBarDefinition.cs" />
     <Compile Include="Framework\Menus\MenuDefinition.cs" />
     <Compile Include="Framework\Menus\MenuDefinitionBase.cs" />
