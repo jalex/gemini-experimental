@@ -155,6 +155,7 @@
     <Compile Include="Framework\Menus\MenuBarDefinition.cs" />
     <Compile Include="Framework\Menus\MenuDefinition.cs" />
     <Compile Include="Framework\Menus\MenuDefinitionBase.cs" />
+    <Compile Include="Framework\Menus\MenuDefinitionEx.cs" />
     <Compile Include="Framework\Menus\MenuItemDefinition.cs" />
     <Compile Include="Framework\Menus\MenuItemGroupDefinition.cs" />
     <Compile Include="Framework\Menus\TextMenuItemDefinition.cs" />
