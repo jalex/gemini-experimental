@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.ComponentModel;
@@ -15,6 +15,7 @@ namespace Gemini.Modules.Inspector.Conventions
         public override bool IsApplicable(PropertyDescriptor propertyDescriptor)
         {
             var isNumberType = propertyDescriptor.PropertyType == typeof(int)
+                               || propertyDescriptor.PropertyType == typeof(long)
                                || propertyDescriptor.PropertyType == typeof(double)
                                || propertyDescriptor.PropertyType == typeof(float);
 
@@ -35,6 +36,12 @@ namespace Gemini.Modules.Inspector.Conventions
                     (int) rangeAttribute.Maximum)
                 {
                     Speed = 1
+                };
+
+            if(propertyDescriptor.PropertyType == typeof(long))
+                return new AdvancedSliderEditorViewModel<long>((long)rangeAttribute.Minimum,
+                    (long)rangeAttribute.Maximum) {
+                    Speed = 1L
                 };
 
             if (propertyDescriptor.PropertyType == typeof(double))
