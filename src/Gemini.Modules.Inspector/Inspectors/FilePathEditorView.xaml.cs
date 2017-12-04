@@ -18,9 +18,9 @@ namespace Gemini.Modules.Inspector.Inspectors
     /// <summary>
     /// Interaction logic for FileInfoEditorView.xaml
     /// </summary>
-    public partial class FileInfoEditorView : UserControl
+    public partial class FilePathEditorView : UserControl
     {
-        public FileInfoEditorView()
+        public FilePathEditorView()
         {
             InitializeComponent();
         }
