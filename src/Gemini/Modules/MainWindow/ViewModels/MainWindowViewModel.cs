@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System.ComponentModel.Composition;
 using System.Windows;
@@ -15,13 +15,13 @@ namespace Gemini.Modules.MainWindow.ViewModels
     [Export(typeof(IMainWindow))]
     public class MainWindowViewModel : Conductor<IShell>, IMainWindow, IPartImportsSatisfiedNotification
     {
-        private double _height = 800.0;
+        //private double _height = 800.0;
 
         private ImageSource _icon;
 
         private string _title = Resources.MainWindowDefaultTitle;
 
-        private double _width = 1000.0;
+        //private double _width = 1000.0;
 
         private WindowState _windowState = WindowState.Normal;
 
@@ -35,6 +35,28 @@ namespace Gemini.Modules.MainWindow.ViewModels
             }
         }
 
+        public double Left
+        {
+            get { return _left; }
+            set
+            {
+                _left = value;
+                NotifyOfPropertyChange(() => Left);
+            }
+        }
+        private double _left = double.NaN;
+
+        public double Top
+        {
+            get { return _top; }
+            set
+            {
+                _top = value;
+                NotifyOfPropertyChange(() => Top);
+            }
+        }
+        private double _top = double.NaN;
+
         public double Width
         {
             get { return _width; }
@@ -44,6 +66,7 @@ namespace Gemini.Modules.MainWindow.ViewModels
                 NotifyOfPropertyChange(() => Width);
             }
         }
+        private double _width = double.NaN;
 
         public double Height
         {
@@ -54,6 +77,7 @@ namespace Gemini.Modules.MainWindow.ViewModels
                 NotifyOfPropertyChange(() => Height);
             }
         }
+        private double _height = double.NaN;
 
         public string Title
         {
